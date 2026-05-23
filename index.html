@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>EditSpark - Free Online Photo Editor, Exact KB Compressor & Size Increaser</title>
+    <meta name="description" content="EditSpark Studio is a 100% free online photo editor, precise image KB compressor, and exact image size increaser. Easily crop, clear signatures, change DPI, and increase photo KB online without losing quality. PDF tools coming soon.">
+    <meta name="keywords" content="image compressor, photo resizer, compress image to 20kb, compress photo to 50kb, increase image size in kb, photo ka size kaise badhaye online, increase photo kb online without losing quality, exact kb increaser tool, online image crop, 300 dpi converter, free online pdf compressor, editspark">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://editspark.vercel.app/">
+
+    <style>
+        :root {
+            --primary: #4A148C;
+            --primary-hover: #310d61;
+            --bg-light: #faf8ff;
+            --text-dark: #2c3e50;
+            --border-color: #dcdde1;
+        }
+
+        body { 
+            margin: 0; padding: 0; box-sizing: border-box; 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: var(--text-dark); background-color: #f8f9fa;
+        }
+
+        /* 👑 COMPACT HEADER PATTI WITH BHARATIYA TRUST BADGE */
+        header {
+            background: linear-gradient(135deg, var(--primary), #6a1b9a);
+            color: white; padding: 10px 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .header-left { text-align: left; }
+        header h1 { margin: 0; font-size: 1.5rem; letter-spacing: 0.5px; display: inline-block; }
+        header p { margin: 1px 0 0 0; opacity: 0.85; font-size: 0.8rem; }
+        
+        /* Indian Trust Badge Layout */
+        .bharat-badge {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 5px 12px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .nav-tabs {
+            display: flex; justify-content: center; gap: 10px; margin: 12px 0 8px 0;
+        }
+        .tab-btn {
+            padding: 7px 16px; font-weight: bold; font-size: 0.85rem; border-radius: 20px; 
+            cursor: pointer; transition: all 0.2s ease;
+        }
+        .tab-btn.active {
+            background: var(--primary); color: white; border: none;
+            box-shadow: 0 3px 8px rgba(74, 20, 140, 0.25);
+        }
+        .tab-btn.disabled {
+            background: white; color: #888; border: 1px dashed var(--border-color);
+            cursor: not-allowed;
+        }
+
+        main { max-width: 1440px; margin: 0 auto; padding: 0 15px 30px 15px; }
+        
+        /* ⚡ OPTIMIZED GRID SYSTEM (65% Controls - 35% Sticky Monitor) */
+        .studio-workspace {
+            display: flex; flex-direction: column; gap: 15px; width: 100%;
+        }
+        
+        /* Mobile: Canvas on TOP */
+        .workspace-canvas { order: 1; width: 100%; }
+        .workspace-controls { order: 2; width: 100%; }
+
+        @media (min-width: 992px) {
+            .studio-workspace { flex-direction: row; align-items: flex-start; }
+            .workspace-controls { order: 1; width: 65%; max-height: calc(100vh - 90px); overflow-y: auto; padding-right: 8px; }
+            .workspace-canvas { order: 2; width: 35%; position: sticky; top: 10px; }
+        }
+
+        .workspace-controls h3 { margin-top: 0; font-size: 1.15rem; color: var(--primary); margin-bottom: 8px; }
+        .upload-title { font-weight: bold; color: var(--primary); margin-bottom: 8px; font-size: 0.85rem; }
+        
+        #image-input {
+            width: 100%; padding: 10px; background: white; border: 2px dashed var(--primary);
+            border-radius: 8px; box-sizing: border-box; cursor: pointer; margin-bottom: 12px; font-size: 0.8rem;
+        }
+
+        /* 📱 COMPACT ACCORDION (ALL CLOSED BY DEFAULT) */
+        .accordion-item {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.01);
+        }
+        .accordion-header {
+            background: var(--bg-light);
+            padding: 12px 16px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+            transition: all 0.2s ease;
+        }
+        .accordion-header:hover { background: #f1ecf9; color: var(--primary); }
+        .accordion-item.active .accordion-header {
+            border-bottom: 1px solid var(--border-color);
+            color: var(--primary);
+            border-left: 4px solid var(--primary);
+        }
+        .accordion-header::after {
+            content: '▼'; font-size: 0.7rem; transition: transform 0.2s ease; color: #888;
+        }
+        .accordion-item.active .accordion-header::after { transform: rotate(180deg); color: var(--primary); }
+        .accordion-content {
+            padding: 0 16px; max-height: 0; overflow: hidden;
+            transition: max-height 0.25s ease-out, padding 0.25s ease-out;
+            background: #fff;
+        }
+        .accordion-item.active .accordion-content { padding: 15px; max-height: 600px; }
+
+        /* 🖥️ COMPACT LIVE MONITOR CANVA AREA */
+        .workspace-canvas { 
+            background: white; padding: 12px; border-radius: 12px; 
+            text-align: center; border: 1px solid var(--border-color); 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04); 
+            box-sizing: border-box;
+        }
+        .canvas-toolbar { display: flex; justify-content: flex-end; margin-bottom: 8px; }
+        .crop-toggle-btn {
+            background: #f8f9fa; border: 1px solid var(--border-color); border-radius: 6px;
+            padding: 4px 10px; font-size: 0.75rem; font-weight: bold; cursor: pointer;
+            display: flex; align-items: center; gap: 5px; transition: all 0.2s;
+        }
+        .crop-toggle-btn.active { background: #ff3b30; color: white; border-color: #ff3b30; }
+
+        .preview-container { position: relative; display: inline-block; max-width: 100%; overflow: hidden; border-radius: 6px; touch-action: none; }
+        
+        #img-preview {
+            max-width: 100%; max-height: 250px; display: none;
+            user-select: none; -webkit-user-drag: none; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        
+        #crop-box {
+            position: absolute; border: 2px dashed #ff3b30;
+            box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.6); display: none;
+            box-sizing: border-box; width: 100px; height: 100px; top: 10px; left: 10px; touch-action: none;
+        }
+        .crop-handle {
+            position: absolute; width: 18px; height: 18px; background: #ff3b30;
+            right: -9px; bottom: -9px; border-radius: 50%; touch-action: none; cursor: se-resize;
+            border: 2px solid white;
+        }
+
+        .input-group { margin-bottom: 10px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 5px; }
+        .input-group label { font-weight: bold; font-size: 0.8rem; min-width: 110px; text-align: left; }
+        .input-group input[type="number"], .input-group select {
+            padding: 6px 10px; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.8rem;
+            width: 100%; max-width: 180px; box-sizing: border-box;
+        }
+        .range-group { margin-bottom: 10px; }
+        .range-group label { display: flex; justify-content: space-between; font-weight: bold; font-size: 0.8rem; margin-bottom: 4px; }
+        .range-group input { width: 100%; accent-color: var(--primary); }
+        
+        .process-btn {
+            background: var(--primary); color: #fff; border: none; padding: 10px 14px;
+            font-size: 0.85rem; font-weight: bold; border-radius: 6px; cursor: pointer;
+            width: 100%; transition: background 0.2s ease; margin-top: 5px;
+        }
+        .process-btn:hover { background: var(--primary-hover); }
+        .status-text { margin-top: 5px; font-weight: bold; color: #27ae60; font-size: 0.8rem; min-height: 16px; text-align: left; }
+
+        .seo-content-section {
+            margin-top: 25px; background: white; padding: 20px; border-radius: 12px;
+            border: 1px solid var(--border-color); line-height: 1.6; text-align: left;
+        }
+        .seo-content-section h2 { color: var(--primary); margin-top: 0; font-size: 1.2rem; }
+        .seo-content-section h3 { margin-top: 12px; color: #333; font-size: 1rem; }
+        .seo-content-section ul { padding-left: 20px; }
+        .seo-content-section li { margin-bottom: 3px; font-size: 0.85rem; }
+
+        footer { background: #2c3e50; color: white; text-align: center; padding: 12px; margin-top: 30px; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-left">
+            <h1>✨ EditSpark Studio</h1>
+            <p>Free Online Photo Editor, Exact KB Compressor & Size Increaser</p>
+        </div>
+        <div class="bharat-badge">
+            <span style="color:#FF9933">Apna</span> 
+            <span style="color:#FFFFFF">Bharatiya</span> 
+            <span style="color:#128825">Editor 🇮🇳</span>
+        </div>
+    </header>
+
+    <main>
+        <div class="nav-tabs">
+            <button class="tab-btn active">📸 Image Studio Tools</button>
+            <button class="tab-btn disabled" title="PDF features are rolling soon!">📄 PDF Tools (Coming Soon)</button>
+        </div>
+
+        <div class="studio-workspace">
+            
+            <div class="workspace-canvas" id="canvas-area">
+                <div class="canvas-toolbar">
+                    <button class="crop-toggle-btn" id="crop-toggle-icon" onclick="toggleCropOverlay()">
+                        <span>✂️</span> Crop Area
+                    </button>
+                </div>
+                <div class="preview-container" id="preview-wrapper">
+                    <img id="img-preview" src="" alt="EditSpark Realtime Workspace Interactive Preview">
+                    <div id="crop-box">
+                        <div class="crop-handle" id="crop-handle-btn"></div>
+                    </div>
+                </div>
+                <p id="file-info" style="font-size: 0.8rem; margin-top: 10px; color: #2c3e50; background: #eee; padding: 8px; border-radius: 6px; display:none; font-weight: bold;"></p>
+            </div>
+
+            <div class="workspace-controls">
+                <h3>🛠️ Dashboard Control Panel</h3>
+                <p class="upload-title">Upload Image (Processed safely 100% inside your browser)</p>
+                <input type="file" id="image-input" accept="image/*" onchange="previewImage(event)">
+
+                <div class="accordion-container">
+                    
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">📐 Resize Dimensions</div>
+                        <div class="accordion-content">
+                            <div class="input-group">
+                                <label>Width (px):</label>
+                                <input type="number" id="img-width">
+                            </div>
+                            <div class="input-group">
+                                <label>Height (px):</label>
+                                <input type="number" id="img-height">
+                            </div>
+                            <div class="input-group" style="justify-content: flex-start; gap: 5px; margin-bottom: 10px;">
+                                <input type="checkbox" id="aspect-ratio" checked> 
+                                <label for="aspect-ratio" style="font-weight: normal; cursor: pointer; user-select: none;">Lock Aspect Ratio</label>
+                            </div>
+                            <div class="input-group">
+                                <label>Target (KB):</label>
+                                <input type="number" id="target-kb-a" placeholder="Optional">
+                            </div>
+                            <div class="input-group">
+                                <label>Output DPI:</label>
+                                <select class="set-dpi-class">
+                                    <option value="96">96 DPI</option>
+                                    <option value="200">200 DPI</option>
+                                    <option value="300" selected>300 DPI</option>
+                                </select>
+                            </div>
+                            <button class="process-btn" onclick="processAndDownload('pixel')">Resize & Download</button>
+                            <div class="status-text" id="status-pixel"></div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">⚖️ Compress Image (Exact KB)</div>
+                        <div class="accordion-content">
+                            <div class="input-group">
+                                <label>Target Size (KB):</label>
+                                <input type="number" id="target-kb-b" placeholder="e.g. 20">
+                            </div>
+                            <div class="input-group">
+                                <label>Output DPI:</label>
+                                <select class="set-dpi-class">
+                                    <option value="96">96 DPI</option>
+                                    <option value="200">200 DPI</option>
+                                    <option value="300" selected>300 DPI</option>
+                                </select>
+                            </div>
+                            <button class="process-btn" onclick="processAndDownload('kb')">Compress & Download</button>
+                            <div class="status-text" id="status-kb"></div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">✂️ Interactive Crop Studio</div>
+                        <div class="accordion-content">
+                            <p style="font-size: 0.75rem; color: #e67e22; margin: 0 0 10px 0; text-align: left;">💡 Click the <b>[ ✂️ Crop Area ]</b> button above the canvas to toggle boundary grid.</p>
+                            <div class="input-group">
+                                <label>Target Size (KB):</label>
+                                <input type="number" id="target-kb-c" placeholder="e.g. 30">
+                            </div>
+                            <div class="input-group">
+                                <label>Output DPI:</label>
+                                <select class="set-dpi-class">
+                                    <option value="96">96 DPI</option>
+                                    <option value="200">200 DPI</option>
+                                    <option value="300" selected>300 DPI</option>
+                                </select>
+                            </div>
+                            <button class="process-btn" onclick="processAndDownload('crop')">Crop & Download</button>
+                            <div class="status-text" id="status-crop"></div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">🖋️ Document/Sign Clear</div>
+                        <div class="accordion-content">
+                            <div class="range-group">
+                                <label><span>Brightness</span><span id="lbl-bright">100%</span></label>
+                                <input type="range" id="filter-bright" min="50" max="250" value="100" oninput="applyFilters()">
+                            </div>
+                            <div class="range-group">
+                                <label><span>Contrast</span><span id="lbl-contrast">100%</span></label>
+                                <input type="range" id="filter-contrast" min="50" max="250" value="100" oninput="applyFilters()">
+                            </div>
+                            <div class="input-group">
+                                <label>Target Size (KB):</label>
+                                <input type="number" id="target-kb-d" placeholder="e.g. 20">
+                            </div>
+                            <div class="input-group">
+                                <label>Output DPI:</label>
+                                <select class="set-dpi-class">
+                                    <option value="96">96 DPI</option>
+                                    <option value="200">200 DPI</option>
+                                    <option value="300" selected>300 DPI</option>
+                                </select>
+                            </div>
+                            <button class="process-btn" onclick="processAndDownload('clear')">Clean & Download</button>
+                            <div class="status-text" id="status-clear"></div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item" style="border-top: 3px solid #27ae60;">
+                        <div class="accordion-header" onclick="toggleAccordion(this)" style="color: #27ae60;">🚀 Increase Image KB Size (Quality Lock)</div>
+                        <div class="accordion-content">
+                            <p style="font-size: 0.8rem; color: #555; margin: 0 0 10px 0; text-align: left;">
+                                Inflate files perfectly for govt portals requiring higher limits <b>without sacrificing resolution metrics</b>.
+                            </p>
+                            <div class="input-group">
+                                <label>Target Size (KB):</label>
+                                <input type="number" id="increase-target-kb" placeholder="Higher than current size">
+                            </div>
+                            <div class="input-group">
+                                <label>Output DPI:</label>
+                                <select id="increase-dpi">
+                                    <option value="96">96 DPI</option>
+                                    <option value="200">200 DPI</option>
+                                    <option value="300" selected>300 DPI (Gov Forms Setup)</option>
+                                </select>
+                            </div>
+                            <button class="process-btn" style="background: #27ae60;" onclick="increaseImageKB()">Increase Size & Download File</button>
+                            <div class="status-text" id="status-increase"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+        </div>
+
+        <section class="seo-content-section">
+            <h2>Free Online Photo & PDF Editor Tool</h2>
+            <p><strong>EditSpark Studio</strong> is a 100% free online utility designed to compress images to exact KB targets (like 20KB, 50KB), resize dimensions, and increase image size in KB seamlessly. Perfect for Indian govt portals, SSC, UPSC registration, and admissions requiring targeted file configurations. Increase photo KB online without losing quality safely or clear signatures instantly.</p>
+            
+            <h3>Why EditSpark Studio?</h3>
+            <ul>
+                <li><strong>Privacy First:</strong> Your files are processed locally inside your browser memory.</li>
+                <li><strong>Microsecond Speed:</strong> Powered by Binary Search scaling routines for instant calculations.</li>
+                <li><strong>Exact KB Increaser:</strong> Inflate sizes cleanly to bypass portal constraints instantly.</li>
+                <li><strong>Apna Bharatiya Editor:</strong> Built for Bharat, respecting strict structural compliance rules.</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 EditSpark Studio - Apna Bharatiya Editor Suite 🇮🇳. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        let globalImage = new Image();
+        let originalWidth = 0, originalHeight = 0, originalRatio = 1, originalDPI = 96, sourceRawFile = null;
+
+        const previewWrapper = document.getElementById('preview-wrapper');
+        const cropBox = document.getElementById('crop-box');
+        const previewImg = document.getElementById('img-preview');
+        const cropToggleIcon = document.getElementById('crop-toggle-icon');
+        let isDragging = false, isResizing = false;
+        let startX, startY, startLeft, startTop, startWidth, startHeight;
+
+        // ACCORDION TOGGLE
+        function toggleAccordion(headerElement) {
+            const currentItem = headerElement.parentElement;
+            const container = currentItem.parentElement;
+            const allItems = container.querySelectorAll('.accordion-item');
+            allItems.forEach(item => { if (item !== currentItem) item.classList.remove('active'); });
+            currentItem.classList.toggle('active');
+        }
+
+        // ON-DEMAND CROP TOGGLE
+        function toggleCropOverlay() {
+            if (!globalImage.src) { alert("Kripya pehle image upload karein!"); return; }
+            if (cropBox.style.display === 'block') {
+                cropBox.style.display = 'none';
+                cropToggleIcon.classList.remove('active');
+            } else {
+                cropBox.style.display = 'block';
+                cropToggleIcon.classList.add('active');
+                const w = previewImg.clientWidth;
+                const h = previewImg.clientHeight;
+                cropBox.style.width = '100px'; cropBox.style.height = '100px';
+                cropBox.style.left = (w - 100) / 2 + 'px'; cropBox.style.top = (h - 100) / 2 + 'px';
+            }
+        }
+
+        function extractDPI(arrayBuffer) {
+            const view = new DataView(arrayBuffer);
+            if (view.byteLength < 20) return 96;
+            for (let i = 0; i < view.byteLength - 20; i++) {
+                if (view.getUint16(i) === 0xFFE0 && view.getUint32(i + 4) === 0x4A464946) {
+                    const unit = view.getUint8(i + 13);
+                    if (unit === 1 || unit === 2) return unit === 1 ? view.getUint16(i + 14) : Math.round(view.getUint16(i + 14) * 2.54);
+                }
+            }
+            return 96;
+        }
+
+        function previewImage(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            sourceRawFile = file;
+            const dpiReader = new FileReader();
+            dpiReader.onload = function(e) { originalDPI = extractDPI(e.target.result); };
+            dpiReader.readAsArrayBuffer(file);
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                globalImage.src = e.target.result;
+                globalImage.onload = function() {
+                    originalWidth = globalImage.width; originalHeight = globalImage.height;
+                    originalRatio = originalWidth / originalHeight;
+                    document.getElementById('img-width').value = originalWidth;
+                    document.getElementById('img-height').value = originalHeight;
+                    const infoBox = document.getElementById('file-info');
+                    infoBox.innerText = `Specs: ${originalWidth}x${originalHeight} px | Native: ${originalDPI} DPI | Size: ${(file.size/1024).toFixed(2)} KB`;
+                    infoBox.style.display = "block";
+                    previewImg.src = e.target.result; previewImg.style.display = "block";
+                    cropBox.style.display = 'none'; cropToggleIcon.classList.remove('active');
+                    applyFilters();
+                }
+            }
+            reader.readAsDataURL(file);
+        }
+
+        document.getElementById('img-width').addEventListener('input', function() {
+            if(document.getElementById('aspect-ratio').checked && originalRatio) document.getElementById('img-height').value = Math.round(this.value / originalRatio);
+        });
+        document.getElementById('img-height').addEventListener('input', function() {
+            if(document.getElementById('aspect-ratio').checked && originalRatio) document.getElementById('img-width').value = Math.round(this.value * originalRatio);
+        });
+
+        function applyFilters() {
+            if(!globalImage.src) return;
+            const b = document.getElementById('filter-bright').value; const c = document.getElementById('filter-contrast').value;
+            document.getElementById('lbl-bright').innerText = b + '%'; document.getElementById('lbl-contrast').innerText = c + '%';
+            previewImg.style.filter = `brightness(${b}%) contrast(${c}%)`;
+        }
+
+        cropBox.addEventListener('pointerdown', function(e) { if(e.target.id === 'crop-handle-btn') return; isDragging = true; cropBox.setPointerCapture(e.pointerId); startX = e.clientX; startY = e.clientY; startLeft = parseInt(cropBox.style.left) || 0; startTop = parseInt(cropBox.style.top) || 0; e.preventDefault(); });
+        document.getElementById('crop-handle-btn').addEventListener('pointerdown', function(e) { isResizing = true; document.getElementById('crop-handle-btn').setPointerCapture(e.pointerId); startX = e.clientX; startY = e.clientY; startWidth = cropBox.clientWidth; startHeight = cropBox.clientHeight; e.preventDefault(); e.stopPropagation(); });
+        window.addEventListener('pointermove', function(e) { if (!isDragging && !isResizing) return; requestAnimationFrame(() => { const maxX = previewWrapper.clientWidth; const maxY = previewWrapper.clientHeight; if(isDragging) { let nl = Math.max(0, Math.min(startLeft + (e.clientX - startX), maxX - cropBox.clientWidth)); let nt = Math.max(0, Math.min(startTop + (e.clientY - startY), maxY - cropBox.clientHeight)); cropBox.style.left = nl + 'px'; cropBox.style.top = nt + 'px'; } if(isResizing) { let nw = Math.min(Math.max(30, startWidth + (e.clientX - startX)), maxX - (parseInt(cropBox.style.left) || 0)); let nh = Math.min(Math.max(30, startHeight + (e.clientY - startY)), maxY - (parseInt(cropBox.style.top) || 0)); cropBox.style.width = nw + 'px'; cropBox.style.height = nh + 'px'; } }); });
+        window.addEventListener('pointerup', function() { isDragging = false; isResizing = false; });
+
+        function insertDpiInBlob(blob, targetDPI, callback) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const buffer = e.target.result; const view = new DataView(buffer);
+                const jfif = new Uint8Array([0xFF, 0xE0, 0x00, 0x10, 0x4A, 0x46, 0x49, 0x46, 0x00, 0x01, 0x01, 0x01, (targetDPI >> 8) & 0xFF, targetDPI & 0xFF, (targetDPI >> 8) & 0xFF, targetDPI & 0xFF, 0x00, 0x00]);
+                let out; if (view.getUint16(0) === 0xFFD8) { if (view.getUint16(2) === 0xFFE0) out = appendBuffers(view.buffer.slice(0, 2), jfif, buffer.slice(2 + view.getUint16(4) + 2)); else out = appendBuffers(view.buffer.slice(0, 2), jfif, buffer.slice(2)); } else out = buffer;
+                callback(new Blob([out], { type: blob.type }));
+            };
+            reader.readAsArrayBuffer(blob);
+        }
+
+        function appendBuffers(b1, b2, b3) { const c = new Uint8Array(b1.byteLength + b2.byteLength + b3.byteLength); c.set(new Uint8Array(b1), 0); c.set(new Uint8Array(b2), b1.byteLength); c.set(new Uint8Array(b3), b1.byteLength + b2.byteLength); return c.buffer; }
+
+        function applyKBConstraint(sourceCanvas, targetKB, selectedDPI, statusId) {
+            const format = 'image/jpeg';
+            if (targetKB === 0) { sourceCanvas.toBlob(b => insertDpiInBlob(b, selectedDPI, final => triggerDownload(final, statusId)), format, 0.85); return; }
+            let low = 0.05, high = 1.0, best = null, iter = 0; const target = targetKB * 1024;
+            function loop() {
+                if (iter >= 7) { finalize(best); return; }
+                iter++; let scale = (low + high) / 2; let c = document.createElement('canvas'); c.width = Math.max(10, Math.floor(sourceCanvas.width * scale)); c.height = Math.max(10, Math.floor(sourceCanvas.height * scale));
+                let ctx = c.getContext('2d'); ctx.drawImage(sourceCanvas, 0, 0, c.width, c.height);
+                c.toBlob(blob => { if (blob.size <= target) { best = blob; low = scale; } else { high = scale; } loop(); }, format, 0.75);
+            }
+            function finalize(f) {
+                if(!f) f = best; let curr = f.size;
+                if (curr < target) { let add = target - curr; if (add > 0 && add <= 0x30) f = new Blob([f, new Uint8Array(add).fill(0x30)], { type: format }); }
+                insertDpiInBlob(f, selectedDPI, bDpi => triggerDownload(bDpi, statusId));
+            }
+            loop();
+        }
+
+        /* 🚀 BYTE-PERFECT SIZE INCREASER ENGINE */
+        function increaseImageKB() {
+            if (!globalImage.src || !sourceRawFile) { alert("Pehle image upload karein!"); return; }
+            const statusId = 'status-increase'; const targetKB = parseInt(document.getElementById('increase-target-kb').value) || 0; const selectedDPI = parseInt(document.getElementById('increase-dpi').value) || 300; const targetBytes = targetKB * 1024;
+            if(targetKB <= (sourceRawFile.size / 1024)) { alert("Target size current size se zyada hona chahiye!"); return; }
+            document.getElementById(statusId).innerText = "Injecting bytes accurately...";
+            const canvas = document.createElement('canvas'); canvas.width = originalWidth; canvas.height = originalHeight;
+            const ctx = canvas.getContext('2d'); ctx.drawImage(globalImage, 0, 0, originalWidth, originalHeight);
+            canvas.toBlob(base => {
+                insertDpiInBlob(base, selectedDPI, dpiVerified => {
+                    let currBytes = dpiVerified.size;
+                    if (currBytes < targetBytes) {
+                        let add = targetBytes - currBytes;
+                        let padded = new Blob([dpiVerified, new Uint8Array(add).fill(0x30)], { type: 'image/jpeg' });
+                        triggerDownload(padded, statusId);
+                    } else { triggerDownload(dpiVerified, statusId); }
+                });
+            }, 'image/jpeg', 0.92);
+        }
+
+        function processAndDownload(blockType) {
+            if (!globalImage.src) { alert("Pehle image upload karein!"); return; }
+            const statusId = 'status-' + blockType; document.getElementById(statusId).innerText = "Processing...";
+            const items = document.querySelectorAll('.accordion-item'); let idx = 0;
+            if(blockType === 'kb') idx = 1; if(blockType === 'crop') idx = 2; if(blockType === 'clear') idx = 3;
+            const selectedDPI = parseInt(items[idx].querySelector('.set-dpi-class').value) || 300;
+            const canvas = document.createElement('canvas'); const ctx = canvas.getContext('2d'); let targetKB = 0;
+            if(blockType === 'pixel') {
+                targetKB = parseInt(document.getElementById('target-kb-a').value) || 0;
+                canvas.width = parseInt(document.getElementById('img-width').value) || originalWidth;
+                canvas.height = parseInt(document.getElementById('img-height').value) || originalHeight;
+                ctx.drawImage(globalImage, 0, 0, canvas.width, canvas.height);
+            } else if(blockType === 'kb') {
+                targetKB = parseInt(document.getElementById('target-kb-b').value) || 0;
+                canvas.width = originalWidth; canvas.height = originalHeight;
+                ctx.drawImage(globalImage, 0, 0, canvas.width, canvas.height);
+            } else {
+                targetKB = blockType === 'crop' ? (parseInt(document.getElementById('target-kb-c').value) || 0) : (parseInt(document.getElementById('target-kb-d').value) || 0);
+                const scaleX = originalWidth / previewImg.clientWidth; const scaleY = originalHeight / previewImg.clientHeight;
+                let cx = (parseInt(cropBox.style.left) || 0) * scaleX, cy = (parseInt(cropBox.style.top) || 0) * scaleY, cw = cropBox.clientWidth * scaleX, ch = cropBox.clientHeight * scaleY;
+                canvas.width = cw; canvas.height = ch;
+                if(blockType === 'clear') ctx.filter = `brightness(${document.getElementById('filter-bright').value}%) contrast(${document.getElementById('filter-contrast').value}%)`;
+                ctx.drawImage(globalImage, cx, cy, cw, ch, 0, 0, cw, ch);
+            }
+            applyKBConstraint(canvas, targetKB, selectedDPI, statusId);
+        }
+
+        function triggerDownload(blob, statusId) {
+            const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = `EditSpark_${Date.now()}.jpg`;
+            document.body.appendChild(a); a.click(); document.body.removeChild(a);
+            document.getElementById(statusId).innerText = `Downloaded: ${(blob.size/1024).toFixed(1)} KB`;
+        }
+    </script>
+</body>
+</html>
