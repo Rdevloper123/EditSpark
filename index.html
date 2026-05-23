@@ -4,11 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>EditSpark - Free Online Photo Editor, Exact KB Compressor & Size Increaser</title>
-    <meta name="description" content="EditSpark Studio is a 100% free online photo editor, precise image KB compressor, and exact image size increaser. Easily crop, clear signatures, change DPI, and increase photo KB online without losing quality. PDF tools coming soon.">
+    <title>EditSpark - Compress Image to Exact KB & Increase Photo Size Online</title>
+    
+    <meta name="description" content="Free online photo editor to compress image to exact KB (20KB, 50KB), resize dimensions, change DPI & increase photo size in KB online for SSC, UPSC & Govt forms.">
+    
     <meta name="keywords" content="image compressor, photo resizer, compress image to 20kb, compress photo to 50kb, increase image size in kb, photo ka size kaise badhaye online, increase photo kb online without losing quality, exact kb increaser tool, online image crop, 300 dpi converter, free online pdf compressor, editspark">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://editspark.vercel.app/">
+    <link rel="canonical" href="https://edit-spark.vercel.app/">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://edit-spark.vercel.app/">
+    <meta property="og:title" content="EditSpark - Compress Image to Exact KB & Increase Size Online">
+    <meta property="og:description" content="100% Free & Safe Online Tool to resize, crop, and compress images to exact KB parameters locally in your browser.">
+    <meta property="og:image" content="https://edit-spark.vercel.app/og-image.png">
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://edit-spark.vercel.app/">
+    <meta property="twitter:title" content="EditSpark - Compress Image to Exact KB & Increase Size Online">
+    <meta property="twitter:description" content="Resize and compress images to exact KB targets locally in your browser safely.">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "EditSpark Studio",
+      "url": "https://edit-spark.vercel.app/",
+      "description": "Free online utility designed to compress images to exact KB targets, resize dimensions, and increase image size in KB seamlessly.",
+      "applicationCategory": "ImageApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires HTML5 canvas support",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
 
     <style>
         :root {
@@ -25,7 +56,6 @@
             color: var(--text-dark); background-color: #f8f9fa;
         }
 
-        /* 👑 COMPACT HEADER PATTI WITH BHARATIYA TRUST BADGE */
         header {
             background: linear-gradient(135deg, var(--primary), #6a1b9a);
             color: white; padding: 10px 20px;
@@ -40,7 +70,6 @@
         header h1 { margin: 0; font-size: 1.5rem; letter-spacing: 0.5px; display: inline-block; }
         header p { margin: 1px 0 0 0; opacity: 0.85; font-size: 0.8rem; }
         
-        /* Indian Trust Badge Layout */
         .bharat-badge {
             background: rgba(255, 255, 255, 0.15);
             border: 1px solid rgba(255, 255, 255, 0.3);
@@ -73,12 +102,10 @@
 
         main { max-width: 1440px; margin: 0 auto; padding: 0 15px 30px 15px; }
         
-        /* ⚡ OPTIMIZED GRID SYSTEM (65% Controls - 35% Sticky Monitor) */
         .studio-workspace {
             display: flex; flex-direction: column; gap: 15px; width: 100%;
         }
         
-        /* Mobile: Canvas on TOP */
         .workspace-canvas { order: 1; width: 100%; }
         .workspace-controls { order: 2; width: 100%; }
 
@@ -88,7 +115,7 @@
             .workspace-canvas { order: 2; width: 35%; position: sticky; top: 10px; }
         }
 
-        .workspace-controls h3 { margin-top: 0; font-size: 1.15rem; color: var(--primary); margin-bottom: 8px; }
+        .workspace-controls h2 { margin-top: 0; font-size: 1.15rem; color: var(--primary); margin-bottom: 8px; }
         .upload-title { font-weight: bold; color: var(--primary); margin-bottom: 8px; font-size: 0.85rem; }
         
         #image-input {
@@ -96,7 +123,6 @@
             border-radius: 8px; box-sizing: border-box; cursor: pointer; margin-bottom: 12px; font-size: 0.8rem;
         }
 
-        /* 📱 COMPACT ACCORDION (ALL CLOSED BY DEFAULT) */
         .accordion-item {
             background: white;
             border: 1px solid var(--border-color);
@@ -108,7 +134,6 @@
         .accordion-header {
             background: var(--bg-light);
             padding: 12px 16px;
-            font-weight: bold;
             font-size: 0.9rem;
             color: var(--text-dark);
             cursor: pointer;
@@ -118,6 +143,7 @@
             user-select: none;
             transition: all 0.2s ease;
         }
+        .accordion-header h3 { margin: 0; font-size: 0.9rem; font-weight: bold; color: inherit; }
         .accordion-header:hover { background: #f1ecf9; color: var(--primary); }
         .accordion-item.active .accordion-header {
             border-bottom: 1px solid var(--border-color);
@@ -135,7 +161,6 @@
         }
         .accordion-item.active .accordion-content { padding: 15px; max-height: 600px; }
 
-        /* 🖥️ COMPACT LIVE MONITOR CANVA AREA */
         .workspace-canvas { 
             background: white; padding: 12px; border-radius: 12px; 
             text-align: center; border: 1px solid var(--border-color); 
@@ -200,12 +225,12 @@
 </head>
 <body>
 
-    <header>
+    <header role="banner">
         <div class="header-left">
-            <h1>✨ EditSpark Studio</h1>
+            <h1>EditSpark Studio</h1>
             <p>Free Online Photo Editor, Exact KB Compressor & Size Increaser</p>
         </div>
-        <div class="bharat-badge">
+        <div class="bharat-badge" aria-label="Apna Bharatiya Editor Suite">
             <span style="color:#FF9933">Apna</span> 
             <span style="color:#FFFFFF">Bharatiya</span> 
             <span style="color:#128825">Editor 🇮🇳</span>
@@ -213,14 +238,14 @@
     </header>
 
     <main>
-        <div class="nav-tabs">
+        <nav class="nav-tabs" aria-label="Tool Categories">
             <button class="tab-btn active">📸 Image Studio Tools</button>
             <button class="tab-btn disabled" title="PDF features are rolling soon!">📄 PDF Tools (Coming Soon)</button>
-        </div>
+        </nav>
 
         <div class="studio-workspace">
             
-            <div class="workspace-canvas" id="canvas-area">
+            <section class="workspace-canvas" id="canvas-area" aria-label="Interactive Image Canvas">
                 <div class="canvas-toolbar">
                     <button class="crop-toggle-btn" id="crop-toggle-icon" onclick="toggleCropOverlay()">
                         <span>✂️</span> Crop Area
@@ -233,17 +258,19 @@
                     </div>
                 </div>
                 <p id="file-info" style="font-size: 0.8rem; margin-top: 10px; color: #2c3e50; background: #eee; padding: 8px; border-radius: 6px; display:none; font-weight: bold;"></p>
-            </div>
+            </section>
 
-            <div class="workspace-controls">
-                <h3>🛠️ Dashboard Control Panel</h3>
+            <section class="workspace-controls" aria-label="Editor Configuration Dashboard">
+                <h2>🛠️ Dashboard Control Panel</h2>
                 <p class="upload-title">Upload Image (Processed safely 100% inside your browser)</p>
-                <input type="file" id="image-input" accept="image/*" onchange="previewImage(event)">
+                <input type="file" id="image-input" accept="image/*" onchange="previewImage(event)" aria-label="Upload Image File">
 
                 <div class="accordion-container">
                     
                     <div class="accordion-item">
-                        <div class="accordion-header" onclick="toggleAccordion(this)">📐 Resize Dimensions</div>
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <h3>📐 Resize Dimensions</h3>
+                        </div>
                         <div class="accordion-content">
                             <div class="input-group">
                                 <label>Width (px):</label>
@@ -275,7 +302,9 @@
                     </div>
 
                     <div class="accordion-item">
-                        <div class="accordion-header" onclick="toggleAccordion(this)">⚖️ Compress Image (Exact KB)</div>
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <h3>⚖️ Compress Image (Exact KB)</h3>
+                        </div>
                         <div class="accordion-content">
                             <div class="input-group">
                                 <label>Target Size (KB):</label>
@@ -295,7 +324,9 @@
                     </div>
 
                     <div class="accordion-item">
-                        <div class="accordion-header" onclick="toggleAccordion(this)">✂️ Interactive Crop Studio</div>
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <h3>✂️ Interactive Crop Studio</h3>
+                        </div>
                         <div class="accordion-content">
                             <p style="font-size: 0.75rem; color: #e67e22; margin: 0 0 10px 0; text-align: left;">💡 Click the <b>[ ✂️ Crop Area ]</b> button above the canvas to toggle boundary grid.</p>
                             <div class="input-group">
@@ -316,7 +347,9 @@
                     </div>
 
                     <div class="accordion-item">
-                        <div class="accordion-header" onclick="toggleAccordion(this)">🖋️ Document/Sign Clear</div>
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <h3>🖋️ Document/Sign Clear</h3>
+                        </div>
                         <div class="accordion-content">
                             <div class="range-group">
                                 <label><span>Brightness</span><span id="lbl-bright">100%</span></label>
@@ -344,7 +377,9 @@
                     </div>
 
                     <div class="accordion-item" style="border-top: 3px solid #27ae60;">
-                        <div class="accordion-header" onclick="toggleAccordion(this)" style="color: #27ae60;">🚀 Increase Image KB Size (Quality Lock)</div>
+                        <div class="accordion-header" onclick="toggleAccordion(this)" style="color: #27ae60;">
+                            <h3>🚀 Increase Image KB Size (Quality Lock)</h3>
+                        </div>
                         <div class="accordion-content">
                             <p style="font-size: 0.8rem; color: #555; margin: 0 0 10px 0; text-align: left;">
                                 Inflate files perfectly for govt portals requiring higher limits <b>without sacrificing resolution metrics</b>.
@@ -367,11 +402,11 @@
                     </div>
 
                 </div>
-            </div>
+            </section>
             
         </div>
 
-        <section class="seo-content-section">
+        <section class="seo-content-section" aria-label="About EditSpark Studio Utilities">
             <h2>Free Online Photo & PDF Editor Tool</h2>
             <p><strong>EditSpark Studio</strong> is a 100% free online utility designed to compress images to exact KB targets (like 20KB, 50KB), resize dimensions, and increase image size in KB seamlessly. Perfect for Indian govt portals, SSC, UPSC registration, and admissions requiring targeted file configurations. Increase photo KB online without losing quality safely or clear signatures instantly.</p>
             
@@ -385,7 +420,7 @@
         </section>
     </main>
 
-    <footer>
+    <footer role="contentinfo">
         <p>&copy; 2026 EditSpark Studio - Apna Bharatiya Editor Suite 🇮🇳. All Rights Reserved.</p>
     </footer>
 
@@ -400,7 +435,6 @@
         let isDragging = false, isResizing = false;
         let startX, startY, startLeft, startTop, startWidth, startHeight;
 
-        // ACCORDION TOGGLE
         function toggleAccordion(headerElement) {
             const currentItem = headerElement.parentElement;
             const container = currentItem.parentElement;
@@ -409,7 +443,6 @@
             currentItem.classList.toggle('active');
         }
 
-        // ON-DEMAND CROP TOGGLE
         function toggleCropOverlay() {
             if (!globalImage.src) { alert("Kripya pehle image upload karein!"); return; }
             if (cropBox.style.display === 'block') {
@@ -513,7 +546,6 @@
             loop();
         }
 
-        /* 🚀 BYTE-PERFECT SIZE INCREASER ENGINE */
         function increaseImageKB() {
             if (!globalImage.src || !sourceRawFile) { alert("Pehle image upload karein!"); return; }
             const statusId = 'status-increase'; const targetKB = parseInt(document.getElementById('increase-target-kb').value) || 0; const selectedDPI = parseInt(document.getElementById('increase-dpi').value) || 300; const targetBytes = targetKB * 1024;
