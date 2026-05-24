@@ -83,18 +83,18 @@
         main {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px 15px;
+            padding: 15px 15px;
             text-align: center;
         }
         .upload-container {
             display: flex;
             justify-content: center;
-            margin: 15px auto;
+            margin: 10px auto;
             max-width: 600px;
         }
         .upload-square {
             width: 100%;
-            height: 110px;
+            height: 100px;
             background: white;
             border: 2.5px dashed var(--primary);
             border-radius: 10px;
@@ -105,7 +105,7 @@
             cursor: pointer;
             transition: all 0.25s ease;
             box-shadow: var(--card-shadow);
-            padding: 15px 25px;
+            padding: 10px 25px;
             box-sizing: border-box;
             gap: 15px;
         }
@@ -115,17 +115,17 @@
             background: #fdfbff;
         }
         .upload-square .icon {
-            font-size: 2.2rem;
+            font-size: 2rem;
             display: inline-block;
         }
         .upload-square .text-block {
             text-align: left;
         }
         .upload-square p {
-            margin: 0 0 3px 0;
+            margin: 0 0 2px 0;
             font-weight: bold;
             color: var(--primary);
-            font-size: 1.05rem;
+            font-size: 1rem;
         }
         .upload-square .sub {
             font-size: 0.75rem;
@@ -139,13 +139,13 @@
             display: none;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
+            gap: 8px;
+            margin-bottom: 15px;
         }
         .preview-wrapper-box {
             position: relative;
             background: white;
-            padding: 8px;
+            padding: 6px;
             border-radius: 10px;
             box-shadow: var(--card-shadow);
             border: 1px solid var(--border-color);
@@ -160,7 +160,7 @@
         }
         #img-preview {
             max-width: 100%;
-            max-height: 260px;
+            max-height: 240px;
             display: block;
             border-radius: 6px;
         }
@@ -171,27 +171,26 @@
             background: #ff3b30;
             color: white;
             border: 2px solid white;
-            width: 26px;
-            height: 26px;
+            width: 24px;
+            height: 24px;
             border-radius: 50%;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: bold;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-            transition: transform 0.2s;
             z-index: 10;
         }
         .corner-close-btn:hover {
-            transform: scale(1.15);
+            transform: scale(1.1);
             background: #d62218;
         }
         #file-info {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             background: #eef2f7;
-            padding: 6px 16px;
+            padding: 5px 14px;
             border-radius: 30px;
             font-weight: bold;
             margin: 0;
@@ -199,128 +198,158 @@
         }
         .tools-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+            margin-top: 10px;
         }
         .tool-card {
             background: white;
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 16px;
+            padding: 12px;
             text-align: left;
             cursor: pointer;
             box-shadow: var(--card-shadow);
-            transition: all 0.25s ease;
-            position: relative;
-            overflow: hidden;
+            transition: all 0.2s ease;
         }
         .tool-card:hover {
-            transform: translateY(-3px);
+            transform: translateY(-2px);
             box-shadow: var(--card-hover-shadow);
             border-color: var(--primary);
         }
         .tool-card h3 {
-            margin: 0 0 4px 0;
-            font-size: 1.05rem;
+            margin: 0 0 3px 0;
+            font-size: 0.95rem;
             color: #1e272e;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .tool-card p {
+            margin: 0;
+            font-size: 0.75rem;
+            color: #7f8c8d;
+            line-height: 1.3;
+        }
+        
+        /* 🛠️ SLIM & COMPACT FORM PANEL STRUCTURE (Out-of-box navigation) */
+        .panel-outer-wrapper {
+            display: none;
+            max-width: 950px;
+            margin: 5px auto;
+            text-align: left;
+        }
+        .outside-back-link {
+            color: var(--primary);
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: 6px;
+            transition: opacity 0.2s;
+        }
+        .outside-back-link:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+        .form-panel {
+            background: white;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            padding: 12px 16px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+        }
+        .form-panel h2 {
+            margin: 0 0 2px 0;
+            font-size: 1.1rem;
+            color: var(--primary);
+        }
+        .form-panel .panel-desc {
+            margin: 0 0 10px 0;
+            font-size: 0.75rem;
+            color: #7f8c8d;
+        }
+        
+        /* Symmetrical Single-Row Flex System */
+        .flat-split-row {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: dashed;
+        }
+        .flat-left-info {
+            font-size: 0.8rem;
+            color: #34495e;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 6px;
+        }
+        .flat-right-controls {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+        }
+        .control-inline-item {
             display: flex;
             align-items: center;
             gap: 6px;
         }
-        .tool-card p {
-            margin: 0;
-            font-size: 0.8rem;
-            color: #7f8c8d;
-            line-height: 1.3;
+        .control-inline-item label {
+            font-weight: bold;
+            font-size: 0.75rem;
+            color: #2c3e50;
+            white-space: nowrap;
         }
-        .form-panel {
-            display: none;
-            background: white;
-            border-radius: 10px;
+        .form-panel input[type="number"], .form-panel select {
+            padding: 6px 10px;
             border: 1px solid var(--border-color);
-            padding: 20px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.05);
-            text-align: left;
-            max-width: 550px;
-            margin: 15px auto;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            background: #fff;
+            box-sizing: border-box;
+            min-width: 90px;
         }
-        .back-btn {
-            background: #7f8c8d;
-            color: white;
-            border: none;
-            padding: 5px 10px;
+        .range-slider-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            max-width: 240px;
+        }
+        .range-slider-box label {
             font-size: 0.75rem;
             font-weight: bold;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-bottom: 15px;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
+            min-width: 110px;
         }
-        .back-btn:hover {
-            background: #616a6b;
-        }
-        .input-group {
-            margin-bottom: 12px;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            gap: 8px;
-        }
-        .input-group label {
-            font-weight: bold;
-            font-size: 0.8rem;
-            color: #34495e;
-        }
-        .input-group input[type="number"], .input-group select {
-            padding: 7px 10px;
-            border: 1px solid var(--border-color);
-            border-radius: 5px;
-            font-size: 0.8rem;
-            width: 100%;
-            max-width: 200px;
-            box-sizing: border-box;
-        }
-        .range-group {
-            margin-bottom: 12px;
-        }
-        .range-group label {
-            display: flex;
-            justify-content: space-between;
-            font-weight: bold;
-            font-size: 0.8rem;
-            margin-bottom: 4px;
-        }
-        .range-group input {
-            width: 100%;
+        .range-slider-box input[type="range"] {
+            flex: 1;
             accent-color: var(--primary);
         }
         .process-btn {
             background: var(--primary);
             color: #fff;
             border: none;
-            padding: 10px 16px;
-            font-size: 0.85rem;
+            padding: 7px 16px;
+            font-size: 0.8rem;
             font-weight: bold;
-            border-radius: 5px;
+            border-radius: 4px;
             cursor: pointer;
-            width: 100%;
             transition: background 0.2s ease;
-            margin-top: 8px;
-            text-align: center;
+            white-space: nowrap;
         }
         .process-btn:hover {
             background: var(--primary-hover);
         }
         .status-text {
-            margin-top: 6px;
+            margin-top: 4px;
             font-weight: bold;
             color: #27ae60;
-            font-size: 0.8rem;
-            min-height: 16px;
+            font-size: 0.75rem;
         }
         #crop-box {
             position: absolute;
@@ -349,18 +378,17 @@
         .crop-toolbar {
             display: flex;
             justify-content: center;
-            margin-top: 8px;
+            margin-top: 5px;
         }
         .crop-toggle-btn {
             background: #fff;
             border: 1px solid #ff3b30;
             color: #ff3b30;
-            border-radius: 5px;
-            padding: 5px 12px;
-            font-size: 0.75rem;
+            border-radius: 4px;
+            padding: 4px 10px;
+            font-size: 0.7rem;
             font-weight: bold;
             cursor: pointer;
-            transition: all 0.2s;
         }
         .crop-toggle-btn.active {
             background: #ff3b30;
@@ -370,25 +398,25 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 15px;
-            margin-top: 35px;
+            margin-top: 25px;
             text-align: left;
         }
         .faq-card {
             background: white;
             border-radius: 8px;
             border: 1px solid var(--border-color);
-            padding: 16px;
+            padding: 14px;
             box-shadow: var(--card-shadow);
         }
         .faq-card h3 {
             color: var(--primary);
             margin-top: 0;
-            font-size: 0.95rem;
-            margin-bottom: 8px;
+            font-size: 0.9rem;
+            margin-bottom: 6px;
         }
         .faq-card p {
             margin: 0;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: #57606f;
             line-height: 1.4;
         }
@@ -396,42 +424,24 @@
             background: #2c3e50;
             color: white;
             text-align: center;
-            padding: 12px;
-            margin-top: 35px;
-            font-size: 0.8rem;
+            padding: 10px;
+            margin-top: 25px;
+            font-size: 0.75rem;
         }
 
-        /* 🛠️ BULLETPROOF WORKFLOW FIX: Flex layout blocks mix hone se bachaega */
-        .form-split-container {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            width: 100%;
-        }
-        .form-left-block, .form-right-block {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Only on Desktop: Side-by-side split box container */
+        /* 🚀 BULLETPROOF DESKTOP ONE-LINE ALIGNMENT */
         @media (min-width: 769px) {
-            .form-panel {
-                max-width: 750px !important;
-                margin: 20px auto;
-            }
-            .form-split-container {
+            .flat-split-row {
                 flex-direction: row !important;
-                gap: 30px !important;
-                align-items: flex-start;
-                margin-top: 10px;
+                justify-content: space-between !important;
+                align-items: center !important;
             }
-            .form-left-block, .form-right-block {
+            .flat-left-info {
+                max-width: 40%;
+            }
+            .flat-right-controls {
+                justify-content: flex-end;
                 flex: 1;
-            }
-            .form-right-block {
-                border-left: 1px dashed var(--border-color);
-                padding-left: 25px;
             }
         }
     </style>
@@ -439,8 +449,8 @@
 <body>
     <header role="banner">
         <div style="text-align: left;">
-            <h1 style="font-size: 1.6rem;">EditSpark Studio</h1>
-            <p style="margin: 3px 0 0 0; opacity: 0.9; font-size: 0.85rem; font-weight: 500;">
+            <h1 style="font-size: 1.5rem;">EditSpark Studio</h1>
+            <p style="margin: 2px 0 0 0; opacity: 0.9; font-size: 0.8rem; font-weight: 500;">
                 Free Online Photo Editor: Compress Image to Exact KB & Increase Photo Size Online
             </p>
         </div>
@@ -477,199 +487,191 @@
             <p id="file-info"></p>
         </div>
         <div class="tools-grid" id="main-tools-grid">
-            <div class="tool-card" onclick="openToolForm('pixel-panel')">
+            <div class="tool-card" onclick="openToolForm('pixel-outer')">
                 <h3>📐 Resize Image</h3>
                 <p>Change image dimensions in pixels and convert DPI to 300 online.</p>
             </div>
-            <div class="tool-card" onclick="openToolForm('kb-panel')">
+            <div class="tool-card" onclick="openToolForm('kb-outer')">
                 <h3>⚖️ Compress Image</h3>
                 <p>Reduce file size to exact 20KB, 50KB, or 100KB for online forms.</p>
             </div>
-            <div class="tool-card" onclick="openToolForm('crop-panel')">
+            <div class="tool-card" onclick="openToolForm('crop-outer')">
                 <h3>✂️ Crop Image</h3>
                 <p>Cut and trim image borders safely inside your browser canvas.</p>
             </div>
-            <div class="tool-card" onclick="openToolForm('clear-panel')">
+            <div class="tool-card" onclick="openToolForm('clear-outer')">
                 <h3>🖋️ Clear Document / Sign</h3>
                 <p>Adjust contrast and brightness to make signatures clear for upload.</p>
             </div>
-            <div class="tool-card" onclick="openToolForm('increase-panel')">
+            <div class="tool-card" onclick="openToolForm('increase-outer')">
                 <h3>🚀 Increase Image Size</h3>
                 <p>Increase photo size in KB online without losing any resolution or quality.</p>
             </div>
         </div>
-        <div class="form-panel" id="pixel-panel">
-            <button class="back-btn" onclick="closeToolForm()">⬅️ Back to Tools</button>
-            <h2>Resize Image Dimensions</h2>
-            <p>Set custom width and height in pixels. Check 'Maintain Aspect Ratio' to prevent stretching.</p>
-            
-            <div class="form-split-container">
-                <div class="form-left-block">
-                    <div class="input-group">
-                        <label for="resize-width">Width (Pixels):</label>
-                        <input type="number" id="resize-width" placeholder="e.g. 350">
-                    </div>
-                    <div class="input-group">
-                        <label for="resize-height">Height (Pixels):</label>
-                        <input type="number" id="resize-height" placeholder="e.g. 450">
-                    </div>
-                    <div style="display:flex; align-items:center; gap:8px; margin: 8px 0; font-size:0.8rem; font-weight:bold; color:#34495e;">
-                        <input type="checkbox" id="aspect-ratio-check" checked style="accent-color:var(--primary);">
-                        <label for="aspect-ratio-check" style="cursor:pointer;">Maintain Aspect Ratio</label>
-                    </div>
-                </div>
+        <div class="panel-outer-wrapper" id="pixel-outer">
+            <span class="outside-back-link" onclick="closeToolForm()">← Back to Tools</span>
+            <div class="form-panel" id="pixel-panel">
+                <h2>Resize Image Dimensions</h2>
+                <p class="panel-desc">Set width and height in pixels. Aspect ratio lock is auto-applied.</p>
                 
-                <div class="form-right-block">
-                    <div class="input-group" style="visibility: hidden; height: 0; margin: 0; padding: 0;">
-                        <input type="hidden">
+                <div class="flat-split-row">
+                    <div class="flat-left-info">
+                        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                            <div style="display: flex; align-items: center; gap: 5px;">
+                                <span style="font-size: 0.75rem; font-weight: bold; color: #34495e;">W:</span>
+                                <input type="number" id="resize-width" placeholder="Width" style="max-width: 80px;">
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 5px;">
+                                <span style="font-size: 0.75rem; font-weight: bold; color: #34495e;">H:</span>
+                                <input type="number" id="resize-height" placeholder="Height" style="max-width: 80px;">
+                            </div>
+                        </div>
                     </div>
-                    <div class="input-group">
-                        <label for="resize-dpi">Output DPI Parameter:</label>
-                        <select id="resize-dpi">
-                            <option value="original" selected>Keep Original DPI</option>
-                            <option value="200">200 DPI</option>
-                            <option value="300">300 DPI (Govt Form Standard)</option>
-                            <option value="600">600 DPI (High Res)</option>
-                        </select>
+                    
+                    <div class="flat-right-controls">
+                        <div class="control-inline-item">
+                            <label for="resize-dpi">DPI:</label>
+                            <select id="resize-dpi">
+                                <option value="original" selected>Original</option>
+                                <option value="200">200 DPI</option>
+                                <option value="300">300 DPI</option>
+                                <option value="600">600 DPI</option>
+                            </select>
+                        </div>
+                        <button class="process-btn" onclick="processResizeAction()">Download Resized</button>
                     </div>
-                    <button class="process-btn" onclick="processResizeAction()">Download Resized Image</button>
                 </div>
+                <div class="status-text" id="resize-status"></div>
             </div>
-            <div class="status-text" id="resize-status"></div>
         </div>
 
-        <div class="form-panel" id="kb-panel">
-            <button class="back-btn" onclick="closeToolForm()">⬅️ Back to Tools</button>
-            <h2>Compress Image to Exact KB</h2>
-            <p>Enter your target maximum size in KB. Our engine will use mathematical binary search to compress accurately.</p>
-            
-            <div class="form-split-container">
-                <div class="form-left-block">
-                    <div class="input-group">
-                        <label>File Quality Level:</label>
-                        <span style="font-size:0.75rem; color:#7f8c8d; font-weight:bold;">Auto Optimized</span>
-                    </div>
-                </div>
+        <div class="panel-outer-wrapper" id="kb-outer">
+            <span class="outside-back-link" onclick="closeToolForm()">← Back to Tools</span>
+            <div class="form-panel" id="kb-panel">
+                <h2>Compress Image to Exact KB</h2>
+                <p class="panel-desc">Enter your required target file weight size threshold ceiling in kilobytes.</p>
                 
-                <div class="form-right-block">
-                    <div class="input-group">
-                        <label for="target-kb-input">Target Size (Max KB):</label>
-                        <input type="number" id="target-kb-input" placeholder="e.g. 20" min="1">
+                <div class="flat-split-row">
+                    <div class="flat-left-info">
+                        <span style="font-size: 0.75rem; color: #7f8c8d; font-weight: bold;">⚡ Accurate Binary Search Loop Active</span>
                     </div>
-                    <div class="input-group">
-                        <label for="compress-dpi">Output DPI Parameter:</label>
-                        <select id="compress-dpi">
-                            <option value="original" selected>Keep Original DPI</option>
-                            <option value="200">200 DPI</option>
-                            <option value="300">300 DPI (Govt Form Standard)</option>
-                            <option value="600">600 DPI (High Res)</option>
-                        </select>
+                    
+                    <div class="flat-right-controls">
+                        <div class="control-inline-item">
+                            <label for="target-kb-input">Target KB:</label>
+                            <input type="number" id="target-kb-input" placeholder="e.g. 20" min="1" style="max-width: 85px;">
+                        </div>
+                        <div class="control-inline-item">
+                            <label for="compress-dpi">DPI:</label>
+                            <select id="compress-dpi">
+                                <option value="original" selected>Original</option>
+                                <option value="200">200 DPI</option>
+                                <option value="300">300 DPI</option>
+                                <option value="600">600 DPI</option>
+                            </select>
+                        </div>
+                        <button class="process-btn" onclick="processCompressionAction()">Download Compressed</button>
                     </div>
-                    <button class="process-btn" onclick="processCompressionAction()">Download Compressed Image</button>
                 </div>
+                <div class="status-text" id="compress-status"></div>
             </div>
-            <div class="status-text" id="compress-status"></div>
         </div>
 
-        <div class="form-panel" id="crop-panel">
-            <button class="back-btn" onclick="closeToolForm()">⬅️ Back to Tools</button>
-            <h2>Crop Image Canvas</h2>
-            <p>Turn on the Crop Overlay Grid above. Drag the box and corner handles to manually select your cropping boundary area.</p>
-            
-            <div class="form-split-container">
-                <div class="form-left-block">
-                    <div class="input-group">
-                        <label>Manual Grid Box Selection:</label>
-                        <span style="font-size:0.75rem; color:#ff3b30; font-weight:bold;">Active Overlay Mode</span>
-                    </div>
-                </div>
+        <div class="panel-outer-wrapper" id="crop-outer">
+            <span class="outside-back-link" onclick="closeToolForm()">← Back to Tools</span>
+            <div class="form-panel" id="crop-panel">
+                <h2>Crop Image Canvas</h2>
+                <p class="panel-desc">Use the manual overlay grid above to accurately slice borders.</p>
                 
-                <div class="form-right-block">
-                    <div class="input-group" style="visibility: hidden; height: 0; margin: 0; padding: 0;">
-                        <input type="hidden">
+                <div class="flat-split-row">
+                    <div class="flat-left-info">
+                        <span style="font-size: 0.75rem; color: #ff3b30; font-weight: bold;">📍 Adjust bounding handles on preview box</span>
                     </div>
-                    <div class="input-group">
-                        <label for="crop-dpi">Output DPI Parameter:</label>
-                        <select id="crop-dpi">
-                            <option value="original" selected>Keep Original DPI</option>
-                            <option value="200">200 DPI</option>
-                            <option value="300">300 DPI (Govt Form Standard)</option>
-                            <option value="600">600 DPI (High Res)</option>
-                        </select>
+                    
+                    <div class="flat-right-controls">
+                        <div class="control-inline-item">
+                            <label for="crop-dpi">DPI:</label>
+                            <select id="crop-dpi">
+                                <option value="original" selected>Original</option>
+                                <option value="200">200 DPI</option>
+                                <option value="300">300 DPI</option>
+                                <option value="600">600 DPI</option>
+                            </select>
+                        </div>
+                        <button class="process-btn" onclick="processCropAction()">Download Cropped</button>
                     </div>
-                    <button class="process-btn" onclick="processCropAction()">Download Cropped Image</button>
                 </div>
+                <div class="status-text" id="crop-status"></div>
             </div>
-            <div class="status-text" id="crop-status"></div>
         </div>
 
-        <div class="form-panel" id="clear-panel">
-            <button class="back-btn" onclick="closeToolForm()">⬅️ Back to Tools</button>
-            <h2>Clear Signature / Document</h2>
-            <p>Enhance visibility by adjusting brightness and contrast values. Ideal for making signatures crisp white and deep black.</p>
-            
-            <div class="form-split-container">
-                <div class="form-left-block">
-                    <div class="range-group">
-                        <label for="clear-contrast">Contrast Level: <span id="contrast-val">0</span></label>
-                        <input type="range" id="clear-contrast" min="-100" max="100" value="0" oninput="document.getElementById('contrast-val').innerText=this.value">
-                    </div>
-                    <div class="range-group">
-                        <label for="clear-brightness">Brightness Level: <span id="brightness-val">0</span></label>
-                        <input type="range" id="clear-brightness" min="-100" max="100" value="0" oninput="document.getElementById('brightness-val').innerText=this.value">
-                    </div>
-                </div>
+        <div class="panel-outer-wrapper" id="clear-outer">
+            <span class="outside-back-link" onclick="closeToolForm()">← Back to Tools</span>
+            <div class="form-panel" id="clear-panel">
+                <h2>Clear Signature / Document</h2>
+                <p class="panel-desc">Enhance visibility matrix filters to make text readable.</p>
                 
-                <div class="form-right-block">
-                    <div class="input-group" style="visibility: hidden; height: 0; margin: 0; padding: 0;">
-                        <input type="hidden">
+                <div class="flat-split-row">
+                    <div class="flat-left-info">
+                        <div style="display: flex; gap: 15px; flex-wrap: wrap; width: 100%;">
+                            <div class="range-slider-box">
+                                <label for="clear-contrast">Contrast (<span id="contrast-val">0</span>):</label>
+                                <input type="range" id="clear-contrast" min="-100" max="100" value="0" oninput="document.getElementById('contrast-val').innerText=this.value">
+                            </div>
+                            <div class="range-slider-box">
+                                <label for="clear-brightness">Brightness (<span id="brightness-val">0</span>):</label>
+                                <input type="range" id="clear-brightness" min="-100" max="100" value="0" oninput="document.getElementById('brightness-val').innerText=this.value">
+                            </div>
+                        </div>
                     </div>
-                    <div class="input-group">
-                        <label for="clear-dpi">Output DPI Parameter:</label>
-                        <select id="clear-dpi">
-                            <option value="original" selected>Keep Original DPI</option>
-                            <option value="200">200 DPI</option>
-                            <option value="300">300 DPI (Govt Form Standard)</option>
-                            <option value="600">600 DPI (High Res)</option>
-                        </select>
+                    
+                    <div class="flat-right-controls">
+                        <div class="control-inline-item">
+                            <label for="clear-dpi">DPI:</label>
+                            <select id="clear-dpi">
+                                <option value="original" selected>Original</option>
+                                <option value="200">200 DPI</option>
+                                <option value="300">300 DPI</option>
+                                <option value="600">600 DPI</option>
+                            </select>
+                        </div>
+                        <button class="process-btn" onclick="processClearAction()">Download Cleared</button>
                     </div>
-                    <button class="process-btn" onclick="processClearAction()">Download Cleared Document</button>
                 </div>
+                <div class="status-text" id="clear-status"></div>
             </div>
-            <div class="status-text" id="clear-status"></div>
         </div>
 
-        <div class="form-panel" id="increase-panel">
-            <button class="back-btn" onclick="closeToolForm()">⬅️ Back to Tools</button>
-            <h2>Increase Photo Size in KB</h2>
-            <p>Expand file sizes safely without degrading pixel resolution layout structure. Perfect for meeting mandatory minimum file targets.</p>
-            
-            <div class="form-split-container">
-                <div class="form-left-block">
-                    <div class="input-group">
-                        <label>Resolution Maintenance:</label>
-                        <span style="font-size:0.75rem; color:#27ae60; font-weight:bold;">100% Quality Preserved</span>
-                    </div>
-                </div>
+        <div class="panel-outer-wrapper" id="increase-outer">
+            <span class="outside-back-link" onclick="closeToolForm()">← Back to Tools</span>
+            <div class="form-panel" id="increase-panel">
+                <h2>Increase Photo Size in KB</h2>
+                <p class="panel-desc">Safely append background storage padding descriptors without altering pixels.</p>
                 
-                <div class="form-right-block">
-                    <div class="input-group">
-                        <label for="increase-kb-input">Minimum Target Size (KB):</label>
-                        <input type="number" id="increase-kb-input" placeholder="e.g. 50" min="1">
+                <div class="flat-split-row">
+                    <div class="flat-left-info">
+                        <span style="font-size: 0.75rem; color: #27ae60; font-weight: bold;">🛡️ 100% Quality & Resolution Preserved</span>
                     </div>
-                    <div class="input-group">
-                        <label for="increase-dpi">Output DPI Parameter:</label>
-                        <select id="increase-dpi">
-                            <option value="original" selected>Keep Original DPI</option>
-                            <option value="200">200 DPI</option>
-                            <option value="300">300 DPI (Govt Form Standard)</option>
-                            <option value="600">600 DPI (High Res)</option>
-                        </select>
+                    
+                    <div class="flat-right-controls">
+                        <div class="control-inline-item">
+                            <label for="increase-kb-input">Min KB Target:</label>
+                            <input type="number" id="increase-kb-input" placeholder="e.g. 50" min="1" style="max-width: 85px;">
+                        </div>
+                        <div class="control-inline-item">
+                            <label for="increase-dpi">DPI:</label>
+                            <select id="increase-dpi">
+                                <option value="original" selected>Original</option>
+                                <option value="200">200 DPI</option>
+                                <option value="300">300 DPI</option>
+                                <option value="600">600 DPI</option>
+                            </select>
+                        </div>
+                        <button class="process-btn" onclick="processIncreaseAction()">Download Expanded</button>
                     </div>
-                    <button class="process-btn" onclick="processIncreaseAction()">Download Expanded Image</button>
                 </div>
+                <div class="status-text" id="increase-status"></div>
             </div>
-            <div class="status-text" id="increase-status"></div>
         </div>
 
         <div class="seo-grid" role="complementary">
@@ -694,7 +696,7 @@
         let globalImage = new Image();
         let globalFileName = "edited-spark";
         let globalFileType = "image/jpeg";
-        let activeToolId = null;
+        let activeOuterId = null;
 
         // Visual Workspace DOM elements
         const uploadAreaBox = document.getElementById('upload-area-box');
@@ -749,20 +751,20 @@
             uploadAreaBox.style.display = 'flex';
         }
 
-        // 2. UI Panels Grid Controller
-        function openToolForm(panelId) {
+        // 2. UI Flat Panels Grid Controller
+        function openToolForm(outerWrapperId) {
             if (!globalImage.src || globalImage.src.startsWith('data:image/gif')) {
                 alert("Kripya pehle upar diye gaye square box se photo upload karein!");
                 return;
             }
-            activeToolId = panelId;
+            activeOuterId = outerWrapperId;
             mainToolsGrid.style.display = 'none';
-            document.querySelectorAll('.form-panel').forEach(panel => panel.style.display = 'none');
+            document.querySelectorAll('.panel-outer-wrapper').forEach(p => p.style.display = 'none');
             
-            const targetPanel = document.getElementById(panelId);
-            targetPanel.style.display = 'block';
+            const targetOuter = document.getElementById(outerWrapperId);
+            targetOuter.style.display = 'block';
             
-            if (panelId === 'crop-panel') {
+            if (outerWrapperId === 'crop-outer') {
                 if (!isCropOverlayActive) toggleCropOverlay();
             } else {
                 if (isCropOverlayActive) toggleCropOverlay();
@@ -771,8 +773,8 @@
         }
 
         function closeToolForm() {
-            activeToolId = null;
-            document.querySelectorAll('.form-panel').forEach(panel => panel.style.display = 'none');
+            activeOuterId = null;
+            document.querySelectorAll('.panel-outer-wrapper').forEach(p => p.style.display = 'none');
             if (isCropOverlayActive) toggleCropOverlay();
             if (globalImage.src && !globalImage.src.startsWith('data:image/gif')) {
                 mainToolsGrid.style.display = 'grid';
@@ -784,10 +786,10 @@
             ids.forEach(id => document.getElementById(id).innerText = "");
         }
 
-        // 3. UNIVERSAL & SATEEK DPI INJECTION ENGINE (Fixed & Highly Accurate)
+        // 3. UNIVERSAL & SATEEK DPI INJECTION ENGINE (Highly Accurate)
         function insertDpiInBlob(blob, targetDpiValue) {
             if (!targetDpiValue || targetDpiValue === 'original') {
-                return Promise.resolve(blob); // Optional check: Returns original file untouched
+                return Promise.resolve(blob);
             }
             
             const dpi = parseInt(targetDpiValue, 10);
@@ -797,9 +799,8 @@
                     const arrayBuffer = e.target.result;
                     const view = new DataView(arrayBuffer);
                     
-                    // Verify JPEG magic bytes (0xFFD8)
                     if (view.getUint16(0, false) !== 0xFFD8) {
-                        resolve(blob); // Non-JPEG formats ko normal return karega
+                        resolve(blob); // Non-JPEG return
                         return;
                     }
 
@@ -808,15 +809,13 @@
                     let offset = 2;
                     let jfifMarkerFound = false;
 
-                    // Standard Array Markers Parse Loop
                     while (offset < view.byteLength - 4) {
                         const marker = view.getUint16(offset, false);
-                        if (marker === 0xFFE0) { // APP0 JFIF header block located
+                        if (marker === 0xFFE0) { 
                             const length = view.getUint16(offset + 2, false);
                             if (offset + 4 + 4 <= view.byteLength) {
-                                // Checking if "JFIF" string exists
                                 if (view.getUint32(offset + 4, false) === 0x4A464946) {
-                                    view.setUint8(offset + 11, 1); // Density type set to Pixels per Inch (DPI)
+                                    view.setUint8(offset + 11, 1); // Unit: Dot Per Inch
                                     view.setUint8(offset + 12, hexX);
                                     view.setUint8(offset + 13, hexY);
                                     view.setUint8(offset + 14, hexX);
@@ -834,24 +833,23 @@
                         }
                     }
 
-                    // SATEEK FIX: Agar image me pehle se JFIF marker nahi hai, toh ek brand new header inject hoga
                     if (!jfifMarkerFound) {
                         const rawBytes = new Uint8Array(arrayBuffer);
                         const jfifSegment = new Uint8Array([
-                            0xFF, 0xE0, // APP0 Marker
-                            0x00, 0x10, // Segment Length (16 bytes)
-                            0x4A, 0x46, 0x49, 0x46, 0x00, // "JFIF\0" string
-                            0x01, 0x01, // Version 1.01
-                            0x01,       // Units: 1 = Dots Per Inch (DPI)
-                            hexX, hexY, // X Density
-                            hexX, hexY, // Y Density
-                            0x00, 0x00  // No Thumbnail data
+                            0xFF, 0xE0, 
+                            0x00, 0x10, 
+                            0x4A, 0x46, 0x49, 0x46, 0x00, 
+                            0x01, 0x01, 
+                            0x01,       
+                            hexX, hexY, 
+                            hexX, hexY, 
+                            0x00, 0x00  
                         ]);
                         
                         const completeBuffer = new Uint8Array(rawBytes.length + jfifSegment.length);
-                        completeBuffer.set(rawBytes.subarray(0, 2), 0); // Write SOI (0xFFD8)
-                        completeBuffer.set(jfifSegment, 2); // Inject valid APP0 structure headers
-                        completeBuffer.set(rawBytes.subarray(2), 2 + jfifSegment.length); // Write remainder payload
+                        completeBuffer.set(rawBytes.subarray(0, 2), 0); 
+                        completeBuffer.set(jfifSegment, 2); 
+                        completeBuffer.set(rawBytes.subarray(2), 2 + jfifSegment.length); 
                         
                         resolve(new Blob([completeBuffer], { type: 'image/jpeg' }));
                         return;
@@ -863,7 +861,6 @@
             });
         }
 
-        // Helper trigger to instantly serve client side files
         function initiateFileDownload(blob, prefixName) {
             const url = URL.createObjectURL(blob);
             const anchor = document.createElement('a');
@@ -893,7 +890,6 @@
             canvas.height = height;
             const ctx = canvas.getContext('2d');
             
-            // Fix alpha transparency issues
             ctx.fillStyle = "#ffffff";
             ctx.fillRect(0, 0, width, height);
             ctx.drawImage(globalImage, 0, 0, width, height);
@@ -942,9 +938,9 @@
                     const currentKB = blob.size / 1024;
                     if (currentKB <= targetKB) {
                         bestBlob = blob;
-                        lowQuality = midQuality; // Try for better clarity matching close to ceiling threshold
+                        lowQuality = midQuality; 
                     } else {
-                        highQuality = midQuality; // Reduce quality window structure bounds
+                        highQuality = midQuality; 
                     }
                     runSearch();
                 }, 'image/jpeg', midQuality);
@@ -952,10 +948,7 @@
 
             function finalizeResult() {
                 if (!bestBlob) {
-                    // Fallback to absolute minimum if target is extremely small
-                    canvas.toBlob((blob) => {
-                        executeDownload(blob);
-                    }, 'image/jpeg', 0.01);
+                    canvas.toBlob((blob) => { executeDownload(blob); }, 'image/jpeg', 0.01);
                 } else {
                     executeDownload(bestBlob);
                 }
@@ -1020,17 +1013,13 @@
 
             const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
             const data = imgData.data;
-            
-            // Formula Matrix Core Calculations
             const contrastFactor = (259 * (contrast + 255)) / (255 * (259 - contrast));
 
             for (let i = 0; i < data.length; i += 4) {
-                // Brightness adjustment
                 let r = data[i] + brightness;
                 let g = data[i+1] + brightness;
                 let b = data[i+2] + brightness;
 
-                // Contrast adjustment
                 data[i]   = contrastFactor * (r - 128) + 128;
                 data[i+1] = contrastFactor * (g - 128) + 128;
                 data[i+2] = contrastFactor * (b - 128) + 128;
@@ -1045,7 +1034,7 @@
             }, 'image/jpeg', 0.90);
         }
 
-        // 8. ACTION PROCESSOR 5: INCREASE IMAGE SIZE IN KB Safely
+        // 8. ACTION PROCESSOR 5: INCREASE IMAGE SIZE IN KB
         function processIncreaseAction() {
             const minTargetKB = parseFloat(document.getElementById('increase-kb-input').value);
             const selectedDpi = document.getElementById('increase-dpi').value;
@@ -1075,29 +1064,26 @@
                     return;
                 }
 
-                // Injecting safe junk comments padding segment to accurately raise disk footprint storage without pixel noise
                 const bytesNeeded = Math.floor((minTargetKB - currentKB) * 1024);
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     const arrayBuffer = e.target.result;
                     const rawArr = new Uint8Array(arrayBuffer);
                     
-                    // Construct an APP12 metadata padding block array
                     const paddingSegment = new Uint8Array(bytesNeeded + 4);
                     paddingSegment[0] = 0xFF;
-                    paddingSegment[1] = 0xED; // APP13 padding block structure marker
+                    paddingSegment[1] = 0xED; // APP13 Marker
                     const totalSegmentLen = bytesNeeded + 2;
                     paddingSegment[2] = (totalSegmentLen >> 8) & 0xFF;
                     paddingSegment[3] = totalSegmentLen & 0xFF;
                     
-                    // Fill dummy padding safely
                     for(let i = 4; i < paddingSegment.length; i++) {
                         paddingSegment[i] = 0x30;
                     }
 
                     const finalBuffer = new Uint8Array(rawArr.length + paddingSegment.length);
-                    finalBuffer.set(rawArr.subarray(0, 2), 0); // SOI
-                    finalBuffer.set(paddingSegment, 2); // Insert Junk Padding block allocation safely
+                    finalBuffer.set(rawArr.subarray(0, 2), 0); 
+                    finalBuffer.set(paddingSegment, 2); 
                     finalBuffer.set(rawArr.subarray(2), 2 + paddingSegment.length);
 
                     const paddedBlob = new Blob([finalBuffer], { type: 'image/jpeg' });
@@ -1110,7 +1096,7 @@
             }, 'image/jpeg', 0.95);
         }
 
-        // 9. CROP OVERLAY CONTROLLER SYSTEM (Pointer/Touch Support)
+        // 9. CROP OVERLAY CONTROLLER SYSTEM (Pointer Support)
         function toggleCropOverlay() {
             isCropOverlayActive = !isCropOverlayActive;
             const btn = document.getElementById('crop-toggle-icon');
@@ -1136,7 +1122,6 @@
             cropBox.style.height = cropState.height + 'px';
         }
 
-        // Unified Events for Mouse and Touch Interaction
         cropBox.addEventListener('pointerdown', function(e) {
             e.preventDefault();
             if (e.target === cropHandleBtn) {
