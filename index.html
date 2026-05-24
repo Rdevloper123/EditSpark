@@ -401,53 +401,37 @@
             font-size: 0.8rem;
         }
 
-        /* 🚀 NAYI CSS: ONLY FOR DESKTOP - 3 Options Shift to Right Side inside Form Panels */
+        /* 🛠️ BULLETPROOF WORKFLOW FIX: Flex layout blocks mix hone se bachaega */
+        .form-split-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+        }
+        .form-left-block, .form-right-block {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Only on Desktop: Side-by-side split box container */
         @media (min-width: 769px) {
             .form-panel {
                 max-width: 750px !important;
                 margin: 20px auto;
             }
-            .form-panel[style*="display: block"] {
-                display: grid !important;
-                grid-template-columns: 1fr 1fr;
-                column-gap: 30px;
-                row-gap: 12px;
-                align-items: start;
+            .form-split-container {
+                flex-direction: row !important;
+                gap: 30px !important;
+                align-items: flex-start;
+                margin-top: 10px;
             }
-            .form-panel .back-btn, 
-            .form-panel h2,
-            .form-panel p {
-                grid-column: span 2;
+            .form-left-block, .form-right-block {
+                flex: 1;
             }
-            .form-panel .input-group:first-of-type,
-            .form-panel .input-group:nth-of-type(2),
-            .form-panel div[style*="display:flex"],
-            .form-panel .range-group {
-                grid-column: 1;
-            }
-            /* Target KB Input Box -> Right Side Top */
-            .form-panel .input-group:nth-of-type(3),
-            .form-panel .input-group:has(input[placeholder*="e.g."]),
-            .form-panel .input-group:has(input[id*="target"]),
-            .form-panel .input-group:has(input[id*="increase"]) {
-                grid-column: 2;
-                grid-row: 3;
-                margin-bottom: 0;
-            }
-            /* Output DPI Parameters Selection -> Right Side Middle */
-            .form-panel .input-group:last-of-type {
-                grid-column: 2;
-                grid-row: 4;
-                margin-bottom: 0;
-            }
-            /* Action Download Buttons -> Right Side Bottom */
-            .form-panel .process-btn {
-                grid-column: 2;
-                grid-row: 5;
-                margin-top: 5px;
-            }
-            .form-panel .status-text {
-                grid-column: span 2;
+            .form-right-block {
+                border-left: 1px dashed var(--border-color);
+                padding-left: 25px;
             }
         }
     </style>
@@ -460,7 +444,7 @@
                 Free Online Photo Editor: Compress Image to Exact KB & Increase Photo Size Online
             </p>
         </div>
-        <div class="bharat-badge" aria-label="Apna Bharatiya Editor Suite">
+        <div class="bharat-badge">
             <span style="color:#FF9933">Apna</span>
             <span style="color:#FFFFFF">Bharat</span>
             <span style="color:#128825">Editor 🇮🇳</span>
@@ -519,32 +503,38 @@
             <h2>Resize Image Dimensions</h2>
             <p>Set custom width and height in pixels. Check 'Maintain Aspect Ratio' to prevent stretching.</p>
             
-            <div class="input-group">
-                <label for="resize-width">Width (Pixels):</label>
-                <input type="number" id="resize-width" placeholder="e.g. 350">
+            <div class="form-split-container">
+                <div class="form-left-block">
+                    <div class="input-group">
+                        <label for="resize-width">Width (Pixels):</label>
+                        <input type="number" id="resize-width" placeholder="e.g. 350">
+                    </div>
+                    <div class="input-group">
+                        <label for="resize-height">Height (Pixels):</label>
+                        <input type="number" id="resize-height" placeholder="e.g. 450">
+                    </div>
+                    <div style="display:flex; align-items:center; gap:8px; margin: 8px 0; font-size:0.8rem; font-weight:bold; color:#34495e;">
+                        <input type="checkbox" id="aspect-ratio-check" checked style="accent-color:var(--primary);">
+                        <label for="aspect-ratio-check" style="cursor:pointer;">Maintain Aspect Ratio</label>
+                    </div>
+                </div>
+                
+                <div class="form-right-block">
+                    <div class="input-group" style="visibility: hidden; height: 0; margin: 0; padding: 0;">
+                        <input type="hidden">
+                    </div>
+                    <div class="input-group">
+                        <label for="resize-dpi">Output DPI Parameter:</label>
+                        <select id="resize-dpi">
+                            <option value="original" selected>Keep Original DPI</option>
+                            <option value="200">200 DPI</option>
+                            <option value="300">300 DPI (Govt Form Standard)</option>
+                            <option value="600">600 DPI (High Res)</option>
+                        </select>
+                    </div>
+                    <button class="process-btn" onclick="processResizeAction()">Download Resized Image</button>
+                </div>
             </div>
-            <div class="input-group">
-                <label for="resize-height">Height (Pixels):</label>
-                <input type="number" id="resize-height" placeholder="e.g. 450">
-            </div>
-            <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px; font-size:0.8rem; font-weight:bold; color:#34495e;">
-                <input type="checkbox" id="aspect-ratio-check" checked style="accent-color:var(--primary);">
-                <label for="aspect-ratio-check" style="cursor:pointer;">Maintain Aspect Ratio</label>
-            </div>
-            
-            <div class="input-group" style="visibility: hidden; height: 0; margin: 0; padding: 0;">
-                <input type="hidden">
-            </div>
-            <div class="input-group">
-                <label for="resize-dpi">Output DPI Parameter:</label>
-                <select id="resize-dpi">
-                    <option value="original" selected>Keep Original DPI</option>
-                    <option value="200">200 DPI</option>
-                    <option value="300">300 DPI (Govt Form Standard)</option>
-                    <option value="600">600 DPI (High Res)</option>
-                </select>
-            </div>
-            <button class="process-btn" onclick="processResizeAction()">Download Resized Image</button>
             <div class="status-text" id="resize-status"></div>
         </div>
 
@@ -553,25 +543,31 @@
             <h2>Compress Image to Exact KB</h2>
             <p>Enter your target maximum size in KB. Our engine will use mathematical binary search to compress accurately.</p>
             
-            <div class="input-group">
-                <label>File Quality Level:</label>
-                <span style="font-size:0.75rem; color:#7f8c8d; font-weight:bold;">Auto Optimized</span>
+            <div class="form-split-container">
+                <div class="form-left-block">
+                    <div class="input-group">
+                        <label>File Quality Level:</label>
+                        <span style="font-size:0.75rem; color:#7f8c8d; font-weight:bold;">Auto Optimized</span>
+                    </div>
+                </div>
+                
+                <div class="form-right-block">
+                    <div class="input-group">
+                        <label for="target-kb-input">Target Size (Max KB):</label>
+                        <input type="number" id="target-kb-input" placeholder="e.g. 20" min="1">
+                    </div>
+                    <div class="input-group">
+                        <label for="compress-dpi">Output DPI Parameter:</label>
+                        <select id="compress-dpi">
+                            <option value="original" selected>Keep Original DPI</option>
+                            <option value="200">200 DPI</option>
+                            <option value="300">300 DPI (Govt Form Standard)</option>
+                            <option value="600">600 DPI (High Res)</option>
+                        </select>
+                    </div>
+                    <button class="process-btn" onclick="processCompressionAction()">Download Compressed Image</button>
+                </div>
             </div>
-            
-            <div class="input-group">
-                <label for="target-kb-input">Target Size (Max KB):</label>
-                <input type="number" id="target-kb-input" placeholder="e.g. 20" min="1">
-            </div>
-            <div class="input-group">
-                <label for="compress-dpi">Output DPI Parameter:</label>
-                <select id="compress-dpi">
-                    <option value="original" selected>Keep Original DPI</option>
-                    <option value="200">200 DPI</option>
-                    <option value="300">300 DPI (Govt Form Standard)</option>
-                    <option value="600">600 DPI (High Res)</option>
-                </select>
-            </div>
-            <button class="process-btn" onclick="processCompressionAction()">Download Compressed Image</button>
             <div class="status-text" id="compress-status"></div>
         </div>
 
@@ -580,24 +576,30 @@
             <h2>Crop Image Canvas</h2>
             <p>Turn on the Crop Overlay Grid above. Drag the box and corner handles to manually select your cropping boundary area.</p>
             
-            <div class="input-group">
-                <label>Manual Grid Box Selection:</label>
-                <span style="font-size:0.75rem; color:#ff3b30; font-weight:bold;">Active Overlay Mode</span>
+            <div class="form-split-container">
+                <div class="form-left-block">
+                    <div class="input-group">
+                        <label>Manual Grid Box Selection:</label>
+                        <span style="font-size:0.75rem; color:#ff3b30; font-weight:bold;">Active Overlay Mode</span>
+                    </div>
+                </div>
+                
+                <div class="form-right-block">
+                    <div class="input-group" style="visibility: hidden; height: 0; margin: 0; padding: 0;">
+                        <input type="hidden">
+                    </div>
+                    <div class="input-group">
+                        <label for="crop-dpi">Output DPI Parameter:</label>
+                        <select id="crop-dpi">
+                            <option value="original" selected>Keep Original DPI</option>
+                            <option value="200">200 DPI</option>
+                            <option value="300">300 DPI (Govt Form Standard)</option>
+                            <option value="600">600 DPI (High Res)</option>
+                        </select>
+                    </div>
+                    <button class="process-btn" onclick="processCropAction()">Download Cropped Image</button>
+                </div>
             </div>
-            
-            <div class="input-group" style="visibility: hidden; height: 0; margin: 0; padding: 0;">
-                <input type="hidden">
-            </div>
-            <div class="input-group">
-                <label for="crop-dpi">Output DPI Parameter:</label>
-                <select id="crop-dpi">
-                    <option value="original" selected>Keep Original DPI</option>
-                    <option value="200">200 DPI</option>
-                    <option value="300">300 DPI (Govt Form Standard)</option>
-                    <option value="600">600 DPI (High Res)</option>
-                </select>
-            </div>
-            <button class="process-btn" onclick="processCropAction()">Download Cropped Image</button>
             <div class="status-text" id="crop-status"></div>
         </div>
 
@@ -606,28 +608,34 @@
             <h2>Clear Signature / Document</h2>
             <p>Enhance visibility by adjusting brightness and contrast values. Ideal for making signatures crisp white and deep black.</p>
             
-            <div class="range-group">
-                <label for="clear-contrast">Contrast Level: <span id="contrast-val">0</span></label>
-                <input type="range" id="clear-contrast" min="-100" max="100" value="0" oninput="document.getElementById('contrast-val').innerText=this.value">
+            <div class="form-split-container">
+                <div class="form-left-block">
+                    <div class="range-group">
+                        <label for="clear-contrast">Contrast Level: <span id="contrast-val">0</span></label>
+                        <input type="range" id="clear-contrast" min="-100" max="100" value="0" oninput="document.getElementById('contrast-val').innerText=this.value">
+                    </div>
+                    <div class="range-group">
+                        <label for="clear-brightness">Brightness Level: <span id="brightness-val">0</span></label>
+                        <input type="range" id="clear-brightness" min="-100" max="100" value="0" oninput="document.getElementById('brightness-val').innerText=this.value">
+                    </div>
+                </div>
+                
+                <div class="form-right-block">
+                    <div class="input-group" style="visibility: hidden; height: 0; margin: 0; padding: 0;">
+                        <input type="hidden">
+                    </div>
+                    <div class="input-group">
+                        <label for="clear-dpi">Output DPI Parameter:</label>
+                        <select id="clear-dpi">
+                            <option value="original" selected>Keep Original DPI</option>
+                            <option value="200">200 DPI</option>
+                            <option value="300">300 DPI (Govt Form Standard)</option>
+                            <option value="600">600 DPI (High Res)</option>
+                        </select>
+                    </div>
+                    <button class="process-btn" onclick="processClearAction()">Download Cleared Document</button>
+                </div>
             </div>
-            <div class="range-group">
-                <label for="clear-brightness">Brightness Level: <span id="brightness-val">0</span></label>
-                <input type="range" id="clear-brightness" min="-100" max="100" value="0" oninput="document.getElementById('brightness-val').innerText=this.value">
-            </div>
-            
-            <div class="input-group" style="visibility: hidden; height: 0; margin: 0; padding: 0;">
-                <input type="hidden">
-            </div>
-            <div class="input-group">
-                <label for="clear-dpi">Output DPI Parameter:</label>
-                <select id="clear-dpi">
-                    <option value="original" selected>Keep Original DPI</option>
-                    <option value="200">200 DPI</option>
-                    <option value="300">300 DPI (Govt Form Standard)</option>
-                    <option value="600">600 DPI (High Res)</option>
-                </select>
-            </div>
-            <button class="process-btn" onclick="processClearAction()">Download Cleared Document</button>
             <div class="status-text" id="clear-status"></div>
         </div>
 
@@ -636,25 +644,31 @@
             <h2>Increase Photo Size in KB</h2>
             <p>Expand file sizes safely without degrading pixel resolution layout structure. Perfect for meeting mandatory minimum file targets.</p>
             
-            <div class="input-group">
-                <label>Resolution Maintenance:</label>
-                <span style="font-size:0.75rem; color:#27ae60; font-weight:bold;">100% Quality Preserved</span>
+            <div class="form-split-container">
+                <div class="form-left-block">
+                    <div class="input-group">
+                        <label>Resolution Maintenance:</label>
+                        <span style="font-size:0.75rem; color:#27ae60; font-weight:bold;">100% Quality Preserved</span>
+                    </div>
+                </div>
+                
+                <div class="form-right-block">
+                    <div class="input-group">
+                        <label for="increase-kb-input">Minimum Target Size (KB):</label>
+                        <input type="number" id="increase-kb-input" placeholder="e.g. 50" min="1">
+                    </div>
+                    <div class="input-group">
+                        <label for="increase-dpi">Output DPI Parameter:</label>
+                        <select id="increase-dpi">
+                            <option value="original" selected>Keep Original DPI</option>
+                            <option value="200">200 DPI</option>
+                            <option value="300">300 DPI (Govt Form Standard)</option>
+                            <option value="600">600 DPI (High Res)</option>
+                        </select>
+                    </div>
+                    <button class="process-btn" onclick="processIncreaseAction()">Download Expanded Image</button>
+                </div>
             </div>
-            
-            <div class="input-group">
-                <label for="increase-kb-input">Minimum Target Size (KB):</label>
-                <input type="number" id="increase-kb-input" placeholder="e.g. 50" min="1">
-            </div>
-            <div class="input-group">
-                <label for="increase-dpi">Output DPI Parameter:</label>
-                <select id="increase-dpi">
-                    <option value="original" selected>Keep Original DPI</option>
-                    <option value="200">200 DPI</option>
-                    <option value="300">300 DPI (Govt Form Standard)</option>
-                    <option value="600">600 DPI (High Res)</option>
-                </select>
-            </div>
-            <button class="process-btn" onclick="processIncreaseAction()">Download Expanded Image</button>
             <div class="status-text" id="increase-status"></div>
         </div>
 
@@ -673,7 +687,7 @@
             </div>
         </div>
     </main>
-    <footer role="contentinfo">
+    <footer>
         <p>© 2026 EditSpark Studio. Built securely for digital application portals, examinations & educational registration tasks. 100% Secure Local Execution.</p>
     </footer>
     <script>
