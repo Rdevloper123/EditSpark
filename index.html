@@ -1,159 +1,641 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Basic Meta -->
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EditSpark - Free Online Image Compressor & Resizer</title>
-  <meta name="description" content="Compress images to exact KB, resize dimensions, crop, and convert DPI online. Perfect for SSC, UPSC, Govt forms. 100% free and secure client-side processing.">
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://edit-spark.vercel.app/">
-  <link rel="icon" href="favicon.ico">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>EditSpark - Compress Image to Exact KB & Increase Photo Size Online</title>
+    <meta name="description" content="Free online photo editor to compress image to exact KB (20KB, 50KB), resize dimensions, change DPI & increase photo size in KB online for SSC, UPSC & Govt forms.">
+    <meta name="keywords" content="image compressor, photo resizer, compress image to 20kb, compress photo to 50kb, increase image size in kb, photo ka size kaise badhaye online, increase photo kb online without losing quality, exact kb increaser tool, online image crop, 300 dpi converter, free online pdf compressor, editspark">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://edit-spark.vercel.app/">
 
-  <!-- Open Graph -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://edit-spark.vercel.app/">
-  <meta property="og:title" content="EditSpark - Free Online Image Compressor & Resizer">
-  <meta property="og:description" content="Resize, crop, compress images locally in your browser. Safe and free.">
-  <meta property="og:image" content="https://edit-spark.vercel.app/og-image.png">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://edit-spark.vercel.app/">
+    <meta property="og:title" content="EditSpark - Compress Image to Exact KB & Increase Size Online">
+    <meta property="og:description" content="100% Free & Safe Online Tool to resize, crop, and compress images locally in your browser.">
+    <meta property="og:image" content="https://edit-spark.vercel.app/og-image.png">
+    <meta property="twitter:card" content="summary_large_image">
 
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-
-  <!-- Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "EditSpark Studio",
-    "url": "https://edit-spark.vercel.app/",
-    "description": "Free online utility designed to compress images to exact KB targets, resize dimensions, crop, and convert DPI seamlessly.",
-    "applicationCategory": "ImageApplication",
-    "operatingSystem": "All",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "EditSpark Studio",
+      "url": "https://edit-spark.vercel.app/",
+      "description": "Free online utility designed to compress images to exact KB targets, resize dimensions, and increase image size seamlessly.",
+      "applicationCategory": "ImageApplication",
+      "operatingSystem": "All",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
     }
-  }
-  </script>
+    </script>
 
-  <!-- Styles -->
-  <style>
-    body {margin:0;font-family:"Segoe UI",Roboto,sans-serif;background:#f9fafc;color:#2c3e50;}
-    header.hero {text-align:center;padding:40px 20px;background:linear-gradient(135deg,#4A148C,#6a1b9a);color:white;}
-    header.hero h1 {margin:0;font-size:2rem;}
-    header.hero p {margin:8px 0 0;opacity:0.9;}
+    <style>
+        :root {
+            --primary: #4A148C;
+            --primary-hover: #310d61;
+            --bg-light: #f8f9fa;
+            --text-dark: #2c3e50;
+            --border-color: #e0e0e0;
+            --card-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            --card-hover-shadow: 0 10px 20px rgba(74, 20, 140, 0.08);
+        }
 
-    .upload-box {max-width:600px;margin:30px auto;text-align:center;border:2px dashed #4A148C;border-radius:12px;padding:30px;background:white;cursor:pointer;transition:0.3s;}
-    .upload-box:hover {background:#fdfbff;box-shadow:0 4px 12px rgba(0,0,0,0.1);}
-    .upload-label {display:block;cursor:pointer;}
-    .upload-label .icon {font-size:2rem;}
-    .upload-label .text {display:block;font-weight:bold;margin-top:10px;color:#4A148C;}
-    .upload-label .sub {font-size:0.8rem;color:#7f8c8d;}
-    input[type="file"] {display:none;}
+        body { 
+            margin: 0; padding: 0; box-sizing: border-box; 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: var(--text-dark); background-color: #f4f6f9;
+        }
 
-    .preview-workspace {display:none;text-align:center;margin-top:20px;}
-    #img-preview {max-width:100%;border-radius:8px;}
-    #file-info {font-size:0.9rem;margin-top:10px;color:#555;}
+        header {
+            background: linear-gradient(135deg, var(--primary), #6a1b9a);
+            color: white; padding: 12px 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 10px;
+        }
+        header h1 { margin: 0; font-size: 1.4rem; letter-spacing: 0.5px; }
+        header p { margin: 2px 0 0 0; opacity: 0.85; font-size: 0.8rem; }
+        
+        .bharat-badge {
+            background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 5px 12px; border-radius: 30px; font-size: 0.75rem; font-weight: bold;
+            display: flex; align-items: center; gap: 5px;
+        }
 
-    .tools-grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;max-width:1000px;margin:40px auto;padding:0 20px;}
-    .tool-card {background:white;border:1px solid #e0e0e0;border-radius:8px;padding:20px;text-align:left;cursor:pointer;transition:0.3s;box-shadow:0 2px 6px rgba(0,0,0,0.05);}
-    .tool-card:hover {transform:translateY(-3px);border-color:#4A148C;}
-    .tool-card h2 {margin:0 0 8px;font-size:1.1rem;color:#1e272e;}
-    .tool-card p {margin:0;font-size:0.85rem;color:#7f8c8d;}
+        main { max-width: 1200px; margin: 0 auto; padding: 20px 15px; text-align: center; }
 
-    .status-msg {margin-top:10px;font-size:0.85rem;text-align:center;display:none;}
-    .status-success {color:#2e7d32;}
-    .status-error {color:#c62828;}
+        /* FIXED: Super-Slim Rectangular Upload Box Layout */
+        .upload-container {
+            display: flex; justify-content: center; margin: 15px auto; max-width: 600px;
+        }
+        .upload-square {
+            width: 100%; height: 110px; background: white;
+            border: 2.5px dashed var(--primary); border-radius: 10px;
+            display: flex; flex-direction: row; align-items: center; justify-content: center;
+            cursor: pointer; transition: all 0.25s ease; box-shadow: var(--card-shadow);
+            padding: 15px 25px; box-sizing: border-box; gap: 15px;
+        }
+        .upload-square:hover {
+            transform: translateY(-2px); box-shadow: 0 8px 16px rgba(74, 20, 140, 0.1);
+            background: #fdfbff;
+        }
+        .upload-square .icon { font-size: 2.2rem; display: inline-block; }
+        .upload-square .text-block { text-align: left; }
+        .upload-square p { margin: 0 0 3px 0; font-weight: bold; color: var(--primary); font-size: 1.05rem; }
+        .upload-square .sub { font-size: 0.75rem; color: #7f8c8d; display: block; }
+        #image-input { display: none; }
 
-    footer {margin-top:40px;padding:20px;text-align:center;font-size:0.8rem;color:#7f8c8d;border-top:1px solid #e0e0e0;}
-  </style>
+        /* FIXED: Compact Workspace & Smart Corner Close Trigger Layout */
+        .preview-workspace {
+            display: none; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 20px;
+        }
+        .preview-wrapper-box {
+            position: relative; background: white; padding: 8px; border-radius: 10px;
+            box-shadow: var(--card-shadow); border: 1px solid var(--border-color); display: inline-block;
+        }
+        .preview-container { position: relative; display: inline-block; max-width: 100%; touch-action: none; overflow: hidden; }
+        #img-preview { max-width: 100%; max-height: 260px; display: block; border-radius: 6px; }
+        
+        /* Modern Floating 'X' Corner Cut Button */
+        .corner-close-btn {
+            position: absolute; top: -10px; right: -10px; background: #ff3b30; color: white;
+            border: 2px solid white; width: 26px; height: 26px; border-radius: 50%;
+            font-size: 0.8rem; font-weight: bold; cursor: pointer; display: flex;
+            align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            transition: transform 0.2s; z-index: 10;
+        }
+        .corner-close-btn:hover { transform: scale(1.15); background: #d62218; }
+
+        #file-info {
+            font-size: 0.8rem; background: #eef2f7; padding: 6px 16px;
+            border-radius: 30px; font-weight: bold; margin: 0; color: var(--text-dark);
+        }
+
+        /* Tools Responsive Layout Grid */
+        .tools-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px; margin-top: 15px;
+        }
+        .tool-card {
+            background: white; border: 1px solid var(--border-color); border-radius: 8px;
+            padding: 16px; text-align: left; cursor: pointer; box-shadow: var(--card-shadow);
+            transition: all 0.25s ease; position: relative; overflow: hidden;
+        }
+        .tool-card:hover {
+            transform: translateY(-3px); box-shadow: var(--card-hover-shadow);
+            border-color: var(--primary);
+        }
+        .tool-card h3 { margin: 0 0 4px 0; font-size: 1.05rem; color: #1e272e; display: flex; align-items: center; gap: 6px; }
+        .tool-card p { margin: 0; font-size: 0.8rem; color: #7f8c8d; line-height: 1.3; }
+
+        /* Unified Focus Control Forms Panels */
+        .form-panel {
+            display: none; background: white; border-radius: 10px; border: 1px solid var(--border-color);
+            padding: 20px; box-shadow: 0 8px 24px rgba(0,0,0,0.05); text-align: left;
+            max-width: 550px; margin: 15px auto;
+        }
+        .back-btn {
+            background: #7f8c8d; color: white; border: none; padding: 5px 10px;
+            font-size: 0.75rem; font-weight: bold; border-radius: 4px; cursor: pointer;
+            margin-bottom: 15px; display: inline-flex; align-items: center; gap: 4px;
+        }
+        .back-btn:hover { background: #616a6b; }
+
+        .input-group { margin-bottom: 12px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
+        .input-group label { font-weight: bold; font-size: 0.8rem; color: #34495e; }
+        .input-group input[type="number"], .input-group select {
+            padding: 7px 10px; border: 1px solid var(--border-color); border-radius: 5px; font-size: 0.8rem;
+            width: 100%; max-width: 200px; box-sizing: border-box;
+        }
+        .range-group { margin-bottom: 12px; }
+        .range-group label { display: flex; justify-content: space-between; font-weight: bold; font-size: 0.8rem; margin-bottom: 4px; }
+        .range-group input { width: 100%; accent-color: var(--primary); }
+
+        .process-btn {
+            background: var(--primary); color: #fff; border: none; padding: 10px 16px;
+            font-size: 0.85rem; font-weight: bold; border-radius: 5px; cursor: pointer;
+            width: 100%; transition: background 0.2s ease; margin-top: 8px; text-align: center;
+        }
+        .process-btn:hover { background: var(--primary-hover); }
+        .status-text { margin-top: 6px; font-weight: bold; color: #27ae60; font-size: 0.8rem; min-height: 16px; }
+
+        /* Precise Overlay Box Styling */
+        #crop-box {
+            position: absolute; border: 2px dashed #ff3b30; box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.6);
+            display: none; box-sizing: border-box; width: 100px; height: 100px; top: 10px; left: 10px; touch-action: none;
+        }
+        .crop-handle {
+            position: absolute; width: 14px; height: 14px; background: #ff3b30; right: -7px; bottom: -7px;
+            border-radius: 50%; touch-action: none; cursor: se-resize; border: 2px solid white;
+        }
+        .crop-toolbar { display: flex; justify-content: center; margin-top: 8px; }
+        .crop-toggle-btn {
+            background: #fff; border: 1px solid #ff3b30; color: #ff3b30; border-radius: 5px;
+            padding: 5px 12px; font-size: 0.75rem; font-weight: bold; cursor: pointer; transition: all 0.2s;
+        }
+        .crop-toggle-btn.active { background: #ff3b30; color: white; }
+
+        /* SEO Informative Blocks */
+        .seo-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 15px; margin-top: 35px; text-align: left;
+        }
+        .faq-card {
+            background: white; border-radius: 8px; border: 1px solid var(--border-color);
+            padding: 16px; box-shadow: var(--card-shadow);
+        }
+        .faq-card h3 { color: var(--primary); margin-top: 0; font-size: 0.95rem; margin-bottom: 8px; }
+        .faq-card p { margin: 0; font-size: 0.8rem; color: #57606f; line-height: 1.4; }
+
+        footer { background: #2c3e50; color: white; text-align: center; padding: 12px; margin-top: 35px; font-size: 0.8rem; }
+    </style>
 </head>
 <body>
-  <header class="hero">
-    <h1>EditSpark Studio</h1>
-    <p>Compress, Resize, Crop & Enhance Photos Instantly</p>
-  </header>
 
-  <!-- Upload Box -->
-  <div class="upload-box">
-    <label for="image-input" class="upload-label">
-      <span class="icon">📸</span>
-      <span class="text">Drag & Drop or Click to Upload</span>
-      <span class="sub">Supports JPG, PNG • Max 15MB</span>
-    </label>
-    <input type="file" id="image-input" accept="image/jpeg, image/png">
-  </div>
+    <header role="banner">
+        <div style="text-align: left;">
+            <h1 style="font-size: 1.6rem;">EditSpark Studio</h1>
+            <p style="margin: 3px 0 0 0; opacity: 0.9; font-size: 0.85rem; font-weight: 500;">
+                Free Online Photo Editor: Compress Image to Exact KB & Increase Photo Size Online
+            </p>
+        </div>
+        <div class="bharat-badge" aria-label="Apna Bharatiya Editor Suite">
+            <span style="color:#FF9933">Apna</span> 
+            <span style="color:#FFFFFF">Bharat</span> 
+            <span style="color:#128825">Editor 🇮🇳</span>
+        </div>
+    </header>
 
-  <!-- Preview -->
-  <div class="preview-workspace" id="preview-workspace-area">
-    <img id="img-preview" alt="Uploaded photo preview" loading="lazy">
-    <p id="file-info"></p>
-  </div>
+    <main>
+        <div class="upload-container" id="upload-area-box">
+            <label for="image-input" class="upload-square">
+                <span class="icon">📸</span>
+                <div class="text-block">
+                    <p>Select or Drag Image Here</p>
+                    <span class="sub">Processed safely 100% inside your browser memory</span>
+                </div>
+            </label>
+            <input type="file" id="image-input" accept="image/*" onchange="previewImage(event)">
+        </div>
 
-  <!-- Tools Grid -->
-  <section class="tools-grid" id="main-tools-grid" style="display:none;">
-    <div class="tool-card" onclick="openToolForm('exact-kb')">
-      <h2>🗜️ Compress to Exact KB</h2>
-      <p>Perfect for SSC, UPSC forms (20KB, 50KB).</p>
-    </div>
-    <div class="tool-card" onclick="openToolForm('resize-dim')">
-      <h2>📐 Resize Dimensions</h2>
-      <p>Change width, height & DPI (200, 300).</p>
-    </div>
-    <div class="tool-card" onclick="openToolForm('crop-img')">
-      <h2>✂️ Crop Photo</h2>
-      <p>Trim passport or signature photos.</p>
-    </div>
-    <div class="tool-card" onclick="openToolForm('dpi-convert')">
-      <h2>🎯 Convert DPI</h2>
-      <p>Set DPI metadata for exam forms.</p>
-    </div>
-    <div class="tool-card" onclick="openToolForm('clear-sig')">
-      <h2>✍️ Clear Signature Background</h2>
-      <p>Remove shadows, enhance contrast.</p>
-    </div>
-  </section>
+        <div class="preview-workspace" id="preview-workspace-area">
+            <div class="preview-wrapper-box" id="preview-wrapper">
+                <button class="corner-close-btn" onclick="cancelUploadedImage()" title="Remove Image">✕</button>
+                <div class="preview-container">
+                    <img id="img-preview" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Preview Workspace">
+                    <div id="crop-box">
+                        <div class="crop-handle" id="crop-handle-btn"></div>
+                    </div>
+                </div>
+                <div class="crop-toolbar">
+                    <button class="crop-toggle-btn" id="crop-toggle-icon" onclick="toggleCropOverlay()">✂️ Toggle Crop Area Grid</button>
+                </div>
+            </div>
+            <p id="file-info"></p>
+        </div>
 
-  <footer>
-    <p>EditSpark Studio • Safe Client Memory Execution Sandbox Engine • No Server Data Mirroring.</p>
-  </footer>
+        <div class="tools-grid" id="main-tools-grid">
+            <div class="tool-card" onclick="openToolForm('pixel-panel')">
+                <h3>📐 Resize Image</h3>
+                <p>Change image dimensions in pixels and convert DPI to 300 online.</p>
+            </div>
+            <div class="tool-card" onclick="openToolForm('kb-panel')">
+                <h3>⚖️ Compress Image</h3>
+                <p>Reduce file size to exact 20KB, 50KB, or 100KB for online forms.</p>
+            </div>
+            <div class="tool-card" onclick="openToolForm('crop-panel')">
+                <h3>✂️ Crop Image</h3>
+                <p>Cut and trim image borders safely inside your browser canvas.</p>
+            </div>
+            <div class="tool-card" onclick="openToolForm('clear-panel')">
+                <h3>🖋️ Clear Document / Sign</h3>
+                <p>Adjust contrast and brightness to make signatures clear for upload.</p>
+            </div>
+            <div class="tool-card" onclick="openToolForm('increase-panel')">
+                <h3>🚀 Increase Image Size</h3>
+                <p>Increase photo size in KB online without losing any resolution or quality.</p>
+            </div>
+        </div>
 
-  <!-- Scripts -->
-  <script>
-    let globalImage = new Image();
-    const imgPreview = document.getElementById('img-preview');
-    const fileInfo = document.getElementById('file-info');
-    const previewWorkspace = document.getElementById('preview-workspace-area');
-    const toolsGrid = document.getElementById('main-tools-grid');
+        <div class="form-panel" id="pixel-panel">
+            <button class="back-btn" onclick="closeToolForm()">← Back to All Tools</button>
+            <h2 style="color:var(--primary); margin-top:0; font-size:1.3rem; margin-bottom:15px;">📐 Resize Image & DPI Studio</h2>
+            <div class="input-group"><label>Width (px):</label><input type="number" id="img-width"></div>
+            <div class="input-group"><label>Height (px):</label><input type="number" id="img-height"></div>
+            <div style="display:flex; gap:6px; align-items:center; margin-bottom:15px;">
+                <input type="checkbox" id="aspect-ratio" checked> <label for="aspect-ratio" style="font-size:0.85rem; font-weight:bold; cursor:pointer;">Lock Aspect Ratio</label>
+            </div>
+            <div class="input-group"><label>Target Max Size (KB - Optional):</label><input type="number" id="target-kb-a" placeholder="e.g. 50"></div>
+            <div class="input-group">
+                <label>Output DPI Parameter:</label>
+                <select class="set-dpi-class"><option value="96">96 DPI</option><option value="200">200 DPI</option><option value="300" selected>300 DPI (UPSC/SSC Size)</option></select>
+            </div>
+            <button class="process-btn" onclick="processAndDownload('pixel')">Resize & Download Image</button>
+            <div class="status-text" id="status-pixel"></div>
+        </div>
 
-    document.getElementById('image-input').addEventListener('change', function(e) {
-      const file = e.target.files[0];
-      if (!file) return;
+        <div class="form-panel" id="kb-panel">
+            <button class="back-btn" onclick="closeToolForm()">← Back to All Tools</button>
+            <h2 style="color:var(--primary); margin-top:0; font-size:1.3rem; margin-bottom:15px;">⚖️ Compress Image to Exact KB</h2>
+            <div class="input-group"><label>Target File Size (KB):</label><input type="number" id="target-kb-b" placeholder="e.g. 20"></div>
+            <div class="input-group">
+                <label>Output DPI Parameter:</label>
+                <select class="set-dpi-class"><option value="96">96 DPI</option><option value="200">200 DPI</option><option value="300" selected>300 DPI</option></select>
+            </div>
+            <button class="process-btn" onclick="processAndDownload('kb')">Compress & Download File</button>
+            <div class="status-text" id="status-kb"></div>
+        </div>
 
-      if (file.size > 15 * 1024 * 1024) {
-        alert("File too large! Please upload under 15MB.");
-        this.value = "";
-        return;
-      }
+        <div class="form-panel" id="crop-panel">
+            <button class="back-btn" onclick="closeToolForm()">← Back to All Tools</button>
+            <h2 style="color:var(--primary); margin-top:0; font-size:1.3rem; margin-bottom:15px;">✂️ Crop Tool Configuration</h2>
+            <p style="font-size: 0.8rem; color: #e67e22; margin: 0 0 15px 0;">💡 Image ke upar bane Red dashed grid ko mouse ya touch se set karein, fir download karein.</p>
+            <div class="input-group"><label>Target Size (KB - Optional):</label><input type="number" id="target-kb-c" placeholder="e.g. 30"></div>
+            <div class="input-group">
+                <label>Output DPI Parameter:</label>
+                <select class="set-dpi-class"><option value="96">96 DPI</option><option value="200">200 DPI</option><option value="300" selected>300 DPI</option></select>
+            </div>
+            <button class="process-btn" onclick="processAndDownload('crop')">Crop & Save Image</button>
+            <div class="status-text" id="status-crop"></div>
+        </div>
 
-      const reader = new FileReader();
-      reader.onload = function(event) {
-        globalImage.onload = function() {
-          imgPreview.src = event.target.result;
-          fileInfo.innerText = `Original Size: ${(file.size/1024).toFixed(1)} KB (${globalImage.naturalWidth} x ${globalImage.naturalHeight}px)`;
-          previewWorkspace.style.display = 'block';
-          toolsGrid.style.display = 'grid';
-        };
-        globalImage.src = event.target.result;
-      };
-      reader.readAsDataURL(file);
-    });
+        <div class="form-panel" id="clear-panel">
+            <button class="back-btn" onclick="closeToolForm()">← Back to All Tools</button>
+            <h2 style="color:var(--primary); margin-top:0; font-size:1.3rem; margin-bottom:15px;">🖋️ Clear Signature & Scan Filters</h2>
+            <div class="range-group"><label><span>Brightness Level</span><span id="lbl-bright">100%</span></label><input type="range" id="filter-bright" min="50" max="250" value="100" oninput="applyFilters()"></div>
+            <div class="range-group"><label><span>Contrast Level</span><span id="lbl-contrast">100%</span></label><input type="range" id="filter-contrast" min="50" max="250" value="100" oninput="applyFilters()"></div>
+            <div class="input-group"><label>Target Size (KB - Optional):</label><input type="number" id="target-kb-d" placeholder="e.g. 20"></div>
+            <div class="input-group">
+                <label>Output DPI Parameter:</label>
+                <select class="set-dpi-class"><option value="96">96 DPI</option><option value="200">200 DPI</option><option value="300" selected>300 DPI</option></select>
+            </div>
+            <button class="process-btn" onclick="processAndDownload('clear')">Clean Filter & Download</button>
+            <div class="status-text" id="status-clear"></div>
+        </div>
 
-    function openToolForm(mode) {
-      alert("Tool selected: " + mode + " (demo placeholder).");
-    }
-  </script>
+        <div class="form-panel" id="increase-panel" style="border-top: 4px solid #27ae60;">
+            <button class="back-btn" onclick="closeToolForm()">← Back to All Tools</button>
+            <h2 style="color:#27ae60; margin-top:0; font-size:1.3rem; margin-bottom:15px;">🚀 Increase Image Size in KB (Without Quality Loss)</h2>
+            <p style="font-size:0.82rem; color:#555; line-height:1.4; margin-bottom:15px;">Sarkari forms par kam size ki samasya ko door karne ke liye file structure me safe bytes inject kiye jaate hain. Photo blur nahi hogi!</p>
+            <div class="input-group"><label>Target Minimum Size (KB):</label><input type="number" id="increase-target-kb" placeholder="Higher than current size"></div>
+            <div class="input-group">
+                <label>Output DPI Parameter:</label>
+                <select class="set-dpi-class"><option value="96">96 DPI</option><option value="200">200 DPI</option><option value="300" selected>300 DPI (Gov Forms Mandate)</option></select>
+            </div>
+            <button class="process-btn" style="background:#27ae60;" onclick="processAndDownload('increase')">Increase File Size & Save</button>
+            <div class="status-text" id="status-increase"></div>
+        </div>
+        <h2 style="color:var(--primary); margin-top:50px; font-size:1.5rem; text-align:center;">Frequently Asked Questions (FAQs) - Photo Tools</h2>
+        <div class="seo-grid">
+            <div class="faq-card">
+                <h3>❓ How to compress image to 20KB or 50KB online?</h3>
+                <p>Simply upload your image into our safe workspace dashboard, click on the 'Compress Image' card, type your required target parameter like 20 or 50, select 300 DPI, and hit download. The binary search engine will accurately hit the exact size limit instantly.</p>
+            </div>
+            <div class="faq-card">
+                <h3>❓ Photo ka size kaise badhaye online without losing quality?</h3>
+                <p>Use our dedicated 'Increase Image Size' tool grid card. Enter your required higher target KB constraint. Our local client script injects secure metadata structure into your file, inflating the size perfectly without affecting your original image resolution or making it blur.</p>
+            </div>
+            <div class="faq-card">
+                <h3>❓ How to convert signature to 300 DPI for SSC/UPSC forms?</h3>
+                <p>Every tool utility configuration panel on EditSpark includes an output DPI dropdown selection. Select '300 DPI' before running the action to automatically rewrite your file metadata structure for mandatory Indian government exam portal guidelines.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 EditSpark Studio - Apna Bharatiya Editor Suite 🇮🇳. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        let globalImage = new Image();
+        let originalWidth = 0, originalHeight = 0, originalRatio = 1, originalDPI = 96, sourceRawFile = null;
+
+        const uploadAreaBox = document.getElementById('upload-area-box');
+        const previewWorkspaceArea = document.getElementById('preview-workspace-area');
+        const mainToolsGrid = document.getElementById('main-tools-grid');
+        
+        const previewWrapper = document.getElementById('preview-wrapper');
+        const cropBox = document.getElementById('crop-box');
+        const previewImg = document.getElementById('img-preview');
+        const cropToggleIcon = document.getElementById('crop-toggle-icon');
+        
+        let isDragging = false, isResizing = false;
+        let startX, startY, startLeft, startTop, startWidth, startHeight;
+
+        // UI Management - Focus Mode Engine (Layout-Shift Fix: Removed scrollIntoView)
+        function openToolForm(panelId) {
+            if (!globalImage.src) { 
+                alert("Kripya pehle upar diye gaye square box se photo upload karein!"); 
+                return; 
+            }
+            mainToolsGrid.style.display = 'none';
+            document.querySelectorAll('.form-panel').forEach(p => p.style.display = 'none');
+            document.getElementById(panelId).style.display = 'block';
+        }
+
+        function closeToolForm() {
+            document.querySelectorAll('.form-panel').forEach(p => p.style.display = 'none');
+            mainToolsGrid.style.display = 'grid';
+            cropBox.style.display = 'none';
+            cropToggleIcon.classList.remove('active');
+        }
+
+        function toggleCropOverlay() {
+            if (!globalImage.src) return;
+            if (cropBox.style.display === 'block') {
+                cropBox.style.display = 'none';
+                cropToggleIcon.classList.remove('active');
+            } else {
+                cropBox.style.display = 'block';
+                cropToggleIcon.classList.add('active');
+                const w = previewImg.clientWidth;
+                const h = previewImg.clientHeight;
+                cropBox.style.width = '100px'; cropBox.style.height = '100px';
+                cropBox.style.left = (w - 100) / 2 + 'px'; cropBox.style.top = (h - 100) / 2 + 'px';
+            }
+        }
+
+        // Native File Handling
+        function previewImage(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            sourceRawFile = file;
+
+            const dpiReader = new FileReader();
+            dpiReader.onload = function(e) { originalDPI = extractDPI(e.target.result); };
+            dpiReader.readAsArrayBuffer(file);
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                globalImage.src = e.target.result;
+                globalImage.onload = function() {
+                    originalWidth = globalImage.width; originalHeight = globalImage.height;
+                    originalRatio = originalWidth / originalHeight;
+                    
+                    document.getElementById('img-width').value = originalWidth;
+                    document.getElementById('img-height').value = originalHeight;
+                    
+                    document.getElementById('file-info').innerText = `Specs: ${originalWidth}x${originalHeight} px | Native: ${originalDPI} DPI | Current Size: ${(file.size/1024).toFixed(2)} KB`;
+                    
+                    previewImg.src = e.target.result;
+                    
+                    uploadAreaBox.style.display = 'none';
+                    previewWorkspaceArea.style.display = 'flex';
+                    closeToolForm();
+                }
+            }
+            reader.readAsDataURL(file);
+        }
+
+        function cancelUploadedImage() {
+            sourceRawFile = null;
+            globalImage = new Image();
+            previewImg.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
+            document.getElementById('image-input').value = "";
+            
+            // Filters reset on cancel
+            document.getElementById('filter-bright').value = 100;
+            document.getElementById('filter-contrast').value = 100;
+            document.getElementById('lbl-bright').innerText = '100%';
+            document.getElementById('lbl-contrast').innerText = '100%';
+            previewImg.style.filter = "none";
+            
+            previewWorkspaceArea.style.display = 'none';
+            uploadAreaBox.style.display = 'flex';
+            closeToolForm();
+        }
+
+        function extractDPI(arrayBuffer) {
+            const view = new DataView(arrayBuffer);
+            if (view.byteLength < 20) return 96;
+            for (let i = 0; i < view.byteLength - 20; i++) {
+                if (view.getUint16(i) === 0xFFE0 && view.getUint32(i + 4) === 0x4A464946) {
+                    const unit = view.getUint8(i + 13);
+                    if (unit === 1 || unit === 2) return unit === 1 ? view.getUint16(i + 14) : Math.round(view.getUint16(i + 14) * 2.54);
+                }
+            }
+            return 96;
+        }
+
+        document.getElementById('img-width').addEventListener('input', function() {
+            if(document.getElementById('aspect-ratio').checked && originalRatio) document.getElementById('img-height').value = Math.round(this.value / originalRatio);
+        });
+        document.getElementById('img-height').addEventListener('input', function() {
+            if(document.getElementById('aspect-ratio').checked && originalRatio) document.getElementById('img-width').value = Math.round(this.value * originalRatio);
+        });
+
+        function applyFilters() {
+            if(!globalImage.src) return;
+            const b = document.getElementById('filter-bright').value; const c = document.getElementById('filter-contrast').value;
+            document.getElementById('lbl-bright').innerText = b + '%'; document.getElementById('lbl-contrast').innerText = c + '%';
+            previewImg.style.filter = `brightness(${b}%) contrast(${c}%)`;
+        }
+
+        // Pointer Event Handlers for Interactive Cropping Grid
+        cropBox.addEventListener('pointerdown', function(e) { if(e.target.id === 'crop-handle-btn') return; isDragging = true; cropBox.setPointerCapture(e.pointerId); startX = e.clientX; startY = e.clientY; startLeft = parseInt(cropBox.style.left) || 0; startTop = parseInt(cropBox.style.top) || 0; e.preventDefault(); });
+        document.getElementById('crop-handle-btn').addEventListener('pointerdown', function(e) { isResizing = true; document.getElementById('crop-handle-btn').setPointerCapture(e.pointerId); startX = e.clientX; startY = e.clientY; startWidth = cropBox.clientWidth; startHeight = cropBox.clientHeight; e.preventDefault(); e.stopPropagation(); });
+        window.addEventListener('pointermove', function(e) { if (!isDragging && !isResizing) return; requestAnimationFrame(() => { const maxX = previewImg.clientWidth; const maxY = previewImg.clientHeight; if(isDragging) { let nl = Math.max(0, Math.min(startLeft + (e.clientX - startX), maxX - cropBox.clientWidth)); let nt = Math.max(0, Math.min(startTop + (e.clientY - startY), maxY - cropBox.clientHeight)); cropBox.style.left = nl + 'px'; cropBox.style.top = nt + 'px'; } if(isResizing) { let nw = Math.min(Math.max(30, startWidth + (e.clientX - startX)), maxX - (parseInt(cropBox.style.left) || 0)); let nh = Math.min(Math.max(30, startHeight + (e.clientY - startY)), maxY - (parseInt(cropBox.style.top) || 0)); cropBox.style.width = nw + 'px'; cropBox.style.height = nh + 'px'; } }); });
+        window.addEventListener('pointerup', function() { isDragging = false; isResizing = false; });
+
+        function insertDpiInBlob(blob, targetDPI, callback) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const buffer = e.target.result; const view = new DataView(buffer);
+                const jfif = new Uint8Array([0xFF, 0xE0, 0x00, 0x10, 0x4A, 0x46, 0x49, 0x46, 0x00, 0x01, 0x01, 0x01, (targetDPI >> 8) & 0xFF, targetDPI & 0xFF, (targetDPI >> 8) & 0xFF, targetDPI & 0xFF, 0x00, 0x00]);
+                let out; if (view.getUint16(0) === 0xFFD8) { if (view.getUint16(2) === 0xFFE0) out = appendBuffers(view.buffer.slice(0, 2), jfif, buffer.slice(2 + view.getUint16(4) + 2)); else out = appendBuffers(view.buffer.slice(0, 2), jfif, buffer.slice(2)); } else out = buffer;
+                callback(new Blob([out], { type: blob.type }));
+            };
+            reader.readAsArrayBuffer(blob);
+        }
+
+        function appendBuffers(b1, b2, b3) { const c = new Uint8Array(b1.byteLength + b2.byteLength + b3.byteLength); c.set(new Uint8Array(b1), 0); c.set(new Uint8Array(b2), b1.byteLength); c.set(new Uint8Array(b3), b1.byteLength + b2.byteLength); return c.buffer; }
+
+        // Adaptive Search Compressing Engine
+        function applyKBConstraint(sourceCanvas, targetKB, selectedDPI, statusId) {
+            const format = 'image/jpeg';
+            if (targetKB === 0) { 
+                sourceCanvas.toBlob(b => insertDpiInBlob(b, selectedDPI, final => triggerDownload(final, statusId)), format, 0.85); 
+                return; 
+            }
+            
+            let lowQuality = 0.01, highQuality = 1.0, quality = 0.85;
+            let lowScale = 0.2, highScale = 1.0, scale = 1.0;
+            let bestBlob = null, loopIteration = 0;
+            const targetBytes = targetKB * 1024;
+
+            function runSearch() {
+                if (loopIteration >= 25 || (highQuality - lowQuality < 0.01 && highScale - lowScale < 0.01)) { 
+                    finalize(bestBlob); 
+                    return; 
+                }
+                loopIteration++;
+
+                let testCanvas = document.createElement('canvas');
+                testCanvas.width = Math.max(30, Math.floor(sourceCanvas.width * scale));
+                testCanvas.height = Math.max(30, Math.floor(sourceCanvas.height * scale));
+                let testCtx = testCanvas.getContext('2d');
+                testCtx.drawImage(sourceCanvas, 0, 0, testCanvas.width, testCanvas.height);
+
+                testCanvas.toBlob(blob => {
+                    if (!blob) { runSearch(); return; }
+                    
+                    if (blob.size <= targetBytes) {
+                        bestBlob = blob;
+                        lowQuality = quality;
+                        lowScale = scale;
+                    } else {
+                        highQuality = quality;
+                        highScale = scale;
+                    }
+                    
+                    quality = (lowQuality + highQuality) / 2;
+                    scale = (lowScale + highScale) / 2;
+                    runSearch();
+                }, format, quality);
+            }
+
+            function finalize(finalBlob) {
+                if (!finalBlob) {
+                    sourceCanvas.toBlob(b => { finalBlob = b; executePadding(); }, format, 0.1);
+                } else {
+                    executePadding();
+                }
+
+                function executePadding() {
+                    let currentSize = finalBlob.size;
+                    if (currentSize < targetBytes) {
+                        let addBytes = targetBytes - currentSize;
+                        if (addBytes > 0) {
+                            finalBlob = new Blob([finalBlob, new Uint8Array(addBytes).fill(0x20)], { type: format });
+                        }
+                    }
+                    insertDpiInBlob(finalBlob, selectedDPI, dpiBlob => triggerDownload(dpiBlob, statusId));
+                }
+            }
+            runSearch();
+        }
+
+        // Unified Process Routing Engine
+        function processAndDownload(blockType) {
+            if (!globalImage.src) return;
+            const statusId = 'status-' + blockType; 
+            document.getElementById(statusId).innerText = "Processing engine routine...";
+            
+            const panelEl = document.getElementById(blockType + '-panel');
+            const selectedDPI = parseInt(panelEl.querySelector('.set-dpi-class').value) || 300;
+            
+            if (blockType === 'increase') {
+                const targetKB = parseInt(document.getElementById('increase-target-kb').value) || 0; 
+                const targetBytes = targetKB * 1024;
+
+                if (!sourceRawFile) { alert("File buffer loss error! Please re-upload."); return; }
+                if (targetKB <= (sourceRawFile.size / 1024)) { 
+                    alert("Target size aapki image ke current size se bada hona chahiye!"); 
+                    document.getElementById(statusId).innerText = "Error: Invalid target.";
+                    return; 
+                }
+
+                const binaryReader = new FileReader();
+                binaryReader.onload = function(event) {
+                    const nativeBlob = new Blob([event.target.result], { type: sourceRawFile.type });
+                    insertDpiInBlob(nativeBlob, selectedDPI, verifiedDpiBlob => {
+                        let currentBytes = verifiedDpiBlob.size;
+                        if (currentBytes < targetBytes) {
+                            let extraBytesNeeded = targetBytes - currentBytes;
+                            let paddedBlob = new Blob([verifiedDpiBlob, new Uint8Array(extraBytesNeeded).fill(0x20)], { type: 'image/jpeg' });
+                            triggerDownload(paddedBlob, statusId);
+                        } else { 
+                            triggerDownload(verifiedDpiBlob, statusId); 
+                        }
+                    });
+                };
+                binaryReader.readAsArrayBuffer(sourceRawFile);
+                return; 
+            }
+
+            const canvas = document.createElement('canvas'); 
+            const ctx = canvas.getContext('2d'); 
+            let targetKB = 0;
+
+            if (blockType === 'pixel') {
+                targetKB = parseInt(document.getElementById('target-kb-a').value) || 0;
+                canvas.width = parseInt(document.getElementById('img-width').value) || originalWidth;
+                canvas.height = parseInt(document.getElementById('img-height').value) || originalHeight;
+                ctx.drawImage(globalImage, 0, 0, canvas.width, canvas.height);
+            } else if (blockType === 'kb') {
+                targetKB = parseInt(document.getElementById('target-kb-b').value) || 0;
+                canvas.width = originalWidth; canvas.height = originalHeight;
+                ctx.drawImage(globalImage, 0, 0, canvas.width, canvas.height);
+            } else {
+                targetKB = blockType === 'crop' ? (parseInt(document.getElementById('target-kb-c').value) || 0) : (parseInt(document.getElementById('target-kb-d').value) || 0);
+                const scaleX = originalWidth / previewImg.clientWidth; 
+                const scaleY = originalHeight / previewImg.clientHeight;
+                
+                let cx = (parseInt(cropBox.style.left) || 0) * scaleX;
+                let cy = (parseInt(cropBox.style.top) || 0) * scaleY;
+                let cw = cropBox.clientWidth * scaleX;
+                let ch = cropBox.clientHeight * scaleY;
+                
+                canvas.width = cw; canvas.height = ch;
+                if (blockType === 'clear') {
+                    ctx.filter = `brightness(${document.getElementById('filter-bright').value}%) contrast(${document.getElementById('filter-contrast').value}%)`;
+                }
+                ctx.drawImage(globalImage, cx, cy, cw, ch, 0, 0, cw, ch);
+            }
+            applyKBConstraint(canvas, targetKB, selectedDPI, statusId);
+        }
+
+        function triggerDownload(blob, statusId) {
+            const url = URL.createObjectURL(blob); 
+            const a = document.createElement('a'); 
+            a.href = url; 
+            a.download = `EditSpark_${Date.now()}.jpg`;
+            document.body.appendChild(a); 
+            a.click(); 
+            document.body.removeChild(a);
+            document.getElementById(statusId).innerText = `Success! Saved: ${(blob.size/1024).toFixed(1)} KB`;
+        }
+    </script>
 </body>
 </html>
