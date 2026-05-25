@@ -418,6 +418,7 @@
                     closeToolForm();
                 }
             }
+            reader.onloadend = function() { applyFilters(); };
             reader.readAsDataURL(file);
         }
 
@@ -483,7 +484,7 @@
 
         function appendBuffers(b1, b2, b3) { const c = new Uint8Array(b1.byteLength + b2.byteLength + b3.byteLength); c.set(new Uint8Array(b1), 0); c.set(new Uint8Array(b2), b1.byteLength); c.set(new Uint8Array(b3), b1.byteLength + b2.byteLength); return c.buffer; }
 
-        // Adaptive Search Compressing Engine
+        // Adaptive Search Compressing Engine (DPI-Aware Real-time Loop)
         function applyKBConstraint(sourceCanvas, targetKB, selectedDPI, statusId) {
             const format = 'image/jpeg';
             if (targetKB === 0) { 
@@ -492,7 +493,7 @@
             }
             
             let lowQuality = 0.01, highQuality = 1.0, quality = 0.85;
-            let lowScale = 0.2, highScale = 1.0, scale = 1.0;
+            let lowScale = 0.1, highScale = 1.0, scale = 1.0;
             let bestBlob = null, loopIteration = 0;
             const targetBytes = targetKB * 1024;
 
@@ -509,27 +510,42 @@
                 let testCtx = testCanvas.getContext('2d');
                 testCtx.drawImage(sourceCanvas, 0, 0, testCanvas.width, testCanvas.height);
 
-                testCanvas.toBlob(blob => {
-                    if (!blob) { runSearch(); return; }
+                testCanvas.toBlob(rawBlob => {
+                    if (!rawBlob) { runSearch(); return; }
                     
-                    if (blob.size <= targetBytes) {
-                        bestBlob = blob;
-                        lowQuality = quality;
-                        lowScale = scale;
-                    } else {
-                        highQuality = quality;
-                        highScale = scale;
-                    }
-                    
-                    quality = (lowQuality + highQuality) / 2;
-                    scale = (lowScale + highScale) / 2;
-                    runSearch();
+                    // CRITICAL FIX: Checking size AFTER injecting DPI inside the adaptive loop
+                    insertDpiInBlob(rawBlob, selectedDPI, dpiInjectedBlob => {
+                        if (dpiInjectedBlob.size <= targetBytes) {
+                            bestBlob = dpiInjectedBlob;
+                            lowQuality = quality;
+                            lowScale = scale;
+                        } else {
+                            highQuality = quality;
+                            highScale = scale;
+                        }
+                        
+                        quality = (lowQuality + highQuality) / 2;
+                        scale = (lowScale + highScale) / 2;
+                        runSearch();
+                    });
                 }, format, quality);
             }
 
             function finalize(finalBlob) {
                 if (!finalBlob) {
-                    sourceCanvas.toBlob(b => { finalBlob = b; executePadding(); }, format, 0.1);
+                    // Fallback to absolute lowest if still oversized
+                    let testCanvas = document.createElement('canvas');
+                    testCanvas.width = Math.max(30, Math.floor(sourceCanvas.width * 0.1));
+                    testCanvas.height = Math.max(30, Math.floor(sourceCanvas.height * 0.1));
+                    let testCtx = testCanvas.getContext('2d');
+                    testCtx.drawImage(sourceCanvas, 0, 0, testCanvas.width, testCanvas.height);
+                    
+                    testCanvas.toBlob(lowestBlob => {
+                        insertDpiInBlob(lowestBlob, selectedDPI, dpiBlob => {
+                            finalBlob = dpiBlob;
+                            executePadding();
+                        });
+                    }, format, 0.05);
                 } else {
                     executePadding();
                 }
@@ -539,10 +555,11 @@
                     if (currentSize < targetBytes) {
                         let addBytes = targetBytes - currentSize;
                         if (addBytes > 0) {
+                            // Injecting safe padding bytes safely at the end of file structure
                             finalBlob = new Blob([finalBlob, new Uint8Array(addBytes).fill(0x20)], { type: format });
                         }
                     }
-                    insertDpiInBlob(finalBlob, selectedDPI, dpiBlob => triggerDownload(dpiBlob, statusId));
+                    triggerDownload(finalBlob, statusId);
                 }
             }
             runSearch();
