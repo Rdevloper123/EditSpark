@@ -250,7 +250,6 @@
                 <p>Increase photo size in KB online without losing any resolution or quality.</p>
             </div>
         </div>
-
         <div class="form-panel" id="pixel-panel">
             <button class="back-btn" onclick="closeToolForm()">← Back to All Tools</button>
             <h2 style="color:var(--primary); margin-top:0; font-size:1.3rem; margin-bottom:15px;">📐 Resize Image & DPI Studio</h2>
@@ -355,7 +354,9 @@
         let isDragging = false, isResizing = false;
         let startX, startY, startLeft, startTop, startWidth, startHeight;
 
-        // UI Management - Focus Mode Engine
+        // UI Management - Focus Mode Engine with Mobile Back Button Protection
+        let isFormOpen = false;
+
         function openToolForm(panelId) {
             if (!globalImage.src) { 
                 alert("Kripya pehle upar diye gaye square box se photo upload karein!"); 
@@ -364,30 +365,33 @@
             mainToolsGrid.style.display = 'none';
             document.querySelectorAll('.form-panel').forEach(p => p.style.display = 'none');
             document.getElementById(panelId).style.display = 'block';
+            
+            // Push dynamic history state for phone physical back button intercept
+            if (!isFormOpen) {
+                isFormOpen = true;
+                history.pushState({ panelActive: true }, "");
+            }
         }
 
-        function closeToolForm() {
+        function closeToolForm(preventBackHistory = false) {
             document.querySelectorAll('.form-panel').forEach(p => p.style.display = 'none');
             mainToolsGrid.style.display = 'grid';
             cropBox.style.display = 'none';
             cropToggleIcon.classList.remove('active');
-        }
-
-        function toggleCropOverlay() {
-            if (!globalImage.src) return;
-            if (cropBox.style.display === 'block') {
-                cropBox.style.display = 'none';
-                cropToggleIcon.classList.remove('active');
-            } else {
-                cropBox.style.display = 'block';
-                cropToggleIcon.classList.add('active');
-                const w = previewImg.clientWidth;
-                const h = previewImg.clientHeight;
-                cropBox.style.width = '100px'; cropBox.style.height = '100px';
-                cropBox.style.left = (w - 100) / 2 + 'px'; cropBox.style.top = (h - 100) / 2 + 'px';
+            
+            isFormOpen = false;
+            // Sync history state if closed manually by button
+            if (!preventBackHistory) {
+                history.back();
             }
         }
 
+        // Global Back Event Listener for Smartphones
+        window.addEventListener('popstate', function(event) {
+            if (isFormOpen) {
+                closeToolForm(true);
+            }
+        });
         // Native File Handling
         function previewImage(event) {
             const file = event.target.files[0];
@@ -414,7 +418,7 @@
                     
                     uploadAreaBox.style.display = 'none';
                     previewWorkspaceArea.style.display = 'flex';
-                    closeToolForm();
+                    closeToolForm(true); // Reset tool layout states silently
                 }
             }
             reader.onloadend = function() { applyFilters(); };
@@ -435,7 +439,7 @@
             
             previewWorkspaceArea.style.display = 'none';
             uploadAreaBox.style.display = 'flex';
-            closeToolForm();
+            closeToolForm(true); // Close panels safely without pushing extra history steps
         }
 
         function extractDPI(arrayBuffer) {
@@ -492,7 +496,6 @@
                 return; 
             }
             
-            // Reduced iteration steps from 25 to 12 for blazing fast search hits
             let lowQuality = 0.05, highQuality = 1.0, quality = 0.80;
             let lowScale = 0.2, highScale = 1.0, scale = 1.0;
             let bestBlob = null, loopIteration = 0;
@@ -562,6 +565,7 @@
             }
             runSearch();
         }
+
         // Unified Process Routing Engine (Optimized for High-Speed)
         function processAndDownload(blockType) {
             if (!globalImage.src) return;
@@ -627,7 +631,6 @@
                 canvas.width = cw; canvas.height = ch;
                 ctx.drawImage(globalImage, cx, cy, cw, ch, 0, 0, cw, ch);
             } else if (blockType === 'clear') {
-                // HIGH SPEED ENGINE: Downscales huge signature images safely for 3x faster KB optimization
                 targetKB = parseInt(document.getElementById('target-kb-d').value) || 0;
                 
                 let targetWidth = originalWidth;
@@ -642,7 +645,6 @@
                 canvas.width = targetWidth; 
                 canvas.height = targetHeight;
                 
-                // Fast filter matrix rendering directly on optimized layout scale
                 ctx.filter = `brightness(${document.getElementById('filter-bright').value}%) contrast(${document.getElementById('filter-contrast').value}%)`;
                 ctx.drawImage(globalImage, 0, 0, targetWidth, targetHeight);
             }
