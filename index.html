@@ -335,9 +335,55 @@
             </div>
         </div>
     </main>
-    <footer>
-        <p>&copy; 2026 EditSpark Studio - Apna Bharatiya Editor Suite 🇮🇳. All Rights Reserved.</p>
-    </footer>
+   <footer style="background: #2c3e50; color: #ecf0f1; padding: 40px 20px; margin-top: 50px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 0.85rem; text-align: left;">
+    <div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px;">
+        
+        <div>
+            <h3 style="color: #fff; font-size: 1.1rem; margin-top: 0; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">ℹ️ About EditSpark</h3>
+            <p style="color: #bdc3c7; line-height: 1.5; margin: 0 0 15px 0;">
+                EditSpark Studio is Apna Bharatiya Editor Suite 🇮🇳 designed to compress, resize, and modify images safely inside your browser memory.
+            </p>
+            <a href="#" style="color: #3498db; text-decoration: none; font-weight: bold;">Read Full About Us →</a>
+        </div>
+
+        <div>
+            <h3 style="color: #fff; font-size: 1.1rem; margin-top: 0; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">🛠️ Editor Tools</h3>
+            <ul style="list-style: none; padding: 0; margin: 0; line-height: 2;">
+                <li><a href="#" onclick="openToolForm('kb-panel'); return false;" style="color: #bdc3c7; text-decoration: none; transition: color 0.2s;">⚖️ Compress Image</a></li>
+                <li><a href="#" onclick="openToolForm('pixel-panel'); return false;" style="color: #bdc3c7; text-decoration: none; transition: color 0.2s;">📐 Resize & DPI Studio</a></li>
+                <li><a href="#" onclick="openToolForm('crop-panel'); return false;" style="color: #bdc3c7; text-decoration: none; transition: color 0.2s;">✂️ Interactive Crop</a></li>
+                <li><a href="#" onclick="openToolForm('clear-panel'); return false;" style="color: #bdc3c7; text-decoration: none; transition: color 0.2s;">🖋️ Clear Sign & Document</a></li>
+                <li><a href="#" onclick="openToolForm('increase-panel'); return false;" style="color: #bdc3c7; text-decoration: none; transition: color 0.2s;">🚀 Increase KB Size</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h3 style="color: #fff; font-size: 1.1rem; margin-top: 0; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">⭐ Platform Features</h3>
+            <ul style="list-style: none; padding: 0; margin: 0; line-height: 2;">
+                <li><a href="#" style="color: #bdc3c7; text-decoration: none;">⚡ High-Speed Canvas</a></li>
+                <li><a href="#" style="color: #bdc3c7; text-decoration: none;">🛡️ 100% Secure & Local</a></li>
+                <li><a href="#" style="color: #bdc3c7; text-decoration: none;">💸 Always Free Layout</a></li>
+                <li><a href="#faq-section" style="color: #bdc3c7; text-decoration: none;">❓ View Tool FAQs</a></li>
+                <li><a href="#" style="color: #bdc3c7; text-decoration: none;">📝 Technical Blog</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h3 style="color: #fff; font-size: 1.1rem; margin-top: 0; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">⚖️ Legal & Trust</h3>
+            <ul style="list-style: none; padding: 0; margin: 0; line-height: 2;">
+                <li><a href="privacy" style="color: #bdc3c7; text-decoration: none; font-weight: 500;">🔒 Privacy Policy</a></li>
+                <li><a href="#" style="color: #bdc3c7; text-decoration: none;">📜 Terms of Service</a></li>
+                <li><a href="#" style="color: #bdc3c7; text-decoration: none;">📧 Contact Support</a></li>
+                <li><a href="#" style="color: #bdc3c7; text-decoration: none;">🏠 Home Dashboard</a></li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div style="max-width: 1200px; margin: 30px auto 0 auto; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); text-align: center; color: #95a5a6; font-size: 0.8rem;">
+        <p style="margin: 0;">&copy; 2026 <strong>EditSpark Studio</strong> - Apna Bharatiya Editor Suite 🇮🇳. All Rights Reserved.</p>
+    </div>
+</footer>
     <script>
         let globalImage = new Image();
         let originalWidth = 0, originalHeight = 0, originalRatio = 1, originalDPI = 96, sourceRawFile = null;
