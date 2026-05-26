@@ -289,8 +289,7 @@
                 <label>Output DPI Parameter:</label>
                 <select class="set-dpi-class"><option value="original">Original DPI</option><option value="96">96 DPI</option><option value="200">200 DPI</option><option value="300" selected>300 DPI</option></select>
             </div>
-            <button class="process-btn" onclick="processAndDownload('crop')">Crop & Save Image</button>
-            <div class="status-text" id="status-crop"></div>
+            <button class="process-btn" onclick="processAndDownload('crop')">Crop & Save Image</button> <div class="status-text" id="status-crop"></div>
         </div>
 
         <div class="form-panel" id="clear-panel">
@@ -336,7 +335,6 @@
             </div>
         </div>
     </main>
-
     <footer>
         <p>&copy; 2026 EditSpark Studio - Apna Bharatiya Editor Suite 🇮🇳. All Rights Reserved.</p>
     </footer>
@@ -513,7 +511,6 @@
                 testCanvas.toBlob(rawBlob => {
                     if (!rawBlob) { runSearch(); return; }
                     
-                    // CRITICAL FIX: Checking size AFTER injecting DPI inside the adaptive loop
                     insertDpiInBlob(rawBlob, selectedDPI, dpiInjectedBlob => {
                         if (dpiInjectedBlob.size <= targetBytes) {
                             bestBlob = dpiInjectedBlob;
@@ -533,7 +530,6 @@
 
             function finalize(finalBlob) {
                 if (!finalBlob) {
-                    // Fallback to absolute lowest if still oversized
                     let testCanvas = document.createElement('canvas');
                     testCanvas.width = Math.max(30, Math.floor(sourceCanvas.width * 0.1));
                     testCanvas.height = Math.max(30, Math.floor(sourceCanvas.height * 0.1));
@@ -555,7 +551,6 @@
                     if (currentSize < targetBytes) {
                         let addBytes = targetBytes - currentSize;
                         if (addBytes > 0) {
-                            // Injecting safe padding bytes safely at the end of file structure
                             finalBlob = new Blob([finalBlob, new Uint8Array(addBytes).fill(0x20)], { type: format });
                         }
                     }
@@ -564,7 +559,6 @@
             }
             runSearch();
         }
-
         // Unified Process Routing Engine
         function processAndDownload(blockType) {
             if (!globalImage.src) return;
@@ -617,8 +611,8 @@
                 targetKB = parseInt(document.getElementById('target-kb-b').value) || 0;
                 canvas.width = originalWidth; canvas.height = originalHeight;
                 ctx.drawImage(globalImage, 0, 0, canvas.width, canvas.height);
-            } else {
-                targetKB = blockType === 'crop' ? (parseInt(document.getElementById('target-kb-c').value) || 0) : (parseInt(document.getElementById('target-kb-d').value) || 0);
+            } else if (blockType === 'crop') {
+                targetKB = parseInt(document.getElementById('target-kb-c').value) || 0;
                 const scaleX = originalWidth / previewImg.clientWidth; 
                 const scaleY = originalHeight / previewImg.clientHeight;
                 
@@ -628,11 +622,18 @@
                 let ch = cropBox.clientHeight * scaleY;
                 
                 canvas.width = cw; canvas.height = ch;
-                if (blockType === 'clear') {
-                    ctx.filter = `brightness(${document.getElementById('filter-bright').value}%) contrast(${document.getElementById('filter-contrast').value}%)`;
-                }
                 ctx.drawImage(globalImage, cx, cy, cw, ch, 0, 0, cw, ch);
+            } else if (blockType === 'clear') {
+                // FIXED: Sign/Clear tool uses full image dimensions directly without cropping requirements
+                targetKB = parseInt(document.getElementById('target-kb-d').value) || 0;
+                canvas.width = originalWidth; 
+                canvas.height = originalHeight;
+                
+                // Applies brightness and contrast rules perfectly onto full native background canvas
+                ctx.filter = `brightness(${document.getElementById('filter-bright').value}%) contrast(${document.getElementById('filter-contrast').value}%)`;
+                ctx.drawImage(globalImage, 0, 0, originalWidth, originalHeight);
             }
+            
             applyKBConstraint(canvas, targetKB, selectedDPI, statusId);
         }
 
