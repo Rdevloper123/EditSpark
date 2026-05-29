@@ -1,13 +1,9 @@
-   
 <!DOCTYPE html>
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us - EditSpark Studio | Online Image Compressor & Resizer Suite</title>
-    <meta name="description" content="Learn more about EditSpark Studio. Discover how our 100% free, browser-side local image editor helps you compress photos to 20KB/50KB, resize dimensions, and convert to 300 DPI safely.">
-    <meta name="keywords" content="about editspark, free photo editor background, safe online image compressor, local browser canvas resize, 300 dpi converter for govt forms, ssc upsc photo tool">
-    <meta name="robots" content="index, follow">
+    <title>EditSpark Studio - Online Image Compressor & Resizer Suite</title>
     <style>
         :root {
             --primary-bg: #1e293b;
@@ -15,160 +11,67 @@
             --primary-hover: #310d61;
             --text-dark: #2c3e50;
             --border-color: #e0e0e0;
+            --body-bg: #f4f6f9;
         }
         body { 
             margin: 0; padding: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            color: var(--text-dark); background-color: #f4f6f9;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+            color: var(--text-dark); background-color: var(--body-bg);
+            display: flex; flex-direction: column; min-height: 100vh;
         }
-        
-        /* Aapka Original Header Style */
         header {
             background: linear-gradient(135deg, var(--primary-purple), #6a1b9a);
-            color: white; padding: 15px 25px;
+            color: white; padding: 20px; text-align: center;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
-        header h1 { margin: 0; font-size: 1.4rem; letter-spacing: 0.5px; }
+        header h1 { margin: 0; font-size: 1.8rem; }
+        header p { margin: 5px 0 0 0; font-size: 1rem; opacity: 0.9; }
+        .container { max-width: 1000px; margin: 30px auto; padding: 20px; flex: 1; box-sizing: border-box; }
+        .tool-box { background: white; padding: 30px; border-radius: 10px; border: 1px solid var(--border-color); box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 25px; }
+        .btn-main { background: var(--primary-purple); color: white; border: none; padding: 12px 25px; font-size: 1rem; font-weight: bold; border-radius: 5px; cursor: pointer; transition: background 0.2s; }
+        .btn-main:hover { background: var(--primary-hover); }
         
-        header .back-top-link {
-            color: #38bdf8;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: color 0.2s;
-        }
-        header .back-top-link:hover {
-            color: #7dd3fc;
-            text-decoration: underline;
-        }
-
-        .container {
-            max-width: 850px; margin: 30px auto; padding: 35px;
-            background: white; border-radius: 10px; border: 1px solid var(--border-color);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            text-align: left;
-            box-sizing: border-box;
-            flex: 1; /* Content area push karega taaki footer niche rahe */
-        }
-        h2 { color: var(--primary-purple); font-size: 1.3rem; margin-top: 30px; border-bottom: 2px solid #f4f6f9; padding-bottom: 8px; }
-        p, li { font-size: 0.92rem; color: #57606f; line-height: 1.6; text-align: justify; }
-        ul { padding-left: 20px; }
-        
-        .feature-box {
-            background: #fdfbff; border: 1px dashed var(--primary-purple);
-            padding: 15px; border-radius: 6px; margin: 15px 0;
-        }
-        .back-btn {
-            background: var(--primary-purple); color: white; border: none; padding: 10px 20px;
-            font-size: 0.85rem; font-weight: bold; border-radius: 5px; cursor: pointer;
-            text-decoration: none; display: inline-block; transition: background 0.2s ease;
-        }
-        .back-btn:hover { background: var(--primary-hover); }
-        
-        /* AAPKA APNA COMPLETE MULTI-LINK FOOTER STYLING */
-        footer {
-            background-color: var(--primary-bg);
-            color: #94a3b8;
-            text-align: center;
-            padding: 25px 20px;
-            font-size: 0.9rem;
-            margin-top: auto;
-            border-top: 1px solid #334155;
-        }
-        .footer-links {
-            margin-bottom: 15px;
-        }
-        .footer-links a {
-            color: #38bdf8;
-            text-decoration: none;
-            margin: 0 12px;
-            font-weight: 500;
-        }
-        .footer-links a:hover {
-            color: #7dd3fc;
-            text-decoration: underline;
-        }
-        .footer-copyright {
-            margin: 0;
-            font-size: 0.85rem;
-            color: #64748b;
-        }
-
-        @media (max-width: 600px) {
-            .container { margin: 15px; padding: 20px; }
-            .footer-links a { display: inline-block; margin: 5px 10px; }
-        }
+        /* FOOTER STYLING FIXED FOR ROOT */
+        footer { background-color: var(--primary-bg); color: #94a3b8; text-align: center; padding: 25px 20px; font-size: 0.9rem; margin-top: auto; border-top: 1px solid #334155; }
+        .footer-links { margin-bottom: 15px; }
+        .footer-links a { color: #38bdf8; text-decoration: none; margin: 0 12px; font-weight: 500; }
+        .footer-links a:hover { color: #7dd3fc; text-decoration: underline; }
+        .footer-copyright { margin: 0; font-size: 0.85rem; color: #64748b; }
+        @media (max-width: 600px) { .footer-links a { display: inline-block; margin: 5px 10px; } }
     </style>
 </head>
 <body>
 
     <header role="banner">
-        <h1>EditSpark Studio - About Us</h1>
-        <!-- Kyunki file folder ke andar hai, isliye upar jaane ke liye ../ lagaya hai -->
-        <a href="../index.html" class="back-top-link">← Back to Editor</a>
+        <h1>EditSpark Studio</h1>
+        <p>Apna Bharatiya Online Image Editor Suite 🇮🇳</p>
     </header>
-
     <main class="container">
-        <h2 style="margin-top: 0;">Welcome to EditSpark Studio (Apna Bharat Editor Suite)</h2>
-        <p>
-            <strong>EditSpark Studio</strong> is a premier, lightweight, and high-performance digital imaging utility engineered specifically to address the daily challenges faced by students, job applicants, and professionals across India. Our platform is 100% free and carefully structured to serve as a fast, frictionless alternative to heavy, ad-cluttered editing software.
-        </p>
+        <!-- Image Compressor Tool Card -->
+        <section class="tool-box">
+            <h2>🖼️ Local Image Compressor (KB Target)</h2>
+            <p>Apni photo ko upload kiye bina 20KB, 50KB ya manchahae size me compress karein. SSC, UPSC aur sarkari forms ke liye ekdum perfect loop.</p>
+            <div style="margin-top: 20px;">
+                <input type="file" id="imageInput" accept="image/jpeg, image/png" style="margin-bottom: 15px; display: block;">
+                <button class="btn-main" onclick="alert('Tool Engine Ready! Please select a file to process.')">Launch Workspace</button>
+            </div>
+        </section>
 
-        <p>
-            Whether you are filling out highly specific application portals for competitive national exams like <strong>SSC, UPSC, IBPS, State PSCs, or Railway boards</strong>, EditSpark delivers the exact tool specifications required to generate flawless uploads instantly.
-        </p>
-
-        <h2>Our Core Tech & Mission: Privacy-First Processing</h2>
-        <p>
-            Most traditional online image compressors force users to upload their private photos, identity cards, and signatures directly to a cloud server. This exposes sensitive data to severe privacy vulnerabilities. 
-        </p>
-        <div class="feature-box">
-            <strong>🔒 The EditSpark Difference:</strong> 
-            Our architecture is built entirely on modern <strong>HTML5 Canvas and client-side JavaScript technologies</strong>. When you load a file here, all optimization loops, structural byte adjustments, and canvas modifications happen 100% inside your local web browser's temporary memory allocation. Your files are never uploaded to any remote server, keeping your data entirely in your own hands.
-        </div>
-
-        <h2>What Makes EditSpark Unique? (Key SEO Utility Grid)</h2>
-        <ul>
-            <li>
-                <strong>Exact KB Target Compression:</strong> Our smart binary search compression routines allow users to automatically shrink JPEGs or digital snapshots down to precise size brackets like <strong>under 20KB or under 50KB</strong> without distorting the final output canvas.
-            </li>
-            <li>
-                <strong>300 DPI Parameter Encoding:</strong> Indian government exam portals mandate official document uploads at exactly 300 DPI. EditSpark features a custom metadata injection algorithm that rewrites raw headers to guarantee compliance with portal guidelines.
-            </li>
-            <li>
-                <strong>Intelligent Image Scaling (KB Increaser):</strong> If a portal rejects your photo because the file size is too low, our advanced filler sequence safely injects secure structure metadata bytes into the file, expanding the overall size footprint in KB without introducing pixel blur.
-            </li>
-            <li>
-                <strong>Frictionless UX Flow:</strong> We do not require account creation, email verification, or sign-up profiles. Users can launch the page on mobile devices or computers and start using premium tooling setups within seconds.
-            </li>
-        </ul>
-
-        <h2>Looking Into the Future: Secure PDF Utilities</h2>
-        <p>
-            As a continuously expanding utility platform, EditSpark is actively evolving. In our upcoming development cycles, we are integrating powerful local <strong>PDF Editing, PDF Compressing, and Signature Tagging</strong> options. This expansion will follow our strict data-handling mandate—keeping everything serverless, client-side, and entirely secure.
-        </p>
-
-        <div style="margin-top: 40px;">
-            <!-- Yeh link bhi perfect kar diya hai folder ke hisab se -->
-            <a href="../index.html" class="back-btn">← Back to Editor Tools Workspace</a>
-        </div>
+        <!-- Feature Information Grid -->
+        <section class="tool-box" style="background: #fdfbff; border-style: dashed; border-color: var(--primary-purple);">
+            <h3>🔒 Client-Side Tech: 100% Secure</h3>
+            <p>Hamari core script aapke browser ke HTML5 Canvas par chalti hai. Aapka koi bhi personal document, photo ya signature hamare server par nahi jata. Poora data aapke device me local compress hota.</p>
+        </section>
     </main>
-
-    <!-- AAPKA APNA COMPLETE MULTI-LINK FOOTER -->
+    <!-- AAPKA APNA COMPLETE MULTI-LINK FOOTER ROUTING FIXED -->
     <footer>
         <div class="footer-links">
-            <!-- cleanUrls true hone ki wajah se bina .html ke paths kaam karenge -->
-            <a href="../">Home</a>
-            <a href="../about">About Us</a>
-            <a href="../contact">Contact Us</a>
+            <!-- cleanUrls true hai isliye bina .html ke perfect redirect hoga -->
+            <a href="/">Home</a>
+            <a href="/about">About Us</a>
+            <a href="/contact">Contact Us</a>
         </div>
-        <p class="footer-copyright">&copy; 2026 EditSpark Studio - Apna Bharatiya Editor Suite 🇮🇳. All Rights Reserved.</p>
+        <p class="footer-copyright">&copy; 2026 EditSpark Studio. All rights reserved. Built with Privacy First Loop.</p>
     </footer>
 
 </body>
