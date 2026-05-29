@@ -1,11 +1,7 @@
 {
-  "cleanUrls": true,
   "rewrites": [
     { "source": "/robots.txt", "destination": "/robots.txt" },
     { "source": "/sitemap.xml", "destination": "/sitemap.xml" },
-    { "source": "/about", "destination": "/about/about.html" },
-    { "source": "/contact", "destination": "/contact/contact.html" },
-    { "source": "/privacy", "destination": "/privacy.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
