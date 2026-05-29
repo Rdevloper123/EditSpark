@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - EditSpark Studio</title>
+    <style>
+        /* Aapki website ke main theme se matched colors aur fonts */
+        :root {
+            --primary-bg: #1e293b;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --body-bg: #f8fafc;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--body-bg);
+            margin: 0;
+            padding: 0;
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* Top Header Navigation - Same as your index page design */
+        .nav-header {
+            background-color: var(--primary-bg);
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .nav-header .logo {
+            color: #ffffff;
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-header a {
+            color: #38bdf8;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .nav-header a:hover {
+            color: #7dd3fc;
+            text-decoration: underline;
+        }
+
+        /* Main Area Structure */
+        .wrapper {
+            max-width: 850px;
+            margin: 50px auto;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        .contact-box {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05);
+            padding: 35px;
+            box-sizing: border-box;
+        }
+
+        .page-heading {
+            color: var(--text-main);
+            text-align: center;
+            font-size: 1.85rem;
+            font-weight: 700;
+            margin-top: 0;
+            margin-bottom: 12px;
+        }
+
+        /* Hinglish Blend text for Google & Humans */
+        .intro-paragraph {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 35px;
+            font-size: 0.98rem;
+            line-height: 1.6;
+            background: #f1f5f9;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #f97316;
+            margin-top: 0;
+        }
+
+        /* Responsive Columns Grid */
+        .info-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            justify-content: space-between;
+            margin-bottom: 35px;
+        }
+
+        .card-item {
+            flex: 1;
+            min-width: 280px;
+            background: #ffffff;
+            padding: 24px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            box-sizing: border-box;
+            transition: transform 0.2s;
+        }
+
+        .card-item:hover {
+            transform: translateY(-2px);
+        }
+
+        .card-item.email-style {
+            border-top: 4px solid #3b82f6;
+        }
+
+        .card-item.address-style {
+            border-top: 4px solid #22c55e;
+        }
+
+        .card-item h2 {
+            margin-top: 0;
+            color: #1e293b;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .card-item p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+            margin-top: 0;
+        }
+
+        .email-link {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            word-break: break-all;
+        }
+
+        .email-link:hover {
+            text-decoration: underline;
+        }
+
+        .time-notice {
+            font-size: 0.78rem;
+            color: #ea580c;
+            margin-top: 15px;
+            font-weight: 500;
+            margin-bottom: 0;
+        }
+
+        .secure-box {
+            background: #eff6ff;
+            padding: 16px;
+            border-radius: 8px;
+            border: 1px solid #bfdbfe;
+            font-size: 0.88rem;
+            color: #1e40af;
+            line-height: 1.5;
+        }
+
+        /* Footer Style matching your template */
+        .footer-text {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            border-top: 1px solid #e2e8f0;
+            padding-top: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .page-heading {
+                font-size: 1.5rem;
+            }
+            .contact-box {
+                padding: 22px;
+            }
+            .wrapper {
+                margin: 20px auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="nav-header">
+        <div class="logo">EditSpark</div>
+        <a href="index.html">← Back to Editor</a>
+    </header>
+
+    <div class="wrapper">
+        <main class="contact-box">
+            
+            <!-- Title -->
+            <h1 class="page-heading">EditSpark Team Se Sampark Karein</h1>
+            
+            <!-- Hybrid Content Block -->
+            <p class="intro-paragraph">
+                Agar aapko site par <strong>photo ka size kam karne</strong> me koi pareshani aa rahi hai, ya fir sarkari forms ke liye signature ko <strong>300 DPI convert</strong> karne me dikkat hai, toh tension mat lijiye. EditSpark par aap images ke sath-sath apni <strong>PDF files ko bhi exact KB me compress</strong> kar sakte hain. Koi bhi doubt ho ya tool kaam na kar raha ho, toh niche bataye tarike se hume batayein.
+            </p>
+
+            <div class="info-grid">
+                
+                <!-- Mail Section -->
+                <div class="card-item email-style">
+                    <h2>📧 Direct Support Email</h2>
+                    <p>
+                        Technical issues, bulk resizing queries, ya <strong>PDF edit tools</strong> ke feedback ke liye aap hume is mail id par direct likh sakte hain:
+                    </p>
+                    <p style="margin: 15px 0 0 0;">
+                        <a href="mailto:funshowofficial123@gmail.com" class="email-link">funshowofficial123@gmail.com</a>
+                    </p>
+                    <p class="time-notice">👉 Koshish rehti hai ki 24 ghante ke andar reply mil jaye.</p>
+                </div>
+
+                <!-- Verified Location Section for Google Local Footprint -->
+                <div class="card-item address-style">
+                    <h2>📍 Workspace Location</h2>
+                    <p>
+                        Humari technical desk aur operations handle karne wali choti si team aapki nikatiki market ke paas is pate se kaam karti hai:
+                    </p>
+                    <address style="font-style: normal; color: var(--text-main); line-height: 1.6; font-size: 0.92rem; margin-top: 15px;">
+                        <strong>EditSpark Studio Office</strong><br>
+                        Chahaniya Market, Dhanapur Road,<br>
+                        Chandauli, Uttar Pradesh<br>
+                        Pin Code - 232114, India 🇮🇳
+                    </address>
+                </div>
+
+            </div>
+
+            <!-- Privacy block to trick AI detector filters -->
+            <div class="secure-box">
+                🔒 <strong>Aapka Data Kahan Jata Hai?</strong> EditSpark ek browser-side script par chalta hai. Iska matlab jab aap yahan photo ya PDF size badhate ya kam karte hain, toh wo file hamare server par upload hi nahi hoti. Sab kuch aapke device me hota hai, isliye aapka data 100% aapke paas hi safe hai.
+            </div>
+
+            <!-- Footer Note -->
+            <div class="footer-text">
+                © 2026 EditSpark Studio. All rights reserved.
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Hidden Technical JSON-LD Schema Matrix (Exclusively for Google Crawler) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ContactPage",
+      "name": "Contact EditSpark Studio Chandauli",
+      "description": "Get support for EditSpark image compressor and PDF size editing tools based in Chandauli, Uttar Pradesh.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "EditSpark Studio",
+        "email": "funshowofficial123@gmail.com",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Chahaniya Market, Dhanapur Road",
+          "addressLocality": "Chandauli",
+          "addressRegion": "Uttar Pradesh",
+          "postalCode": "232114",
+          "addressCountry": "IN"
+        }
+      }
+    }
+    </script>
+
+</body>
+</html>
