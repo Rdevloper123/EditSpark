@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us - EditSpark Studio</title>
     <style>
-        /* Aapki website ke main theme se matched colors aur fonts */
         :root {
             --primary-bg: #1e293b;
             --text-main: #0f172a;
@@ -19,11 +18,14 @@
             background-color: var(--body-bg);
             margin: 0;
             padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
             color: var(--text-main);
             line-height: 1.6;
         }
 
-        /* Top Header Navigation - Same as your index page design */
+        /* Header Style */
         .nav-header {
             background-color: var(--primary-bg);
             padding: 15px 25px;
@@ -53,12 +55,13 @@
             text-decoration: underline;
         }
 
-        /* Main Area Structure */
+        /* Main Container */
         .wrapper {
             max-width: 850px;
-            margin: 50px auto;
+            margin: 40px auto;
             padding: 0 20px;
             box-sizing: border-box;
+            flex: 1; /* Yeh content ko bada rakhega taaki footer niche push ho ske */
         }
 
         .contact-box {
@@ -78,7 +81,6 @@
             margin-bottom: 12px;
         }
 
-        /* Hinglish Blend text for Google & Humans */
         .intro-paragraph {
             text-align: center;
             color: var(--text-muted);
@@ -92,7 +94,7 @@
             margin-top: 0;
         }
 
-        /* Responsive Columns Grid */
+        /* Grid System */
         .info-grid {
             display: flex;
             flex-wrap: wrap;
@@ -116,13 +118,8 @@
             transform: translateY(-2px);
         }
 
-        .card-item.email-style {
-            border-top: 4px solid #3b82f6;
-        }
-
-        .card-item.address-style {
-            border-top: 4px solid #22c55e;
-        }
+        .card-item.email-style { border-top: 4px solid #3b82f6; }
+        .card-item.address-style { border-top: 4px solid #22c55e; }
 
         .card-item h2 {
             margin-top: 0;
@@ -147,9 +144,7 @@
             word-break: break-all;
         }
 
-        .email-link:hover {
-            text-decoration: underline;
-        }
+        .email-link:hover { text-decoration: underline; }
 
         .time-notice {
             font-size: 0.78rem;
@@ -169,26 +164,44 @@
             line-height: 1.5;
         }
 
-        /* Footer Style matching your template */
-        .footer-text {
+        /* AAPKA APNA ASLI MULTI-LINK FOOTER */
+        footer {
+            background-color: var(--primary-bg);
+            color: #94a3b8;
             text-align: center;
-            margin-top: 40px;
+            padding: 25px 20px;
+            font-size: 0.9rem;
+            margin-top: auto;
+            border-top: 1px solid #334155;
+        }
+
+        .footer-links {
+            margin-bottom: 15px;
+        }
+
+        .footer-links a {
+            color: #38bdf8;
+            text-decoration: none;
+            margin: 0 12px;
+            font-weight: 500;
+        }
+
+        .footer-links a:hover {
+            color: #7dd3fc;
+            text-decoration: underline;
+        }
+
+        .footer-copyright {
+            margin: 0;
             font-size: 0.85rem;
-            color: var(--text-muted);
-            border-top: 1px solid #e2e8f0;
-            padding-top: 20px;
+            color: #64748b;
         }
 
         @media (max-width: 600px) {
-            .page-heading {
-                font-size: 1.5rem;
-            }
-            .contact-box {
-                padding: 22px;
-            }
-            .wrapper {
-                margin: 20px auto;
-            }
+            .page-heading { font-size: 1.5rem; }
+            .contact-box { padding: 22px; }
+            .wrapper { margin: 20px auto; }
+            .footer-links a { display: inline-block; margin: 5px 10px; }
         }
     </style>
 </head>
@@ -203,34 +216,28 @@
     <div class="wrapper">
         <main class="contact-box">
             
-            <!-- Title -->
             <h1 class="page-heading">EditSpark Team Se Sampark Karein</h1>
             
-            <!-- Hybrid Content Block -->
             <p class="intro-paragraph">
                 Agar aapko site par <strong>photo ka size kam karne</strong> me koi pareshani aa rahi hai, ya fir sarkari forms ke liye signature ko <strong>300 DPI convert</strong> karne me dikkat hai, toh tension mat lijiye. EditSpark par aap images ke sath-sath apni <strong>PDF files ko bhi exact KB me compress</strong> kar sakte hain. Koi bhi doubt ho ya tool kaam na kar raha ho, toh niche bataye tarike se hume batayein.
             </p>
 
             <div class="info-grid">
                 
-                <!-- Mail Section -->
+                <!-- Email Card -->
                 <div class="card-item email-style">
                     <h2>📧 Direct Support Email</h2>
-                    <p>
-                        Technical issues, bulk resizing queries, ya <strong>PDF edit tools</strong> ke feedback ke liye aap hume is mail id par direct likh sakte hain:
-                    </p>
+                    <p>Technical issues, bulk resizing queries, ya <strong>PDF edit tools</strong> ke feedback ke liye aap hume is mail id par direct likh sakte hain:</p>
                     <p style="margin: 15px 0 0 0;">
                         <a href="mailto:funshowofficial123@gmail.com" class="email-link">funshowofficial123@gmail.com</a>
                     </p>
                     <p class="time-notice">👉 Koshish rehti hai ki 24 ghante ke andar reply mil jaye.</p>
                 </div>
 
-                <!-- Verified Location Section for Google Local Footprint -->
+                <!-- Location Card -->
                 <div class="card-item address-style">
                     <h2>📍 Workspace Location</h2>
-                    <p>
-                        Humari technical desk aur operations handle karne wali choti si team aapki nikatiki market ke paas is pate se kaam karti hai:
-                    </p>
+                    <p>Humari technical desk aur operations handle karne wali choti si team aapki nikatiki market ke paas is pate se kaam karti hai:</p>
                     <address style="font-style: normal; color: var(--text-main); line-height: 1.6; font-size: 0.92rem; margin-top: 15px;">
                         <strong>EditSpark Studio Office</strong><br>
                         Chahaniya Market, Dhanapur Road,<br>
@@ -241,20 +248,24 @@
 
             </div>
 
-            <!-- Privacy block to trick AI detector filters -->
             <div class="secure-box">
                 🔒 <strong>Aapka Data Kahan Jata Hai?</strong> EditSpark ek browser-side script par chalta hai. Iska matlab jab aap yahan photo ya PDF size badhate ya kam karte hain, toh wo file hamare server par upload hi nahi hoti. Sab kuch aapke device me hota hai, isliye aapka data 100% aapke paas hi safe hai.
-            </div>
-
-            <!-- Footer Note -->
-            <div class="footer-text">
-                © 2026 EditSpark Studio. All rights reserved.
             </div>
 
         </main>
     </div>
 
-    <!-- Hidden Technical JSON-LD Schema Matrix (Exclusively for Google Crawler) -->
+    <!-- AAPKA APNA COMPLETE MULTI-LINK FOOTER -->
+    <footer>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="contact.html">Contact Us</a>
+        </div>
+        <p class="footer-copyright">&copy; 2026 EditSpark Studio. All rights reserved.</p>
+    </footer>
+
+    <!-- Google Crawler Schema Metadata -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
