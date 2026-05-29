@@ -384,471 +384,330 @@
         <p style="margin: 0;">&copy; 2026 <strong>EditSpark Studio</strong> - Apna Bharatiya Editor Suite 🇮🇳. All Rights Reserved.</p>
     </div>
 </footer>
-<script>
-    // Global Dashboard Configuration States
-    let ORIGINAL_IMAGE_SOURCE = null;
-    let WORKSPACE_CANVAS = null;
-    let ACTIVE_METADATA_TYPE = "image/jpeg";
-    let TARGET_DPI_RESOLUTION = 300;
-    let CLEAN_FILTER_BACKUP = null;
+    <script>
+        let globalImage = new Image();
+        let originalWidth = 0, originalHeight = 0, originalRatio = 1, originalDPI = 96, sourceRawFile = null;
 
-    // Interactive Crop Box Coordinate Trackers
-    let cropBoxX = 20;
-    let cropBoxY = 20;
-    let cropBoxW = 160;
-    let cropBoxH = 160;
-    let isDraggingCropBox = false;
-    let isResizingCropBox = false;
-    let dragStartX = 0;
-    let dragStartY = 0;
-    let initialBoxX = 0;
-    let initialBoxY = 0;
-    let initialBoxW = 0;
-    let initialBoxH = 0;
+        const uploadAreaBox = document.getElementById('upload-area-box');
+        const previewWorkspaceArea = document.getElementById('preview-workspace-area');
+        const mainToolsGrid = document.getElementById('main-tools-grid');
+        
+        const previewWrapper = document.getElementById('preview-wrapper');
+        const cropBox = document.getElementById('crop-box');
+        const previewImg = document.getElementById('img-preview');
+        const cropToggleIcon = document.getElementById('crop-toggle-icon');
+        
+        let isDragging = false, isResizing = false;
+        let startX, startY, startLeft, startTop, startWidth, startHeight;
 
-    // 1. Local Image Input File Pointer Reader
-    function previewImage(event) {
-        const filePointer = event.target.files[0];
-        if (!filePointer) return;
+        // UI Management - Focus Mode Engine with Mobile Back Button Protection
+        let isFormOpen = false;
 
-        ACTIVE_METADATA_TYPE = filePointer.type || "image/jpeg";
-        const fileReaderInstance = new FileReader();
+        function openToolForm(panelId) {
+            if (!globalImage.src) { 
+                alert("Kripya pehle upar diye gaye square box se photo upload karein!"); 
+                return; 
+            }
+            mainToolsGrid.style.display = 'none';
+            document.querySelectorAll('.form-panel').forEach(p => p.style.display = 'none');
+            document.getElementById(panelId).style.display = 'block';
+            
+            // Push dynamic history state for phone physical back button intercept
+            if (!isFormOpen) {
+                isFormOpen = true;
+                history.pushState({ panelActive: true }, "");
+            }
+        }
 
-        fileReaderInstance.onload = function(e) {
-            const tempImageElement = new Image();
-            tempImageElement.onload = function() {
-                ORIGINAL_IMAGE_SOURCE = tempImageElement;
-                
-                // Set default pixel dimensions inside input fields
-                document.getElementById('img-width').value = tempImageElement.width;
-                document.getElementById('img-height').value = tempImageElement.height;
-                
-                // Show real-time size info to the applicant
-                const sizeInKB = (filePointer.size / 1024).toFixed(2);
-                document.getElementById('file-info').innerHTML = 
-                    `📋 <strong>Loaded File:</strong> ${filePointer.name} | <strong>Current Size:</strong> ${sizeInKB} KB | <strong>Dimensions:</strong> ${tempImageElement.width}x${tempImageElement.height} px`;
-                
-                // Refresh rendering viewports
-                renderImageToWorkspacePreview();
-                resetCropBoxOverlayUI();
-                
-                // Switch drag box layout views
-                document.getElementById('upload-area-box').style.display = 'none';
-                document.getElementById('preview-workspace-area').style.display = 'block';
-                document.getElementById('main-tools-grid').style.display = 'grid';
+        function closeToolForm(preventBackHistory = false) {
+            document.querySelectorAll('.form-panel').forEach(p => p.style.display = 'none');
+            mainToolsGrid.style.display = 'grid';
+            cropBox.style.display = 'none';
+            cropToggleIcon.classList.remove('active');
+            
+            isFormOpen = false;
+            // Sync history state if closed manually by button
+            if (!preventBackHistory) {
+                history.back();
+            }
+        }
+
+        // Global Back Event Listener for Smartphones
+        window.addEventListener('popstate', function(event) {
+            if (isFormOpen) {
+                closeToolForm(true);
+            }
+        });
+        // Native File Handling
+        function previewImage(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            sourceRawFile = file;
+
+            const dpiReader = new FileReader();
+            dpiReader.onload = function(e) { originalDPI = extractDPI(e.target.result); };
+            dpiReader.readAsArrayBuffer(file);
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                globalImage.src = e.target.result;
+                globalImage.onload = function() {
+                    originalWidth = globalImage.width; originalHeight = globalImage.height;
+                    originalRatio = originalWidth / originalHeight;
+                    
+                    document.getElementById('img-width').value = originalWidth;
+                    document.getElementById('img-height').value = originalHeight;
+                    
+                    document.getElementById('file-info').innerText = `Specs: ${originalWidth}x${originalHeight} px | Native: ${originalDPI} DPI | Current Size: ${(file.size/1024).toFixed(2)} KB`;
+                    
+                    previewImg.src = e.target.result;
+                    
+                    uploadAreaBox.style.display = 'none';
+                    previewWorkspaceArea.style.display = 'flex';
+                    closeToolForm(true); // Reset tool layout states silently
+                }
+            }
+            reader.onloadend = function() { applyFilters(); };
+            reader.readAsDataURL(file);
+        }
+
+        function cancelUploadedImage() {
+            sourceRawFile = null;
+            globalImage = new Image();
+            previewImg.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
+            document.getElementById('image-input').value = "";
+            
+            document.getElementById('filter-bright').value = 100;
+            document.getElementById('filter-contrast').value = 100;
+            document.getElementById('lbl-bright').innerText = '100%';
+            document.getElementById('lbl-contrast').innerText = '100%';
+            previewImg.style.filter = "none";
+            
+            previewWorkspaceArea.style.display = 'none';
+            uploadAreaBox.style.display = 'flex';
+            closeToolForm(true); // Close panels safely without pushing extra history steps
+        }
+
+        function extractDPI(arrayBuffer) {
+            const view = new DataView(arrayBuffer);
+            if (view.byteLength < 20) return 96;
+            for (let i = 0; i < view.byteLength - 20; i++) {
+                if (view.getUint16(i) === 0xFFE0 && view.getUint32(i + 4) === 0x4A464946) {
+                    const unit = view.getUint8(i + 13);
+                    if (unit === 1 || unit === 2) return unit === 1 ? view.getUint16(i + 14) : Math.round(view.getUint16(i + 14) * 2.54);
+                }
+            }
+            return 96;
+        }
+
+        document.getElementById('img-width').addEventListener('input', function() {
+            if(document.getElementById('aspect-ratio').checked && originalRatio) document.getElementById('img-height').value = Math.round(this.value / originalRatio);
+        });
+        document.getElementById('img-height').addEventListener('input', function() {
+            if(document.getElementById('aspect-ratio').checked && originalRatio) document.getElementById('img-width').value = Math.round(this.value * originalRatio);
+        });
+
+        // Live Preview Filters Filter
+        function applyFilters() {
+            if(!globalImage.src) return;
+            const b = document.getElementById('filter-bright').value; const c = document.getElementById('filter-contrast').value;
+            document.getElementById('lbl-bright').innerText = b + '%'; document.getElementById('lbl-contrast').innerText = c + '%';
+            previewImg.style.filter = `brightness(${b}%) contrast(${c}%)`;
+        }
+
+        // Pointer Event Handlers for Interactive Cropping Grid
+        cropBox.addEventListener('pointerdown', function(e) { if(e.target.id === 'crop-handle-btn') return; isDragging = true; cropBox.setPointerCapture(e.pointerId); startX = e.clientX; startY = e.clientY; startLeft = parseInt(cropBox.style.left) || 0; startTop = parseInt(cropBox.style.top) || 0; e.preventDefault(); });
+        document.getElementById('crop-handle-btn').addEventListener('pointerdown', function(e) { isResizing = true; document.getElementById('crop-handle-btn').setPointerCapture(e.pointerId); startX = e.clientX; startY = e.clientY; startWidth = cropBox.clientWidth; startHeight = cropBox.clientHeight; e.preventDefault(); e.stopPropagation(); });
+        window.addEventListener('pointermove', function(e) { if (!isDragging && !isResizing) return; requestAnimationFrame(() => { const maxX = previewImg.clientWidth; const maxY = previewImg.clientHeight; if(isDragging) { let nl = Math.max(0, Math.min(startLeft + (e.clientX - startX), maxX - cropBox.clientWidth)); let nt = Math.max(0, Math.min(startTop + (e.clientY - startY), maxY - cropBox.clientHeight)); cropBox.style.left = nl + 'px'; cropBox.style.top = nt + 'px'; } if(isResizing) { let nw = Math.min(Math.max(30, startWidth + (e.clientX - startX)), maxX - (parseInt(cropBox.style.left) || 0)); let nh = Math.min(Math.max(30, startHeight + (e.clientY - startY)), maxY - (parseInt(cropBox.style.top) || 0)); cropBox.style.width = nw + 'px'; cropBox.style.height = nh + 'px'; } }); });
+        window.addEventListener('pointerup', function() { isDragging = false; isResizing = false; });
+
+        function insertDpiInBlob(blob, targetDPI, callback) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const buffer = e.target.result; const view = new DataView(buffer);
+                const jfif = new Uint8Array([0xFF, 0xE0, 0x00, 0x10, 0x4A, 0x46, 0x49, 0x46, 0x00, 0x01, 0x01, 0x01, (targetDPI >> 8) & 0xFF, targetDPI & 0xFF, (targetDPI >> 8) & 0xFF, targetDPI & 0xFF, 0x00, 0x00]);
+                let out; if (view.getUint16(0) === 0xFFD8) { if (view.getUint16(2) === 0xFFE0) out = appendBuffers(view.buffer.slice(0, 2), jfif, buffer.slice(2 + view.getUint16(4) + 2)); else out = appendBuffers(view.buffer.slice(0, 2), jfif, buffer.slice(2)); } else out = buffer;
+                callback(new Blob([out], { type: blob.type }));
             };
-            tempImageElement.src = e.target.result;
-        };
-        fileReaderInstance.readAsDataURL(filePointer);
-    }
-
-    // 2. Render Scaled Matrix Image inside Browser CSS Container safely
-    function renderImageToWorkspacePreview() {
-        if (!ORIGINAL_IMAGE_SOURCE) return;
-        const targetPreviewImage = document.getElementById('img-preview');
-        targetPreviewImage.src = ORIGINAL_IMAGE_SOURCE.src;
-    }
-
-    // 3. Reset Crop Red Box Overlays coordinates back to bounds
-    function resetCropBoxOverlayUI() {
-        cropBoxX = 30;
-        cropBoxY = 30;
-        cropBoxW = 140;
-        cropBoxH = 140;
-        applyUpdatedCropBoxDOMStyles();
-    }
-
-    function applyUpdatedCropBoxDOMStyles() {
-        const targetBoxDOM = document.getElementById('crop-box');
-        if (!targetBoxDOM) return;
-        targetBoxDOM.style.left = cropBoxX + 'px';
-        targetBoxDOM.style.top = cropBoxY + 'px';
-        targetBoxDOM.style.width = cropBoxW + 'px';
-        targetBoxDOM.style.height = cropBoxH + 'px';
-    }
-
-    // 4. Toggle Interactive Crop Grid Layout Visibility 
-    function toggleCropOverlay() {
-        const boxInstance = document.getElementById('crop-box');
-        if (!boxInstance) return;
-        if (boxInstance.style.display === 'none' || boxInstance.style.display === '') {
-            boxInstance.style.display = 'block';
-            document.getElementById('crop-toggle-icon').innerText = "🙈 Hide Crop Grid Overlay";
-        } else {
-            boxInstance.style.display = 'none';
-            document.getElementById('crop-toggle-icon').innerText = "✂️ Toggle Crop Area Grid";
+            reader.readAsArrayBuffer(blob);
         }
-    }
 
-    // 5. Tool Panel Route Views Controller Toggles
-    function openToolForm(panelDOMId) {
-        // Safe check to see if an image is loaded
-        if (!ORIGINAL_IMAGE_SOURCE) {
-            alert("⚠️ Please upload a scanned photo or signature first to open configuration settings!");
-            return;
-        }
-        
-        // Hide grid cards
-        document.getElementById('main-tools-grid').style.display = 'none';
-        
-        // Close all active open panel views 
-        const allPanels = document.querySelectorAll('.form-panel');
-        allPanels.forEach(panel => panel.style.display = 'none');
-        
-        // Open selected operation viewport node
-        const activeTargetPanel = document.getElementById(panelDOMId);
-        activeTargetPanel.style.display = 'block';
-        activeTargetPanel.scrollIntoView({ behavior: 'smooth' });
+        function appendBuffers(b1, b2, b3) { const c = new Uint8Array(b1.byteLength + b2.byteLength + b3.byteLength); c.set(new Uint8Array(b1), 0); c.set(new Uint8Array(b2), b1.byteLength); c.set(new Uint8Array(b3), b1.byteLength + b2.byteLength); return c.buffer; }
 
-        // Special dynamic trigger setup for Crop tool UI assistance
-        const cropBoxInstance = document.getElementById('crop-box');
-        if (panelDOMId === 'crop-panel') {
-            cropBoxInstance.style.display = 'block';
-            document.getElementById('crop-toggle-icon').innerText = "🙈 Hide Crop Grid Overlay";
-        } else {
-            cropBoxInstance.style.display = 'none';
-            document.getElementById('crop-toggle-icon').innerText = "✂️ Toggle Crop Area Grid";
-        }
-    }
+        // Adaptive Search Compressing Engine (Optimized High Speed Loop)
+        function applyKBConstraint(sourceCanvas, targetKB, selectedDPI, statusId) {
+            const format = 'image/jpeg';
+            if (targetKB === 0) { 
+                sourceCanvas.toBlob(b => insertDpiInBlob(b, selectedDPI, final => triggerDownload(final, statusId)), format, 0.85); 
+                return; 
+            }
+            
+            let lowQuality = 0.05, highQuality = 1.0, quality = 0.80;
+            let lowScale = 0.2, highScale = 1.0, scale = 1.0;
+            let bestBlob = null, loopIteration = 0;
+            const targetBytes = targetKB * 1024;
 
-    function closeToolForm() {
-        const allPanels = document.querySelectorAll('.form-panel');
-        allPanels.forEach(panel => panel.style.display = 'none');
-        document.getElementById('main-tools-grid').style.display = 'grid';
-        document.getElementById('crop-box').style.display = 'none';
-        document.getElementById('crop-toggle-icon').innerText = "✂️ Toggle Crop Area Grid";
-    }
+            function runSearch() {
+                if (loopIteration >= 12 || (highQuality - lowQuality < 0.03 && highScale - lowScale < 0.03)) { 
+                    finalize(bestBlob); 
+                    return; 
+                }
+                loopIteration++;
 
-    // 6. Close / Clear current image workspace session cleanly
-    function cancelUploadedImage() {
-        ORIGINAL_IMAGE_SOURCE = null;
-        WORKSPACE_CANVAS = null;
-        CLEAN_FILTER_BACKUP = null;
-        
-        document.getElementById('image-input').value = "";
-        document.getElementById('img-preview').src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
-        
-        // Reset Filter Sliders values back to default middle state
-        document.getElementById('filter-bright').value = 100;
-        document.getElementById('filter-contrast').value = 100;
-        document.getElementById('lbl-bright').innerText = "100%";
-        document.getElementById('lbl-contrast').innerText = "100%";
-        
-        // Toggle view containers back to square scratch layout
-        document.getElementById('upload-area-box').style.display = 'block';
-        document.getElementById('preview-workspace-area').style.display = 'none';
-        document.getElementById('main-tools-grid').style.display = 'none';
-        
-        const allPanels = document.querySelectorAll('.form-panel');
-        allPanels.forEach(panel => panel.style.display = 'none');
-    }
-    // 7. Interactive Crop Drag & Resize Pointer Listeners
-    window.addEventListener('DOMContentLoaded', () => {
-        const cropBoxDOM = document.getElementById('crop-box');
-        const handleDOM = document.getElementById('crop-handle-btn');
+                let testCanvas = document.createElement('canvas');
+                testCanvas.width = Math.max(30, Math.floor(sourceCanvas.width * scale));
+                testCanvas.height = Math.max(30, Math.floor(sourceCanvas.height * scale));
+                let testCtx = testCanvas.getContext('2d');
+                testCtx.drawImage(sourceCanvas, 0, 0, testCanvas.width, testCanvas.height);
 
-        if(cropBoxDOM && handleDOM) {
-            // Drag Listener setup
-            cropBoxDOM.addEventListener('mousedown', (e) => {
-                if (e.target === handleDOM) return; // Pass to resize
-                isDraggingCropBox = true;
-                dragStartX = e.clientX;
-                dragStartY = e.clientY;
-                initialBoxX = cropBoxX;
-                initialBoxY = cropBoxY;
-            });
-
-            // Resize Listener setup
-            handleDOM.addEventListener('mousedown', (e) => {
-                e.stopPropagation();
-                isResizingCropBox = true;
-                dragStartX = e.clientX;
-                dragStartY = e.clientY;
-                initialBoxW = cropBoxW;
-                initialBoxH = cropBoxH;
-            });
-
-            window.addEventListener('mousemove', (e) => {
-                if (isDraggingCropBox) {
-                    const deltaX = e.clientX - dragStartX;
-                    const deltaY = e.clientY - dragStartY;
-                    cropBoxX = initialBoxX + deltaX;
-                    cropBoxY = initialBoxY + deltaY;
+                testCanvas.toBlob(rawBlob => {
+                    if (!rawBlob) { runSearch(); return; }
                     
-                    // Keep bounds inside boundary preview wrapper box
-                    if(cropBoxX < 0) cropBoxX = 0;
-                    if(cropBoxY < 0) cropBoxY = 0;
-                    applyUpdatedCropBoxDOMStyles();
-                }
-                if (isResizingCropBox) {
-                    const deltaX = e.clientX - dragStartX;
-                    const deltaY = e.clientY - dragStartY;
-                    cropBoxW = initialBoxW + deltaX;
-                    cropBoxH = initialBoxH + deltaY;
-                    
-                    if(cropBoxW < 30) cropBoxW = 30;
-                    if(cropBoxH < 30) cropBoxH = 30;
-                    applyUpdatedCropBoxDOMStyles();
-                }
-            });
-
-            window.addEventListener('mouseup', () => {
-                isDraggingCropBox = false;
-                isResizingCropBox = false;
-            });
-        }
-    });
-
-    // 8. Real-time Canvas CSS Filter Core pipeline 
-    function applyFilters() {
-        if (!ORIGINAL_IMAGE_SOURCE) return;
-        const bVal = document.getElementById('filter-bright').value;
-        const cVal = document.getElementById('filter-contrast').value;
-        
-        document.getElementById('lbl-bright').innerText = bVal + "%";
-        document.getElementById('lbl-contrast').innerText = cVal + "%";
-        
-        const previewDOM = document.getElementById('img-preview');
-        previewDOM.style.filter = `brightness(${bVal}%) contrast(${cVal}%)`;
-    }
-
-    // 9. Process Master Pipeline Logic
-    function processAndDownload(actionType) {
-        if (!ORIGINAL_IMAGE_SOURCE) {
-            alert("Upload an image first!");
-            return;
-        }
-
-        const statusNode = document.getElementById(`status-${actionType}`);
-        statusNode.innerText = "⏳ Processing image algorithm layers inside browser memory...";
-
-        // Collect matching active tool variables
-        let targetWidth = ORIGINAL_IMAGE_SOURCE.width;
-        let targetHeight = ORIGINAL_IMAGE_SOURCE.height;
-        let targetKB = null;
-
-        if (actionType === 'pixel') {
-            targetWidth = parseInt(document.getElementById('img-width').value) || ORIGINAL_IMAGE_SOURCE.width;
-            targetHeight = parseInt(document.getElementById('img-height').value) || ORIGINAL_IMAGE_SOURCE.height;
-            targetKB = parseFloat(document.getElementById('target-kb-a').value) || null;
-        } else if (actionType === 'kb') {
-            targetKB = parseFloat(document.getElementById('target-kb-b').value);
-            if (!targetKB) { alert("Please input target compressed KB limit!"); return; }
-        } else if (actionType === 'crop') {
-            targetKB = parseFloat(document.getElementById('target-kb-c').value) || null;
-        } else if (actionType === 'clear') {
-            targetKB = parseFloat(document.getElementById('target-kb-d').value) || null;
-        } else if (actionType === 'increase') {
-            targetKB = parseFloat(document.getElementById('increase-target-kb').value);
-            if (!targetKB) { alert("Please input higher minimum target KB constraint!"); return; }
-        }
-
-        // Initialize Virtual Operation Canvas Element
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-
-        if (actionType === 'crop') {
-            // Real physical image coordinate translation calculations
-            const previewImg = document.getElementById('img-preview');
-            const scaleX = ORIGINAL_IMAGE_SOURCE.width / previewImg.clientWidth;
-            const scaleY = ORIGINAL_IMAGE_SOURCE.height / previewImg.clientHeight;
-
-            canvas.width = cropBoxW * scaleX;
-            canvas.height = cropBoxH * scaleY;
-            
-            ctx.drawImage(
-                ORIGINAL_IMAGE_SOURCE,
-                cropBoxX * scaleX, cropBoxY * scaleY, cropBoxW * scaleX, cropBoxH * scaleY,
-                0, 0, canvas.width, canvas.height
-            );
-        } else {
-            canvas.width = targetWidth;
-            canvas.height = targetHeight;
-            
-            // Apply Sign Clear Filters if active session parameters matches
-            if (actionType === 'clear') {
-                const bVal = document.getElementById('filter-bright').value;
-                const cVal = document.getElementById('filter-contrast').value;
-                ctx.filter = `brightness(${bVal}%) contrast(${cVal}%)`;
-            }
-            ctx.drawImage(ORIGINAL_IMAGE_SOURCE, 0, 0, targetWidth, targetHeight);
-        }
-
-        // Detect target required DPI from layout dropdown context
-        const panelDOM = document.getElementById(`${actionType}-panel`);
-        const dpiSelect = panelDOM.querySelector('.set-dpi-class');
-        const selectedDpi = dpiSelect ? dpiSelect.value : "300";
-
-        // Convert Canvas to Binary Blob Array
-        let baseMime = ACTIVE_METADATA_TYPE;
-        if (baseMime === "image/png" && actionType === 'kb') {
-            baseMime = "image/jpeg"; // Force JPEG to compress byte limits accurately
-        }
-
-        if (actionType === 'increase') {
-            // Force higher file injection routine block
-            let currentQuality = 0.92;
-            let currentDataUrl = canvas.toDataURL("image/jpeg", currentQuality);
-            let currentBlob = dataURLToBlobBytes(currentDataUrl);
-            
-            if ((currentBlob.size / 1024) >= targetKB) {
-                // If native high render meets target size automatically
-                finalizeAndTriggerDownload(currentBlob, selectedDpi, actionType, statusNode);
-            } else {
-                // Inject metadata padding buffer stream safely without ruining content structure
-                let nativeBytesSize = currentBlob.size;
-                let neededBytes = (targetKB * 1024) - nativeBytesSize;
-                
-                if(neededBytes > 0) {
-                    let paddedBlob = injectSafeByteStructure(currentBlob, neededBytes);
-                    finalizeAndTriggerDownload(paddedBlob, selectedDpi, actionType, statusNode);
-                } else {
-                    finalizeAndTriggerDownload(currentBlob, selectedDpi, actionType, statusNode);
-                }
-            }
-        } 
-        else if (targetKB) {
-            // Run Binary Search Engine Optimizer Loop to match exact compression target 
-            let minQ = 0.01;
-            let maxQ = 1.0;
-            let bestBlob = null;
-            let iterations = 8; // Iterate to match accurate parameters
-
-            for (let i = 0; i < iterations; i++) {
-                let midQ = (minQ + maxQ) / 2;
-                let dataUrl = canvas.toDataURL(baseMime, midQ);
-                let loopBlob = dataURLToBlobBytes(dataUrl);
-                let loopKB = loopBlob.size / 1024;
-
-                if (loopKB <= targetKB) {
-                    bestBlob = loopBlob;
-                    minQ = midQ; // Try to get higher quality close to limit boundary
-                } else {
-                    maxQ = midQ; // File size is too high, decrease quality parameters
-                }
-            }
-
-            if (!bestBlob) {
-                bestBlob = dataURLToBlobBytes(canvas.toDataURL(baseMime, 0.01));
-            }
-            finalizeAndTriggerDownload(bestBlob, selectedDpi, actionType, statusNode);
-        } else {
-            // Standard direct native quality download routine pipeline
-            let finalUrl = canvas.toDataURL(baseMime, 0.92);
-            finalizeAndTriggerDownload(dataURLToBlobBytes(finalUrl), selectedDpi, actionType, statusNode);
-        }
-    }
-    // 10. Data URL Translation Layer to Uint8 Raw Binary Array Bytes
-    function dataURLToBlobBytes(dataUrlString) {
-        const stringSegments = dataUrlString.split(',');
-        const mimeContext = stringSegments[0].match(/:(.*?);/)[1];
-        const decodedStream = atob(stringSegments[1]);
-        let streamLength = decodedStream.length;
-        const u8ArrayBuffer = new Uint8Array(streamLength);
-        
-        while (streamLength--) {
-            u8ArrayBuffer[streamLength] = decodedStream.charCodeAt(streamLength);
-        }
-        return new Blob([u8ArrayBuffer], { type: mimeContext });
-    }
-
-    // 11. Custom Padding Binary Injector Engine (For Increasing File Sizes)
-    function injectSafeByteStructure(originalBlob, totalBytesToPadding) {
-        // We inject structural comment layers inside footer EOF blocks to maintain image parity
-        const paddingBuffer = new Uint8Array(Math.floor(totalBytesToPadding));
-        // Fill arrays with safe non-null custom static characters
-        for (let i = 0; i < paddingBuffer.length; i++) {
-            paddingBuffer[i] = 0x30 + (i % 10); // Standard readable cyclic numeric bytes
-        }
-        return new Blob([originalBlob, paddingBuffer], { type: originalBlob.type });
-    }
-
-    // 12. Heavy Core Logic: Overwrite JPEG Header Density Parameters for Exact 300 DPI compliance
-    function rewriteDpiMetadataInBlob(blobMatrix, targetDpiString) {
-        if (targetDpiString === "original") return Promise.resolve(blobMatrix);
-        
-        const numericDpiValue = parseInt(targetDpiString);
-        return new Promise((resolve) => {
-            const fileReaderInstance = new FileReader();
-            fileReaderInstance.onload = function(event) {
-                const bufferArray = new Uint8Array(event.target.result);
-                
-                // Confirm valid magic bytes structures for JPEGs (FF D8)
-                if (bufferArray[0] === 0xFF && bufferArray[1] === 0xD8) {
-                    let positionIndex = 2;
-                    let app0MarkerFound = false;
-
-                    while (positionIndex < bufferArray.length) {
-                        if (bufferArray[positionIndex] === 0xFF && bufferArray[positionIndex + 1] === 0xE0) {
-                            // JFIF APP0 Segment Match block verified
-                            app0MarkerFound = true;
-                            
-                            // Rewrite units identifier attribute (1 = dots per inch)
-                            bufferArray[positionIndex + 7] = 1; 
-                            
-                            // Inject X Density Byte segments
-                            bufferArray[positionIndex + 8] = (numericDpiValue >> 8) & 0xFF;
-                            bufferArray[positionIndex + 9] = numericDpiValue & 0xFF;
-                            
-                            // Inject Y Density Byte segments
-                            bufferArray[positionIndex + 10] = (numericDpiValue >> 8) & 0xFF;
-                            bufferArray[positionIndex + 11] = numericDpiValue & 0xFF;
-                            break;
+                    insertDpiInBlob(rawBlob, selectedDPI, dpiInjectedBlob => {
+                        if (dpiInjectedBlob.size <= targetBytes) {
+                            bestBlob = dpiInjectedBlob;
+                            lowQuality = quality;
+                            lowScale = scale;
+                        } else {
+                            highQuality = quality;
+                            highScale = scale;
                         }
                         
-                        if (bufferArray[positionIndex] === 0xFF && (bufferArray[positionIndex + 1] === 0xDA || bufferArray[positionIndex + 1] === 0xD9)) {
-                            // SOS or EOI boundary hit, break parsing pipelines
-                            break;
-                        }
-                        
-                        // Increment dynamic pointers based on active segment structural byte length
-                        let segmentLength = (bufferArray[positionIndex + 2] << 8) + bufferArray[positionIndex + 3];
-                        positionIndex += segmentLength + 2;
-                    }
+                        quality = (lowQuality + highQuality) / 2;
+                        scale = (lowScale + highScale) / 2;
+                        runSearch();
+                    });
+                }, format, quality);
+            }
 
-                    // If older files missing generic APP0 structures, inject standard 18-byte template blocks manually
-                    if (!app0MarkerFound && bufferArray.length > 4) {
-                        const app0HeaderTemplate = new Uint8Array([
-                            0xFF, 0xE0, 0x00, 0x10, 0x4A, 0x46, 0x49, 0x46, 0x00, 0x01, 0x01, 
-                            0x01, (numericDpiValue >> 8) & 0xFF, numericDpiValue & 0xFF, 
-                            (numericDpiValue >> 8) & 0xFF, numericDpiValue & 0xFF, 0x00, 0x00
-                        ]);
-                        
-                        const structuralRebuildBuffer = new Uint8Array(bufferArray.length + app0HeaderTemplate.length);
-                        structuralRebuildBuffer.set(bufferArray.subarray(0, 2), 0); // SOS
-                        structuralRebuildBuffer.set(app0HeaderTemplate, 2); // APP0 Header
-                        structuralRebuildBuffer.set(bufferArray.subarray(2), 2 + app0HeaderTemplate.length); // Remaining Data Stream
-                        
-                        resolve(new Blob([structuralRebuildBuffer], { type: "image/jpeg" }));
-                        return;
-                    }
+            function finalize(finalBlob) {
+                if (!finalBlob) {
+                    let testCanvas = document.createElement('canvas');
+                    testCanvas.width = Math.max(30, Math.floor(sourceCanvas.width * 0.15));
+                    testCanvas.height = Math.max(30, Math.floor(sourceCanvas.height * 0.15));
+                    let testCtx = testCanvas.getContext('2d');
+                    testCtx.drawImage(sourceCanvas, 0, 0, testCanvas.width, testCanvas.height);
+                    
+                    testCanvas.toBlob(lowestBlob => {
+                        insertDpiInBlob(lowestBlob, selectedDPI, dpiBlob => {
+                            finalBlob = dpiBlob;
+                            executePadding();
+                        });
+                    }, format, 0.08);
+                } else {
+                    executePadding();
                 }
-                resolve(new Blob([bufferArray], { type: blobMatrix.type }));
-            };
-            fileReaderInstance.readAsArrayBuffer(blobMatrix);
-        });
-    }
 
-    // 13. Master Downloader Engine Dispatches
-    function finalizeAndTriggerDownload(rawBlobOutput, targetDpiString, modeTag, statusDOMNode) {
-        rewriteDpiMetadataInBlob(rawBlobOutput, targetDpiString).then((processedBlob) => {
-            const finalSizeKB = (processedBlob.size / 1024).toFixed(2);
-            statusDOMNode.innerHTML = `✅ <strong>Success!</strong> Optimized File Size: <strong>${finalSizeKB} KB</strong>. Auto downloading triggered...`;
+                function executePadding() {
+                    let currentSize = finalBlob.size;
+                    if (currentSize < targetBytes) {
+                        let addBytes = targetBytes - currentSize;
+                        if (addBytes > 0) {
+                            finalBlob = new Blob([finalBlob, new Uint8Array(addBytes).fill(0x20)], { type: format });
+                        }
+                    }
+                    triggerDownload(finalBlob, statusId);
+                }
+            }
+            runSearch();
+        }
 
-            // Setup temporary DOM trigger anchor links
-            const anchorLink = document.createElement('a');
-            anchorLink.download = `EditSpark_${modeTag}_${Date.now()}.jpg`;
-            anchorLink.href = URL.createObjectURL(processedBlob);
+        // Unified Process Routing Engine (Optimized for High-Speed)
+        function processAndDownload(blockType) {
+            if (!globalImage.src) return;
+            const statusId = 'status-' + blockType; 
+            document.getElementById(statusId).innerText = "Processing engine routine...";
             
-            document.body.appendChild(anchorLink);
-            anchorLink.click();
+            const panelEl = document.getElementById(blockType + '-panel');
+            const dpiValue = panelEl.querySelector('.set-dpi-class').value;
+            const selectedDPI = dpiValue === 'original' ? originalDPI : (parseInt(dpiValue) || 300);
             
-            // Clean up temporary objects out of DOM memory nodes safely
-            document.body.removeChild(anchorLink);
-            setTimeout(() => URL.revokeObjectURL(anchorLink.href), 1000);
-        });
-    }
-</script>
+            if (blockType === 'increase') {
+                const targetKB = parseInt(document.getElementById('increase-target-kb').value) || 0; 
+                const targetBytes = targetKB * 1024;
 
+                if (!sourceRawFile) { alert("File buffer loss error! Please re-upload."); return; }
+                if (targetKB <= (sourceRawFile.size / 1024)) { 
+                    alert("Target size aapki image ke current size se bada hona chahiye!"); 
+                    document.getElementById(statusId).innerText = "Error: Invalid target.";
+                    return; 
+                }
+
+                const binaryReader = new FileReader();
+                binaryReader.onload = function(event) {
+                    const nativeBlob = new Blob([event.target.result], { type: sourceRawFile.type });
+                    insertDpiInBlob(nativeBlob, selectedDPI, verifiedDpiBlob => {
+                        let currentBytes = verifiedDpiBlob.size;
+                        if (currentBytes < targetBytes) {
+                            let extraBytesNeeded = targetBytes - currentBytes;
+                            let paddedBlob = new Blob([verifiedDpiBlob, new Uint8Array(extraBytesNeeded).fill(0x20)], { type: 'image/jpeg' });
+                            triggerDownload(paddedBlob, statusId);
+                        } else { 
+                            triggerDownload(verifiedDpiBlob, statusId); 
+                        }
+                    });
+                };
+                binaryReader.readAsArrayBuffer(sourceRawFile);
+                return; 
+            }
+
+            const canvas = document.createElement('canvas'); 
+            const ctx = canvas.getContext('2d'); 
+            let targetKB = 0;
+
+            if (blockType === 'pixel') {
+                targetKB = parseInt(document.getElementById('target-kb-a').value) || 0;
+                canvas.width = parseInt(document.getElementById('img-width').value) || originalWidth;
+                canvas.height = parseInt(document.getElementById('img-height').value) || originalHeight;
+                ctx.drawImage(globalImage, 0, 0, canvas.width, canvas.height);
+            } else if (blockType === 'kb') {
+                targetKB = parseInt(document.getElementById('target-kb-b').value) || 0;
+                canvas.width = originalWidth; canvas.height = originalHeight;
+                ctx.drawImage(globalImage, 0, 0, canvas.width, canvas.height);
+            } else if (blockType === 'crop') {
+                targetKB = parseInt(document.getElementById('target-kb-c').value) || 0;
+                const scaleX = originalWidth / previewImg.clientWidth; 
+                const scaleY = originalHeight / previewImg.clientHeight;
+                
+                let cx = (parseInt(cropBox.style.left) || 0) * scaleX;
+                let cy = (parseInt(cropBox.style.top) || 0) * scaleY;
+                let cw = cropBox.clientWidth * scaleX;
+                let ch = cropBox.clientHeight * scaleY;
+                
+                canvas.width = cw; canvas.height = ch;
+                ctx.drawImage(globalImage, cx, cy, cw, ch, 0, 0, cw, ch);
+            } else if (blockType === 'clear') {
+                targetKB = parseInt(document.getElementById('target-kb-d').value) || 0;
+                
+                let targetWidth = originalWidth;
+                let targetHeight = originalHeight;
+                const maxSignatureWidth = 1500; 
+                
+                if (originalWidth > maxSignatureWidth) {
+                    targetWidth = maxSignatureWidth;
+                    targetHeight = Math.round(maxSignatureWidth / originalRatio);
+                }
+                
+                canvas.width = targetWidth; 
+                canvas.height = targetHeight;
+                
+                ctx.filter = `brightness(${document.getElementById('filter-bright').value}%) contrast(${document.getElementById('filter-contrast').value}%)`;
+                ctx.drawImage(globalImage, 0, 0, targetWidth, targetHeight);
+            }
+            
+            applyKBConstraint(canvas, targetKB, selectedDPI, statusId);
+        }
+
+        function triggerDownload(blob, statusId) {
+            const url = URL.createObjectURL(blob); 
+            const a = document.createElement('a'); 
+            a.href = url; 
+            a.download = `EditSpark_${Date.now()}.jpg`;
+            document.body.appendChild(a); 
+            a.click(); 
+            document.body.removeChild(a);
+            document.getElementById(statusId).innerText = `Success! Saved: ${(blob.size/1024).toFixed(1)} KB`;
+        }
+    </script>
 </body>
 </html>
