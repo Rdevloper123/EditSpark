@@ -19,6 +19,9 @@
             background-color: var(--body-bg);
             margin: 0;
             padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
             color: var(--text-main);
             line-height: 1.6;
         }
@@ -56,9 +59,10 @@
         /* Main Area Structure */
         .wrapper {
             max-width: 850px;
-            margin: 50px auto;
+            margin: 40px auto;
             padding: 0 20px;
             box-sizing: border-box;
+            flex: 1; /* Content ko push karega taaki footer niche set rahe */
         }
 
         .contact-box {
@@ -169,14 +173,37 @@
             line-height: 1.5;
         }
 
-        /* Footer Style matching your template */
-        .footer-text {
+        /* Aapki Website Ka Original Multi-Link Footer Style */
+        footer {
+            background-color: var(--primary-bg);
+            color: #94a3b8;
             text-align: center;
-            margin-top: 40px;
+            padding: 25px 20px;
+            font-size: 0.9rem;
+            margin-top: auto;
+            border-top: 1px solid #334155;
+        }
+
+        .footer-links {
+            margin-bottom: 15px;
+        }
+
+        .footer-links a {
+            color: #38bdf8;
+            text-decoration: none;
+            margin: 0 12px;
+            font-weight: 500;
+        }
+
+        .footer-links a:hover {
+            color: #7dd3fc;
+            text-decoration: underline;
+        }
+
+        .footer-copyright {
+            margin: 0;
             font-size: 0.85rem;
-            color: var(--text-muted);
-            border-top: 1px solid #e2e8f0;
-            padding-top: 20px;
+            color: #64748b;
         }
 
         @media (max-width: 600px) {
@@ -188,6 +215,10 @@
             }
             .wrapper {
                 margin: 20px auto;
+            }
+            .footer-links a {
+                display: inline-block;
+                margin: 5px 10px;
             }
         }
     </style>
@@ -246,13 +277,18 @@
                 🔒 <strong>Aapka Data Kahan Jata Hai?</strong> EditSpark ek browser-side script par chalta hai. Iska matlab jab aap yahan photo ya PDF size badhate ya kam karte hain, toh wo file hamare server par upload hi nahi hoti. Sab kuch aapke device me hota hai, isliye aapka data 100% aapke paas hi safe hai.
             </div>
 
-            <!-- Footer Note -->
-            <div class="footer-text">
-                © 2026 EditSpark Studio. All rights reserved.
-            </div>
-
         </main>
     </div>
+
+    <!-- MULTI-LINK FULL FOOTER (Aapki website ke baki pages jaisa same links ke sath) -->
+    <footer>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="contact.html">Contact Us</a>
+        </div>
+        <p class="footer-copyright">&copy; 2026 EditSpark Studio. All rights reserved.</p>
+    </footer>
 
     <!-- Hidden Technical JSON-LD Schema Matrix (Exclusively for Google Crawler) -->
     <script type="application/ld+json">
