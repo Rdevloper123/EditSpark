@@ -501,7 +501,7 @@
             let targetKb = 0;
             let statusId = 'status-' + mode;
             let statusBox = document.getElementById(statusId);
-            statusBox.innerText = "Processing image client-side...";
+            statusBox.innerText = "Processing image instantly...";
 
             let dpiSelect = document.querySelector('#' + mode + '-panel .set-dpi-class');
             let selectedDPI = dpiSelect ? dpiSelect.value : '300';
@@ -555,45 +555,28 @@
                 return;
             }
 
-            let low = 0.01, high = 1.0, bestBlob = null, loopCount = 0;
-            
-            function binarySearchCompress() {
-                if(loopCount > 15) { 
-                    if(bestBlob) {
-                        finalizeDownload(bestBlob, selectedDPI, statusBox);
-                    } else {
-                        // Agar image bohot badi hai aur min quality par bhi target se upar ja rahi hai, toh dimensions downscale karne padenge
-                        let currentWidth = canvas.width;
-                        let currentHeight = canvas.height;
-                        if(currentWidth > 150 && currentHeight > 150) {
-                            canvas.width = Math.round(currentWidth * 0.8);
-                            canvas.height = Math.round(currentHeight * 0.8);
-                            ctx.filter = previewImg.style.filter;
-                            ctx.drawImage(globalImage, 0, 0, canvas.width, canvas.height);
-                            loopCount = 0;
-                            low = 0.01;
-                            high = 1.0;
-                            setTimeout(binarySearchCompress, 1);
-                        } else {
-                            canvas.toBlob((blob) => { finalizeDownload(blob, selectedDPI, statusBox); }, 'image/jpeg', 0.01);
-                        }
-                    }
-                    return; 
+            // Current raw estimate check karne ke liye base quality use karein
+            canvas.toBlob((baseBlob) => {
+                const currentSize = baseBlob.size / 1024;
+                
+                // Pure mathematical compression factor loop ke bina calculate karein
+                let targetQuality = Math.min(0.95, Math.max(0.01, (targetKb / currentSize) * 0.85));
+                
+                // Agar target size bohot zyada chhota hai (jaise 5KB), toh automatically canvas downscale karein bina kisi processing lag ke
+                if (targetKb < 15 && (canvas.width > 300 || canvas.height > 300)) {
+                    const scaleFactor = Math.sqrt(targetKb / 25); // Safe automated reduction ratio
+                    canvas.width = Math.round(canvas.width * Math.max(0.4, scaleFactor));
+                    canvas.height = Math.round(canvas.height * Math.max(0.4, scaleFactor));
+                    ctx.filter = previewImg.style.filter;
+                    ctx.drawImage(globalImage, 0, 0, canvas.width, canvas.height);
+                    targetQuality = 0.35; // Better compression visibility over artifacts
                 }
-                let mid = (low + high) / 2;
-                canvas.toBlob((blob) => {
-                    loopCount++;
-                    const sizeKb = blob.size / 1024;
-                    if(sizeKb <= targetKb) { 
-                        bestBlob = blob; 
-                        low = mid; // Quality badhao size target ke andar hai
-                    } else { 
-                        high = mid; // Quality ghatao kyuki size bada hai
-                    }
-                    setTimeout(binarySearchCompress, 1);
-                }, 'image/jpeg', mid);
-            }
-            binarySearchCompress();
+
+                canvas.toBlob((finalBlob) => {
+                    finalizeDownload(finalBlob, selectedDPI, statusBox);
+                }, 'image/jpeg', targetQuality);
+
+            }, 'image/jpeg', 0.85);
         }
 
         function triggerSizeIncreaser(canvas, targetKb, selectedDPI, statusBox) {
