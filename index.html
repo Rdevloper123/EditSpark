@@ -550,18 +550,32 @@
         }
 
         function triggerOptimizationLoop(canvas, ctx, targetKb, selectedDPI, statusBox) {
-            let low = 0.01, high = 0.99, bestBlob = null, loopCount = 0;
+            if(targetKb <= 0) {
+                canvas.toBlob((blob) => { finalizeDownload(blob, selectedDPI, statusBox); }, 'image/jpeg', 0.85);
+                return;
+            }
+
+            let low = 0.01, high = 1.0, bestBlob = null, loopCount = 0;
+            
             function binarySearchCompress() {
-                if(targetKb <= 0) {
-                    canvas.toBlob((blob) => { finalizeDownload(blob, selectedDPI, statusBox); }, 'image/jpeg', 0.85);
-                    return;
+                if(loopCount > 10) { 
+                    if(bestBlob) {
+                        finalizeDownload(bestBlob, selectedDPI, statusBox);
+                    } else {
+                        canvas.toBlob((blob) => { finalizeDownload(blob, selectedDPI, statusBox); }, 'image/jpeg', 0.01);
+                    }
+                    return; 
                 }
-                if(loopCount > 6) { finalizeDownload(bestBlob, selectedDPI, statusBox); return; }
                 let mid = (low + high) / 2;
                 canvas.toBlob((blob) => {
                     loopCount++;
                     const sizeKb = blob.size / 1024;
-                    if(sizeKb <= targetKb) { bestBlob = blob; low = mid; } else { high = mid; }
+                    if(sizeKb <= targetKb) { 
+                        bestBlob = blob; 
+                        low = mid; 
+                    } else { 
+                        high = mid; 
+                    }
                     setTimeout(binarySearchCompress, 1);
                 }, 'image/jpeg', mid);
             }
@@ -572,22 +586,23 @@
             canvas.toBlob((blob) => {
                 const currentKb = blob.size / 1024;
                 if(targetKb <= currentKb) { finalizeDownload(blob, selectedDPI, statusBox); return; }
-                const neededBytes = Math.round((targetKb - currentKb) * 1024) + 100;
+                
+                const neededBytes = Math.round((targetKb - currentKb) * 1024);
                 const reader = new FileReader();
                 reader.onloadend = function() {
                     const originalArr = new Uint8Array(reader.result);
                     const newArr = new Uint8Array(originalArr.length + neededBytes);
                     newArr.set(originalArr);
+                    
                     const padSlice = newArr.subarray(originalArr.length);
                     if (typeof crypto !== 'undefined' && crypto.getRandomValues) {
                         crypto.getRandomValues(padSlice);
                     } else {
                         for(let i = 0; i < neededBytes; i++) { padSlice[i] = (Math.random() * 256) | 0; }
                     }
-                    setTimeout(() => {
-                        const injectedBlob = new Blob([newArr], { type: 'image/jpeg' });
-                        finalizeDownload(injectedBlob, selectedDPI, statusBox);
-                    }, 1);
+                    
+                    const injectedBlob = new Blob([newArr], { type: 'image/jpeg' });
+                    finalizeDownload(injectedBlob, selectedDPI, statusBox);
                 };
                 reader.readAsArrayBuffer(blob);
             }, 'image/jpeg', 0.90);
