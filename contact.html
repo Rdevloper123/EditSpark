@@ -1,292 +1,133 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us - EditSpark Studio</title>
+    
+    <!-- Primary SEO Meta Tags -->
+    <title>Contact Us | EditSpark - Customer Support & Feedback</title>
+    <meta name="description" content="Get in touch with the EditSpark support team. Reach out for any questions, tool feedback, or feature requests regarding our local image compressor.">
+    <meta name="keywords" content="EditSpark contact, image compressor support, photo resizer feedback, contact EditSpark team, funshowofficial123@gmail.com">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://rdevloper123.github.io/EditSpark/contact.html">
+
+    <!-- Open Graph / Facebook SEO -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Contact Us | EditSpark">
+    <meta property="og:description" content="Have queries or feedback? Contact the EditSpark team directly.">
+    <meta property="og:url" content="https://rdevloper123.github.io/EditSpark/contact.html">
+    <meta property="og:site_name" content="EditSpark">
+
     <style>
         :root {
-            --primary-bg: #1e293b;
-            --text-main: #0f172a;
-            --text-muted: #475569;
-            --body-bg: #f8fafc;
-            --card-bg: #ffffff;
+            --primary: #4A148C;
+            --primary-hover: #310d61;
+            --text-dark: #2c3e50;
+            --text-muted: #555;
+            --border-color: #e0e0e0;
+            --bg-body: #f4f6f9;
         }
-
         body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--body-bg);
             margin: 0;
             padding: 0;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text-dark);
+            background-color: var(--bg-body);
             line-height: 1.6;
         }
-
-        /* Header Style */
-        .nav-header {
-            background-color: var(--primary-bg);
-            padding: 15px 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .nav-header .logo {
-            color: #ffffff;
-            font-size: 1.3rem;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-
-        .nav-header a {
-            color: #38bdf8;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: color 0.2s;
-        }
-
-        .nav-header a:hover {
-            color: #7dd3fc;
-            text-decoration: underline;
-        }
-
-        /* Main Container */
-        .wrapper {
-            max-width: 850px;
-            margin: 40px auto;
-            padding: 0 20px;
-            box-sizing: border-box;
-            flex: 1; /* Yeh content ko bada rakhega taaki footer niche push ho ske */
-        }
-
-        .contact-box {
-            background: var(--card-bg);
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05);
-            padding: 35px;
-            box-sizing: border-box;
-        }
-
-        .page-heading {
-            color: var(--text-main);
-            text-align: center;
-            font-size: 1.85rem;
-            font-weight: 700;
-            margin-top: 0;
-            margin-bottom: 12px;
-        }
-
-        .intro-paragraph {
-            text-align: center;
-            color: var(--text-muted);
-            margin-bottom: 35px;
-            font-size: 0.98rem;
-            line-height: 1.6;
-            background: #f1f5f9;
+        header {
+            background: linear-gradient(135deg, var(--primary), #6a1b9a);
+            color: white;
             padding: 20px;
-            border-radius: 8px;
-            border-left: 4px solid #f97316;
-            margin-top: 0;
-        }
-
-        /* Grid System */
-        .info-grid {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             display: flex;
-            flex-wrap: wrap;
-            gap: 24px;
+            align-items: center;
             justify-content: space-between;
-            margin-bottom: 35px;
         }
-
-        .card-item {
-            flex: 1;
-            min-width: 280px;
-            background: #ffffff;
-            padding: 24px;
+        header h1 { margin: 0; font-size: 1.5rem; font-weight: 700; }
+        header h1 a { color: white; text-decoration: none; }
+        .badge-india {
+            font-weight: bold;
+            font-size: 0.85rem;
+            background: rgba(255,255,255,0.2);
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: white;
+            padding: 40px;
             border-radius: 8px;
-            border: 1px solid #e2e8f0;
-            box-sizing: border-box;
-            transition: transform 0.2s;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
-
-        .card-item:hover {
-            transform: translateY(-2px);
+        h2 { color: var(--primary); margin-top: 0; font-size: 1.8rem; border-bottom: 2px solid #f4f6f9; padding-bottom: 10px; }
+        h3 { color: #6a1b9a; margin-top: 25px; font-size: 1.3rem; }
+        p { color: var(--text-muted); margin-bottom: 15px; }
+        .contact-box {
+            background: #f8f9fa;
+            border-left: 4px solid var(--primary);
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 6px 6px 0;
         }
-
-        .card-item.email-style { border-top: 4px solid #3b82f6; }
-        .card-item.address-style { border-top: 4px solid #22c55e; }
-
-        .card-item h2 {
-            margin-top: 0;
-            color: #1e293b;
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 12px;
-        }
-
-        .card-item p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-bottom: 12px;
-            margin-top: 0;
-        }
-
-        .email-link {
-            color: #2563eb;
+        .contact-box a {
+            color: var(--primary);
+            font-weight: bold;
             text-decoration: none;
-            font-weight: 600;
-            font-size: 1rem;
-            word-break: break-all;
         }
-
-        .email-link:hover { text-decoration: underline; }
-
-        .time-notice {
-            font-size: 0.78rem;
-            color: #ea580c;
-            margin-top: 15px;
-            font-weight: 500;
-            margin-bottom: 0;
-        }
-
-        .secure-box {
-            background: #eff6ff;
-            padding: 16px;
-            border-radius: 8px;
-            border: 1px solid #bfdbfe;
-            font-size: 0.88rem;
-            color: #1e40af;
-            line-height: 1.5;
-        }
-
-        /* AAPKA APNA ASLI MULTI-LINK FOOTER */
-        footer {
-            background-color: var(--primary-bg);
-            color: #94a3b8;
-            text-align: center;
-            padding: 25px 20px;
-            font-size: 0.9rem;
-            margin-top: auto;
-            border-top: 1px solid #334155;
-        }
-
-        .footer-links {
-            margin-bottom: 15px;
-        }
-
-        .footer-links a {
-            color: #38bdf8;
-            text-decoration: none;
-            margin: 0 12px;
-            font-weight: 500;
-        }
-
-        .footer-links a:hover {
-            color: #7dd3fc;
+        .contact-box a:hover {
             text-decoration: underline;
         }
-
-        .footer-copyright {
-            margin: 0;
-            font-size: 0.85rem;
-            color: #64748b;
+        .back-home {
+            display: inline-block;
+            margin-top: 30px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.2s ease;
         }
-
-        @media (max-width: 600px) {
-            .page-heading { font-size: 1.5rem; }
-            .contact-box { padding: 22px; }
-            .wrapper { margin: 20px auto; }
-            .footer-links a { display: inline-block; margin: 5px 10px; }
+        .back-home:hover { color: var(--primary-hover); text-decoration: underline; }
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 60px;
+            color: #7f8c8d;
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border-color);
+            background-color: white;
         }
     </style>
 </head>
 <body>
 
-    <!-- Header Navigation (Links updated with ../ to point to root) -->
-    <header class="nav-header">
-        <div class="logo">EditSpark</div>
-        <a href="../index.html">← Back to Editor</a>
+    <header>
+        <h1><a href="index.html">EditSpark</a></h1>
+        <div class="badge-india">Apna Bharat Editor Suite 🇮🇳</div>
     </header>
 
-    <div class="wrapper">
-        <main class="contact-box">
-            
-            <h1 class="page-heading">EditSpark Team Se Sampark Karein</h1>
-            
-            <p class="intro-paragraph">
-                Agar aapko site par <strong>photo ka size kam karne</strong> me koi pareshani aa rahi hai, ya fir sarkari forms ke liye signature ko <strong>300 DPI convert</strong> karne me dikkat hai, toh tension mat lijiye. EditSpark par aap images ke sath-sath apni <strong>PDF files ko bhi exact KB me compress</strong> kar sakte hain. Koi bhi doubt ho ya tool kaam na kar raha ho, toh niche bataye tarike se hume batayein.
-            </p>
+    <main class="container">
+        <h2>📧 Contact Support</h2>
+        <p>Thank you for using <span class="highlight">EditSpark</span>! We are continuously working to make our browser-based image utilities faster, safer, and more efficient for your daily form-filling requirements.</p>
+        
+        <h3>💡 Have Questions, Issues, or Feature Requests?</h3>
+        <p>If you encounter any glitches while resizing your photos, modifying DPI setups, or clearing document layouts, or if you simply want to share some feedback to help us grow, feel free to drop us a message.</p>
 
-            <div class="info-grid">
-                
-                <!-- Email Card -->
-                <div class="card-item email-style">
-                    <h2>📧 Direct Support Email</h2>
-                    <p>Technical issues, bulk resizing queries, ya <strong>PDF edit tools</strong> ke feedback ke liye aap hume is mail id par direct likh sakte hain:</p>
-                    <p style="margin: 15px 0 0 0;">
-                        <a href="mailto:funshowofficial123@gmail.com" class="email-link">funshowofficial123@gmail.com</a>
-                    </p>
-                    <p class="time-notice">👉 Koshish rehti hai ki 24 ghante ke andar reply mil jaye.</p>
-                </div>
-
-                <!-- Location Card -->
-                <div class="card-item address-style">
-                    <h2>📍 Workspace Location</h2>
-                    <p>Humari technical desk aur operations handle karne wali choti si team aapki nikatiki market ke paas is pate se kaam karti hai:</p>
-                    <address style="font-style: normal; color: var(--text-main); line-height: 1.6; font-size: 0.92rem; margin-top: 15px;">
-                        <strong>EditSpark Studio Office</strong><br>
-                        Chahaniya Market, Dhanapur Road,<br>
-                        Chandauli, Uttar Pradesh<br>
-                        Pin Code - 232114, India 🇮🇳
-                    </address>
-                </div>
-
-            </div>
-
-            <div class="secure-box">
-                🔒 <strong>Aapka Data Kahan Jata Hai?</strong> EditSpark ek browser-side script par chalta hai. Iska matlab jab aap yahan photo ya PDF size badhate ya kam karte hain, toh wo file hamare server par upload hi nahi hoti. Sab kuch aapke device me hota hai, isliye aapka data 100% aapke paas hi safe hai.
-            </div>
-
-        </main>
-    </div>
-
-    <!-- AAPKA APNA COMPLETE MULTI-LINK FOOTER (Clean routing using ../ with Vercel) -->
-    <footer>
-        <div class="footer-links">
-            <a href="../">Home</a>
-            <a href="../about">About Us</a>
-            <a href="../contact">Contact Us</a>
+        <div class="contact-box">
+            <strong>📧 Official Email Support:</strong><br>
+            <p style="margin: 5px 0 0 0;">Aap humein kisi bhi technical query ke liye direct email bhej sakte hain: 
+            <a href="mailto:funshowofficial123@gmail.com">funshowofficial123@gmail.com</a></p>
         </div>
-        <p class="footer-copyright">&copy; 2026 EditSpark Studio. All rights reserved.</p>
-    </footer>
 
-    <!-- Google Crawler Schema Metadata -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "ContactPage",
-      "name": "Contact EditSpark Studio Chandauli",
-      "description": "Get support for EditSpark image compressor and PDF size editing tools based in Chandauli, Uttar Pradesh.",
-      "publisher": {
-        "@type": "Organization",
-        "name": "EditSpark Studio",
-        "email": "funshowofficial123@gmail.com",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "Chahaniya Market, Dhanapur Road",
-          "addressLocality": "Chandauli",
-          "addressRegion": "Uttar Pradesh",
-          "postalCode": "232114",
-          "addressCountry": "IN"
-        }
-      }
-    }
-    </script>
+        <p>Hum koshish karte hain ki 24-48 ghanton ke andar aapke har email ya query ka response de sakein.</p>
+
+        <a href="index.html" class="back-home">← Back to EditSpark Dashboard</a>
+    </main>
+
+    <footer>
+        &copy; 2026 EditSpark. All Rights Reserved.
+    </footer>
 
 </body>
 </html>
