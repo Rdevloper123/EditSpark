@@ -306,7 +306,7 @@
                 <h3 style="color: #fff; font-size: 1.1rem; margin-top: 0; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">⚖️ Legal & Trust</h3>
                 <ul style="list-style: none; padding: 0; margin: 0; line-height: 2;">
                     <li><a href="/privacy.html" style="color: #bdc3c7; text-decoration: none; font-weight: 500;">🔒 Privacy Policy</a></li>
-                    <li><a href="/terms.html" style="color: #bdc3c7; text-decoration: none;">📜 Terms of Service</a></li>
+                    <li><a href="/terms.html; return false;" style="color: #bdc3c7; text-decoration: none;">📜 Terms of Service</a></li>
                     <li><a href="/contact.html" style="color: #bdc3c7; text-decoration: none;">📧 Contact Support</a></li>
                     <li><a href="/index.html" style="color: #bdc3c7; text-decoration: none;">🏠 Home Dashboard</a></li>
                 </ul>
@@ -552,14 +552,17 @@
         function triggerOptimizationLoop(canvas, ctx, targetKb, selectedDPI, statusBox) {
             let low = 0.01, high = 0.99, bestBlob = null, loopCount = 0;
             function binarySearchCompress() {
-                if(loopCount > 7) { finalizeDownload(bestBlob, selectedDPI, statusBox); return; }
+                if(targetKb <= 0) {
+                    canvas.toBlob((blob) => { finalizeDownload(blob, selectedDPI, statusBox); }, 'image/jpeg', 0.85);
+                    return;
+                }
+                if(loopCount > 6) { finalizeDownload(bestBlob, selectedDPI, statusBox); return; }
                 let mid = (low + high) / 2;
                 canvas.toBlob((blob) => {
                     loopCount++;
                     const sizeKb = blob.size / 1024;
-                    if(targetKb <= 0) { bestBlob = blob; finalizeDownload(bestBlob, selectedDPI, statusBox); return; }
                     if(sizeKb <= targetKb) { bestBlob = blob; low = mid; } else { high = mid; }
-                    binarySearchCompress();
+                    setTimeout(binarySearchCompress, 1);
                 }, 'image/jpeg', mid);
             }
             binarySearchCompress();
@@ -569,25 +572,25 @@
             canvas.toBlob((blob) => {
                 const currentKb = blob.size / 1024;
                 if(targetKb <= currentKb) { finalizeDownload(blob, selectedDPI, statusBox); return; }
-                const neededBytes = Math.round((targetKb - currentKb) * 1024) + 200;
+                const neededBytes = Math.round((targetKb - currentKb) * 1024) + 100;
                 const reader = new FileReader();
                 reader.onloadend = function() {
                     const originalArr = new Uint8Array(reader.result);
                     const newArr = new Uint8Array(originalArr.length + neededBytes);
                     newArr.set(originalArr);
-                    
                     const padSlice = newArr.subarray(originalArr.length);
                     if (typeof crypto !== 'undefined' && crypto.getRandomValues) {
                         crypto.getRandomValues(padSlice);
                     } else {
                         for(let i = 0; i < neededBytes; i++) { padSlice[i] = (Math.random() * 256) | 0; }
                     }
-                    
-                    const injectedBlob = new Blob([newArr], { type: 'image/jpeg' });
-                    finalizeDownload(injectedBlob, selectedDPI, statusBox);
+                    setTimeout(() => {
+                        const injectedBlob = new Blob([newArr], { type: 'image/jpeg' });
+                        finalizeDownload(injectedBlob, selectedDPI, statusBox);
+                    }, 1);
                 };
                 reader.readAsArrayBuffer(blob);
-            }, 'image/jpeg', 0.92);
+            }, 'image/jpeg', 0.90);
         }
 
         function finalizeDownload(blob, selectedDPI, statusBox) {
