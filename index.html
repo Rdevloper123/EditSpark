@@ -558,11 +558,25 @@
             let low = 0.01, high = 1.0, bestBlob = null, loopCount = 0;
             
             function binarySearchCompress() {
-                if(loopCount > 10) { 
+                if(loopCount > 15) { 
                     if(bestBlob) {
                         finalizeDownload(bestBlob, selectedDPI, statusBox);
                     } else {
-                        canvas.toBlob((blob) => { finalizeDownload(blob, selectedDPI, statusBox); }, 'image/jpeg', 0.01);
+                        // Agar image bohot badi hai aur min quality par bhi target se upar ja rahi hai, toh dimensions downscale karne padenge
+                        let currentWidth = canvas.width;
+                        let currentHeight = canvas.height;
+                        if(currentWidth > 150 && currentHeight > 150) {
+                            canvas.width = Math.round(currentWidth * 0.8);
+                            canvas.height = Math.round(currentHeight * 0.8);
+                            ctx.filter = previewImg.style.filter;
+                            ctx.drawImage(globalImage, 0, 0, canvas.width, canvas.height);
+                            loopCount = 0;
+                            low = 0.01;
+                            high = 1.0;
+                            setTimeout(binarySearchCompress, 1);
+                        } else {
+                            canvas.toBlob((blob) => { finalizeDownload(blob, selectedDPI, statusBox); }, 'image/jpeg', 0.01);
+                        }
                     }
                     return; 
                 }
@@ -572,9 +586,9 @@
                     const sizeKb = blob.size / 1024;
                     if(sizeKb <= targetKb) { 
                         bestBlob = blob; 
-                        low = mid; 
+                        low = mid; // Quality badhao size target ke andar hai
                     } else { 
-                        high = mid; 
+                        high = mid; // Quality ghatao kyuki size bada hai
                     }
                     setTimeout(binarySearchCompress, 1);
                 }, 'image/jpeg', mid);
@@ -605,7 +619,7 @@
                     finalizeDownload(injectedBlob, selectedDPI, statusBox);
                 };
                 reader.readAsArrayBuffer(blob);
-            }, 'image/jpeg', 0.90);
+            }, 'image/jpeg', 0.95);
         }
 
         function finalizeDownload(blob, selectedDPI, statusBox) {
