@@ -122,15 +122,12 @@
         .faq-card { background: white; border-radius: 8px; border: 1px solid var(--border-color); padding: 16px; box-shadow: var(--card-shadow); }
         .faq-card h3 { color: var(--primary); margin-top: 0; font-size: 0.95rem; margin-bottom: 8px; }
         .faq-card p { margin: 0; font-size: 0.8rem; color: #57606f; line-height: 1.4; }
-        footer { background: #2c3e50; color: white; text-align: center; padding: 12px; margin-top: 35px; font-size: 0.8rem; }
-        .dynamic-page { display: none; background: white; border-radius: 12px; border: 1px solid var(--border-color); padding: 30px; box-shadow: var(--card-shadow); text-align: left; max-width: 800px; margin: 20px auto; }
-        .dynamic-page h2 { color: var(--primary); border-bottom: 2px solid #f4f6f9; padding-bottom: 10px; margin-top: 0; }
     </style>
 </head>
 <body>
     <header role="banner">
         <div style="text-align: left;">
-            <h1 style="font-size: 1.6rem;"><a href="/" onclick="navigateRoute(event, '/')" style="color:white; text-decoration:none;">EditSpark Studio</a></h1>
+            <h1 style="font-size: 1.6rem;"><a href="/index.html" style="color:white; text-decoration:none;">EditSpark Studio</a></h1>
             <p style="margin: 3px 0 0 0; opacity: 0.9; font-size: 0.85rem; font-weight: 500;">
                 Free Online Photo Editor: Compress Image to Exact KB & Increase Photo Size Online
             </p>
@@ -139,11 +136,7 @@
             <span style="color:#FF9933">Apna</span> <span style="color:#FFFFFF">Bharat</span> <span style="color:#128825">Editor 🇮🇳</span>
         </div>
     </header>
-    
-    <!-- Dynamic Router Pages Container -->
-    <div id="dynamic-router-outlet"></div>
 
-    <!-- Main Workspace Container -->
     <main id="main-editor-workspace">
         <div class="upload-container" id="upload-area-box">
             <label for="image-input" class="upload-square">
@@ -287,7 +280,7 @@
                 <p style="color: #bdc3c7; line-height: 1.5; margin: 0 0 15px 0;">
                     EditSpark Studio is Apna Bharat Editor Suite 🇮🇳 designed to compress, resize, and modify images safely inside your browser memory.
                 </p>
-                <a href="/about" onclick="navigateRoute(event, '/about')" style="color: #3498db; text-decoration: none; font-weight: bold;">Read Full About Us →</a>
+                <a href="/about.html" style="color: #3498db; text-decoration: none; font-weight: bold;">Read Full About Us →</a>
             </div>
             <div>
                 <h3 style="color: #fff; font-size: 1.1rem; margin-top: 0; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">🛠️ Editor Tools</h3>
@@ -305,17 +298,16 @@
                     <li><a href="#" style="color: #bdc3c7; text-decoration: none;">⚡ High-Speed Canvas</a></li>
                     <li><a href="#" style="color: #bdc3c7; text-decoration: none;">🛡️ 100% Secure & Local</a></li>
                     <li><a href="#" style="color: #bdc3c7; text-decoration: none;">💸 Always Free Layout</a></li>
-                    <li><a href="#faq-section" style="color: #bdc3c7; text-decoration: none;">❓ View Tool FAQs</a></li>
                     <li><a href="#" style="color: #bdc3c7; text-decoration: none;">📝 Technical Blog</a></li>
                 </ul>
             </div>
             <div>
                 <h3 style="color: #fff; font-size: 1.1rem; margin-top: 0; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">⚖️ Legal & Trust</h3>
                 <ul style="list-style: none; padding: 0; margin: 0; line-height: 2;">
-                    <li><a href="/privacy" onclick="navigateRoute(event, '/privacy')" style="color: #bdc3c7; text-decoration: none; font-weight: 500;">🔒 Privacy Policy</a></li>
-                    <li><a href="/terms" onclick="navigateRoute(event, '/terms')" style="color: #bdc3c7; text-decoration: none;">📜 Terms of Service</a></li>
-                    <li><a href="/contact" onclick="navigateRoute(event, '/contact')" style="color: #bdc3c7; text-decoration: none;">📧 Contact Support</a></li>
-                    <li><a href="/" onclick="navigateRoute(event, '/')" style="color: #bdc3c7; text-decoration: none;">🏠 Home Dashboard</a></li>
+                    <li><a href="/privacy.html" style="color: #bdc3c7; text-decoration: none; font-weight: 500;">🔒 Privacy Policy</a></li>
+                    <li><a href="/terms.html" style="color: #bdc3c7; text-decoration: none;">📜 Terms of Service</a></li>
+                    <li><a href="/contact.html" style="color: #bdc3c7; text-decoration: none;">📧 Contact Support</a></li>
+                    <li><a href="/index.html" style="color: #bdc3c7; text-decoration: none;">🏠 Home Dashboard</a></li>
                 </ul>
             </div>
         </div>
@@ -362,7 +354,6 @@
 
         window.addEventListener('popstate', function(event) {
             if (isFormOpen) { closeToolForm(true); }
-            handleClientRouting(); 
         });
 
         function previewImage(event) {
@@ -614,68 +605,6 @@
             }
             return buffer;
         }
-
-        // ===================================================
-        // 🌟 100% WORKING FIXED CLIENT-SIDE SPA ROUTER ENGINE
-        // ===================================================
-        const routesData = {
-            "/about": `
-                <div class="dynamic-page">
-                    <h2>🇮🇳 About EditSpark Studio</h2>
-                    <p><strong>EditSpark Studio (Apna Bharat Editor Suite)</strong> ek 100% safe, fast, aur browser-based utility platform hai jise vishesh roop se Bharatiya chatro aur sarkari naukari ke aavedako (SSC, UPSC, IBPS, Railways) ke liye banaya gaya hai.</p>
-                    <p>Aapki privacy hamari sabse badi priority hai. Isliye aapki koi bhi photo, sign ya document kisi bhi server par upload nahi hote. Sabhi process HTML5 Canvas aur dynamic algorithms ke jariye local browser memory me hi execute hoti hain.</p>
-                    <button class="process-btn" onclick="navigateRoute(null, '/')">← Return to Home Dashboard</button>
-                </div>`,
-            "/privacy": `
-                <div class="dynamic-page">
-                    <h2>🔒 Privacy Policy</h2>
-                    <p>EditSpark Studio me hum aapki niji jankari aur files ka poora samman karte hain. Hum aapki files ko kisi bhi server par transmit ya store nahi karte hain.</p>
-                    <p>Sabhi processing (image compression, resizing, and filtering) direct aapke laptop ya mobile ke web browser me perform hoti hai, jisse aapka data completely offline secure rehta hai.</p>
-                    <button class="process-btn" onclick="navigateRoute(null, '/')">← Return to Home Dashboard</button>
-                </div>`,
-            "/terms": `
-                <div class="dynamic-page">
-                    <h2>📜 Terms & Conditions</h2>
-                    <p>Welcome to EditSpark Studio. Is free platform ka upyog karne par aap hamari niyam aur sharto se sahmat hote hain.</p>
-                    <p>Aap is service ka upyog keval vaidh aur legitimate official application forms ki file requirements ko optimize karne ke liye kar sakte hain. Kisi bhi illegal ya malicious activity ke liye is tool ka upyog varjit hai.</p>
-                    <button class="process-btn" onclick="navigateRoute(null, '/')">← Return to Home Dashboard</button>
-                </div>`,
-            "/contact": `
-                <div class="dynamic-page">
-                    <h2>📧 Contact Support</h2>
-                    <p>Agar aapko photo ka size kam karne me ya DPI set karne me koi dikkat aa rahi hai, to tension mat lijiye! Hum aapki help ke liye hamesha tayar hain.</p>
-                    <p><strong>Support Email:</strong> funshowofficial123@gmail.com</p>
-                    <p><strong>Office Address:</strong> Chahaniya Market, Chandauli, Uttar Pradesh, India 🇮🇳</p>
-                    <button class="process-btn" onclick="navigateRoute(null, '/')">← Return to Home Dashboard</button>
-                </div>`
-        };
-
-        function navigateRoute(event, path) {
-            if (event) event.preventDefault();
-            window.history.pushState({}, "", path);
-            handleClientRouting();
-        }
-
-        function handleClientRouting() {
-            const currentPath = window.location.pathname;
-            const outlet = document.getElementById('dynamic-router-outlet');
-            const mainWorkspace = document.getElementById('main-editor-workspace');
-
-            if (routesData[currentPath]) {
-                mainWorkspace.style.display = 'none'; // Pehle main editor workspace ko chhupayein
-                outlet.style.display = 'block';       // Router outlet box ko show karein
-                outlet.innerHTML = routesData[currentPath];
-                window.scrollTo(0, 0);
-            } else {
-                outlet.innerHTML = "";
-                outlet.style.display = 'none';       // Router outlet ko band karein
-                mainWorkspace.style.display = 'block'; // Wapas se default index grid layout dikhayein
-            }
-        }
-
-        document.addEventListener("DOMContentLoaded", () => {
-            handleClientRouting();
-        });
     </script>
 </body>
 </html>
