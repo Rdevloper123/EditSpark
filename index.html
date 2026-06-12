@@ -113,12 +113,7 @@
         .process-btn { background: var(--primary); color: #fff; border: none; padding: 10px 16px; font-size: 0.85rem; font-weight: bold; border-radius: 5px; cursor: pointer; width: 100%; transition: background 0.2s ease; margin-top: 8px; text-align: center; }
         .process-btn:hover { background: var(--primary-hover); }
         .status-text { margin-top: 6px; font-weight: bold; color: #27ae60; font-size: 0.8rem; min-height: 16px; }
-        
-        /* Cropper CSS Adjustments */
-        #crop-box {
-            position: absolute; border: 2px dashed #ff3b30; box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.6);
-            display: none; box-sizing: border-box; width: 100px; height: 100px; top: 10px; left: 10px; touch-action: none;
-        }
+        #crop-box { position: absolute; border: 2px dashed #ff3b30; box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.6); display: none; box-sizing: border-box; width: 100px; height: 100px; top: 10px; left: 10px; touch-action: none; }
         .crop-handle { position: absolute; width: 14px; height: 14px; background: #ff3b30; right: -7px; bottom: -7px; border-radius: 50%; touch-action: none; cursor: se-resize; border: 2px solid white; }
         .crop-toolbar { display: flex; justify-content: center; margin-top: 8px; }
         .crop-toggle-btn { background: #fff; border: 1px solid #ff3b30; color: #ff3b30; border-radius: 5px; padding: 5px 12px; font-size: 0.75rem; font-weight: bold; cursor: pointer; transition: all 0.2s; }
@@ -128,8 +123,6 @@
         .faq-card h3 { color: var(--primary); margin-top: 0; font-size: 0.95rem; margin-bottom: 8px; }
         .faq-card p { margin: 0; font-size: 0.8rem; color: #57606f; line-height: 1.4; }
         footer { background: #2c3e50; color: white; text-align: center; padding: 12px; margin-top: 35px; font-size: 0.8rem; }
-        
-        /* New Dynamic Page Views Router CSS */
         .dynamic-page { display: none; background: white; border-radius: 12px; border: 1px solid var(--border-color); padding: 30px; box-shadow: var(--card-shadow); text-align: left; max-width: 800px; margin: 20px auto; }
         .dynamic-page h2 { color: var(--primary); border-bottom: 2px solid #f4f6f9; padding-bottom: 10px; margin-top: 0; }
     </style>
@@ -330,7 +323,6 @@
             <p style="margin: 0;">&copy; 2026 <strong>EditSpark Studio</strong> - Apna Bharat Editor Suite 🇮🇳. All Rights Reserved.</p>
         </div>
     </footer>
-
     <script>
         let globalImage = new Image();
         let originalWidth = 0, originalHeight = 0, originalRatio = 1, originalDPI = 96, sourceRawFile = null;
@@ -345,7 +337,6 @@
         let startX, startY, startLeft, startTop, startWidth, startHeight;
         let isFormOpen = false;
 
-        // UI Management - Focus Mode
         function openToolForm(panelId) {
             if (!globalImage.src || globalImage.src.startsWith("data:image/gif")) {
                 alert("Kripya pehle upar diye gaye square box se photo upload karein!");
@@ -371,10 +362,9 @@
 
         window.addEventListener('popstate', function(event) {
             if (isFormOpen) { closeToolForm(true); }
-            handleClientRouting(); // Popstate पर भी राउटिंग चेक होगी
+            handleClientRouting(); 
         });
 
-        // Native File Handling
         function previewImage(event) {
             const file = event.target.files[0];
             if (!file) return;
@@ -446,7 +436,6 @@
             previewImg.style.filter = `brightness(${b}%) contrast(${c}%)`;
         }
 
-        // PERFECT CROP INTERACTIVE LOGIC (Fixed Coordination Math)
         cropBox.addEventListener('pointerdown', function(e) {
             if(e.target.id === 'crop-handle-btn') return;
             isDragging = true;
@@ -490,10 +479,7 @@
             });
         });
 
-        function releasePointer(e) {
-            isDragging = false;
-            isResizing = false;
-        }
+        function releasePointer(e) { isDragging = false; isResizing = false; }
         window.addEventListener('pointerup', releasePointer);
         window.addEventListener('pointercancel', releasePointer);
 
@@ -510,7 +496,6 @@
                 cropToggleIcon.classList.add('active');
             }
         }
-        // ADVANCED PROCESSING ENGINE & CLIENT-SIDE ROUTER
         function processAndDownload(mode) {
             if(!globalImage.src || globalImage.src.startsWith("data:image/gif")) return;
             
@@ -538,8 +523,6 @@
                     return;
                 }
                 targetKb = parseInt(document.getElementById('target-kb-c').value) || 0;
-                
-                // Real mathematical scaling ratio calculation between displayed preview vs natural source
                 const rx = globalImage.naturalWidth / previewImg.clientWidth;
                 const ry = globalImage.naturalHeight / previewImg.clientHeight;
                 
@@ -572,7 +555,6 @@
 
         function triggerOptimizationLoop(canvas, ctx, targetKb, selectedDPI, statusBox) {
             let low = 0.01, high = 0.99, bestBlob = null, loopCount = 0;
-            
             function binarySearchCompress() {
                 if(loopCount > 12) { finalizeDownload(bestBlob, selectedDPI, statusBox); return; }
                 let mid = (low + high) / 2;
@@ -590,20 +572,14 @@
         function triggerSizeIncreaser(canvas, targetKb, selectedDPI, statusBox) {
             canvas.toBlob((blob) => {
                 const currentKb = blob.size / 1024;
-                if(targetKb <= currentKb) {
-                    finalizeDownload(blob, selectedDPI, statusBox);
-                    return;
-                }
+                if(targetKb <= currentKb) { finalizeDownload(blob, selectedDPI, statusBox); return; }
                 const neededBytes = Math.round((targetKb - currentKb) * 1024) + 500;
                 const reader = new FileReader();
                 reader.onloadend = function() {
                     const originalArr = new Uint8Array(reader.result);
                     const newArr = new Uint8Array(originalArr.length + neededBytes);
                     newArr.set(originalArr);
-                    // Inject safe trailing metadata padding bytes
-                    for(let i = 0; i < neededBytes; i++) {
-                        newArr[originalArr.length + i] = Math.floor(Math.random() * 256);
-                    }
+                    for(let i = 0; i < neededBytes; i++) { newArr[originalArr.length + i] = Math.floor(Math.random() * 256); }
                     const injectedBlob = new Blob([newArr], { type: 'image/jpeg' });
                     finalizeDownload(injectedBlob, selectedDPI, statusBox);
                 };
@@ -615,9 +591,7 @@
             const reader = new FileReader();
             reader.onloadend = function() {
                 let arrayBuffer = reader.result;
-                if(selectedDPI !== 'original') {
-                    arrayBuffer = injectDPMetadata(arrayBuffer, parseInt(selectedDPI));
-                }
+                if(selectedDPI !== 'original') { arrayBuffer = injectDPMetadata(arrayBuffer, parseInt(selectedDPI)); }
                 const finalBlob = new Blob([arrayBuffer], { type: 'image/jpeg' });
                 const link = document.createElement('a');
                 link.href = URL.createObjectURL(finalBlob);
@@ -630,22 +604,20 @@
 
         function injectDPMetadata(buffer, dpi) {
             const view = new DataView(buffer);
-            const dpm = Math.round(dpi / 0.0254);
-            // Search for JFIF Header
             for (let i = 0; i < view.byteLength - 20; i++) {
                 if (view.getUint16(i) === 0xFFE0 && view.getUint32(i + 4) === 0x4A464946) {
-                    view.setUint8(i + 13, 1); // Set unit density to inches
-                    view.setUint16(i + 14, dpi); // X resolution
-                    view.setUint16(i + 16, dpi); // Y resolution
+                    view.setUint8(i + 13, 1);
+                    view.setUint16(i + 14, dpi);
+                    view.setUint16(i + 16, dpi);
                     return buffer;
                 }
             }
             return buffer;
         }
 
-        // ==========================================
-        // LIGHTWEIGHT CLIENT-SIDE SPA ROUTER ENGINE
-        // ==========================================
+        // ===================================================
+        // 🌟 100% WORKING FIXED CLIENT-SIDE SPA ROUTER ENGINE
+        // ===================================================
         const routesData = {
             "/about": `
                 <div class="dynamic-page">
@@ -690,17 +662,17 @@
             const mainWorkspace = document.getElementById('main-editor-workspace');
 
             if (routesData[currentPath]) {
-                mainWorkspace.style.display = 'none';
+                mainWorkspace.style.display = 'none'; // Pehle main editor workspace ko chhupayein
+                outlet.style.display = 'block';       // Router outlet box ko show karein
                 outlet.innerHTML = routesData[currentPath];
                 window.scrollTo(0, 0);
             } else {
-                // If route matches / or any unrecognized paths, render home dashboard default workspace
                 outlet.innerHTML = "";
-                mainWorkspace.style.display = 'block';
+                outlet.style.display = 'none';       // Router outlet ko band karein
+                mainWorkspace.style.display = 'block'; // Wapas se default index grid layout dikhayein
             }
         }
 
-        // Initialize Router Loop Execution on App Startup
         document.addEventListener("DOMContentLoaded", () => {
             handleClientRouting();
         });
