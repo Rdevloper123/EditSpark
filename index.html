@@ -3,20 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <title>EditSpark - Compress Image to Exact KB & Increase Photo Size Online</title>
     <meta name="description" content="Free online photo editor to compress image to exact KB (20KB, 50KB), resize dimensions, change DPI & increase photo size in KB online for SSC, UPSC & Govt forms.">
     <meta name="keywords" content="image compressor, photo resizer, compress image to 20kb, compress photo to 50kb, increase image size in kb, photo ka size kaise badhaye online, increase photo kb online without losing quality, exact kb increaser tool, online image crop, 300 dpi converter, free online pdf compressor, editspark">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://edit-spark.vercel.app/">
-
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://edit-spark.vercel.app/">
     <meta property="og:title" content="EditSpark - Compress Image to Exact KB & Increase Size Online">
     <meta property="og:description" content="100% Free & Safe Online Tool to resize, crop, and compress images locally in your browser.">
     <meta property="og:image" content="https://edit-spark.vercel.app/og-image.png">
     <meta property="twitter:card" content="summary_large_image">
-
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -26,10 +23,13 @@
       "description": "Free online utility designed to compress images to exact KB targets, resize dimensions, and increase image size seamlessly.",
       "applicationCategory": "ImageApplication",
       "operatingSystem": "All",
-      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
     }
     </script>
-
     <style>
         :root {
             --primary: #4A148C;
@@ -40,167 +40,118 @@
             --card-shadow: 0 4px 6px rgba(0,0,0,0.05);
             --card-hover-shadow: 0 10px 20px rgba(74, 20, 140, 0.08);
         }
-
-        body { 
-            margin: 0; padding: 0; box-sizing: border-box; 
+        body {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            color: var(--text-dark); background-color: #f4f6f9;
+            color: var(--text-dark);
+            background-color: #f4f6f9;
         }
-
         header {
             background: linear-gradient(135deg, var(--primary), #6a1b9a);
-            color: white; padding: 12px 20px;
+            color: white;
+            padding: 12px 20px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            display: flex; align-items: center; justify-content: space-between;
-            flex-wrap: wrap; gap: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
         }
         header h1 { margin: 0; font-size: 1.4rem; letter-spacing: 0.5px; }
         header p { margin: 2px 0 0 0; opacity: 0.85; font-size: 0.8rem; }
-        
         .bharat-badge {
-            background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 5px 12px; border-radius: 30px; font-size: 0.75rem; font-weight: bold;
-            display: flex; align-items: center; gap: 5px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 5px 12px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
-
         main { max-width: 1200px; margin: 0 auto; padding: 20px 15px; text-align: center; }
-
-        .upload-container {
-            display: flex; justify-content: center; margin: 15px auto; max-width: 600px;
-        }
+        .upload-container { display: flex; justify-content: center; margin: 15px auto; max-width: 600px; }
         .upload-square {
-            width: 100%; height: 110px; background: white;
-            border: 2.5px dashed var(--primary); border-radius: 10px;
-            display: flex; flex-direction: row; align-items: center; justify-content: center;
-            cursor: pointer; transition: all 0.25s ease; box-shadow: var(--card-shadow);
-            padding: 15px 25px; box-sizing: border-box; gap: 15px;
+            width: 100%; height: 110px; background: white; border: 2.5px dashed var(--primary); border-radius: 10px;
+            display: flex; flex-direction: row; align-items: center; justify-content: center; cursor: pointer;
+            transition: all 0.25s ease; box-shadow: var(--card-shadow); padding: 15px 25px; box-sizing: border-box; gap: 15px;
         }
-        .upload-square:hover {
-            transform: translateY(-2px); box-shadow: 0 8px 16px rgba(74, 20, 140, 0.1);
-            background: #fdfbff;
-        }
+        .upload-square:hover { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(74, 20, 140, 0.1); background: #fdfbff; }
         .upload-square .icon { font-size: 2.2rem; display: inline-block; }
         .upload-square .text-block { text-align: left; }
         .upload-square p { margin: 0 0 3px 0; font-weight: bold; color: var(--primary); font-size: 1.05rem; }
         .upload-square .sub { font-size: 0.75rem; color: #7f8c8d; display: block; }
         #image-input { display: none; }
-
-        .preview-workspace {
-            display: none; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 20px;
-        }
-        .preview-wrapper-box {
-            position: relative; background: white; padding: 8px; border-radius: 10px;
-            box-shadow: var(--card-shadow); border: 1px solid var(--border-color); display: inline-block;
-        }
+        .preview-workspace { display: none; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 20px; }
+        .preview-wrapper-box { position: relative; background: white; padding: 8px; border-radius: 10px; box-shadow: var(--card-shadow); border: 1px solid var(--border-color); display: inline-block; }
         .preview-container { position: relative; display: inline-block; max-width: 100%; touch-action: none; overflow: hidden; }
-        #img-preview { max-width: 100%; max-height: 260px; display: block; border-radius: 6px; }
-        
+        #img-preview { max-width: 100%; max-height: 260px; display: block; border-radius: 6px; user-select: none; -webkit-user-drag: none; }
         .corner-close-btn {
-            position: absolute; top: -10px; right: -10px; background: #ff3b30; color: white;
-            border: 2px solid white; width: 26px; height: 26px; border-radius: 50%;
-            font-size: 0.8rem; font-weight: bold; cursor: pointer; display: flex;
-            align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-            transition: transform 0.2s; z-index: 10;
+            position: absolute; top: -10px; right: -10px; background: #ff3b30; color: white; border: 2px solid white;
+            width: 26px; height: 26px; border-radius: 50%; font-size: 0.8rem; font-weight: bold; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,0.2); transition: transform 0.2s; z-index: 10;
         }
         .corner-close-btn:hover { transform: scale(1.15); background: #d62218; }
-
-        #file-info {
-            font-size: 0.8rem; background: #eef2f7; padding: 6px 16px;
-            border-radius: 30px; font-weight: bold; margin: 0; color: var(--text-dark);
-        }
-
-        .tools-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 15px; margin-top: 15px;
-        }
-        .tool-card {
-            background: white; border: 1px solid var(--border-color); border-radius: 8px;
-            padding: 16px; text-align: left; cursor: pointer; box-shadow: var(--card-shadow);
-            transition: all 0.25s ease; position: relative; overflow: hidden;
-        }
-        .tool-card:hover {
-            transform: translateY(-3px); box-shadow: var(--card-hover-shadow);
-            border-color: var(--primary);
-        }
+        #file-info { font-size: 0.8rem; background: #eef2f7; padding: 6px 16px; border-radius: 30px; font-weight: bold; margin: 0; color: var(--text-dark); }
+        .tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-top: 15px; }
+        .tool-card { background: white; border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; text-align: left; cursor: pointer; box-shadow: var(--card-shadow); transition: all 0.25s ease; position: relative; overflow: hidden; }
+        .tool-card:hover { transform: translateY(-3px); box-shadow: var(--card-hover-shadow); border-color: var(--primary); }
         .tool-card h3 { margin: 0 0 4px 0; font-size: 1.05rem; color: #1e272e; display: flex; align-items: center; gap: 6px; }
         .tool-card p { margin: 0; font-size: 0.8rem; color: #7f8c8d; line-height: 1.3; }
-
-        .form-panel {
-            display: none; background: white; border-radius: 10px; border: 1px solid var(--border-color);
-            padding: 20px; box-shadow: 0 8px 24px rgba(0,0,0,0.05); text-align: left;
-            max-width: 550px; margin: 15px auto;
-        }
-        .back-btn {
-            background: #7f8c8d; color: white; border: none; padding: 5px 10px;
-            font-size: 0.75rem; font-weight: bold; border-radius: 4px; cursor: pointer;
-            margin-bottom: 15px; display: inline-flex; align-items: center; gap: 4px;
-        }
+        .form-panel { display: none; background: white; border-radius: 10px; border: 1px solid var(--border-color); padding: 20px; box-shadow: 0 8px 24px rgba(0,0,0,0.05); text-align: left; max-width: 550px; margin: 15px auto; }
+        .back-btn { background: #7f8c8d; color: white; border: none; padding: 5px 10px; font-size: 0.75rem; font-weight: bold; border-radius: 4px; cursor: pointer; margin-bottom: 15px; display: inline-flex; align-items: center; gap: 4px; }
         .back-btn:hover { background: #616a6b; }
-
         .input-group { margin-bottom: 12px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
         .input-group label { font-weight: bold; font-size: 0.8rem; color: #34495e; }
-        .input-group input[type="number"], .input-group select {
-            padding: 7px 10px; border: 1px solid var(--border-color); border-radius: 5px; font-size: 0.8rem;
-            width: 100%; max-width: 200px; box-sizing: border-box;
-        }
+        .input-group input[type="number"], .input-group select { padding: 7px 10px; border: 1px solid var(--border-color); border-radius: 5px; font-size: 0.8rem; width: 100%; max-width: 200px; box-sizing: border-box; }
         .range-group { margin-bottom: 12px; }
         .range-group label { display: flex; justify-content: space-between; font-weight: bold; font-size: 0.8rem; margin-bottom: 4px; }
         .range-group input { width: 100%; accent-color: var(--primary); }
-
-        .process-btn {
-            background: var(--primary); color: #fff; border: none; padding: 10px 16px;
-            font-size: 0.85rem; font-weight: bold; border-radius: 5px; cursor: pointer;
-            width: 100%; transition: background 0.2s ease; margin-top: 8px; text-align: center;
-        }
+        .process-btn { background: var(--primary); color: #fff; border: none; padding: 10px 16px; font-size: 0.85rem; font-weight: bold; border-radius: 5px; cursor: pointer; width: 100%; transition: background 0.2s ease; margin-top: 8px; text-align: center; }
         .process-btn:hover { background: var(--primary-hover); }
         .status-text { margin-top: 6px; font-weight: bold; color: #27ae60; font-size: 0.8rem; min-height: 16px; }
-
+        
+        /* Cropper CSS Adjustments */
         #crop-box {
             position: absolute; border: 2px dashed #ff3b30; box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.6);
             display: none; box-sizing: border-box; width: 100px; height: 100px; top: 10px; left: 10px; touch-action: none;
         }
-        .crop-handle {
-            position: absolute; width: 14px; height: 14px; background: #ff3b30; right: -7px; bottom: -7px;
-            border-radius: 50%; touch-action: none; cursor: se-resize; border: 2px solid white;
-        }
+        .crop-handle { position: absolute; width: 14px; height: 14px; background: #ff3b30; right: -7px; bottom: -7px; border-radius: 50%; touch-action: none; cursor: se-resize; border: 2px solid white; }
         .crop-toolbar { display: flex; justify-content: center; margin-top: 8px; }
-        .crop-toggle-btn {
-            background: #fff; border: 1px solid #ff3b30; color: #ff3b30; border-radius: 5px;
-            padding: 5px 12px; font-size: 0.75rem; font-weight: bold; cursor: pointer; transition: all 0.2s;
-        }
+        .crop-toggle-btn { background: #fff; border: 1px solid #ff3b30; color: #ff3b30; border-radius: 5px; padding: 5px 12px; font-size: 0.75rem; font-weight: bold; cursor: pointer; transition: all 0.2s; }
         .crop-toggle-btn.active { background: #ff3b30; color: white; }
-
-        .seo-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 15px; margin-top: 35px; text-align: left;
-        }
-        .faq-card {
-            background: white; border-radius: 8px; border: 1px solid var(--border-color);
-            padding: 16px; box-shadow: var(--card-shadow);
-        }
+        .seo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 15px; margin-top: 35px; text-align: left; }
+        .faq-card { background: white; border-radius: 8px; border: 1px solid var(--border-color); padding: 16px; box-shadow: var(--card-shadow); }
         .faq-card h3 { color: var(--primary); margin-top: 0; font-size: 0.95rem; margin-bottom: 8px; }
         .faq-card p { margin: 0; font-size: 0.8rem; color: #57606f; line-height: 1.4; }
-
         footer { background: #2c3e50; color: white; text-align: center; padding: 12px; margin-top: 35px; font-size: 0.8rem; }
+        
+        /* New Dynamic Page Views Router CSS */
+        .dynamic-page { display: none; background: white; border-radius: 12px; border: 1px solid var(--border-color); padding: 30px; box-shadow: var(--card-shadow); text-align: left; max-width: 800px; margin: 20px auto; }
+        .dynamic-page h2 { color: var(--primary); border-bottom: 2px solid #f4f6f9; padding-bottom: 10px; margin-top: 0; }
     </style>
 </head>
 <body>
-
     <header role="banner">
         <div style="text-align: left;">
-            <h1 style="font-size: 1.6rem;">EditSpark Studio</h1>
+            <h1 style="font-size: 1.6rem;"><a href="/" onclick="navigateRoute(event, '/')" style="color:white; text-decoration:none;">EditSpark Studio</a></h1>
             <p style="margin: 3px 0 0 0; opacity: 0.9; font-size: 0.85rem; font-weight: 500;">
                 Free Online Photo Editor: Compress Image to Exact KB & Increase Photo Size Online
             </p>
         </div>
         <div class="bharat-badge" aria-label="Apna Bharatiya Editor Suite">
-            <span style="color:#FF9933">Apna</span> 
-            <span style="color:#FFFFFF">Bharat</span> 
-            <span style="color:#128825">Editor 🇮🇳</span>
+            <span style="color:#FF9933">Apna</span> <span style="color:#FFFFFF">Bharat</span> <span style="color:#128825">Editor 🇮🇳</span>
         </div>
     </header>
+    
+    <!-- Dynamic Router Pages Container -->
+    <div id="dynamic-router-outlet"></div>
 
-    <main>
+    <!-- Main Workspace Container -->
+    <main id="main-editor-workspace">
         <div class="upload-container" id="upload-area-box">
             <label for="image-input" class="upload-square">
                 <span class="icon">📸</span>
@@ -211,7 +162,6 @@
             </label>
             <input type="file" id="image-input" accept="image/*" onchange="previewImage(event)">
         </div>
-
         <div class="preview-workspace" id="preview-workspace-area">
             <div class="preview-wrapper-box" id="preview-wrapper">
                 <button class="corner-close-btn" onclick="cancelUploadedImage()" title="Remove Image">✕</button>
@@ -227,7 +177,6 @@
             </div>
             <p id="file-info"></p>
         </div>
-
         <div class="tools-grid" id="main-tools-grid">
             <div class="tool-card" onclick="openToolForm('pixel-panel')">
                 <h3>📐 Resize Image</h3>
@@ -250,13 +199,15 @@
                 <p>Increase photo size in KB online without losing any resolution or quality.</p>
             </div>
         </div>
+        <!-- All Tool Config Panels -->
         <div class="form-panel" id="pixel-panel">
             <button class="back-btn" onclick="closeToolForm()">← Back to All Tools</button>
             <h2 style="color:var(--primary); margin-top:0; font-size:1.3rem; margin-bottom:15px;">📐 Resize Image & DPI Studio</h2>
             <div class="input-group"><label>Width (px):</label><input type="number" id="img-width"></div>
             <div class="input-group"><label>Height (px):</label><input type="number" id="img-height"></div>
             <div style="display:flex; gap:6px; align-items:center; margin-bottom:15px;">
-                <input type="checkbox" id="aspect-ratio" checked> <label for="aspect-ratio" style="font-size:0.85rem; font-weight:bold; cursor:pointer;">Lock Aspect Ratio</label>
+                <input type="checkbox" id="aspect-ratio" checked>
+                <label for="aspect-ratio" style="font-size:0.85rem; font-weight:bold; cursor:pointer;">Lock Aspect Ratio</label>
             </div>
             <div class="input-group"><label>Target Max Size (KB - Optional):</label><input type="number" id="target-kb-a" placeholder="e.g. 50"></div>
             <div class="input-group">
@@ -335,84 +286,74 @@
             </div>
         </div>
     </main>
-   <footer style="background: #2c3e50; color: #ecf0f1; padding: 40px 20px; margin-top: 50px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 0.85rem; text-align: left;">
-    <div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px;">
-        
-        <div>
-            <h3 style="color: #fff; font-size: 1.1rem; margin-top: 0; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">ℹ️ About EditSpark</h3>
-            <p style="color: #bdc3c7; line-height: 1.5; margin: 0 0 15px 0;">
-                EditSpark Studio is Apna Bharatiya Editor Suite 🇮🇳 designed to compress, resize, and modify images safely inside your browser memory.
-            </p>
-            <a href="about" style="color: #3498db; text-decoration: none; font-weight: bold;">Read Full About Us →</a>
+
+    <footer style="background: #2c3e50; color: #ecf0f1; padding: 40px 20px; margin-top: 50px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 0.85rem; text-align: left;">
+        <div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px;">
+            <div>
+                <h3 style="color: #fff; font-size: 1.1rem; margin-top: 0; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">ℹ️ About EditSpark</h3>
+                <p style="color: #bdc3c7; line-height: 1.5; margin: 0 0 15px 0;">
+                    EditSpark Studio is Apna Bharat Editor Suite 🇮🇳 designed to compress, resize, and modify images safely inside your browser memory.
+                </p>
+                <a href="/about" onclick="navigateRoute(event, '/about')" style="color: #3498db; text-decoration: none; font-weight: bold;">Read Full About Us →</a>
+            </div>
+            <div>
+                <h3 style="color: #fff; font-size: 1.1rem; margin-top: 0; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">🛠️ Editor Tools</h3>
+                <ul style="list-style: none; padding: 0; margin: 0; line-height: 2;">
+                    <li><a href="#" onclick="openToolForm('kb-panel'); return false;" style="color: #bdc3c7; text-decoration: none; transition: color 0.2s;">⚖️ Compress Image</a></li>
+                    <li><a href="#" onclick="openToolForm('pixel-panel'); return false;" style="color: #bdc3c7; text-decoration: none; transition: color 0.2s;">📐 Resize & DPI Studio</a></li>
+                    <li><a href="#" onclick="openToolForm('crop-panel'); return false;" style="color: #bdc3c7; text-decoration: none; transition: color 0.2s;">✂️ Interactive Crop</a></li>
+                    <li><a href="#" onclick="openToolForm('clear-panel'); return false;" style="color: #bdc3c7; text-decoration: none; transition: color 0.2s;">🖋️ Clear Sign & Document</a></li>
+                    <li><a href="#" onclick="openToolForm('increase-panel'); return false;" style="color: #bdc3c7; text-decoration: none; transition: color 0.2s;">🚀 Increase KB Size</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 style="color: #fff; font-size: 1.1rem; margin-top: 0; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">⭐ Platform Features</h3>
+                <ul style="list-style: none; padding: 0; margin: 0; line-height: 2;">
+                    <li><a href="#" style="color: #bdc3c7; text-decoration: none;">⚡ High-Speed Canvas</a></li>
+                    <li><a href="#" style="color: #bdc3c7; text-decoration: none;">🛡️ 100% Secure & Local</a></li>
+                    <li><a href="#" style="color: #bdc3c7; text-decoration: none;">💸 Always Free Layout</a></li>
+                    <li><a href="#faq-section" style="color: #bdc3c7; text-decoration: none;">❓ View Tool FAQs</a></li>
+                    <li><a href="#" style="color: #bdc3c7; text-decoration: none;">📝 Technical Blog</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 style="color: #fff; font-size: 1.1rem; margin-top: 0; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">⚖️ Legal & Trust</h3>
+                <ul style="list-style: none; padding: 0; margin: 0; line-height: 2;">
+                    <li><a href="/privacy" onclick="navigateRoute(event, '/privacy')" style="color: #bdc3c7; text-decoration: none; font-weight: 500;">🔒 Privacy Policy</a></li>
+                    <li><a href="/terms" onclick="navigateRoute(event, '/terms')" style="color: #bdc3c7; text-decoration: none;">📜 Terms of Service</a></li>
+                    <li><a href="/contact" onclick="navigateRoute(event, '/contact')" style="color: #bdc3c7; text-decoration: none;">📧 Contact Support</a></li>
+                    <li><a href="/" onclick="navigateRoute(event, '/')" style="color: #bdc3c7; text-decoration: none;">🏠 Home Dashboard</a></li>
+                </ul>
+            </div>
         </div>
-
-        <div>
-            <h3 style="color: #fff; font-size: 1.1rem; margin-top: 0; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">🛠️ Editor Tools</h3>
-            <ul style="list-style: none; padding: 0; margin: 0; line-height: 2;">
-                <li><a href="#" onclick="openToolForm('kb-panel'); return false;" style="color: #bdc3c7; text-decoration: none; transition: color 0.2s;">⚖️ Compress Image</a></li>
-                <li><a href="#" onclick="openToolForm('pixel-panel'); return false;" style="color: #bdc3c7; text-decoration: none; transition: color 0.2s;">📐 Resize & DPI Studio</a></li>
-                <li><a href="#" onclick="openToolForm('crop-panel'); return false;" style="color: #bdc3c7; text-decoration: none; transition: color 0.2s;">✂️ Interactive Crop</a></li>
-                <li><a href="#" onclick="openToolForm('clear-panel'); return false;" style="color: #bdc3c7; text-decoration: none; transition: color 0.2s;">🖋️ Clear Sign & Document</a></li>
-                <li><a href="#" onclick="openToolForm('increase-panel'); return false;" style="color: #bdc3c7; text-decoration: none; transition: color 0.2s;">🚀 Increase KB Size</a></li>
-            </ul>
+        <div style="max-width: 1200px; margin: 30px auto 0 auto; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); text-align: center; color: #95a5a6; font-size: 0.8rem;">
+            <p style="margin: 0;">&copy; 2026 <strong>EditSpark Studio</strong> - Apna Bharat Editor Suite 🇮🇳. All Rights Reserved.</p>
         </div>
+    </footer>
 
-        <div>
-            <h3 style="color: #fff; font-size: 1.1rem; margin-top: 0; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">⭐ Platform Features</h3>
-            <ul style="list-style: none; padding: 0; margin: 0; line-height: 2;">
-                <li><a href="#" style="color: #bdc3c7; text-decoration: none;">⚡ High-Speed Canvas</a></li>
-                <li><a href="#" style="color: #bdc3c7; text-decoration: none;">🛡️ 100% Secure & Local</a></li>
-                <li><a href="#" style="color: #bdc3c7; text-decoration: none;">💸 Always Free Layout</a></li>
-                <li><a href="#faq-section" style="color: #bdc3c7; text-decoration: none;">❓ View Tool FAQs</a></li>
-                <li><a href="#" style="color: #bdc3c7; text-decoration: none;">📝 Technical Blog</a></li>
-            </ul>
-        </div>
-
-        <div>
-            <h3 style="color: #fff; font-size: 1.1rem; margin-top: 0; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">⚖️ Legal & Trust</h3>
-            <ul style="list-style: none; padding: 0; margin: 0; line-height: 2;">
-                <li><a href="privacy" style="color: #bdc3c7; text-decoration: none; font-weight: 500;">🔒 Privacy Policy</a></li>
-                <li><a href="#" style="color: #bdc3c7; text-decoration: none;">📜 Terms of Service</a></li>
-                <li><a href="#" style="color: #bdc3c7; text-decoration: none;">📧 Contact Support</a></li>
-                <li><a href="#" style="color: #bdc3c7; text-decoration: none;">🏠 Home Dashboard</a></li>
-            </ul>
-        </div>
-
-    </div>
-
-    <div style="max-width: 1200px; margin: 30px auto 0 auto; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); text-align: center; color: #95a5a6; font-size: 0.8rem;">
-        <p style="margin: 0;">&copy; 2026 <strong>EditSpark Studio</strong> - Apna Bharatiya Editor Suite 🇮🇳. All Rights Reserved.</p>
-    </div>
-</footer>
     <script>
         let globalImage = new Image();
         let originalWidth = 0, originalHeight = 0, originalRatio = 1, originalDPI = 96, sourceRawFile = null;
-
         const uploadAreaBox = document.getElementById('upload-area-box');
         const previewWorkspaceArea = document.getElementById('preview-workspace-area');
         const mainToolsGrid = document.getElementById('main-tools-grid');
-        
         const previewWrapper = document.getElementById('preview-wrapper');
         const cropBox = document.getElementById('crop-box');
         const previewImg = document.getElementById('img-preview');
         const cropToggleIcon = document.getElementById('crop-toggle-icon');
-        
         let isDragging = false, isResizing = false;
         let startX, startY, startLeft, startTop, startWidth, startHeight;
-
-        // UI Management - Focus Mode Engine with Mobile Back Button Protection
         let isFormOpen = false;
 
+        // UI Management - Focus Mode
         function openToolForm(panelId) {
-            if (!globalImage.src) { 
-                alert("Kripya pehle upar diye gaye square box se photo upload karein!"); 
-                return; 
+            if (!globalImage.src || globalImage.src.startsWith("data:image/gif")) {
+                alert("Kripya pehle upar diye gaye square box se photo upload karein!");
+                return;
             }
             mainToolsGrid.style.display = 'none';
             document.querySelectorAll('.form-panel').forEach(p => p.style.display = 'none');
             document.getElementById(panelId).style.display = 'block';
-            
-            // Push dynamic history state for phone physical back button intercept
             if (!isFormOpen) {
                 isFormOpen = true;
                 history.pushState({ panelActive: true }, "");
@@ -424,47 +365,38 @@
             mainToolsGrid.style.display = 'grid';
             cropBox.style.display = 'none';
             cropToggleIcon.classList.remove('active');
-            
             isFormOpen = false;
-            // Sync history state if closed manually by button
-            if (!preventBackHistory) {
-                history.back();
-            }
+            if (!preventBackHistory) { history.back(); }
         }
 
-        // Global Back Event Listener for Smartphones
         window.addEventListener('popstate', function(event) {
-            if (isFormOpen) {
-                closeToolForm(true);
-            }
+            if (isFormOpen) { closeToolForm(true); }
+            handleClientRouting(); // Popstate पर भी राउटिंग चेक होगी
         });
+
         // Native File Handling
         function previewImage(event) {
             const file = event.target.files[0];
             if (!file) return;
             sourceRawFile = file;
-
             const dpiReader = new FileReader();
             dpiReader.onload = function(e) { originalDPI = extractDPI(e.target.result); };
             dpiReader.readAsArrayBuffer(file);
-
+            
             const reader = new FileReader();
             reader.onload = function(e) {
                 globalImage.src = e.target.result;
                 globalImage.onload = function() {
-                    originalWidth = globalImage.width; originalHeight = globalImage.height;
+                    originalWidth = globalImage.width;
+                    originalHeight = globalImage.height;
                     originalRatio = originalWidth / originalHeight;
-                    
                     document.getElementById('img-width').value = originalWidth;
                     document.getElementById('img-height').value = originalHeight;
-                    
                     document.getElementById('file-info').innerText = `Specs: ${originalWidth}x${originalHeight} px | Native: ${originalDPI} DPI | Current Size: ${(file.size/1024).toFixed(2)} KB`;
-                    
                     previewImg.src = e.target.result;
-                    
                     uploadAreaBox.style.display = 'none';
                     previewWorkspaceArea.style.display = 'flex';
-                    closeToolForm(true); // Reset tool layout states silently
+                    closeToolForm(true);
                 }
             }
             reader.onloadend = function() { applyFilters(); };
@@ -476,16 +408,14 @@
             globalImage = new Image();
             previewImg.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
             document.getElementById('image-input').value = "";
-            
             document.getElementById('filter-bright').value = 100;
             document.getElementById('filter-contrast').value = 100;
             document.getElementById('lbl-bright').innerText = '100%';
             document.getElementById('lbl-contrast').innerText = '100%';
             previewImg.style.filter = "none";
-            
             previewWorkspaceArea.style.display = 'none';
             uploadAreaBox.style.display = 'flex';
-            closeToolForm(true); // Close panels safely without pushing extra history steps
+            closeToolForm(true);
         }
 
         function extractDPI(arrayBuffer) {
@@ -507,207 +437,273 @@
             if(document.getElementById('aspect-ratio').checked && originalRatio) document.getElementById('img-width').value = Math.round(this.value * originalRatio);
         });
 
-        // Live Preview Filters Filter
         function applyFilters() {
-            if(!globalImage.src) return;
-            const b = document.getElementById('filter-bright').value; const c = document.getElementById('filter-contrast').value;
-            document.getElementById('lbl-bright').innerText = b + '%'; document.getElementById('lbl-contrast').innerText = c + '%';
+            if(!globalImage.src || globalImage.src.startsWith("data:image/gif")) return;
+            const b = document.getElementById('filter-bright').value;
+            const c = document.getElementById('filter-contrast').value;
+            document.getElementById('lbl-bright').innerText = b + '%';
+            document.getElementById('lbl-contrast').innerText = c + '%';
             previewImg.style.filter = `brightness(${b}%) contrast(${c}%)`;
         }
 
-        // Pointer Event Handlers for Interactive Cropping Grid
-        cropBox.addEventListener('pointerdown', function(e) { if(e.target.id === 'crop-handle-btn') return; isDragging = true; cropBox.setPointerCapture(e.pointerId); startX = e.clientX; startY = e.clientY; startLeft = parseInt(cropBox.style.left) || 0; startTop = parseInt(cropBox.style.top) || 0; e.preventDefault(); });
-        document.getElementById('crop-handle-btn').addEventListener('pointerdown', function(e) { isResizing = true; document.getElementById('crop-handle-btn').setPointerCapture(e.pointerId); startX = e.clientX; startY = e.clientY; startWidth = cropBox.clientWidth; startHeight = cropBox.clientHeight; e.preventDefault(); e.stopPropagation(); });
-        window.addEventListener('pointermove', function(e) { if (!isDragging && !isResizing) return; requestAnimationFrame(() => { const maxX = previewImg.clientWidth; const maxY = previewImg.clientHeight; if(isDragging) { let nl = Math.max(0, Math.min(startLeft + (e.clientX - startX), maxX - cropBox.clientWidth)); let nt = Math.max(0, Math.min(startTop + (e.clientY - startY), maxY - cropBox.clientHeight)); cropBox.style.left = nl + 'px'; cropBox.style.top = nt + 'px'; } if(isResizing) { let nw = Math.min(Math.max(30, startWidth + (e.clientX - startX)), maxX - (parseInt(cropBox.style.left) || 0)); let nh = Math.min(Math.max(30, startHeight + (e.clientY - startY)), maxY - (parseInt(cropBox.style.top) || 0)); cropBox.style.width = nw + 'px'; cropBox.style.height = nh + 'px'; } }); });
-        window.addEventListener('pointerup', function() { isDragging = false; isResizing = false; });
+        // PERFECT CROP INTERACTIVE LOGIC (Fixed Coordination Math)
+        cropBox.addEventListener('pointerdown', function(e) {
+            if(e.target.id === 'crop-handle-btn') return;
+            isDragging = true;
+            cropBox.setPointerCapture(e.pointerId);
+            startX = e.clientX;
+            startY = e.clientY;
+            startLeft = parseInt(cropBox.style.left) || 0;
+            startTop = parseInt(cropBox.style.top) || 0;
+            e.preventDefault();
+        });
 
-        function insertDpiInBlob(blob, targetDPI, callback) {
+        document.getElementById('crop-handle-btn').addEventListener('pointerdown', function(e) {
+            isResizing = true;
+            document.getElementById('crop-handle-btn').setPointerCapture(e.pointerId);
+            startX = e.clientX;
+            startY = e.clientY;
+            startWidth = cropBox.clientWidth;
+            startHeight = cropBox.clientHeight;
+            e.preventDefault();
+            e.stopPropagation();
+        });
+
+        window.addEventListener('pointermove', function(e) {
+            if (!isDragging && !isResizing) return;
+            e.preventDefault();
+            requestAnimationFrame(() => {
+                const maxX = previewImg.clientWidth;
+                const maxY = previewImg.clientHeight;
+                if(isDragging) {
+                    let nl = Math.max(0, Math.min(startLeft + (e.clientX - startX), maxX - cropBox.clientWidth));
+                    let nt = Math.max(0, Math.min(startTop + (e.clientY - startY), maxY - cropBox.clientHeight));
+                    cropBox.style.left = nl + 'px';
+                    cropBox.style.top = nt + 'px';
+                }
+                if(isResizing) {
+                    let nw = Math.max(30, Math.min(startWidth + (e.clientX - startX), maxX - parseInt(cropBox.style.left || 0)));
+                    let nh = Math.max(30, Math.min(startHeight + (e.clientY - startY), maxY - parseInt(cropBox.style.top || 0)));
+                    cropBox.style.width = nw + 'px';
+                    cropBox.style.height = nh + 'px';
+                }
+            });
+        });
+
+        function releasePointer(e) {
+            isDragging = false;
+            isResizing = false;
+        }
+        window.addEventListener('pointerup', releasePointer);
+        window.addEventListener('pointercancel', releasePointer);
+
+        function toggleCropOverlay() {
+            if(cropBox.style.display === 'block') {
+                cropBox.style.display = 'none';
+                cropToggleIcon.classList.remove('active');
+            } else {
+                cropBox.style.display = 'block';
+                cropBox.style.left = '10px';
+                cropBox.style.top = '10px';
+                cropBox.style.width = '100px';
+                cropBox.style.height = '100px';
+                cropToggleIcon.classList.add('active');
+            }
+        }
+        // ADVANCED PROCESSING ENGINE & CLIENT-SIDE ROUTER
+        function processAndDownload(mode) {
+            if(!globalImage.src || globalImage.src.startsWith("data:image/gif")) return;
+            
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            let tw = originalWidth, th = originalHeight;
+            let targetKb = 0;
+            let statusId = 'status-' + mode;
+            let statusBox = document.getElementById(statusId);
+            statusBox.innerText = "Processing image client-side...";
+
+            let dpiSelect = document.querySelector('#' + mode + '-panel .set-dpi-class');
+            let selectedDPI = dpiSelect ? dpiSelect.value : '300';
+
+            if(mode === 'pixel') {
+                tw = parseInt(document.getElementById('img-width').value) || originalWidth;
+                th = parseInt(document.getElementById('img-height').value) || originalHeight;
+                targetKb = parseInt(document.getElementById('target-kb-a').value) || 0;
+            } else if(mode === 'kb') {
+                targetKb = parseInt(document.getElementById('target-kb-b').value) || 0;
+            } else if(mode === 'crop') {
+                if(cropBox.style.display === 'none') {
+                    alert("Kripya crop grid open karke area toggle karein!");
+                    statusBox.innerText = "";
+                    return;
+                }
+                targetKb = parseInt(document.getElementById('target-kb-c').value) || 0;
+                
+                // Real mathematical scaling ratio calculation between displayed preview vs natural source
+                const rx = globalImage.naturalWidth / previewImg.clientWidth;
+                const ry = globalImage.naturalHeight / previewImg.clientHeight;
+                
+                tw = Math.round(cropBox.clientWidth * rx);
+                th = Math.round(cropBox.clientHeight * ry);
+                canvas.width = tw;
+                canvas.height = th;
+                
+                ctx.filter = previewImg.style.filter;
+                ctx.drawImage(globalImage, Math.round(parseInt(cropBox.style.left)*rx), Math.round(parseInt(cropBox.style.top)*ry), tw, th, 0, 0, tw, th);
+                triggerOptimizationLoop(canvas, ctx, targetKb, selectedDPI, statusBox);
+                return;
+            } else if(mode === 'clear') {
+                targetKb = parseInt(document.getElementById('target-kb-d').value) || 0;
+            } else if(mode === 'increase') {
+                targetKb = parseInt(document.getElementById('increase-target-kb').value) || 0;
+            }
+
+            canvas.width = tw;
+            canvas.height = th;
+            ctx.filter = previewImg.style.filter;
+            ctx.drawImage(globalImage, 0, 0, tw, th);
+
+            if(mode === 'increase') {
+                triggerSizeIncreaser(canvas, targetKb, selectedDPI, statusBox);
+            } else {
+                triggerOptimizationLoop(canvas, ctx, targetKb, selectedDPI, statusBox);
+            }
+        }
+
+        function triggerOptimizationLoop(canvas, ctx, targetKb, selectedDPI, statusBox) {
+            let low = 0.01, high = 0.99, bestBlob = null, loopCount = 0;
+            
+            function binarySearchCompress() {
+                if(loopCount > 12) { finalizeDownload(bestBlob, selectedDPI, statusBox); return; }
+                let mid = (low + high) / 2;
+                canvas.toBlob((blob) => {
+                    loopCount++;
+                    const sizeKb = blob.size / 1024;
+                    if(targetKb <= 0) { bestBlob = blob; finalizeDownload(bestBlob, selectedDPI, statusBox); return; }
+                    if(sizeKb <= targetKb) { bestBlob = blob; low = mid; } else { high = mid; }
+                    binarySearchCompress();
+                }, 'image/jpeg', mid);
+            }
+            binarySearchCompress();
+        }
+
+        function triggerSizeIncreaser(canvas, targetKb, selectedDPI, statusBox) {
+            canvas.toBlob((blob) => {
+                const currentKb = blob.size / 1024;
+                if(targetKb <= currentKb) {
+                    finalizeDownload(blob, selectedDPI, statusBox);
+                    return;
+                }
+                const neededBytes = Math.round((targetKb - currentKb) * 1024) + 500;
+                const reader = new FileReader();
+                reader.onloadend = function() {
+                    const originalArr = new Uint8Array(reader.result);
+                    const newArr = new Uint8Array(originalArr.length + neededBytes);
+                    newArr.set(originalArr);
+                    // Inject safe trailing metadata padding bytes
+                    for(let i = 0; i < neededBytes; i++) {
+                        newArr[originalArr.length + i] = Math.floor(Math.random() * 256);
+                    }
+                    const injectedBlob = new Blob([newArr], { type: 'image/jpeg' });
+                    finalizeDownload(injectedBlob, selectedDPI, statusBox);
+                };
+                reader.readAsArrayBuffer(blob);
+            }, 'image/jpeg', 0.95);
+        }
+
+        function finalizeDownload(blob, selectedDPI, statusBox) {
             const reader = new FileReader();
-            reader.onload = function(e) {
-                const buffer = e.target.result; const view = new DataView(buffer);
-                const jfif = new Uint8Array([0xFF, 0xE0, 0x00, 0x10, 0x4A, 0x46, 0x49, 0x46, 0x00, 0x01, 0x01, 0x01, (targetDPI >> 8) & 0xFF, targetDPI & 0xFF, (targetDPI >> 8) & 0xFF, targetDPI & 0xFF, 0x00, 0x00]);
-                let out; if (view.getUint16(0) === 0xFFD8) { if (view.getUint16(2) === 0xFFE0) out = appendBuffers(view.buffer.slice(0, 2), jfif, buffer.slice(2 + view.getUint16(4) + 2)); else out = appendBuffers(view.buffer.slice(0, 2), jfif, buffer.slice(2)); } else out = buffer;
-                callback(new Blob([out], { type: blob.type }));
+            reader.onloadend = function() {
+                let arrayBuffer = reader.result;
+                if(selectedDPI !== 'original') {
+                    arrayBuffer = injectDPMetadata(arrayBuffer, parseInt(selectedDPI));
+                }
+                const finalBlob = new Blob([arrayBuffer], { type: 'image/jpeg' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(finalBlob);
+                link.download = `editspark_studio_${Date.now()}.jpg`;
+                link.click();
+                statusBox.innerText = `Success! Saved Size: ${(finalBlob.size/1024).toFixed(2)} KB`;
             };
             reader.readAsArrayBuffer(blob);
         }
 
-        function appendBuffers(b1, b2, b3) { const c = new Uint8Array(b1.byteLength + b2.byteLength + b3.byteLength); c.set(new Uint8Array(b1), 0); c.set(new Uint8Array(b2), b1.byteLength); c.set(new Uint8Array(b3), b1.byteLength + b2.byteLength); return c.buffer; }
-
-        // Adaptive Search Compressing Engine (Optimized High Speed Loop)
-        function applyKBConstraint(sourceCanvas, targetKB, selectedDPI, statusId) {
-            const format = 'image/jpeg';
-            if (targetKB === 0) { 
-                sourceCanvas.toBlob(b => insertDpiInBlob(b, selectedDPI, final => triggerDownload(final, statusId)), format, 0.85); 
-                return; 
-            }
-            
-            let lowQuality = 0.05, highQuality = 1.0, quality = 0.80;
-            let lowScale = 0.2, highScale = 1.0, scale = 1.0;
-            let bestBlob = null, loopIteration = 0;
-            const targetBytes = targetKB * 1024;
-
-            function runSearch() {
-                if (loopIteration >= 12 || (highQuality - lowQuality < 0.03 && highScale - lowScale < 0.03)) { 
-                    finalize(bestBlob); 
-                    return; 
-                }
-                loopIteration++;
-
-                let testCanvas = document.createElement('canvas');
-                testCanvas.width = Math.max(30, Math.floor(sourceCanvas.width * scale));
-                testCanvas.height = Math.max(30, Math.floor(sourceCanvas.height * scale));
-                let testCtx = testCanvas.getContext('2d');
-                testCtx.drawImage(sourceCanvas, 0, 0, testCanvas.width, testCanvas.height);
-
-                testCanvas.toBlob(rawBlob => {
-                    if (!rawBlob) { runSearch(); return; }
-                    
-                    insertDpiInBlob(rawBlob, selectedDPI, dpiInjectedBlob => {
-                        if (dpiInjectedBlob.size <= targetBytes) {
-                            bestBlob = dpiInjectedBlob;
-                            lowQuality = quality;
-                            lowScale = scale;
-                        } else {
-                            highQuality = quality;
-                            highScale = scale;
-                        }
-                        
-                        quality = (lowQuality + highQuality) / 2;
-                        scale = (lowScale + highScale) / 2;
-                        runSearch();
-                    });
-                }, format, quality);
-            }
-
-            function finalize(finalBlob) {
-                if (!finalBlob) {
-                    let testCanvas = document.createElement('canvas');
-                    testCanvas.width = Math.max(30, Math.floor(sourceCanvas.width * 0.15));
-                    testCanvas.height = Math.max(30, Math.floor(sourceCanvas.height * 0.15));
-                    let testCtx = testCanvas.getContext('2d');
-                    testCtx.drawImage(sourceCanvas, 0, 0, testCanvas.width, testCanvas.height);
-                    
-                    testCanvas.toBlob(lowestBlob => {
-                        insertDpiInBlob(lowestBlob, selectedDPI, dpiBlob => {
-                            finalBlob = dpiBlob;
-                            executePadding();
-                        });
-                    }, format, 0.08);
-                } else {
-                    executePadding();
-                }
-
-                function executePadding() {
-                    let currentSize = finalBlob.size;
-                    if (currentSize < targetBytes) {
-                        let addBytes = targetBytes - currentSize;
-                        if (addBytes > 0) {
-                            finalBlob = new Blob([finalBlob, new Uint8Array(addBytes).fill(0x20)], { type: format });
-                        }
-                    }
-                    triggerDownload(finalBlob, statusId);
+        function injectDPMetadata(buffer, dpi) {
+            const view = new DataView(buffer);
+            const dpm = Math.round(dpi / 0.0254);
+            // Search for JFIF Header
+            for (let i = 0; i < view.byteLength - 20; i++) {
+                if (view.getUint16(i) === 0xFFE0 && view.getUint32(i + 4) === 0x4A464946) {
+                    view.setUint8(i + 13, 1); // Set unit density to inches
+                    view.setUint16(i + 14, dpi); // X resolution
+                    view.setUint16(i + 16, dpi); // Y resolution
+                    return buffer;
                 }
             }
-            runSearch();
+            return buffer;
         }
 
-        // Unified Process Routing Engine (Optimized for High-Speed)
-        function processAndDownload(blockType) {
-            if (!globalImage.src) return;
-            const statusId = 'status-' + blockType; 
-            document.getElementById(statusId).innerText = "Processing engine routine...";
-            
-            const panelEl = document.getElementById(blockType + '-panel');
-            const dpiValue = panelEl.querySelector('.set-dpi-class').value;
-            const selectedDPI = dpiValue === 'original' ? originalDPI : (parseInt(dpiValue) || 300);
-            
-            if (blockType === 'increase') {
-                const targetKB = parseInt(document.getElementById('increase-target-kb').value) || 0; 
-                const targetBytes = targetKB * 1024;
+        // ==========================================
+        // LIGHTWEIGHT CLIENT-SIDE SPA ROUTER ENGINE
+        // ==========================================
+        const routesData = {
+            "/about": `
+                <div class="dynamic-page">
+                    <h2>🇮🇳 About EditSpark Studio</h2>
+                    <p><strong>EditSpark Studio (Apna Bharat Editor Suite)</strong> ek 100% safe, fast, aur browser-based utility platform hai jise vishesh roop se Bharatiya chatro aur sarkari naukari ke aavedako (SSC, UPSC, IBPS, Railways) ke liye banaya gaya hai.</p>
+                    <p>Aapki privacy hamari sabse badi priority hai. Isliye aapki koi bhi photo, sign ya document kisi bhi server par upload nahi hote. Sabhi process HTML5 Canvas aur dynamic algorithms ke jariye local browser memory me hi execute hoti hain.</p>
+                    <button class="process-btn" onclick="navigateRoute(null, '/')">← Return to Home Dashboard</button>
+                </div>`,
+            "/privacy": `
+                <div class="dynamic-page">
+                    <h2>🔒 Privacy Policy</h2>
+                    <p>EditSpark Studio me hum aapki niji jankari aur files ka poora samman karte hain. Hum aapki files ko kisi bhi server par transmit ya store nahi karte hain.</p>
+                    <p>Sabhi processing (image compression, resizing, and filtering) direct aapke laptop ya mobile ke web browser me perform hoti hai, jisse aapka data completely offline secure rehta hai.</p>
+                    <button class="process-btn" onclick="navigateRoute(null, '/')">← Return to Home Dashboard</button>
+                </div>`,
+            "/terms": `
+                <div class="dynamic-page">
+                    <h2>📜 Terms & Conditions</h2>
+                    <p>Welcome to EditSpark Studio. Is free platform ka upyog karne par aap hamari niyam aur sharto se sahmat hote hain.</p>
+                    <p>Aap is service ka upyog keval vaidh aur legitimate official application forms ki file requirements ko optimize karne ke liye kar sakte hain. Kisi bhi illegal ya malicious activity ke liye is tool ka upyog varjit hai.</p>
+                    <button class="process-btn" onclick="navigateRoute(null, '/')">← Return to Home Dashboard</button>
+                </div>`,
+            "/contact": `
+                <div class="dynamic-page">
+                    <h2>📧 Contact Support</h2>
+                    <p>Agar aapko photo ka size kam karne me ya DPI set karne me koi dikkat aa rahi hai, to tension mat lijiye! Hum aapki help ke liye hamesha tayar hain.</p>
+                    <p><strong>Support Email:</strong> funshowofficial123@gmail.com</p>
+                    <p><strong>Office Address:</strong> Chahaniya Market, Chandauli, Uttar Pradesh, India 🇮🇳</p>
+                    <button class="process-btn" onclick="navigateRoute(null, '/')">← Return to Home Dashboard</button>
+                </div>`
+        };
 
-                if (!sourceRawFile) { alert("File buffer loss error! Please re-upload."); return; }
-                if (targetKB <= (sourceRawFile.size / 1024)) { 
-                    alert("Target size aapki image ke current size se bada hona chahiye!"); 
-                    document.getElementById(statusId).innerText = "Error: Invalid target.";
-                    return; 
-                }
-
-                const binaryReader = new FileReader();
-                binaryReader.onload = function(event) {
-                    const nativeBlob = new Blob([event.target.result], { type: sourceRawFile.type });
-                    insertDpiInBlob(nativeBlob, selectedDPI, verifiedDpiBlob => {
-                        let currentBytes = verifiedDpiBlob.size;
-                        if (currentBytes < targetBytes) {
-                            let extraBytesNeeded = targetBytes - currentBytes;
-                            let paddedBlob = new Blob([verifiedDpiBlob, new Uint8Array(extraBytesNeeded).fill(0x20)], { type: 'image/jpeg' });
-                            triggerDownload(paddedBlob, statusId);
-                        } else { 
-                            triggerDownload(verifiedDpiBlob, statusId); 
-                        }
-                    });
-                };
-                binaryReader.readAsArrayBuffer(sourceRawFile);
-                return; 
-            }
-
-            const canvas = document.createElement('canvas'); 
-            const ctx = canvas.getContext('2d'); 
-            let targetKB = 0;
-
-            if (blockType === 'pixel') {
-                targetKB = parseInt(document.getElementById('target-kb-a').value) || 0;
-                canvas.width = parseInt(document.getElementById('img-width').value) || originalWidth;
-                canvas.height = parseInt(document.getElementById('img-height').value) || originalHeight;
-                ctx.drawImage(globalImage, 0, 0, canvas.width, canvas.height);
-            } else if (blockType === 'kb') {
-                targetKB = parseInt(document.getElementById('target-kb-b').value) || 0;
-                canvas.width = originalWidth; canvas.height = originalHeight;
-                ctx.drawImage(globalImage, 0, 0, canvas.width, canvas.height);
-            } else if (blockType === 'crop') {
-                targetKB = parseInt(document.getElementById('target-kb-c').value) || 0;
-                const scaleX = originalWidth / previewImg.clientWidth; 
-                const scaleY = originalHeight / previewImg.clientHeight;
-                
-                let cx = (parseInt(cropBox.style.left) || 0) * scaleX;
-                let cy = (parseInt(cropBox.style.top) || 0) * scaleY;
-                let cw = cropBox.clientWidth * scaleX;
-                let ch = cropBox.clientHeight * scaleY;
-                
-                canvas.width = cw; canvas.height = ch;
-                ctx.drawImage(globalImage, cx, cy, cw, ch, 0, 0, cw, ch);
-            } else if (blockType === 'clear') {
-                targetKB = parseInt(document.getElementById('target-kb-d').value) || 0;
-                
-                let targetWidth = originalWidth;
-                let targetHeight = originalHeight;
-                const maxSignatureWidth = 1500; 
-                
-                if (originalWidth > maxSignatureWidth) {
-                    targetWidth = maxSignatureWidth;
-                    targetHeight = Math.round(maxSignatureWidth / originalRatio);
-                }
-                
-                canvas.width = targetWidth; 
-                canvas.height = targetHeight;
-                
-                ctx.filter = `brightness(${document.getElementById('filter-bright').value}%) contrast(${document.getElementById('filter-contrast').value}%)`;
-                ctx.drawImage(globalImage, 0, 0, targetWidth, targetHeight);
-            }
-            
-            applyKBConstraint(canvas, targetKB, selectedDPI, statusId);
+        function navigateRoute(event, path) {
+            if (event) event.preventDefault();
+            window.history.pushState({}, "", path);
+            handleClientRouting();
         }
 
-        function triggerDownload(blob, statusId) {
-            const url = URL.createObjectURL(blob); 
-            const a = document.createElement('a'); 
-            a.href = url; 
-            a.download = `EditSpark_${Date.now()}.jpg`;
-            document.body.appendChild(a); 
-            a.click(); 
-            document.body.removeChild(a);
-            document.getElementById(statusId).innerText = `Success! Saved: ${(blob.size/1024).toFixed(1)} KB`;
+        function handleClientRouting() {
+            const currentPath = window.location.pathname;
+            const outlet = document.getElementById('dynamic-router-outlet');
+            const mainWorkspace = document.getElementById('main-editor-workspace');
+
+            if (routesData[currentPath]) {
+                mainWorkspace.style.display = 'none';
+                outlet.innerHTML = routesData[currentPath];
+                window.scrollTo(0, 0);
+            } else {
+                // If route matches / or any unrecognized paths, render home dashboard default workspace
+                outlet.innerHTML = "";
+                mainWorkspace.style.display = 'block';
+            }
         }
+
+        // Initialize Router Loop Execution on App Startup
+        document.addEventListener("DOMContentLoaded", () => {
+            handleClientRouting();
+        });
     </script>
 </body>
 </html>
