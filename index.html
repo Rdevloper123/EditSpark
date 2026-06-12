@@ -187,6 +187,7 @@
                 <p>Increase photo size in KB online without losing any resolution or quality.</p>
             </div>
         </div>
+
         <!-- All Tool Config Panels -->
         <div class="form-panel" id="pixel-panel">
             <button class="back-btn" onclick="closeToolForm()">← Back to All Tools</button>
@@ -306,7 +307,7 @@
                 <h3 style="color: #fff; font-size: 1.1rem; margin-top: 0; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">⚖️ Legal & Trust</h3>
                 <ul style="list-style: none; padding: 0; margin: 0; line-height: 2;">
                     <li><a href="/privacy.html" style="color: #bdc3c7; text-decoration: none; font-weight: 500;">🔒 Privacy Policy</a></li>
-                    <li><a href="/terms.html; return false;" style="color: #bdc3c7; text-decoration: none;">📜 Terms of Service</a></li>
+                    <li><a href="/terms.html" style="color: #bdc3c7; text-decoration: none;">📜 Terms of Service</a></li>
                     <li><a href="/contact.html" style="color: #bdc3c7; text-decoration: none;">📧 Contact Support</a></li>
                     <li><a href="/index.html" style="color: #bdc3c7; text-decoration: none;">🏠 Home Dashboard</a></li>
                 </ul>
@@ -403,6 +404,7 @@
             uploadAreaBox.style.display = 'flex';
             closeToolForm(true);
         }
+        
         function extractDPI(arrayBuffer) {
             const view = new DataView(arrayBuffer);
             if (view.byteLength < 20) return 96;
@@ -549,34 +551,59 @@
             }
         }
 
+        // Fast Binary Optimization Loop (Max 5 checks to hit precise target)
         function triggerOptimizationLoop(canvas, ctx, targetKb, selectedDPI, statusBox) {
             if(targetKb <= 0) {
                 canvas.toBlob((blob) => { finalizeDownload(blob, selectedDPI, statusBox); }, 'image/jpeg', 0.85);
                 return;
             }
 
-            // Current raw estimate check karne ke liye base quality use karein
-            canvas.toBlob((baseBlob) => {
-                const currentSize = baseBlob.size / 1024;
-                
-                // Pure mathematical compression factor loop ke bina calculate karein
-                let targetQuality = Math.min(0.95, Math.max(0.01, (targetKb / currentSize) * 0.85));
-                
-                // Agar target size bohot zyada chhota hai (jaise 5KB), toh automatically canvas downscale karein bina kisi processing lag ke
-                if (targetKb < 15 && (canvas.width > 300 || canvas.height > 300)) {
-                    const scaleFactor = Math.sqrt(targetKb / 25); // Safe automated reduction ratio
-                    canvas.width = Math.round(canvas.width * Math.max(0.4, scaleFactor));
-                    canvas.height = Math.round(canvas.height * Math.max(0.4, scaleFactor));
-                    ctx.filter = previewImg.style.filter;
-                    ctx.drawImage(globalImage, 0, 0, canvas.width, canvas.height);
-                    targetQuality = 0.35; // Better compression visibility over artifacts
-                }
+            let low = 0.01;
+            let high = 0.98;
+            let bestQuality = 0.5;
+            let bestBlob = null;
+            let iterations = 0;
 
-                canvas.toBlob((finalBlob) => {
-                    finalizeDownload(finalBlob, selectedDPI, statusBox);
-                }, 'image/jpeg', targetQuality);
+            function checkQuality() {
+                let mid = (low + high) / 2;
+                canvas.toBlob((blob) => {
+                    iterations++;
+                    const currentSizeKb = blob.size / 1024;
 
-            }, 'image/jpeg', 0.85);
+                    // Perfect balance or hit max loop range
+                    if (!bestBlob || Math.abs(currentSizeKb - targetKb) < Math.abs((bestBlob.size / 1024) - targetKb)) {
+                        bestBlob = blob;
+                        bestQuality = mid;
+                    }
+
+                    if (currentSizeKb > targetKb) {
+                        high = mid; // Size bada hai, quality kam karo
+                    } else {
+                        low = mid;  // Size chhota hai, quality badhao
+                    }
+
+                    // Strict margin of 1.5 KB or max iterations achieved
+                    if (Math.abs(currentSizeKb - targetKb) < 1.5 || iterations >= 5) {
+                        // Safe Adaptive Fallback: Agar image abhi bhi badi hai, resize dimensions auto-scale
+                        if ((bestBlob.size / 1024) > targetKb + 2 && (canvas.width > 120 || canvas.height > 120)) {
+                            canvas.width = Math.round(canvas.width * 0.85);
+                            canvas.height = Math.round(canvas.height * 0.85);
+                            ctx.filter = previewImg.style.filter;
+                            ctx.drawImage(globalImage, 0, 0, canvas.width, canvas.height);
+                            // Run final calculation pass
+                            canvas.toBlob((fallbackBlob) => {
+                                finalizeDownload(fallbackBlob, selectedDPI, statusBox);
+                            }, 'image/jpeg', Math.max(0.1, bestQuality - 0.1));
+                        } else {
+                            finalizeDownload(bestBlob, selectedDPI, statusBox);
+                        }
+                    } else {
+                        checkQuality(); // Loop dynamically next step
+                    }
+                }, 'image/jpeg', mid);
+            }
+
+            checkQuality();
         }
 
         function triggerSizeIncreaser(canvas, targetKb, selectedDPI, statusBox) {
