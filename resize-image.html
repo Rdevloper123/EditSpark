@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resize Image & 300 DPI Converter Online | EditSpark</title>
+    <meta name="description" content="Resize your images by pixels or percentage and convert them to 300 DPI instantly. Perfect for UPSC, SSC, and official government exam form uploads.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        .btn-blue {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+        }
+        .preview-box {
+            border: 2px dashed #cbd5e1;
+            transition: all 0.3s ease;
+        }
+        .preview-box:hover {
+            border-color: #2563eb;
+        }
+    </style>
+</head>
+<body class="bg-[#f3f4f6] font-sans text-slate-800 min-h-screen flex flex-col">
+
+    <!-- Navigation Bar -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center space-x-2">
+                    <div class="bg-blue-500 p-2 rounded-lg text-white shadow-sm">
+                        <i class="fa-solid fa-wand-magic-sparkles text-lg"></i>
+                    </div>
+                    <span class="text-2xl font-black tracking-tight text-slate-900">Edit<span class="text-blue-500">Spark</span></span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="text-sm font-bold text-slate-600 hover:text-blue-500 transition-colors">
+                        <i class="fa-solid fa-house mr-1"></i> HOME
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-4xl mx-auto px-4 py-12 w-full">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-black text-slate-900 tracking-tight uppercase">Resize Image & DPI Studio</h1>
+            <p class="mt-2 text-slate-500 font-medium">Change image dimensions and resolution to 300 DPI for standard application forms.</p>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-xs border border-slate-200 p-6 md:p-8">
+            <!-- Dropzone -->
+            <div id="resizeDropzone" class="preview-box rounded-xl p-8 text-center cursor-pointer bg-slate-50 mb-6">
+                <input type="file" id="resizeInput" accept="image/*" class="hidden">
+                <div id="resizePrompt">
+                    <i class="fa-solid fa-cloud-arrow-up text-4xl text-blue-500 mb-3"></i>
+                    <p class="font-bold text-slate-700 uppercase tracking-wide text-sm">Drag & drop your image here, or <span class="text-blue-500">browse</span></p>
+                    <p class="text-xs text-slate-400 mt-1">Supports JPG, JPEG, PNG</p>
+                </div>
+                <div id="resizePreviewContainer" class="hidden flex flex-col items-center">
+                    <img id="resizePreview" class="max-h-64 rounded shadow-xs mb-3">
+                    <p id="resizeFileInfo" class="text-sm text-slate-500 font-bold"></p>
+                </div>
+            </div>
+
+            <!-- Controls Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Width (Pixels)</label>
+                    <input type="number" id="resizeWidth" value="350" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-bold">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Height (Pixels)</label>
+                    <input type="number" id="resizeHeight" value="450" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-bold">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Target DPI</label>
+                    <select id="targetDpi" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-bold bg-white">
+                        <option value="300">300 DPI (Standard Form)</option>
+                        <option value="200">200 DPI</option>
+                        <option value="150">150 DPI</option>
+                        <option value="72">72 DPI (Web)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Lock Aspect Ratio Checkbox -->
+            <div class="flex items-center space-x-2 mb-6">
+                <input type="checkbox" id="maintainAspect" checked class="h-4 w-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500">
+                <label for="maintainAspect" class="text-xs font-bold uppercase tracking-wider text-slate-600 cursor-pointer">Maintain Aspect Ratio</label>
+            </div>
+
+            <!-- Resize Button -->
+            <button id="resizeBtn" class="w-full btn-blue text-white font-bold py-3 px-6 rounded-lg shadow-sm flex items-center justify-center space-x-2 transition-all cursor-pointer uppercase tracking-wider">
+                <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
+                <span>Resize & Convert DPI</span>
+            </button>
+
+            <!-- Result Section -->
+            <div id="resizeResult" class="hidden mt-8 pt-6 border-t border-slate-200 text-center">
+                <div class="inline-flex items-center space-x-2 text-emerald-600 font-bold uppercase tracking-wide mb-3 text-sm">
+                    <i class="fa-solid fa-circle-check text-xl"></i>
+                    <span>Processing Complete!</span>
+                </div>
+                <p id="resultResizeInfo" class="text-sm text-slate-600 font-bold mb-4"></p>
+                <a id="downloadResizeBtn" class="inline-flex items-center space-x-2 bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg shadow-sm transition-all cursor-pointer uppercase tracking-wider">
+                    <i class="fa-solid fa-download"></i>
+                    <span>Download Resized Image</span>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-6 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center text-sm text-slate-400 font-medium">
+            &copy; 2026 EditSpark Studio. Locally Processed (Safe & Secure).
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic with Hex DPI Injector -->
+    <script>
+        const dropzone = document.getElementById('resizeDropzone');
+        const fileInput = document.getElementById('resizeInput');
+        const promptDiv = document.getElementById('resizePrompt');
+        const previewContainer = document.getElementById('resizePreviewContainer');
+        const previewImg = document.getElementById('resizePreview');
+        const fileInfo = document.getElementById('resizeFileInfo');
+        const resizeBtn = document.getElementById('resizeBtn');
+        const resizeResult = document.getElementById('resizeResult');
+        const resultResizeInfo = document.getElementById('resultResizeInfo');
+        const downloadBtn = document.getElementById('downloadResizeBtn');
+
+        let activeFile = null;
+        let originalRatio = 1;
+
+        dropzone.addEventListener('click', () => fileInput.click());
+        dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('border-blue-500', 'bg-blue-50/30'); });
+        dropzone.addEventListener('dragleave', () => { dropzone.classList.remove('border-blue-500', 'bg-blue-50/30'); });
+        dropzone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropzone.classList.remove('border-blue-500', 'bg-blue-50/30');
+            if(e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+        });
+        fileInput.addEventListener('change', (e) => {
+            if(e.target.files.length) handleFile(e.target.files[0]);
+        });
+
+        function handleFile(file) {
+            if(!file.type.startsWith('image/')) { alert('Please select a valid image file.'); return; }
+            activeFile = file;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.src = e.target.result;
+                img.onload = () => {
+                    originalRatio = img.width / img.height;
+                    document.getElementById('resizeWidth').value = img.width;
+                    document.getElementById('resizeHeight').value = img.height;
+                    
+                    previewImg.src = e.target.result;
+                    promptDiv.classList.add('hidden');
+                    previewContainer.classList.remove('hidden');
+                    fileInfo.textContent = `${file.name} (${img.width}x${img.height} px)`;
+                    resizeResult.classList.add('hidden');
+                };
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Auto Aspect Ratio Handler
+        document.getElementById('resizeWidth').addEventListener('input', (e) => {
+            if(document.getElementById('maintainAspect').checked && activeFile) {
+                const val = parseInt(e.target.value);
+                if(val) document.getElementById('resizeHeight').value = Math.round(val / originalRatio);
+            }
+        });
+        document.getElementById('resizeHeight').addEventListener('input', (e) => {
+            if(document.getElementById('maintainAspect').checked && activeFile) {
+                const val = parseInt(e.target.value);
+                if(val) document.getElementById('resizeWidth').value = Math.round(val * originalRatio);
+            }
+        });
+
+        resizeBtn.addEventListener('click', () => {
+            if(!activeFile) { alert('Please upload an image first.'); return; }
+            const w = parseInt(document.getElementById('resizeWidth').value);
+            const h = parseInt(document.getElementById('resizeHeight').value);
+            const dpi = parseInt(document.getElementById('targetDpi').value);
+
+            if(!w || !h) { alert('Valid dimensions required.'); return; }
+
+            resizeBtn.disabled = true;
+            resizeBtn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> <span>Processing...</span>';
+
+            const img = new Image();
+            img.src = previewImg.src;
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                canvas.width = w;
+                canvas.height = h;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, w, h);
+
+                // Export as JPEG and Inject DPI Metadata
+                canvas.toBlob((blob) => {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const arrayBuffer = e.target.result;
+                        const view = new DataView(arrayBuffer);
+                        
+                        // Inject DPI to JFIF header if applicable
+                        let finalBlob = blob;
+                        if (view.getUint16(0) === 0xFFD8 && view.getUint16(2) === 0xFFE0) {
+                            view.setUint8(13, 1); // Set density unit to dots per inch
+                            view.setUint16(14, dpi); // X density
+                            view.setUint16(16, dpi); // Y density
+                            finalBlob = new Blob([arrayBuffer], {type: 'image/jpeg'});
+                        }
+
+                        const url = URL.createObjectURL(finalBlob);
+                        downloadBtn.href = url;
+                        downloadBtn.download = `editspark_${dpi}dpi_${w}x${h}.jpg`;
+
+                        resultResizeInfo.textContent = `New Dimensions: ${w}x${h} px | Output: ${dpi} DPI JPEG`;
+                        resizeResult.classList.remove('hidden');
+                        resizeResult.scrollIntoView({ behavior: 'smooth' });
+                        
+                        resizeBtn.disabled = false;
+                        resizeBtn.innerHTML = '<i class="fa-solid fa-up-right-and-down-left-from-center"></i> <span>Resize & Convert DPI</span>';
+                    };
+                    reader.readAsArrayBuffer(blob);
+                }, 'image/jpeg', 0.95);
+            };
+        });
+    </script>
+</body>
+</html>
