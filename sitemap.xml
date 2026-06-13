@@ -1,9 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-   <url>
-      <loc>https://edit-spark.vercel.app/</loc>
-      <lastmod>2026-05-23</lastmod>
-      <changefreq>daily</changefreq>
-      <priority>1.0</priority>
-   </url>
+  <!-- Main Home Page -->
+  <url>
+    <loc>https://edit-spark.vercel.app/</loc>
+    <lastmod>2026-06-13</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <!-- Compress Tool -->
+  <url>
+    <loc>https://edit-spark.vercel.app/compress-image.html</loc>
+    <lastmod>2026-06-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Resize Tool -->
+  <url>
+    <loc>https://edit-spark.vercel.app/resize-image.html</loc>
+    <lastmod>2026-06-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Crop Tool -->
+  <url>
+    <loc>https://edit-spark.vercel.app/crop-image.html</loc>
+    <lastmod>2026-06-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Magic Clear Document Tool -->
+  <url>
+    <loc>https://edit-spark.vercel.app/clear-document.html</loc>
+    <lastmod>2026-06-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>
