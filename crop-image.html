@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Image Cropper Online - Crop Passport Photos & Signs | EditSpark</title>
+    <meta name="description" content="Crop your images, passport size photos, and digital signatures online for free. Custom aspect ratios and perfect alignment grid for official form uploads.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        .btn-green {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+        .preview-box {
+            border: 2px dashed #cbd5e1;
+            transition: all 0.3s ease;
+        }
+        .preview-box:hover {
+            border-color: #10b981;
+        }
+        /* Crop Overlay Styles from your original tool */
+        .crop-container {
+            position: relative;
+            display: inline-block;
+            max-width: 100%;
+        }
+        .crop-overlay {
+            position: absolute;
+            border: 2px dashed #ef4444;
+            background: rgba(239, 68, 68, 0.1);
+            cursor: move;
+            box-sizing: border-box;
+        }
+        /* Grid Lines inside crop box */
+        .crop-overlay::before, .crop-overlay::after {
+            content: '';
+            position: absolute;
+            background: rgba(239, 68, 68, 0.3);
+        }
+        .crop-overlay::before { top: 33.33%; bottom: 33.33%; left: 0; right: 0; border-top: 1px dashed #ef4444; border-bottom: 1px dashed #ef4444; }
+        .crop-overlay::after { left: 33.33%; right: 33.33%; top: 0; bottom: 0; border-left: 1px dashed #ef4444; border-right: 1px dashed #ef4444; }
+        
+        .resize-handle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ef4444;
+            bottom: -5px;
+            right: -5px;
+            cursor: se-resize;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body class="bg-[#f3f4f6] font-sans text-slate-800 min-h-screen flex flex-col">
+
+    <!-- Navigation Bar -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center space-x-2">
+                    <div class="bg-emerald-500 p-2 rounded-lg text-white shadow-sm">
+                        <i class="fa-solid fa-wand-magic-sparkles text-lg"></i>
+                    </div>
+                    <span class="text-2xl font-black tracking-tight text-slate-900">Edit<span class="text-emerald-500">Spark</span></span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="text-sm font-bold text-slate-600 hover:text-emerald-500 transition-colors">
+                        <i class="fa-solid fa-house mr-1"></i> HOME
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-4xl mx-auto px-4 py-12 w-full">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-black text-slate-900 tracking-tight uppercase">Smart Image Crop</h1>
+            <p class="mt-2 text-slate-500 font-medium">Crop passport size photos, signatures, or documents with perfect alignment grids.</p>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-xs border border-slate-200 p-6 md:p-8">
+            <!-- Dropzone -->
+            <div id="cropDropzone" class="preview-box rounded-xl p-8 text-center cursor-pointer bg-slate-50 mb-6 flex flex-col items-center justify-center min-h-[200px]">
+                <input type="file" id="cropInput" accept="image/*" class="hidden">
+                <div id="cropPrompt">
+                    <i class="fa-solid fa-cloud-arrow-up text-4xl text-emerald-500 mb-3"></i>
+                    <p class="font-bold text-slate-700 uppercase tracking-wide text-sm">Drag & drop your image here, or <span class="text-emerald-500">browse</span></p>
+                    <p class="text-xs text-slate-400 mt-1">Supports JPG, JPEG, PNG</p>
+                </div>
+                
+                <!-- Interactive Workspace -->
+                <div id="cropWorkspace" class="hidden crop-container">
+                    <img id="cropSourceImg" class="max-h-[450px] select-none block">
+                    <div id="cropBox" class="crop-overlay">
+                        <div id="resizeHandle" class="resize-handle"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pre-defined Ratios from your original idea -->
+            <div class="mb-6">
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Aspect Ratio / Presets</label>
+                <div class="flex flex-wrap gap-2">
+                    <button id="presetFree" class="text-xs font-bold px-4 py-2 rounded-lg bg-emerald-500 text-white border border-emerald-500 uppercase tracking-wider transition-colors cursor-pointer">Free Form</button>
+                    <button id="presetPassport" class="text-xs font-bold px-4 py-2 rounded-lg bg-slate-100 text-slate-600 hover:bg-emerald-50 hover:text-emerald-600 rounded-lg border border-slate-200 uppercase tracking-wider transition-colors cursor-pointer">Passport Photo (3.5 x 4.5)</button>
+                    <button id="presetSign" class="text-xs font-bold px-4 py-2 rounded-lg bg-slate-100 text-slate-600 hover:bg-emerald-50 hover:text-emerald-600 rounded-lg border border-slate-200 uppercase tracking-wider transition-colors cursor-pointer">Signature (4.5 x 1.5)</button>
+                </div>
+            </div>
+
+            <!-- Crop Action Button -->
+            <button id="cropBtn" class="w-full btn-green text-white font-bold py-3 px-6 rounded-lg shadow-sm flex items-center justify-center space-x-2 transition-all cursor-pointer uppercase tracking-wider">
+                <i class="fa-solid fa-crop-simple"></i>
+                <span>Apply Crop</span>
+            </button>
+
+            <!-- Result Canvas & Download -->
+            <div id="cropResult" class="hidden mt-8 pt-6 border-t border-slate-200 text-center">
+                <div class="inline-flex items-center space-x-2 text-emerald-600 font-bold uppercase tracking-wide mb-4 text-sm">
+                    <i class="fa-solid fa-circle-check text-xl"></i>
+                    <span>Image Cropped Successfully!</span>
+                </div>
+                <div class="flex justify-center mb-4">
+                    <canvas id="resultCanvas" class="max-h-64 rounded shadow-sm border border-slate-200 bg-slate-50"></canvas>
+                </div>
+                <a id="downloadCropBtn" class="inline-flex items-center space-x-2 bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg shadow-sm transition-all cursor-pointer uppercase tracking-wider">
+                    <i class="fa-solid fa-download"></i>
+                    <span>Download Cropped Image</span>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-6 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center text-sm text-slate-400 font-medium">
+            &copy; 2026 EditSpark Studio. Locally Processed (Safe & Secure).
+        </div>
+    </footer>
+
+    <!-- JavaScript Crop Engine -->
+    <script>
+        const dropzone = document.getElementById('cropDropzone');
+        const fileInput = document.getElementById('cropInput');
+        const promptDiv = document.getElementById('cropPrompt');
+        const workspace = document.getElementById('cropWorkspace');
+        const sourceImg = document.getElementById('cropSourceImg');
+        const cropBox = document.getElementById('cropBox');
+        const resizeHandle = document.getElementById('resizeHandle');
+        const cropBtn = document.getElementById('cropBtn');
+        const cropResult = document.getElementById('cropResult');
+        const resultCanvas = document.getElementById('resultCanvas');
+        const downloadBtn = document.getElementById('downloadCropBtn');
+
+        let isDragging = false, isResizing = false;
+        let startX, startY, startLeft, startTop, startWidth, startHeight;
+        let currentRatio = null; // null means Free form
+
+        // Open File Browser on Dropzone Click ONLY if no image loaded
+        dropzone.addEventListener('click', (e) => {
+            if (workspace.classList.contains('hidden')) fileInput.click();
+        });
+        
+        dropzone.addEventListener('dragover', (e) => { e.preventDefault(); if(workspace.classList.contains('hidden')) dropzone.classList.add('border-emerald-500', 'bg-emerald-50/30'); });
+        dropzone.addEventListener('dragleave', () => { dropzone.classList.remove('border-emerald-500', 'bg-emerald-50/30'); });
+        dropzone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropzone.classList.remove('border-emerald-500', 'bg-emerald-50/30');
+            if(e.dataTransfer.files.length && workspace.classList.contains('hidden')) handleFile(e.dataTransfer.files[0]);
+        });
+        fileInput.addEventListener('change', (e) => {
+            if(e.target.files.length) handleFile(e.target.files[0]);
+        });
+
+        function handleFile(file) {
+            if(!file.type.startsWith('image/')) { alert('Please select a valid image file.'); return; }
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                sourceImg.src = e.target.result;
+                sourceImg.onload = () => {
+                    promptDiv.classList.add('hidden');
+                    workspace.classList.remove('hidden');
+                    dropzone.classList.remove('cursor-pointer');
+                    
+                    // Reset Crop Box initial position and size (e.g. 150x150)
+                    cropBox.style.width = '150px';
+                    cropBox.style.height = '150px';
+                    cropBox.style.top = '20px';
+                    cropBox.style.left = '20px';
+                    cropResult.classList.add('hidden');
+                };
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // --- Interaction Logic for Crop Box ---
+        cropBox.addEventListener('mousedown', (e) => {
+            if (e.target === resizeHandle) return;
+            isDragging = true;
+            startX = e.clientX;
+            startY = e.clientY;
+            startLeft = cropBox.offsetLeft;
+            startTop = cropBox.offsetTop;
+            e.preventDefault();
+        });
+
+        resizeHandle.addEventListener('mousedown', (e) => {
+            isResizing = true;
+            startX = e.clientX;
+            startY = e.clientY;
+            startWidth = cropBox.offsetWidth;
+            startHeight = cropBox.offsetHeight;
+            e.preventDefault();
+            e.stopPropagation();
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (isDragging) {
+                let dx = e.clientX - startX;
+                let dy = e.clientY - startY;
+                let newLeft = startLeft + dx;
+                let newTop = startTop + dy;
+
+                // Boundaries constraint
+                newLeft = Math.max(0, Math.min(newLeft, workspace.offsetWidth - cropBox.offsetWidth));
+                newTop = Math.max(0, Math.min(newTop, workspace.offsetHeight - cropBox.offsetHeight));
+
+                cropBox.style.left = newLeft + 'px';
+                cropBox.style.top = newTop + 'px';
+            }
+            if (isResizing) {
+                let dx = e.clientX - startX;
+                let dy = e.clientY - startY;
+                let newWidth = startWidth + dx;
+                let newHeight = startHeight + dy;
+
+                if (currentRatio) {
+                    newHeight = newWidth / currentRatio;
+                }
+
+                // Minimum limit check & Workspace constraints
+                if (newWidth > 40 && (cropBox.offsetLeft + newWidth <= workspace.offsetWidth) &&
+                    newHeight > 40 && (cropBox.offsetTop + newHeight <= workspace.offsetHeight)) {
+                    cropBox.style.width = newWidth + 'px';
+                    cropBox.style.height = newHeight + 'px';
+                }
+            }
+        });
+
+        window.addEventListener('mouseup', () => { isDragging = false; isResizing = false; });
+
+        // --- Presets Aspect Ratio Handlers ---
+        const btnFree = document.getElementById('presetFree');
+        const btnPassport = document.getElementById('presetPassport');
+        const btnSign = document.getElementById('presetSign');
+
+        function updatePresetButtons(activeBtn) {
+            [btnFree, btnPassport, btnSign].forEach(btn => {
+                btn.className = "text-xs font-bold px-4 py-2 rounded-lg bg-slate-100 text-slate-600 border border-slate-200 uppercase tracking-wider transition-colors cursor-pointer";
+            });
+            activeBtn.className = "text-xs font-bold px-4 py-2 rounded-lg bg-emerald-500 text-white border border-emerald-500 uppercase tracking-wider transition-colors cursor-pointer";
+        }
+
+        btnFree.addEventListener('click', () => { currentRatio = null; updatePresetButtons(btnFree); });
+        btnPassport.addEventListener('click', () => { 
+            currentRatio = 3.5 / 4.5; 
+            updatePresetButtons(btnPassport);
+            cropBox.style.width = '140px';
+            cropBox.style.height = '180px';
+        });
+        btnSign.addEventListener('click', () => { 
+            currentRatio = 4.5 / 1.5; 
+            updatePresetButtons(btnSign);
+            cropBox.style.width = '180px';
+            cropBox.style.height = '60px';
+        });
+
+        // --- Core Crop Renderer Engine ---
+        cropBtn.addEventListener('click', () => {
+            if (!sourceImg.src) { alert('Upload an image first.'); return; }
+            
+            // Get Scaling ratios between UI layout view & real original file size
+            const scaleX = sourceImg.naturalWidth / sourceImg.offsetWidth;
+            const scaleY = sourceImg.naturalHeight / sourceImg.offsetHeight;
+
+            const cropX = cropBox.offsetLeft * scaleX;
+            const cropY = cropBox.offsetTop * scaleY;
+            const cropW = cropBox.offsetWidth * scaleX;
+            const cropH = cropBox.offsetHeight * scaleY;
+
+            resultCanvas.width = cropW;
+            resultCanvas.height = cropH;
+            const ctx = resultCanvas.getContext('2d');
+            ctx.drawImage(sourceImg, cropX, cropY, cropW, cropH, 0, 0, cropW, cropH);
+
+            // Create download link URL
+            downloadBtn.href = resultCanvas.toDataURL('image/jpeg', 0.95);
+            downloadBtn.download = `editspark_cropped.jpg`;
+            
+            cropResult.classList.remove('hidden');
+            cropResult.scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
