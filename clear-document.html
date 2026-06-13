@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clear Document & Auto-Darken Signature Online | EditSpark</title>
+    <meta name="description" content="Enhance your scanned documents and digital signatures online for free. Automatically clear backgrounds to pure white and darken signatures for job forms.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        .btn-purple {
+            background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%);
+        }
+        .preview-box {
+            border: 2px dashed #cbd5e1;
+            transition: all 0.3s ease;
+        }
+        .preview-box:hover {
+            border-color: #a855f7;
+        }
+    </style>
+</head>
+<body class="bg-[#f3f4f6] font-sans text-slate-800 min-h-screen flex flex-col">
+
+    <!-- Navigation Bar -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center space-x-2">
+                    <div class="bg-purple-500 p-2 rounded-lg text-white shadow-sm">
+                        <i class="fa-solid fa-wand-magic-sparkles text-lg"></i>
+                    </div>
+                    <span class="text-2xl font-black tracking-tight text-slate-900">Edit<span class="text-purple-500">Spark</span></span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="text-sm font-bold text-slate-600 hover:text-purple-500 transition-colors">
+                        <i class="fa-solid fa-house mr-1"></i> HOME
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-4xl mx-auto px-4 py-12 w-full">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-black text-slate-900 tracking-tight uppercase">Magic Signature & Document Cleaner</h1>
+            <p class="mt-2 text-slate-500 font-medium">1-Click AI Filter: Automatically removes background shadows and makes signatures dark black.</p>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-xs border border-slate-200 p-6 md:p-8">
+            <!-- Dropzone -->
+            <div id="enhanceDropzone" class="preview-box rounded-xl p-8 text-center cursor-pointer bg-slate-50 mb-6">
+                <input type="file" id="enhanceInput" accept="image/*" class="hidden">
+                <div id="enhancePrompt">
+                    <i class="fa-solid fa-wand-magic-sparkles text-4xl text-purple-500 mb-3"></i>
+                    <p class="font-bold text-slate-700 uppercase tracking-wide text-sm">Upload Signature or Document <span class="text-purple-500">browse</span></p>
+                    <p class="text-xs text-slate-400 mt-1">Drag & drop works too. Supports JPG, JPEG, PNG</p>
+                </div>
+                <div id="enhancePreviewContainer" class="hidden flex flex-col items-center">
+                    <img id="enhancePreview" class="max-h-64 rounded shadow-xs mb-3">
+                    <p id="enhanceFileInfo" class="text-sm text-slate-500 font-bold"></p>
+                </div>
+            </div>
+
+            <!-- Magic Auto Clean Button -->
+            <button id="enhanceBtn" class="w-full btn-purple text-white font-bold py-4 px-6 rounded-lg shadow-md flex items-center justify-center space-x-2 transition-all cursor-pointer uppercase tracking-wider text-base">
+                <i class="fa-solid fa-bolt animate-pulse"></i>
+                <span>Magic Auto-Clean (Pure White & Dark Sign)</span>
+            </button>
+
+            <!-- Result Section -->
+            <div id="enhanceResult" class="hidden mt-8 pt-6 border-t border-slate-200 text-center">
+                <div class="inline-flex items-center space-x-2 text-emerald-600 font-bold uppercase tracking-wide mb-4 text-sm">
+                    <i class="fa-solid fa-circle-check text-xl"></i>
+                    <span>Background Cleaned & Signature Enhanced!</span>
+                </div>
+                <div class="flex justify-center mb-6">
+                    <canvas id="resultCanvas" class="max-h-64 rounded shadow-md border border-slate-300 bg-white"></canvas>
+                </div>
+                <a id="downloadEnhanceBtn" class="inline-flex items-center space-x-2 bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg shadow-sm transition-all cursor-pointer uppercase tracking-wider">
+                    <i class="fa-solid fa-download"></i>
+                    <span>Download Cleaned Image</span>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-6 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center text-sm text-slate-400 font-medium">
+            &copy; 2026 EditSpark Studio. Locally Processed (100% Private & Safe).
+        </div>
+    </footer>
+
+    <!-- Smart Auto-Threshold Pixel Engine -->
+    <script>
+        const dropzone = document.getElementById('enhanceDropzone');
+        const fileInput = document.getElementById('enhanceInput');
+        const promptDiv = document.getElementById('enhancePrompt');
+        const previewContainer = document.getElementById('enhancePreviewContainer');
+        const previewImg = document.getElementById('enhancePreview');
+        const fileInfo = document.getElementById('enhanceFileInfo');
+        const enhanceBtn = document.getElementById('enhanceBtn');
+        const enhanceResult = document.getElementById('enhanceResult');
+        const canvas = document.getElementById('resultCanvas');
+        const downloadBtn = document.getElementById('downloadEnhanceBtn');
+
+        let activeFile = null;
+
+        dropzone.addEventListener('click', () => fileInput.click());
+        dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('border-purple-500', 'bg-purple-50/30'); });
+        dropzone.addEventListener('dragleave', () => { dropzone.classList.remove('border-purple-500', 'bg-purple-50/30'); });
+        dropzone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropzone.classList.remove('border-purple-500', 'bg-purple-50/30');
+            if(e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+        });
+        fileInput.addEventListener('change', (e) => {
+            if(e.target.files.length) handleFile(e.target.files[0]);
+        });
+
+        function handleFile(file) {
+            if(!file.type.startsWith('image/')) { alert('Please select a valid image file.'); return; }
+            activeFile = file;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                previewImg.src = e.target.result;
+                promptDiv.classList.add('hidden');
+                previewContainer.classList.remove('hidden');
+                fileInfo.textContent = `${file.name} (${(file.size/1024).toFixed(1)} KB)`;
+                enhanceResult.classList.add('hidden');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // --- Core Intelligent Thresholding Engine ---
+        enhanceBtn.addEventListener('click', () => {
+            if(!activeFile) { alert('Please upload an image first.'); return; }
+            
+            enhanceBtn.disabled = true;
+            enhanceBtn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> <span>Analyzing Pixels...</span>';
+
+            const img = new Image();
+            img.src = previewImg.src;
+            img.onload = () => {
+                canvas.width = img.width;
+                canvas.height = img.height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0);
+
+                const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                const data = imgData.data;
+
+                // Step 1: Calculate average luminance to find the perfect signature cutoff mark dynamically
+                let totalLuminance = 0;
+                let pixelCount = data.length / 4;
+                for (let i = 0; i < data.length; i += 4) {
+                    totalLuminance += (data[i] * 0.299 + data[i+1] * 0.587 + data[i+2] * 0.114);
+                }
+                const avgLuminance = totalLuminance / pixelCount;
+                
+                // Adaptive offset to handle slightly dark mobile clicks cleanly
+                const threshold = avgLuminance * 0.85;
+
+                // Step 2: Distribute pixels cleanly (Dark text becomes darker, light backgrounds snap to pure white)
+                for (let i = 0; i < data.length; i += 4) {
+                    let r = data[i], g = data[i+1], b = data[i+2];
+                    let v = (r * 0.299 + g * 0.587 + b * 0.114); // current pixel luminance
+
+                    if (v < threshold) {
+                        // Snaps target ink pixels to rich prominent dark shades smoothly
+                        let scale = v / threshold;
+                        data[i] = Math.max(0, r * scale * 0.5);   // Red
+                        data[i+1] = Math.max(0, g * scale * 0.5); // Green
+                        data[i+2] = Math.max(0, b * scale * 0.5); // Blue
+                    } else {
+                        // Snaps shadow/grey backgrounds directly to 100% Crisp Pure White
+                        data[i] = 255;
+                        data[i+1] = 255;
+                        data[i+2] = 255;
+                    }
+                }
+
+                ctx.putImageData(imgData, 0, 0);
+
+                // Export out compressed high quality configuration package
+                downloadBtn.href = canvas.toDataURL('image/jpeg', 0.90);
+                downloadBtn.download = `editspark_magic_clean_${activeFile.name}`;
+
+                enhanceResult.classList.remove('hidden');
+                enhanceResult.scrollIntoView({ behavior: 'smooth' });
+
+                enhanceBtn.disabled = false;
+                enhanceBtn.innerHTML = '<i class="fa-solid fa-bolt"></i> <span>Magic Auto-Clean (Pure White & Dark Sign)</span>';
+            };
+        });
+    </script>
+</body>
+</html>
