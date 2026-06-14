@@ -39,10 +39,10 @@
             <p class="text-slate-400 text-xs">Click karein ya file yahan drop karein</p>
         </div>
 
-        <!-- SPLIT LIVE WORKSPACE (Initially Hidden) -->
+        <!-- SPLIT LIVE WORKSPACE -->
         <div id="workspace-panel" class="hidden flex flex-col lg:grid lg:grid-cols-12 gap-6 items-start">
             
-            <!-- LEFT COLUMN: LIVE ORIGINAL PREVIEW -->
+            <!-- LEFT COLUMN: LIVE ORIGINAL PREVIEW (Mobile par Top Sticky Mini Preview) -->
             <div class="w-full lg:col-span-5 bg-white rounded-xl border border-slate-200 shadow-xs p-3 lg:p-5 sticky top-16 lg:top-24 z-30 bg-white/95 backdrop-blur-xs">
                 <div class="border-b border-slate-100 pb-1.5 mb-2 lg:pb-3 lg:mb-4 flex justify-between items-center">
                     <h3 class="text-[10px] lg:text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
@@ -53,13 +53,8 @@
                     </button>
                 </div>
                 
-                <!-- Cropper JS Container for Manual Crop (Initially hidden) -->
-                <div id="cropper-container" class="hidden aspect-square border border-slate-100 rounded-lg p-2 flex flex-row lg:flex-col items-center justify-center gap-3">
-                  <img id="cropper-image" src="" class="block max-w-full">
-                </div>
-                
-                <!-- Display Area -->
-                <div id="display-area" class="bg-slate-50 border border-slate-100 rounded-lg p-2 flex flex-row lg:flex-col items-center justify-center gap-3 min-h-[60px] lg:min-h-[250px]">
+                <!-- Fixed Mini Container for keeping the image small on mobile after crop -->
+                <div id="display-area" class="bg-slate-50 border border-slate-100 rounded-lg p-2 flex flex-row lg:flex-col items-center justify-center gap-3 min-h-[60px] lg:min-h-[250px] w-full overflow-hidden">
                     <img id="original-preview-img" src="" class="max-h-16 lg:max-h-72 object-contain rounded shadow-sm border border-white">
                     <div id="original-meta" class="text-left lg:text-center text-[10px] lg:text-xs font-bold text-slate-500 uppercase tracking-wide"></div>
                 </div>
@@ -78,7 +73,7 @@
                         <label class="block text-xs font-black text-slate-700 uppercase tracking-wider flex items-center gap-2">
                             <i class="fa-solid fa-crop-simple text-amber-500"></i> 1. Manual Crop
                         </label>
-                        <button id="toggleCrop" class="text-[11px] font-bold px-3 py-1 bg-amber-50 text-amber-700 rounded-full border border-amber-200 hover:bg-amber-100 flex items-center gap-1.5">
+                        <button id="toggleCrop" class="text-[11px] font-bold px-3 py-1 bg-amber-50 text-amber-700 rounded-full border border-amber-200 hover:bg-amber-100 flex items-center gap-1.5 cursor-pointer">
                             <i class="fa-solid fa-crop"></i>
                             <span>Crop Karen</span>
                         </button>
@@ -132,18 +127,21 @@
             </div>
         </div>
 
-        <!-- CROP MODAL (Initially Hidden) -->
-        <div id="cropModal" class="fixed inset-0 bg-slate-900/60 flex items-center justify-center z-50 p-4 backdrop-blur-xs hidden">
-            <div class="bg-white rounded-xl max-w-4xl w-full p-4 flex flex-col items-center">
-              <div class="w-full mb-4 flex justify-between items-center">
-                <h2 class="text-sm font-black text-slate-900 uppercase tracking-wider">Manual Crop</h2>
+        <!-- CROP MODAL (Badi Screen for Manual Cropping) -->
+        <div id="cropModal" class="fixed inset-0 bg-slate-900/80 flex items-center justify-center z-50 p-2 sm:p-4 backdrop-blur-xs hidden">
+            <div class="bg-white rounded-xl max-w-4xl w-full p-4 flex flex-col items-center shadow-2xl max-h-[90vh]">
+              <div class="w-full mb-3 flex justify-between items-center border-b border-slate-100 pb-2">
+                <h2 class="text-xs sm:text-sm font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
+                    <i class="fa-solid fa-crop text-amber-500"></i> Manual Crop Area
+                </h2>
                 <div class="flex items-center gap-2">
-                    <button onclick="confirmCrop()" class="px-4 py-1.5 bg-emerald-500 text-white text-xs font-black uppercase rounded-lg hover:bg-emerald-600">Save Crop</button>
-                    <button onclick="closeModal()" class="px-4 py-1.5 bg-slate-100 text-slate-700 text-xs font-black uppercase rounded-lg hover:bg-slate-200">Cancel</button>
+                    <button onclick="confirmCrop()" class="px-3 py-1.5 bg-emerald-500 text-white text-[11px] font-black uppercase rounded-lg hover:bg-emerald-600 cursor-pointer">Save Crop</button>
+                    <button onclick="closeModal()" class="px-3 py-1.5 bg-slate-100 text-slate-700 text-[11px] font-black uppercase rounded-lg hover:bg-slate-200 cursor-pointer">Cancel</button>
                 </div>
               </div>
-              <div class="w-full min-h-[300px] bg-slate-100 flex items-center justify-center overflow-hidden rounded-lg">
-                <img id="modalCropImage" src="" class="block max-w-full">
+              <!-- Wrapper to force bounds on cropper instance -->
+              <div class="w-full flex-grow min-h-[300px] max-h-[65vh] bg-slate-900 flex items-center justify-center overflow-hidden rounded-lg relative">
+                <img id="modalCropImage" src="" class="block max-w-full max-h-full">
               </div>
             </div>
         </div>
@@ -162,7 +160,7 @@
         let currentFile = null;
         let originalImgObject = null;
         let cropperInstance = null;
-        let croppedImageData = null; // Stores cropped image dataUrl
+        let croppedImageData = null; 
 
         document.getElementById('imageInput').addEventListener('change', function(e) {
             if(e.target.files.length > 0) {
@@ -184,18 +182,20 @@
         });
 
         function initWorkspace(dataUrl) {
-          // Display original preview
-          document.getElementById('original-preview-img').src = dataUrl;
+          // Setting the preview image source
+          const previewImg = document.getElementById('original-preview-img');
+          previewImg.src = dataUrl;
           
-          // Display meta specifications
+          // Enforcing max-height explicitly to avoid sudden layouts shifts
+          previewImg.className = "max-h-16 lg:max-h-72 object-contain rounded shadow-sm border border-white";
+          
           const sizeKb = Math.round(currentFile.size / 1024);
           document.getElementById('original-meta').innerText = `${originalImgObject.width}x${originalImgObject.height} PX | ${sizeKb} KB`;
           
-          // UI State Mutation
           document.getElementById('upload-box').classList.add('hidden');
           document.getElementById('workspace-panel').classList.remove('hidden');
           
-          croppedImageData = dataUrl; // default to original data
+          croppedImageData = dataUrl; 
         }
 
         function resetWorkspace() {
@@ -213,25 +213,25 @@
             document.getElementById('output-grid').innerHTML = '';
             closeModal();
             
-            // Reset display area
             document.getElementById('original-preview-img').src = '';
-            document.getElementById('display-area').classList.remove('hidden');
-            document.getElementById('cropper-container').classList.add('hidden');
             
-            // Reset fields
             document.getElementById('targetWidth').value = '';
             document.getElementById('targetHeight').value = '';
             document.getElementById('targetKb').value = '50';
             document.getElementById('targetExt').value = 'same';
+
+            const toggleButton = document.getElementById('toggleCrop');
+            toggleButton.className = "text-[11px] font-bold px-3 py-1 bg-amber-50 text-amber-700 rounded-full border border-amber-200 hover:bg-amber-100 flex items-center gap-1.5 cursor-pointer";
+            toggleButton.innerHTML = '<i class="fa-solid fa-crop"></i> <span>Crop Karen</span>';
         }
 
-        // Modal functionalities
         const cropModal = document.getElementById('cropModal');
         const modalImage = document.getElementById('modalCropImage');
 
         function openModal() {
           if(!currentFile || !originalImgObject) return;
-          modalImage.src = originalImgObject.src;
+          // Always crop from the latest cropped data state if available, otherwise original
+          modalImage.src = croppedImageData || originalImgObject.src;
           cropModal.classList.remove('hidden');
           initCropperOnModal();
         }
@@ -246,14 +246,13 @@
 
         function initCropperOnModal() {
           cropperInstance = new Cropper(modalImage, {
-            viewMode: 1, // Restrict crop box to within the container
+            viewMode: 1, 
             guides: true,
             movable: true,
             zoomable: true,
             rotatable: false,
             scalable: false,
-            // aspect Ratio removed for manual cropping 
-            // aspectRatio: 16 / 9, 
+            autoCropArea: 0.8
           });
         }
 
@@ -262,19 +261,18 @@
           const canvas = cropperInstance.getCroppedCanvas();
           croppedImageData = canvas.toDataURL(currentFile.type || "image/jpeg", 1);
           
-          // update original display with cropped result
-          document.getElementById('original-preview-img').src = croppedImageData;
+          // Wapas chhota karne ke liye preview src update karein aur classes ensure karein
+          const previewImg = document.getElementById('original-preview-img');
+          previewImg.src = croppedImageData;
+          previewImg.className = "max-h-16 lg:max-h-72 object-contain rounded shadow-sm border border-white";
 
-          // update display logic
-          document.getElementById('display-area').classList.add('hidden');
-          document.getElementById('cropper-container').classList.remove('hidden');
-          document.getElementById('cropper-image').src = croppedImageData;
+          // Metadata update dynamically based on new cropped canvas dimensions
+          document.getElementById('original-meta').innerText = `${canvas.width}x${canvas.height} PX | Cropped`;
 
-          // update button label
+          // Change crop button status to show success state
           const toggleButton = document.getElementById('toggleCrop');
-          toggleButton.classList.remove('bg-amber-50', 'text-amber-700', 'border-amber-200');
-          toggleButton.classList.add('bg-emerald-50', 'text-emerald-700', 'border-emerald-200');
-          toggleButton.innerHTML = '<i class="fa-solid fa-check"></i> <span>Cropped</span>';
+          toggleButton.className = "text-[11px] font-bold px-3 py-1 bg-emerald-50 text-emerald-700 rounded-full border border-emerald-200 hover:bg-emerald-100 flex items-center gap-1.5 cursor-pointer";
+          toggleButton.innerHTML = '<i class="fa-solid fa-check"></i> <span>Cropped ✓</span>';
 
           closeModal();
         }
@@ -291,8 +289,6 @@
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
 
-            let finalImageObject = originalImgObject; // default
-
             if (croppedImageData) {
               const croppedImage = new Image();
               croppedImage.onload = function() {
@@ -300,7 +296,7 @@
               };
               croppedImage.src = croppedImageData;
             } else {
-              proceedProcessing(finalImageObject);
+              proceedProcessing(originalImgObject);
             }
 
             function proceedProcessing(img) {
@@ -342,7 +338,7 @@
 
               // Render output block card
               const card = document.createElement('div');
-              card.className = "bg-white border border-slate-200 rounded-xl p-5 text-center max-w-sm w-full flex flex-col items-center shadow-xs";
+              card.className = "bg-white border border-slate-200 rounded-xl p-5 text-center max-w-sm w-full flex flex-col items-center shadow-xs mb-6";
               card.innerHTML = `
                   <img src="${finalOutputUrl}" class="max-h-56 object-contain rounded border border-slate-100 mb-4 shadow-2xs">
                   <div class="w-full">
