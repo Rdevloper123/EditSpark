@@ -4,18 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EditSpark Smart Workspace | Photo Resizer, Crop & Converter</title>
-    <meta name="description" content="Sarkari form ke liye photo resize, compress, crop aur format conversion ek hi jagah.">
     
     <!-- Tailwind CSS v4 -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        .tool-card { transition: all 0.2s ease-in-out; }
-        .tool-card:hover { transform: translateY(-2px); box-shadow: 0 8px 15px -3px rgba(0, 0, 0, 0.05); }
-        .active-card { border-color: #10b981 !important; background-color: #f0fdf4 !important; }
-    </style>
 </head>
 <body class="bg-[#f3f4f6] font-sans text-slate-800 min-h-screen flex flex-col">
 
@@ -42,289 +35,260 @@
     <!-- Main Content -->
     <main class="flex-grow max-w-7xl mx-auto px-4 py-8 w-full">
         
-        <!-- Interactive Tool Selector Grid Tabs -->
-        <div id="multi-tool-selector" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
-            
-            <!-- 1. Compress Tab -->
-            <div onclick="switchTool('compress')" id="btn-compress" class="tool-card bg-white rounded-lg p-3.5 border border-slate-200 shadow-2xs flex items-center space-x-3 group cursor-pointer active-card">
-                <div class="h-10 w-10 shrink-0 rounded-lg bg-emerald-50 text-emerald-500 flex items-center justify-center text-lg group-hover:bg-emerald-500 group-hover:text-white transition-all duration-200">
-                    <i class="fa-solid fa-compress"></i>
-                </div>
-                <div class="flex-grow min-w-0">
-                    <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wide">KB Compressor</h3>
-                    <p class="text-slate-400 text-[11px] truncate">Under 20KB, 50KB, 100KB</p>
-                </div>
-            </div>
-
-            <!-- 2. Resize Tab -->
-            <div onclick="switchTool('resize')" id="btn-resize" class="tool-card bg-white rounded-lg p-3.5 border border-slate-200 shadow-2xs flex items-center space-x-3 group cursor-pointer">
-                <div class="h-10 w-10 shrink-0 rounded-lg bg-blue-50 text-blue-500 flex items-center justify-center text-lg group-hover:bg-blue-500 group-hover:text-white transition-all duration-200">
-                    <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
-                </div>
-                <div class="flex-grow min-w-0">
-                    <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wide">Dimension Resizer</h3>
-                    <p class="text-slate-400 text-[11px] truncate">Width & Height Pixels</p>
-                </div>
-            </div>
-
-            <!-- 3. Crop Tab -->
-            <div onclick="switchTool('crop')" id="btn-crop" class="tool-card bg-white rounded-lg p-3.5 border border-slate-200 shadow-2xs flex items-center space-x-3 group cursor-pointer">
-                <div class="h-10 w-10 shrink-0 rounded-lg bg-amber-50 text-amber-500 flex items-center justify-center text-lg group-hover:bg-amber-500 group-hover:text-white transition-all duration-200">
-                    <i class="fa-solid fa-crop-simple"></i>
-                </div>
-                <div class="flex-grow min-w-0">
-                    <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wide">Smart Aspect Crop</h3>
-                    <p class="text-slate-400 text-[11px] truncate">Passport (3.5x4.5) & Square</p>
-                </div>
-            </div>
-
-            <!-- 4. Format Converter Tab -->
-            <div onclick="switchTool('format')" id="btn-format" class="tool-card bg-white rounded-lg p-3.5 border border-slate-200 shadow-2xs flex items-center space-x-3 group cursor-pointer">
-                <div class="h-10 w-10 shrink-0 rounded-lg bg-purple-50 text-purple-500 flex items-center justify-center text-lg group-hover:bg-purple-500 group-hover:text-white transition-all duration-200">
-                    <i class="fa-solid fa-layer-group"></i>
-                </div>
-                <div class="flex-grow min-w-0">
-                    <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wide">Format Converter</h3>
-                    <p class="text-slate-400 text-[11px] truncate">JPG to PNG / PNG to JPG</p>
-                </div>
-            </div>
+        <!-- INITIAL DROPZONE (Hide ho jayega upload ke baad) -->
+        <div id="upload-box" class="bg-white rounded-xl border border-slate-200 shadow-xs p-12 text-center cursor-pointer hover:bg-slate-50 transition-colors max-w-2xl mx-auto mb-8" onclick="document.getElementById('imageInput').click()">
+            <input type="file" id="imageInput" class="hidden" accept="image/*">
+            <i class="fa-solid fa-cloud-arrow-up text-5xl text-emerald-400 mb-4 block"></i>
+            <h3 class="text-base font-black text-slate-800 uppercase tracking-wider mb-1">Apni Photo Upload Karein</h3>
+            <p class="text-slate-400 text-xs">Click karein ya file yahan drop karein</p>
         </div>
 
-        <!-- LIVE WORKING INTERFACE -->
-        <div class="bg-white rounded-xl border border-slate-200 shadow-xs p-6 max-w-4xl mx-auto">
+        <!-- SPLIT LIVE WORKSPACE (Sirf upload ke baad dikhega) -->
+        <div id="workspace-panel" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             
-            <div class="border-b border-slate-100 pb-4 mb-6">
-                <h2 id="workspace-title" class="text-base font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
-                    <span class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                    KB Size Compressor Active
-                </h2>
-                <p id="workspace-desc" class="text-slate-400 text-xs mt-0.5">Apni image select karein aur exact file size match karein.</p>
-            </div>
-
-            <!-- File Upload Dropzone -->
-            <div class="border-2 border-dashed border-slate-200 rounded-xl p-8 bg-slate-50 text-center cursor-pointer hover:bg-slate-100/50 transition-colors mb-6" onclick="document.getElementById('imageInput').click()">
-                <input type="file" id="imageInput" class="hidden" accept="image/*" multiple>
-                <i class="fa-solid fa-cloud-arrow-up text-3xl text-slate-300 mb-2 block"></i>
-                <span class="text-xs font-bold text-slate-700 block">Click karein ya files yahan drag karke drop karein</span>
-                <div id="file-counter" class="hidden text-xs bg-emerald-500 text-white font-bold px-2 py-1 rounded-md mt-2 inline-block shadow-sm"></div>
-            </div>
-
-            <!-- CONFIGURATION SETTINGS PANEL -->
-            <div class="bg-slate-50/50 border border-slate-100 rounded-lg p-4 mb-6">
+            <!-- LEFT COLUMN: LIVE ORIGINAL PREVIEW -->
+            <div class="lg:col-span-5 bg-white rounded-xl border border-slate-200 shadow-xs p-5 sticky top-24">
+                <div class="border-b border-slate-100 pb-3 mb-4 flex justify-between items-center">
+                    <h3 class="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
+                        <span class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        Original Photo Preview
+                    </h3>
+                    <button onclick="resetWorkspace()" class="text-[11px] font-bold text-red-500 hover:underline bg-red-50 px-2 py-1 rounded">
+                        <i class="fa-solid fa-rotate-left mr-1"></i> Change Photo
+                    </button>
+                </div>
                 
-                <!-- 1. COMPRESS ARGUMENTS -->
-                <div id="ctrl-compress" class="max-w-xs">
-                    <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">Target Max Size (KB)</label>
-                    <div class="relative">
-                        <input type="number" id="targetKb" value="50" class="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-sm font-bold focus:outline-emerald-500">
-                        <span class="absolute right-3 top-2.5 text-xs font-bold text-slate-400">KB</span>
-                    </div>
+                <div class="bg-slate-50 border border-slate-100 rounded-lg p-4 flex flex-col items-center justify-center min-h-[250px]">
+                    <img id="original-preview-img" src="" class="max-h-72 object-contain rounded shadow-sm border border-white">
+                    <div id="original-meta" class="mt-3 text-center text-xs font-bold text-slate-500 uppercase"></div>
                 </div>
-
-                <!-- 2. RESIZE ARGUMENTS -->
-                <div id="ctrl-resize" class="hidden grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-md">
-                    <div>
-                        <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">Target Width (Pixels)</label>
-                        <input type="number" id="targetWidth" placeholder="Original Width" class="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-sm font-bold focus:outline-blue-500">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">Target Height (Pixels)</label>
-                        <input type="number" id="targetHeight" placeholder="Original Height" class="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-sm font-bold focus:outline-blue-500">
-                    </div>
-                </div>
-
-                <!-- 3. CROP ARGUMENTS -->
-                <div id="ctrl-crop" class="hidden max-w-xs">
-                    <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">Crop Preset Dimension</label>
-                    <select id="cropPreset" class="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-sm font-bold focus:outline-amber-500">
-                        <option value="passport">Sarkari Passport Size (3.5 x 4.5 cm Ratio)</option>
-                        <option value="square">Square Aspect Ratio (1:1)</option>
-                        <option value="landscape">Standard Landscape (4:3)</option>
-                    </select>
-                </div>
-
-                <!-- 4. FORMAT CONVERTER ARGUMENTS -->
-                <div id="ctrl-format" class="hidden max-w-xs">
-                    <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">Target Output Format</label>
-                    <select id="targetExt" class="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-sm font-bold focus:outline-purple-500">
-                        <option value="image/jpeg">Convert to JPG / JPEG format</option>
-                        <option value="image/png">Convert to PNG format</option>
-                        <option value="image/webp">Convert to WEBP format</option>
-                    </select>
-                </div>
-
             </div>
 
-            <!-- PROCESS TRIGGER BUTTON -->
-            <button onclick="processWorkspace()" class="w-full bg-emerald-500 text-white font-black uppercase text-xs tracking-widest py-3 rounded-lg shadow-md hover:bg-emerald-600 transition-colors cursor-pointer flex items-center justify-center gap-2">
-                <i class="fa-solid fa-gear"></i>
-                <span>Apply & Process Workspace</span>
-            </button>
+            <!-- RIGHT COLUMN: MULTIPLE SIMULTANEOUS OPERATIONS PANEL -->
+            <div class="lg:col-span-7 bg-white rounded-xl border border-slate-200 shadow-xs p-6">
+                <div class="border-b border-slate-100 pb-3 mb-6">
+                    <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider">Smart Processing Control Center</h3>
+                    <p class="text-slate-400 text-xs mt-0.5">Saari settings ek sath adjust karke apply karein.</p>
+                </div>
 
-            <!-- LIVE DYNAMIC DOWNLOAD MATRIX GRID -->
-            <div id="preview-section" class="mt-8 border-t border-slate-100 pt-6 hidden">
-                <h3 class="text-xs font-black text-slate-900 uppercase tracking-wider mb-4">Processed Live Outputs</h3>
-                <div id="preview-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
+                <div class="space-y-6">
+                    <!-- 1. CROP PRESET (Simultaneous) -->
+                    <div class="bg-slate-50 border border-slate-200/60 rounded-xl p-4">
+                        <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-crop-simple text-amber-500"></i> 1. Smart Aspect Ratio Crop
+                        </label>
+                        <select id="cropPreset" class="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-xs font-bold focus:outline-emerald-500">
+                            <option value="none">No Crop (Keep Original Aspect Ratio)</option>
+                            <option value="passport">Sarkari Passport Size (3.5 x 4.5 Ratio)</option>
+                            <option value="square">Square Format (1:1 Ratio)</option>
+                            <option value="landscape">Standard Landscape (4:3 Ratio)</option>
+                        </select>
+                    </div>
+
+                    <!-- 2. RESIZE DIMENSIONS (Simultaneous) -->
+                    <div class="bg-slate-50 border border-slate-200/60 rounded-xl p-4">
+                        <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-up-right-and-down-left-from-center text-blue-500"></i> 2. Dimension Resizer (Pixels)
+                        </label>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <span class="text-[10px] font-bold text-slate-400 block mb-1">Custom Width</span>
+                                <input type="number" id="targetWidth" placeholder="e.g. 350" class="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-xs font-bold focus:outline-emerald-500">
+                            </div>
+                            <div>
+                                <span class="text-[10px] font-bold text-slate-400 block mb-1">Custom Height</span>
+                                <input type="number" id="targetHeight" placeholder="e.g. 450" class="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-xs font-bold focus:outline-emerald-500">
+                            </div>
+                        </div>
+                        <p class="text-[10px] text-slate-400 mt-1.5 font-medium">* Khali chhodne par original pixels use honge (Resize bypass ho jayega).</p>
+                    </div>
+
+                    <!-- 3. COMPRESS FILE SIZE (Simultaneous) -->
+                    <div class="bg-slate-50 border border-slate-200/60 rounded-xl p-4">
+                        <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-compress text-emerald-500"></i> 3. Target Max File Size (KB)
+                        </label>
+                        <div class="relative max-w-xs">
+                            <input type="number" id="targetKb" value="50" class="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-xs font-bold focus:outline-emerald-500">
+                            <span class="absolute right-3 top-2 text-xs font-bold text-slate-400">KB</span>
+                        </div>
+                    </div>
+
+                    <!-- 4. FORMAT EXTENSION (Simultaneous) -->
+                    <div class="bg-slate-50 border border-slate-200/60 rounded-xl p-4">
+                        <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-layer-group text-purple-500"></i> 4. Target Extension Format
+                        </label>
+                        <select id="targetExt" class="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-xs font-bold focus:outline-emerald-500">
+                            <option value="same">Keep Original Format</option>
+                            <option value="image/jpeg">Convert to JPG / JPEG</option>
+                            <option value="image/png">Convert to PNG</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- MASTER TRIGGER BUTTON -->
+                <button onclick="processAllInOneWorkspace()" class="w-full mt-6 bg-emerald-500 text-white font-black uppercase text-xs tracking-widest py-3.5 rounded-xl shadow-md hover:bg-emerald-600 transition-colors cursor-pointer flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-gears text-sm"></i>
+                    <span>Apply All Changes & Process</span>
+                </button>
             </div>
-
         </div>
+
+        <!-- DYNAMIC OUTPUT GENERATION ZONE -->
+        <div id="output-section" class="mt-8 border-t border-slate-200 pt-8 hidden max-w-4xl mx-auto">
+            <h3 class="text-xs font-black text-slate-900 uppercase tracking-wider mb-4 text-center">Processed Output Result</h3>
+            <div id="output-grid" class="flex justify-center"></div>
+        </div>
+
     </main>
 
-    <!-- CORE PROCESSING JAVASCRIPT ENGINE -->
     <script>
-        let activeTool = 'compress';
-        let loadedFiles = [];
+        let currentFile = null;
+        let originalImgObject = null;
 
-        // Tab Switcher Pipeline
-        function switchTool(toolKey) {
-            activeTool = toolKey;
-            
-            // Toggle active visual CSS cards
-            document.querySelectorAll('#multi-tool-selector > div').forEach(el => el.classList.remove('active-card'));
-            document.getElementById(`btn-${toolKey}`).classList.add('active-card');
-
-            // Hide/Show correct input properties 
-            document.getElementById('ctrl-compress').classList.add('hidden');
-            document.getElementById('ctrl-resize').classList.add('hidden');
-            document.getElementById('ctrl-crop').classList.add('hidden');
-            document.getElementById('ctrl-format').classList.add('hidden');
-            document.getElementById(`ctrl-${toolKey}`).classList.remove('hidden');
-
-            const headers = {
-                compress: { t: "KB Size Compressor Active", d: "Image select karein aur maximum file size custom constraint match karein." },
-                resize: { t: "Dimension Resizer Active", d: "Exact pixel width aur height coordinates map karke convert karein." },
-                crop: { t: "Smart Aspect Ratio Crop Engine", d: "Sarkari result standard size matrix ke according auto focus center bounding crop." },
-                format: { t: "JPG to PNG / PNG to JPG Matrix Converter", d: "Bina compression artifact drop kiye extension exchange layout processing." }
-            };
-
-            document.getElementById('workspace-title').innerText = headers[toolKey].t;
-            document.getElementById('workspace-desc').innerText = headers[toolKey].d;
-        }
-
-        // File Selection Listener
         document.getElementById('imageInput').addEventListener('change', function(e) {
-            loadedFiles = Array.from(e.target.files);
-            const counter = document.getElementById('file-counter');
-            if(loadedFiles.length > 0) {
-                counter.innerText = `${loadedFiles.length} Files Loaded Successfully`;
-                counter.classList.remove('hidden');
-            } else {
-                counter.classList.add('hidden');
+            if(e.target.files.length > 0) {
+                currentFile = e.target.files[0];
+                
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    originalImgObject = new Image();
+                    originalImgObject.onload = function() {
+                        // Display original preview on the left
+                        document.getElementById('original-preview-img').src = event.target.result;
+                        
+                        // Display meta specifications
+                        const sizeKb = Math.round(currentFile.size / 1024);
+                        document.getElementById('original-meta').innerText = `${originalImgObject.width}x${originalImgObject.height} PX | ${sizeKb} KB`;
+                        
+                        // UI State Mutation
+                        document.getElementById('upload-box').classList.add('hidden');
+                        document.getElementById('workspace-panel').classList.remove('hidden');
+                    };
+                    originalImgObject.src = event.target.result;
+                };
+                reader.readAsDataURL(currentFile);
             }
         });
 
-        // Main Image Multi-Threading Processor Logic
-        function processWorkspace() {
-            if(loadedFiles.length === 0) {
-                alert("Pehle files upload ya drop kijiye!");
+        function resetWorkspace() {
+            currentFile = null;
+            originalImgObject = null;
+            document.getElementById('imageInput').value = '';
+            document.getElementById('upload-box').classList.remove('hidden');
+            document.getElementById('workspace-panel').classList.add('hidden');
+            document.getElementById('output-section').classList.add('hidden');
+            document.getElementById('output-grid').innerHTML = '';
+            
+            // Reset fields
+            document.getElementById('cropPreset').value = 'none';
+            document.getElementById('targetWidth').value = '';
+            document.getElementById('targetHeight').value = '';
+            document.getElementById('targetKb').value = '50';
+            document.getElementById('targetExt').value = 'same';
+        }
+
+        function processAllInOneWorkspace() {
+            if(!currentFile || !originalImgObject) {
+                alert("Kripya pehle photo select karein!");
                 return;
             }
 
-            const grid = document.getElementById('preview-grid');
+            const grid = document.getElementById('output-grid');
             grid.innerHTML = '';
-            document.getElementById('preview-section').classList.remove('hidden');
 
-            loadedFiles.forEach((file, idx) => {
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    const img = new Image();
-                    img.onload = function() {
-                        const canvas = document.createElement('canvas');
-                        const ctx = canvas.getContext('2d');
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
 
-                        let sourceX = 0, sourceY = 0;
-                        let sourceW = img.width;
-                        let sourceH = img.height;
-                        let targetW = img.width;
-                        let targetH = img.height;
+            let sourceX = 0, sourceY = 0;
+            let sourceW = originalImgObject.width;
+            let sourceH = originalImgObject.height;
+            
+            let targetW = originalImgObject.width;
+            let targetH = originalImgObject.height;
 
-                        // 1. DIMENSION RESIZE LAYER
-                        if(activeTool === 'resize') {
-                            const wVal = parseInt(document.getElementById('targetWidth').value);
-                            const hVal = parseInt(document.getElementById('targetHeight').value);
-                            targetW = wVal ? wVal : img.width;
-                            targetH = hVal ? hVal : img.height;
-                        } 
-                        // 2. CROP LOGIC LAYER (Auto-Center Matrix calculation)
-                        else if(activeTool === 'crop') {
-                            const preset = document.getElementById('cropPreset').value;
-                            let aspectRatio = 1; // Default square
-                            
-                            if(preset === 'passport') {
-                                aspectRatio = 3.5 / 4.5; // Strict Passport Dimension Ratio
-                                targetW = 350;
-                                targetH = 450;
-                            } else if(preset === 'square') {
-                                aspectRatio = 1;
-                                targetW = 400;
-                                targetH = 400;
-                            } else if(preset === 'landscape') {
-                                aspectRatio = 4 / 3;
-                                targetW = 640;
-                                targetH = 480;
-                            }
+            // STEP 1: RESOLVE CROP PRESET (IF ANY)
+            const cropSelection = document.getElementById('cropPreset').value;
+            if(cropSelection !== 'none') {
+                let aspectRatio = 1;
+                if(cropSelection === 'passport') {
+                    aspectRatio = 3.5 / 4.5;
+                } else if(cropSelection === 'square') {
+                    aspectRatio = 1;
+                } else if(cropSelection === 'landscape') {
+                    aspectRatio = 4 / 3;
+                }
 
-                            // Math algorithms for calculating crop center coordinates
-                            if (img.width / img.height > aspectRatio) {
-                                sourceW = img.height * aspectRatio;
-                                sourceH = img.height;
-                                sourceX = (img.width - sourceW) / 2;
-                            } else {
-                                sourceW = img.width;
-                                sourceH = img.width / aspectRatio;
-                                sourceY = (img.height - sourceH) / 2;
-                            }
-                        }
+                if (originalImgObject.width / originalImgObject.height > aspectRatio) {
+                    sourceW = originalImgObject.height * aspectRatio;
+                    sourceH = originalImgObject.height;
+                    sourceX = (originalImgObject.width - sourceW) / 2;
+                } else {
+                    sourceW = originalImgObject.width;
+                    sourceH = originalImgObject.width / aspectRatio;
+                    sourceY = (originalImgObject.height - sourceH) / 2;
+                }
+                
+                // Crop default metrics mapping
+                targetW = sourceW;
+                targetH = sourceH;
+            }
 
-                        canvas.width = targetW;
-                        canvas.height = targetH;
-                        
-                        // Render canvas mapping context data
-                        ctx.drawImage(img, sourceX, sourceY, sourceW, sourceH, 0, 0, targetW, targetH);
+            // STEP 2: RESOLVE CUSTOM OVERRIDE RESIZE METRICS
+            const inputW = parseInt(document.getElementById('targetWidth').value);
+            const inputH = parseInt(document.getElementById('targetHeight').value);
+            
+            if(!isNaN(inputW) && inputW > 0) targetW = inputW;
+            if(!isNaN(inputH) && inputH > 0) targetH = inputH;
 
-                        // 3. FORMAT SELECTION EXTENSION ASSIGNMENT
-                        let mimeType = "image/jpeg";
-                        if(activeTool === 'format') {
-                            mimeType = document.getElementById('targetExt').value;
-                        } else {
-                            mimeType = file.type || "image/jpeg";
-                        }
+            // DRAW PROCESS MAP
+            canvas.width = targetW;
+            canvas.height = targetH;
+            ctx.drawImage(originalImgObject, sourceX, sourceY, sourceW, sourceH, 0, 0, targetW, targetH);
 
-                        let quality = 0.90;
-                        let outputUrl = canvas.toDataURL(mimeType, quality);
+            // STEP 3: RESOLVE FORMAT EXTENSION
+            let targetMime = currentFile.type || "image/jpeg";
+            const chosenExt = document.getElementById('targetExt').value;
+            if(chosenExt !== 'same') {
+                targetMime = chosenExt;
+            }
 
-                        // 4. KB COMPRESSION ITERATION BINARY TREE TUNING
-                        if(activeTool === 'compress') {
-                            const maxKb = parseFloat(document.getElementById('targetKb').value) || 50;
-                            for (let q = 0.95; q > 0.02; q -= 0.04) {
-                                outputUrl = canvas.toDataURL(mimeType, q);
-                                const currentKb = (outputUrl.length * 3) / 4 / 1024;
-                                if(currentKb <= maxKb) break;
-                            }
-                        }
+            // STEP 4: SAFE COMPRESSION STRATEGY
+            let finalOutputUrl = canvas.toDataURL(targetMime, 0.92);
+            const maxAllowedKb = parseFloat(document.getElementById('targetKb').value) || 50;
 
-                        const finalSize = Math.round((outputUrl.length * 3) / 4 / 1024);
-                        const fileExt = mimeType.split('/')[1];
+            // Run localized optimization engine loop safely
+            for (let compressionFactor = 0.95; compressionFactor > 0.05; compressionFactor -= 0.04) {
+                finalOutputUrl = canvas.toDataURL(targetMime, compressionFactor);
+                const currentIterationSize = (finalOutputUrl.length * 3) / 4 / 1024;
+                if(currentIterationSize <= maxAllowedKb) {
+                    break;
+                }
+            }
 
-                        // Create individual dynamic responsive output grid card
-                        const card = document.createElement('div');
-                        card.className = "bg-slate-50 border border-slate-200 rounded-lg p-3 text-center flex flex-col items-center justify-between";
-                        card.innerHTML = `
-                            <img src="${outputUrl}" class="max-h-32 object-contain rounded border border-slate-100 mb-2 shadow-2xs">
-                            <div class="w-full">
-                                <span class="text-[10px] font-bold text-emerald-600 block bg-emerald-50 px-2 py-0.5 rounded-full mb-1 inline-block">~${finalSize} KB</span>
-                                <p class="text-[10px] font-bold text-slate-500 truncate mb-2 uppercase">${targetW} x ${targetH} PX | ${fileExt}</p>
-                                <a href="${outputUrl}" download="editspark_${idx}.${fileExt}" class="inline-flex items-center justify-center gap-1 w-full bg-emerald-500 text-white font-black text-[10px] uppercase py-2 rounded shadow-2xs hover:bg-emerald-600 transition-colors">
-                                    <i class="fa-solid fa-cloud-arrow-down"></i> Download Asset
-                                </a>
-                            </div>
-                        `;
-                        grid.appendChild(card);
-                    };
-                    img.src = event.target.result;
-                };
-                reader.readAsDataURL(file);
-            });
+            const processedSizeKb = Math.round((finalOutputUrl.length * 3) / 4 / 1024);
+            const verifiedExtension = targetMime.split('/')[1];
+
+            // Render output block card
+            const card = document.createElement('div');
+            card.className = "bg-white border border-slate-200 rounded-xl p-5 text-center max-w-sm w-full flex flex-col items-center shadow-xs animate-fade-in";
+            card.innerHTML = `
+                <img src="${finalOutputUrl}" class="max-h-56 object-contain rounded border border-slate-100 mb-4 shadow-2xs">
+                <div class="w-full">
+                    <span class="text-xs font-black text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full mb-2 inline-block">~${processedSizeKb} KB Size</span>
+                    <p class="text-[11px] font-bold text-slate-500 mb-4 uppercase tracking-wider">${targetW} x ${targetH} PX | Format: ${verifiedExtension}</p>
+                    <a href="${finalOutputUrl}" download="editspark_all_in_one.${verifiedExtension}" class="inline-flex items-center justify-center gap-2 w-full bg-emerald-500 text-white font-black text-xs uppercase py-3 rounded-lg shadow-sm hover:bg-emerald-600 transition-colors">
+                        <i class="fa-solid fa-cloud-arrow-down"></i> Download Processed Image
+                    </a>
+                </div>
+            `;
+            
+            grid.appendChild(card);
+            document.getElementById('output-section').classList.remove('hidden');
+            
+            // Scroll smoothly to outputs
+            document.getElementById('output-section').scrollIntoView({ behavior: 'smooth' });
         }
     </script>
 </body>
