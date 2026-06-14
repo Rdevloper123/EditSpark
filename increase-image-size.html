@@ -179,51 +179,76 @@
             const ctx = canvas.getContext('2d');
             ctx.drawImage(sourceImg, 0, 0);
 
-            // Step 1: Base compression check
-            let dataUrl = canvas.toDataURL(format, 1.0);
-            let currentKB = (dataUrl.length * 3 / 4) / 1024;
+            // Step 1: Base image generation at high quality
+            let dataUrl = canvas.toDataURL(format, 0.95);
+            
+            // Base64 to Binary Array conversion helper
+            let block = dataUrl.split(';');
+            let contentType = block[0].split(":")[1];
+            let realData = block[1].split(",")[1];
+            
+            let binaryString = atob(realData);
+            let len = binaryString.length;
+            let currentKB = len / 1024;
+            let finalBlob = null;
 
-            // Step 2: High Speed Binary Padding Insertion Loop if File is Too Small
+            // Step 2: Accurate Byte Padding Routine
             if (currentKB < targetKB) {
-                let paddingString = "";
-                let targetBytes = targetKB * 1024 * (4 / 3); // Base64 encoding structure expansion ratio
-                let currentBytes = dataUrl.length;
-                let neededBytes = targetBytes - currentBytes;
+                let targetBytes = Math.floor(targetKB * 1024);
+                let neededBytes = targetBytes - len;
 
-                // Generating fast high density clean string buffer
-                if (neededBytes > 0) {
-                    paddingString = "0".repeat(Math.floor(neededBytes));
+                // Create a new Uint8Array combining original data + safe blank padding bytes
+                let newBuffer = new Uint8Array(targetBytes);
+                
+                // Copy original data
+                for (let i = 0; i < len; i++) {
+                    newBuffer[i] = binaryString.charCodeAt(i);
                 }
-
-                // Injecting continuous blank safely readable custom application metadata blocks
-                if (format === 'image/jpeg') {
-                    // Injecting inside safe COM (Comment segment) metadata structure of JPEG stream
-                    let base64Parts = dataUrl.split(',');
-                    let header = base64Parts[0];
-                    let body = base64Parts[1];
-                    dataUrl = header + ',' + body + paddingString;
-                } else {
-                    // Fallback injection block structure pattern matching for safety stability
-                    dataUrl = dataUrl + paddingString;
+                
+                // Fill the rest with safe neutral trailing space structures
+                for (let i = len; i < targetBytes; i++) {
+                    newBuffer[i] = 0x20; // Space byte padding (safe for binary file formats)
                 }
+                
+                finalBlob = new Blob([newBuffer], {type: contentType});
             } else {
-                // Standard down-scale logic threshold adjustment protection bypass loop
-                let low = 0.1, high = 1.0;
-                for (let i = 0; i < 8; i++) {
+                // If it is already larger, adaptively reduce quality via binary loop
+                let low = 0.1, high = 0.95;
+                for (let i = 0; i < 10; i++) {
                     let mid = (low + high) / 2;
                     let testUrl = canvas.toDataURL(format, mid);
-                    let sizeKB = (testUrl.length * 3 / 4) / 1024;
-                    if (sizeKB > targetKB) { high = mid; } else { low = mid; dataUrl = testUrl; }
+                    let testLen = atob(testUrl.split(',')[1]).length;
+                    if ((testLen / 1024) > targetKB) {
+                        high = mid;
+                    } else {
+                        low = mid;
+                        dataUrl = testUrl;
+                    }
                 }
+                
+                // Re-build standard plain blob array mapping
+                let rawB64 = dataUrl.split(',')[1];
+                let binStr = atob(rawB64);
+                let buf = new Uint8Array(binStr.length);
+                for(let i=0; i<binStr.length; i++) {
+                    buf[i] = binStr.charCodeAt(i);
+                }
+                finalBlob = new Blob([buf], {type: contentType});
             }
 
-            // Calculate final precision structure calculations
-            const finalKB = (dataUrl.length * 3 / 4) / 1024;
-            finalSizeText.textContent = finalKB.toFixed(1) + " KB";
+            // Calculate exact precision live layout updates
+            const actualSizeKB = finalBlob.size / 1024;
+            finalSizeText.textContent = actualSizeKB.toFixed(2) + " KB";
             
-            // Present Link Download Triggers UI
+            // Create Object URL mapping to support large binary streams cleanly
+            if(downloadLink.href && downloadLink.href.startsWith('blob:')) {
+                URL.revokeObjectURL(downloadLink.href);
+            }
+            
+            const blobUrl = URL.createObjectURL(finalBlob);
             const ext = format === 'image/png' ? 'png' : 'jpg';
-            downloadLink.href = dataUrl;
+            
+            downloadLink.href = blobUrl;
             downloadLink.download = `editspark_increased_${Date.now()}.${ext}`;
             
             downloadLink.classList.remove('hidden');
