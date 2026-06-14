@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EditSpark Smart Workspace | Photo Resizer, Crop & Converter</title>
+    <title>EditSpark Smart Workspace | Manual Crop & Photo Resizer</title>
     <!-- Tailwind CSS v4 -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Cropper.js for Manual Crop -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
 </head>
 <body class="bg-[#f3f4f6] font-sans text-slate-800 min-h-screen flex flex-col">
 
@@ -22,11 +24,6 @@
                     <span class="text-2xl font-black tracking-tight text-slate-900">Edit<span class="text-emerald-500">Spark</span></span>
                     <span class="text-xs font-bold text-slate-400 bg-slate-100 px-2 py-0.5 rounded-md ml-2">All-In-One Workspace</span>
                 </div>
-                <div class="flex items-center space-x-4">
-                    <span class="text-xs font-bold px-2.5 py-1 bg-emerald-50 text-emerald-700 rounded-full border border-emerald-200 uppercase tracking-wider">
-                        100% Client-Side Secure
-                    </span>
-                </div>
             </div>
         </div>
     </nav>
@@ -34,7 +31,7 @@
     <!-- Main Content -->
     <main class="flex-grow max-w-7xl mx-auto px-4 py-6 w-full">
         
-        <!-- INITIAL DROPZONE (Hide ho jayega upload ke baad) -->
+        <!-- INITIAL DROPZONE -->
         <div id="upload-box" class="bg-white rounded-xl border border-slate-200 shadow-xs p-12 text-center cursor-pointer hover:bg-slate-50 transition-colors max-w-2xl mx-auto mb-8" onclick="document.getElementById('imageInput').click()">
             <input type="file" id="imageInput" class="hidden" accept="image/*">
             <i class="fa-solid fa-cloud-arrow-up text-5xl text-emerald-400 mb-4 block"></i>
@@ -42,12 +39,11 @@
             <p class="text-slate-400 text-xs">Click karein ya file yahan drop karein</p>
         </div>
 
-        <!-- SPLIT LIVE WORKSPACE (Mobile par Stacked with Top Sticky Preview, Desktop par Side-by-Side Grid) -->
+        <!-- SPLIT LIVE WORKSPACE (Initially Hidden) -->
         <div id="workspace-panel" class="hidden flex flex-col lg:grid lg:grid-cols-12 gap-6 items-start">
             
-            <!-- LEFT COLUMN / TOP MINI STICKY PREVIEW -->
-            <!-- Mobile par sticky top-16 rahega taaki controls chalate waqt photo dikhti rahe, Desktop par full panel banega -->
-            <div class="w-full lg:col-span-5 bg-white rounded-xl border border-slate-200 shadow-xs p-3 lg:p-5 sticky top-16 lg:top-24 z-40 bg-white/95 backdrop-blur-xs">
+            <!-- LEFT COLUMN: LIVE ORIGINAL PREVIEW -->
+            <div class="w-full lg:col-span-5 bg-white rounded-xl border border-slate-200 shadow-xs p-3 lg:p-5 sticky top-16 lg:top-24 z-30 bg-white/95 backdrop-blur-xs">
                 <div class="border-b border-slate-100 pb-1.5 mb-2 lg:pb-3 lg:mb-4 flex justify-between items-center">
                     <h3 class="text-[10px] lg:text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
                         <span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Photo Preview
@@ -57,32 +53,35 @@
                     </button>
                 </div>
                 
-                <!-- Container & Image height optimized for mobile layout screen saving -->
-                <div class="bg-slate-50 border border-slate-100 rounded-lg p-2 flex flex-row lg:flex-col items-center justify-center gap-3 min-h-[60px] lg:min-h-[250px]">
+                <!-- Cropper JS Container for Manual Crop (Initially hidden) -->
+                <div id="cropper-container" class="hidden aspect-square border border-slate-100 rounded-lg p-2 flex flex-row lg:flex-col items-center justify-center gap-3">
+                  <img id="cropper-image" src="" class="block max-w-full">
+                </div>
+                
+                <!-- Display Area -->
+                <div id="display-area" class="bg-slate-50 border border-slate-100 rounded-lg p-2 flex flex-row lg:flex-col items-center justify-center gap-3 min-h-[60px] lg:min-h-[250px]">
                     <img id="original-preview-img" src="" class="max-h-16 lg:max-h-72 object-contain rounded shadow-sm border border-white">
                     <div id="original-meta" class="text-left lg:text-center text-[10px] lg:text-xs font-bold text-slate-500 uppercase tracking-wide"></div>
                 </div>
             </div>
 
-            <!-- RIGHT COLUMN: MULTIPLE SIMULTANEOUS OPERATIONS PANEL -->
+            <!-- RIGHT COLUMN: CONTROL CENTER -->
             <div class="w-full lg:col-span-7 bg-white rounded-xl border border-slate-200 shadow-xs p-5 lg:p-6 relative z-10">
                 <div class="border-b border-slate-100 pb-3 mb-5">
                     <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider">Smart Processing Control Center</h3>
-                    <p class="text-slate-400 text-xs mt-0.5">Saari settings ek sath adjust karke apply karein.</p>
+                    <p class="text-slate-400 text-xs mt-0.5">Saari settings adjust karein.</p>
                 </div>
 
                 <div class="space-y-5">
-                    <!-- 1. CROP PRESET -->
-                    <div class="bg-slate-50 border border-slate-200/60 rounded-xl p-3.5 lg:p-4">
-                        <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-2 flex items-center gap-2">
-                            <i class="fa-solid fa-crop-simple text-amber-500"></i> 1. Smart Aspect Ratio Crop
+                    <!-- 1. MANUAL CROP TRIGGER -->
+                    <div class="bg-slate-50 border border-slate-200/60 rounded-xl p-3.5 lg:p-4 flex items-center justify-between gap-2">
+                        <label class="block text-xs font-black text-slate-700 uppercase tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-crop-simple text-amber-500"></i> 1. Manual Crop
                         </label>
-                        <select id="cropPreset" class="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-xs font-bold focus:outline-emerald-500">
-                            <option value="none">No Crop (Keep Original Aspect Ratio)</option>
-                            <option value="passport">Sarkari Passport Size (3.5 x 4.5 Ratio)</option>
-                            <option value="square">Square Format (1:1 Ratio)</option>
-                            <option value="landscape">Standard Landscape (4:3 Ratio)</option>
-                        </select>
+                        <button id="toggleCrop" class="text-[11px] font-bold px-3 py-1 bg-amber-50 text-amber-700 rounded-full border border-amber-200 hover:bg-amber-100 flex items-center gap-1.5">
+                            <i class="fa-solid fa-crop"></i>
+                            <span>Crop Karen</span>
+                        </button>
                     </div>
 
                     <!-- 2. RESIZE DIMENSIONS -->
@@ -100,7 +99,6 @@
                                 <input type="number" id="targetHeight" placeholder="e.g. 450" class="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-xs font-bold focus:outline-emerald-500">
                             </div>
                         </div>
-                        <p class="text-[10px] text-slate-400 mt-1.5 font-medium">* Khali chhodne par original pixels use honge.</p>
                     </div>
 
                     <!-- 3. COMPRESS FILE SIZE -->
@@ -121,8 +119,8 @@
                         </label>
                         <select id="targetExt" class="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-xs font-bold focus:outline-emerald-500">
                             <option value="same">Keep Original Format</option>
-                            <option value="image/jpeg">Convert to JPG / JPEG</option>
-                            <option value="image/png">Convert to PNG</option>
+                            <option value="image/jpeg">JPG / JPEG</option>
+                            <option value="image/png">PNG</option>
                         </select>
                     </div>
                 </div>
@@ -134,6 +132,22 @@
             </div>
         </div>
 
+        <!-- CROP MODAL (Initially Hidden) -->
+        <div id="cropModal" class="fixed inset-0 bg-slate-900/60 flex items-center justify-center z-50 p-4 backdrop-blur-xs hidden">
+            <div class="bg-white rounded-xl max-w-4xl w-full p-4 flex flex-col items-center">
+              <div class="w-full mb-4 flex justify-between items-center">
+                <h2 class="text-sm font-black text-slate-900 uppercase tracking-wider">Manual Crop</h2>
+                <div class="flex items-center gap-2">
+                    <button onclick="confirmCrop()" class="px-4 py-1.5 bg-emerald-500 text-white text-xs font-black uppercase rounded-lg hover:bg-emerald-600">Save Crop</button>
+                    <button onclick="closeModal()" class="px-4 py-1.5 bg-slate-100 text-slate-700 text-xs font-black uppercase rounded-lg hover:bg-slate-200">Cancel</button>
+                </div>
+              </div>
+              <div class="w-full min-h-[300px] bg-slate-100 flex items-center justify-center overflow-hidden rounded-lg">
+                <img id="modalCropImage" src="" class="block max-w-full">
+              </div>
+            </div>
+        </div>
+
         <!-- DYNAMIC OUTPUT GENERATION ZONE -->
         <div id="output-section" class="mt-8 border-t border-slate-200 pt-8 hidden max-w-4xl mx-auto">
             <h3 class="text-xs font-black text-slate-900 uppercase tracking-wider mb-4 text-center">Processed Output Result</h3>
@@ -141,9 +155,14 @@
         </div>
     </main>
 
+    <!-- Cropper.js Script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+
     <script>
         let currentFile = null;
         let originalImgObject = null;
+        let cropperInstance = null;
+        let croppedImageData = null; // Stores cropped image dataUrl
 
         document.getElementById('imageInput').addEventListener('change', function(e) {
             if(e.target.files.length > 0) {
@@ -152,16 +171,7 @@
                 reader.onload = function(event) {
                     originalImgObject = new Image();
                     originalImgObject.onload = function() {
-                        // Display original preview
-                        document.getElementById('original-preview-img').src = event.target.result;
-                        
-                        // Display meta specifications
-                        const sizeKb = Math.round(currentFile.size / 1024);
-                        document.getElementById('original-meta').innerText = `${originalImgObject.width}x${originalImgObject.height} PX | ${sizeKb} KB`;
-                        
-                        // UI State Mutation
-                        document.getElementById('upload-box').classList.add('hidden');
-                        document.getElementById('workspace-panel').classList.remove('hidden');
+                        initWorkspace(event.target.result);
                     };
                     originalImgObject.src = event.target.result;
                 };
@@ -169,21 +179,104 @@
             }
         });
 
+        document.getElementById('toggleCrop').addEventListener('click', function() {
+          openModal();
+        });
+
+        function initWorkspace(dataUrl) {
+          // Display original preview
+          document.getElementById('original-preview-img').src = dataUrl;
+          
+          // Display meta specifications
+          const sizeKb = Math.round(currentFile.size / 1024);
+          document.getElementById('original-meta').innerText = `${originalImgObject.width}x${originalImgObject.height} PX | ${sizeKb} KB`;
+          
+          // UI State Mutation
+          document.getElementById('upload-box').classList.add('hidden');
+          document.getElementById('workspace-panel').classList.remove('hidden');
+          
+          croppedImageData = dataUrl; // default to original data
+        }
+
         function resetWorkspace() {
             currentFile = null;
             originalImgObject = null;
+            croppedImageData = null;
+            if(cropperInstance) {
+              cropperInstance.destroy();
+              cropperInstance = null;
+            }
             document.getElementById('imageInput').value = '';
             document.getElementById('upload-box').classList.remove('hidden');
             document.getElementById('workspace-panel').classList.add('hidden');
             document.getElementById('output-section').classList.add('hidden');
             document.getElementById('output-grid').innerHTML = '';
+            closeModal();
+            
+            // Reset display area
+            document.getElementById('original-preview-img').src = '';
+            document.getElementById('display-area').classList.remove('hidden');
+            document.getElementById('cropper-container').classList.add('hidden');
             
             // Reset fields
-            document.getElementById('cropPreset').value = 'none';
             document.getElementById('targetWidth').value = '';
             document.getElementById('targetHeight').value = '';
             document.getElementById('targetKb').value = '50';
             document.getElementById('targetExt').value = 'same';
+        }
+
+        // Modal functionalities
+        const cropModal = document.getElementById('cropModal');
+        const modalImage = document.getElementById('modalCropImage');
+
+        function openModal() {
+          if(!currentFile || !originalImgObject) return;
+          modalImage.src = originalImgObject.src;
+          cropModal.classList.remove('hidden');
+          initCropperOnModal();
+        }
+
+        function closeModal() {
+          cropModal.classList.add('hidden');
+          if(cropperInstance) {
+            cropperInstance.destroy();
+            cropperInstance = null;
+          }
+        }
+
+        function initCropperOnModal() {
+          cropperInstance = new Cropper(modalImage, {
+            viewMode: 1, // Restrict crop box to within the container
+            guides: true,
+            movable: true,
+            zoomable: true,
+            rotatable: false,
+            scalable: false,
+            // aspect Ratio removed for manual cropping 
+            // aspectRatio: 16 / 9, 
+          });
+        }
+
+        function confirmCrop() {
+          if(!cropperInstance) return;
+          const canvas = cropperInstance.getCroppedCanvas();
+          croppedImageData = canvas.toDataURL(currentFile.type || "image/jpeg", 1);
+          
+          // update original display with cropped result
+          document.getElementById('original-preview-img').src = croppedImageData;
+
+          // update display logic
+          document.getElementById('display-area').classList.add('hidden');
+          document.getElementById('cropper-container').classList.remove('hidden');
+          document.getElementById('cropper-image').src = croppedImageData;
+
+          // update button label
+          const toggleButton = document.getElementById('toggleCrop');
+          toggleButton.classList.remove('bg-amber-50', 'text-amber-700', 'border-amber-200');
+          toggleButton.classList.add('bg-emerald-50', 'text-emerald-700', 'border-emerald-200');
+          toggleButton.innerHTML = '<i class="fa-solid fa-check"></i> <span>Cropped</span>';
+
+          closeModal();
         }
 
         function processAllInOneWorkspace() {
@@ -198,86 +291,72 @@
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
 
-            let sourceX = 0, sourceY = 0;
-            let sourceW = originalImgObject.width;
-            let sourceH = originalImgObject.height;
-            let targetW = originalImgObject.width;
-            let targetH = originalImgObject.height;
+            let finalImageObject = originalImgObject; // default
 
-            // STEP 1: RESOLVE CROP PRESET (IF ANY)
-            const cropSelection = document.getElementById('cropPreset').value;
-            if(cropSelection !== 'none') {
-                let aspectRatio = 1;
-                if(cropSelection === 'passport') {
-                    aspectRatio = 3.5 / 4.5;
-                } else if(cropSelection === 'square') {
-                    aspectRatio = 1;
-                } else if(cropSelection === 'landscape') {
-                    aspectRatio = 4 / 3;
-                }
-
-                if (originalImgObject.width / originalImgObject.height > aspectRatio) {
-                    sourceW = originalImgObject.height * aspectRatio;
-                    sourceH = originalImgObject.height;
-                    sourceX = (originalImgObject.width - sourceW) / 2;
-                } else {
-                    sourceW = originalImgObject.width;
-                    sourceH = originalImgObject.width / aspectRatio;
-                    sourceY = (originalImgObject.height - sourceH) / 2;
-                }
-                targetW = sourceW;
-                targetH = sourceH;
+            if (croppedImageData) {
+              const croppedImage = new Image();
+              croppedImage.onload = function() {
+                proceedProcessing(croppedImage);
+              };
+              croppedImage.src = croppedImageData;
+            } else {
+              proceedProcessing(finalImageObject);
             }
 
-            // STEP 2: RESOLVE CUSTOM OVERRIDE RESIZE METRICS
-            const inputW = parseInt(document.getElementById('targetWidth').value);
-            const inputH = parseInt(document.getElementById('targetHeight').value);
-            if(!isNaN(inputW) && inputW > 0) targetW = inputW;
-            if(!isNaN(inputH) && inputH > 0) targetH = inputH;
+            function proceedProcessing(img) {
+              let targetW = img.width;
+              let targetH = img.height;
 
-            // DRAW PROCESS MAP
-            canvas.width = targetW;
-            canvas.height = targetH;
-            ctx.drawImage(originalImgObject, sourceX, sourceY, sourceW, sourceH, 0, 0, targetW, targetH);
+              // STEP 2: RESOLVE CUSTOM OVERRIDE RESIZE METRICS
+              const inputW = parseInt(document.getElementById('targetWidth').value);
+              const inputH = parseInt(document.getElementById('targetHeight').value);
+              if(!isNaN(inputW) && inputW > 0) targetW = inputW;
+              if(!isNaN(inputH) && inputH > 0) targetH = inputH;
 
-            // STEP 3: RESOLVE FORMAT EXTENSION
-            let targetMime = currentFile.type || "image/jpeg";
-            const chosenExt = document.getElementById('targetExt').value;
-            if(chosenExt !== 'same') {
-                targetMime = chosenExt;
+              // DRAW PROCESS MAP
+              canvas.width = targetW;
+              canvas.height = targetH;
+              ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, targetW, targetH);
+
+              // STEP 3: RESOLVE FORMAT EXTENSION
+              let targetMime = currentFile.type || "image/jpeg";
+              const chosenExt = document.getElementById('targetExt').value;
+              if(chosenExt !== 'same') {
+                  targetMime = chosenExt;
+              }
+
+              // STEP 4: SAFE COMPRESSION STRATEGY
+              let finalOutputUrl = canvas.toDataURL(targetMime, 0.92);
+              const maxAllowedKb = parseFloat(document.getElementById('targetKb').value) || 50;
+
+              for (let compressionFactor = 0.95; compressionFactor > 0.05; compressionFactor -= 0.04) {
+                  finalOutputUrl = canvas.toDataURL(targetMime, compressionFactor);
+                  const currentIterationSize = (finalOutputUrl.length * 3) / 4 / 1024;
+                  if(currentIterationSize <= maxAllowedKb) {
+                      break;
+                  }
+              }
+
+              const processedSizeKb = Math.round((finalOutputUrl.length * 3) / 4 / 1024);
+              const verifiedExtension = targetMime.split('/')[1];
+
+              // Render output block card
+              const card = document.createElement('div');
+              card.className = "bg-white border border-slate-200 rounded-xl p-5 text-center max-w-sm w-full flex flex-col items-center shadow-xs";
+              card.innerHTML = `
+                  <img src="${finalOutputUrl}" class="max-h-56 object-contain rounded border border-slate-100 mb-4 shadow-2xs">
+                  <div class="w-full">
+                      <span class="text-xs font-black text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full mb-2 inline-block">~${processedSizeKb} KB Size</span>
+                      <p class="text-[11px] font-bold text-slate-500 mb-4 uppercase tracking-wider">${targetW} x ${targetH} PX | Format: ${verifiedExtension}</p>
+                      <a href="${finalOutputUrl}" download="spark_${Date.now()}.${verifiedExtension}" class="inline-flex items-center justify-center gap-2 w-full bg-emerald-500 text-white font-black text-xs uppercase py-3 rounded-lg shadow-sm hover:bg-emerald-600 transition-colors">
+                          <i class="fa-solid fa-cloud-arrow-down"></i> Download Image
+                      </a>
+                  </div>
+              `;
+              grid.appendChild(card);
+              document.getElementById('output-section').classList.remove('hidden');
+              document.getElementById('output-section').scrollIntoView({ behavior: 'smooth' });
             }
-
-            // STEP 4: SAFE COMPRESSION STRATEGY
-            let finalOutputUrl = canvas.toDataURL(targetMime, 0.92);
-            const maxAllowedKb = parseFloat(document.getElementById('targetKb').value) || 50;
-
-            for (let compressionFactor = 0.95; compressionFactor > 0.05; compressionFactor -= 0.04) {
-                finalOutputUrl = canvas.toDataURL(targetMime, compressionFactor);
-                const currentIterationSize = (finalOutputUrl.length * 3) / 4 / 1024;
-                if(currentIterationSize <= maxAllowedKb) {
-                    break;
-                }
-            }
-
-            const processedSizeKb = Math.round((finalOutputUrl.length * 3) / 4 / 1024);
-            const verifiedExtension = targetMime.split('/')[1];
-
-            // Render output block card
-            const card = document.createElement('div');
-            card.className = "bg-white border border-slate-200 rounded-xl p-5 text-center max-w-sm w-full flex flex-col items-center shadow-xs";
-            card.innerHTML = `
-                <img src="${finalOutputUrl}" class="max-h-56 object-contain rounded border border-slate-100 mb-4 shadow-2xs">
-                <div class="w-full">
-                    <span class="text-xs font-black text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full mb-2 inline-block">~${processedSizeKb} KB Size</span>
-                    <p class="text-[11px] font-bold text-slate-500 mb-4 uppercase tracking-wider">${targetW} x ${targetH} PX | Format: ${verifiedExtension}</p>
-                    <a href="${finalOutputUrl}" download="editspark_all_in_one.${verifiedExtension}" class="inline-flex items-center justify-center gap-2 w-full bg-emerald-500 text-white font-black text-xs uppercase py-3 rounded-lg shadow-sm hover:bg-emerald-600 transition-colors">
-                        <i class="fa-solid fa-cloud-arrow-down"></i> Download Processed Image
-                    </a>
-                </div>
-            `;
-            grid.appendChild(card);
-            document.getElementById('output-section').classList.remove('hidden');
-            document.getElementById('output-section').scrollIntoView({ behavior: 'smooth' });
         }
     </script>
 </body>
