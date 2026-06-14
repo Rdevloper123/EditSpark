@@ -3,13 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EditSpark Ultimate Workspace | Manual Crop, Resize & Multi-Format Converter</title>
+    <title>EditSpark | Pure Image Format Converter</title>
     <!-- Tailwind CSS v4 -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Cropper.js for Manual Crop -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
 </head>
 <body class="bg-[#f3f4f6] font-sans text-slate-800 min-h-screen flex flex-col">
 
@@ -18,13 +16,13 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
                 <div class="flex items-center space-x-2">
-                    <div class="bg-emerald-500 p-2 rounded-lg text-white shadow-sm">
-                        <i class="fa-solid fa-wand-magic-sparkles text-lg"></i>
+                    <div class="bg-purple-600 p-2 rounded-lg text-white shadow-sm">
+                        <i class="fa-solid fa-file-image text-lg"></i>
                     </div>
-                    <span class="text-2xl font-black tracking-tight text-slate-900">Edit<span class="text-emerald-500">Spark</span></span>
-                    <span class="text-xs font-bold text-slate-400 bg-slate-100 px-2 py-0.5 rounded-md ml-2">Ultimate Engine</span>
+                    <span class="text-2xl font-black tracking-tight text-slate-900">Edit<span class="text-purple-600">Spark</span></span>
+                    <span class="text-xs font-bold text-slate-400 bg-slate-100 px-2 py-0.5 rounded-md ml-2">Format Converter</span>
                 </div>
-                <span class="text-xs font-bold px-2.5 py-1 bg-purple-50 text-purple-700 rounded-full border border-purple-200 uppercase tracking-wider hidden sm:inline-block">
+                <span class="text-xs font-bold px-2.5 py-1 bg-emerald-50 text-emerald-700 rounded-full border border-emerald-200 uppercase tracking-wider hidden sm:inline-block">
                     ⚡ 100% Offline & Secure
                 </span>
             </div>
@@ -32,335 +30,203 @@
     </nav>
 
     <!-- Main Content -->
-    <main class="flex-grow max-w-7xl mx-auto px-4 py-6 w-full">
+    <main class="flex-grow max-w-4xl mx-auto px-4 py-8 w-full">
         
-        <!-- INITIAL DROPZONE -->
-        <div id="upload-box" class="bg-white rounded-xl border border-slate-200 shadow-xs p-12 text-center cursor-pointer hover:bg-slate-50 transition-colors max-w-2xl mx-auto mb-8" onclick="document.getElementById('imageInput').click()">
-            <input type="file" id="imageInput" class="hidden" accept="image/*">
-            <i class="fa-solid fa-cloud-arrow-up text-5xl text-purple-400 mb-4 block"></i>
-            <h3 class="text-base font-black text-slate-800 uppercase tracking-wider mb-1">Apni Photo Upload Karein</h3>
-            <p class="text-slate-400 text-xs">Click karein ya file yahan drop karein</p>
+        <!-- INTRO HEADER -->
+        <div class="text-center mb-8">
+            <h1 class="text-2xl font-black text-slate-900 uppercase tracking-wide">Image Format Converter</h1>
+            <p class="text-slate-500 text-sm mt-1">Apni photos ka format badlein (JPG, PNG, WebP) bina quality kharab kiye.</p>
         </div>
 
-        <!-- SPLIT LIVE WORKSPACE -->
-        <div id="workspace-panel" class="hidden flex flex-col lg:grid lg:grid-cols-12 gap-6 items-start">
-            
-            <!-- LEFT COLUMN: LIVE ORIGINAL PREVIEW (Mobile Par Top Sticky Mini Panel) -->
-            <div class="w-full lg:col-span-5 bg-white rounded-xl border border-slate-200 shadow-xs p-3 lg:p-5 sticky top-16 lg:top-24 z-40 bg-white/95 backdrop-blur-xs">
-                <div class="border-b border-slate-100 pb-1.5 mb-2 lg:pb-3 lg:mb-4 flex justify-between items-center">
-                    <h3 class="text-[10px] lg:text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
-                        <span class="h-1.5 w-1.5 rounded-full bg-purple-500 animate-pulse"></span> Selected Photo
+        <!-- STEP 1: DROPZONE -->
+        <div id="dropzone" class="bg-white rounded-xl border-2 border-dashed border-slate-300 shadow-xs p-10 text-center cursor-pointer hover:bg-slate-50 hover:border-purple-500 transition-all mb-6" onclick="document.getElementById('imageInput').click()">
+            <input type="file" id="imageInput" class="hidden" accept="image/*" multiple>
+            <i class="fa-solid fa-images text-5xl text-purple-400 mb-4 block"></i>
+            <h3 class="text-base font-black text-slate-800 uppercase tracking-wider mb-1">Photos Upload Karen</h3>
+            <p class="text-slate-400 text-xs">Ek ya ek se zyaada photos click karke ya drag karke yahan daalein</p>
+        </div>
+
+        <!-- STEP 2: CONVERSION CONTROLS (Hidden until files uploaded) -->
+        <div id="control-panel" class="bg-white rounded-xl border border-slate-200 shadow-sm p-5 mb-6 hidden">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                    <h3 class="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-sliders text-purple-600"></i> Target Format Select Karen
                     </h3>
-                    <button onclick="resetWorkspace()" class="text-[9px] lg:text-[11px] font-bold text-red-500 hover:underline bg-red-50 px-1.5 py-0.5 lg:px-2 lg:py-1 rounded cursor-pointer">
-                        <i class="fa-solid fa-rotate-left mr-0.5 lg:mr-1"></i> Change Image
-                    </button>
+                    <p class="text-slate-400 text-[11px] mt-0.5">Saari uploaded photos isi format me convert ho jayengi.</p>
                 </div>
-                
-                <!-- Cropped state mini area for mobile -->
-                <div id="display-area" class="bg-slate-50 border border-slate-100 rounded-lg p-2 flex flex-row lg:flex-col items-center justify-center gap-3 min-h-[60px] lg:min-h-[250px] w-full overflow-hidden">
-                    <img id="original-preview-img" src="" class="max-h-16 lg:max-h-72 object-contain rounded shadow-sm border border-white">
-                    <div id="original-meta" class="text-left lg:text-center text-[10px] lg:text-xs font-bold text-slate-500 uppercase tracking-wide"></div>
+                <div class="w-full sm:w-72">
+                    <select id="targetExt" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2.5 text-xs font-bold focus:outline-purple-500">
+                        <option value="image/jpeg">Convert to JPG / JPEG (Standard)</option>
+                        <option value="image/png">Convert to PNG (Supports Transparency)</option>
+                        <option value="image/webp">Convert to WEBP (Best for Websites)</option>
+                    </select>
                 </div>
             </div>
 
-            <!-- RIGHT COLUMN: CONTROL CENTER (All settings at one place) -->
-            <div class="w-full lg:col-span-7 bg-white rounded-xl border border-slate-200 shadow-xs p-5 lg:p-6 relative z-10">
-                <div class="border-b border-slate-100 pb-3 mb-5">
-                    <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider">Smart Processing Control Center</h3>
-                    <p class="text-slate-400 text-xs mt-0.5">Apne hisab se specifications enter karein.</p>
-                </div>
+            <!-- ACTION TRIGGER -->
+            <button onclick="processAllImages()" class="w-full mt-5 bg-purple-600 text-white font-black uppercase text-xs tracking-widest py-3.5 rounded-xl shadow-md hover:bg-purple-700 transition-colors cursor-pointer flex items-center justify-center gap-2">
+                <i class="fa-solid fa-play text-sm"></i> <span>Convert All Images</span>
+            </button>
+        </div>
 
-                <div class="space-y-5">
-                    <!-- 1. MANUAL CROP TRIGGER (Opens full screen view) -->
-                    <div class="bg-slate-50 border border-slate-200/60 rounded-xl p-3.5 lg:p-4 flex items-center justify-between gap-2">
-                        <div class="space-y-0.5">
-                            <label class="block text-xs font-black text-slate-700 uppercase tracking-wider flex items-center gap-2">
-                                <i class="fa-solid fa-crop-simple text-amber-500"></i> 1. Manual Image Crop
-                            </label>
-                            <span class="text-[10px] text-slate-400 block font-medium">Badi screen par photo ko hath se ya mouse se crop karein.</span>
-                        </div>
-                        <button id="toggleCrop" class="text-[11px] font-black px-4 py-2 bg-amber-50 text-amber-700 rounded-lg border border-amber-200 hover:bg-amber-100 flex items-center gap-1.5 cursor-pointer whitespace-nowrap">
-                            <i class="fa-solid fa-crop"></i>
-                            <span>Crop Karen</span>
-                        </button>
-                    </div>
-
-                    <!-- 2. RESIZE DIMENSIONS -->
-                    <div class="bg-slate-50 border border-slate-200/60 rounded-xl p-3.5 lg:p-4">
-                        <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-2 flex items-center gap-2">
-                            <i class="fa-solid fa-up-right-and-down-left-from-center text-blue-500"></i> 2. Dimension Resizer (Pixels)
-                        </label>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <span class="text-[10px] font-bold text-slate-400 block mb-1">Target Width (PX)</span>
-                                <input type="number" id="targetWidth" placeholder="e.g. 350" class="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-xs font-bold focus:outline-purple-500">
-                            </div>
-                            <div>
-                                <span class="text-[10px] font-bold text-slate-400 block mb-1">Target Height (PX)</span>
-                                <input type="number" id="targetHeight" placeholder="e.g. 450" class="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-xs font-bold focus:outline-purple-500">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 3. COMPRESS FILE SIZE -->
-                    <div class="bg-slate-50 border border-slate-200/60 rounded-xl p-3.5 lg:p-4">
-                        <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-2 flex items-center gap-2">
-                            <i class="fa-solid fa-compress text-emerald-500"></i> 3. Target Max File Size (KB)
-                        </label>
-                        <div class="relative max-w-xs">
-                            <input type="number" id="targetKb" value="50" class="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-xs font-bold focus:outline-purple-500">
-                            <span class="absolute right-3 top-2 text-xs font-bold text-slate-400">KB</span>
-                        </div>
-                    </div>
-
-                    <!-- 4. FORMAT EXTENSION (All required formats added) -->
-                    <div class="bg-slate-50 border border-slate-200/60 rounded-xl p-3.5 lg:p-4">
-                        <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-2 flex items-center gap-2">
-                            <i class="fa-solid fa-layer-group text-purple-500"></i> 4. Target Extension Format
-                        </label>
-                        <select id="targetExt" class="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-xs font-bold focus:outline-purple-500">
-                            <option value="same">Original Format Rakhien</option>
-                            <option value="image/jpeg">Convert to JPG / JPEG (Standard Photos)</option>
-                            <option value="image/png">Convert to PNG (Transparent Background)</option>
-                            <option value="image/webp">Convert to WEBP (Super Low Web Size)</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- MASTER TRIGGER BUTTON -->
-                <button onclick="processAllInOneWorkspace()" class="w-full mt-6 bg-purple-600 text-white font-black uppercase text-xs tracking-widest py-3.5 rounded-xl shadow-md hover:bg-purple-700 transition-colors cursor-pointer flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-gears text-sm"></i> <span>Apply Changes & Process Image</span>
+        <!-- QUEUE & OUTPUT LIST -->
+        <div id="files-section" class="space-y-3 hidden">
+            <div class="flex justify-between items-center border-b border-slate-200 pb-2">
+                <h3 class="text-xs font-black text-slate-900 uppercase tracking-wider" id="queue-title">Selected Files (0)</h3>
+                <button onclick="resetConverter()" class="text-[11px] font-bold text-red-500 hover:underline bg-red-50 px-2.5 py-1 rounded cursor-pointer">
+                    <i class="fa-solid fa-trash-can mr-1"></i> Clear All
                 </button>
             </div>
+            <div id="files-list" class="space-y-3"></div>
         </div>
 
-        <!-- CROP MODAL (Bada Image Panel for manual work) -->
-        <div id="cropModal" class="fixed inset-0 bg-slate-900/80 flex items-center justify-center z-50 p-2 sm:p-4 backdrop-blur-xs hidden">
-            <div class="bg-white rounded-xl max-w-4xl w-full p-4 flex flex-col items-center shadow-2xl max-h-[90vh]">
-              <div class="w-full mb-3 flex justify-between items-center border-b border-slate-100 pb-2">
-                <h2 class="text-xs sm:text-sm font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
-                    <i class="fa-solid fa-crop text-amber-500"></i> Manual Crop Area (Apne hisab se fit karein)
-                </h2>
-                <div class="flex items-center gap-2">
-                    <button onclick="confirmCrop()" class="px-4 py-1.5 bg-emerald-500 text-white text-[11px] font-black uppercase rounded-lg hover:bg-emerald-600 cursor-pointer">Save Crop</button>
-                    <button onclick="closeModal()" class="px-4 py-1.5 bg-slate-100 text-slate-700 text-[11px] font-black uppercase rounded-lg hover:bg-slate-200 cursor-pointer">Cancel</button>
-                </div>
-              </div>
-              <div class="w-full flex-grow min-h-[300px] max-h-[65vh] bg-slate-900 flex items-center justify-center overflow-hidden rounded-lg relative">
-                <img id="modalCropImage" src="" class="block max-w-full max-h-full">
-              </div>
-            </div>
-        </div>
-
-        <!-- DYNAMIC OUTPUT GENERATION ZONE -->
-        <div id="output-section" class="mt-8 border-t border-slate-200 pt-8 hidden max-w-4xl mx-auto">
-            <h3 class="text-xs font-black text-slate-900 uppercase tracking-wider mb-4 text-center">Processed Output Result</h3>
-            <div id="output-grid" class="flex justify-center"></div>
-        </div>
     </main>
 
-    <!-- Cropper.js Core File -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
-
     <script>
-        let currentFile = null;
-        let originalImgObject = null;
-        let cropperInstance = null;
-        let croppedImageData = null; 
+        let selectedFiles = [];
+
+        // Drag and Drop Effects
+        const dropzone = document.getElementById('dropzone');
+        ['dragover', 'mouseenter'].forEach(evt => {
+            dropzone.addEventListener(evt, () => dropzone.classList.add('border-purple-500', 'bg-slate-50'), false);
+        });
+        ['dragleave', 'drop'].forEach(evt => {
+            dropzone.addEventListener(evt, () => dropzone.classList.remove('border-purple-500', 'bg-slate-50'), false);
+        });
+
+        dropzone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            handleFiles(e.dataTransfer.files);
+        });
 
         document.getElementById('imageInput').addEventListener('change', function(e) {
-            if(e.target.files.length > 0) {
-                currentFile = e.target.files[0];
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    originalImgObject = new Image();
-                    originalImgObject.onload = function() {
-                        initWorkspace(event.target.result);
-                    };
-                    originalImgObject.src = event.target.result;
-                };
-                reader.readAsDataURL(currentFile);
+            handleFiles(e.target.files);
+        });
+
+        function handleFiles(files) {
+            for (let file of files) {
+                if (file.type.startsWith('image/')) {
+                    // Avoid duplicate files
+                    if (!selectedFiles.some(f => f.name === file.name && f.size === file.size)) {
+                        selectedFiles.push({
+                            fileObject: file,
+                            status: 'ready', // ready, converting, done
+                            outputUrl: null,
+                            outputSize: null
+                        });
+                    }
+                }
             }
-        });
-
-        document.getElementById('toggleCrop').addEventListener('click', function() {
-          openModal();
-        });
-
-        function initWorkspace(dataUrl) {
-          const previewImg = document.getElementById('original-preview-img');
-          previewImg.src = dataUrl;
-          previewImg.className = "max-h-16 lg:max-h-72 object-contain rounded shadow-sm border border-white";
-          
-          const sizeKb = Math.round(currentFile.size / 1024);
-          document.getElementById('original-meta').innerText = `${originalImgObject.width}x${originalImgObject.height} PX | ${sizeKb} KB`;
-          
-          document.getElementById('upload-box').classList.add('hidden');
-          document.getElementById('workspace-panel').classList.remove('hidden');
-          
-          croppedImageData = dataUrl; 
+            renderFilesList();
         }
 
-        function resetWorkspace() {
-            currentFile = null;
-            originalImgObject = null;
-            croppedImageData = null;
-            if(cropperInstance) {
-              cropperInstance.destroy();
-              cropperInstance = null;
-            }
-            document.getElementById('imageInput').value = '';
-            document.getElementById('upload-box').classList.remove('hidden');
-            document.getElementById('workspace-panel').classList.add('hidden');
-            document.getElementById('output-section').classList.add('hidden');
-            document.getElementById('output-grid').innerHTML = '';
-            closeModal();
+        function renderFilesList() {
+            const listContainer = document.getElementById('files-list');
+            const controlPanel = document.getElementById('control-panel');
+            const filesSection = document.getElementById('files-section');
             
-            document.getElementById('original-preview-img').src = '';
-            document.getElementById('targetWidth').value = '';
-            document.getElementById('targetHeight').value = '';
-            document.getElementById('targetKb').value = '50';
-            document.getElementById('targetExt').value = 'same';
+            listContainer.innerHTML = '';
 
-            const toggleButton = document.getElementById('toggleCrop');
-            toggleButton.className = "text-[11px] font-bold px-3 py-2 bg-amber-50 text-amber-700 rounded-lg border border-amber-200 hover:bg-amber-100 flex items-center gap-1.5 cursor-pointer";
-            toggleButton.innerHTML = '<i class="fa-solid fa-crop"></i> <span>Crop Karen</span>';
-        }
-
-        const cropModal = document.getElementById('cropModal');
-        const modalImage = document.getElementById('modalCropImage');
-
-        function openModal() {
-          if(!currentFile || !originalImgObject) return;
-          modalImage.src = croppedImageData || originalImgObject.src;
-          cropModal.classList.remove('hidden');
-          initCropperOnModal();
-        }
-
-        function closeModal() {
-          cropModal.classList.add('hidden');
-          if(cropperInstance) {
-            cropperInstance.destroy();
-            cropperInstance = null;
-          }
-        }
-
-        function initCropperOnModal() {
-          cropperInstance = new Cropper(modalImage, {
-            viewMode: 1, 
-            guides: true,
-            movable: true,
-            zoomable: true,
-            rotatable: false,
-            scalable: false,
-            autoCropArea: 0.9
-          });
-        }
-
-        function confirmCrop() {
-          if(!cropperInstance) return;
-          const canvas = cropperInstance.getCroppedCanvas();
-          croppedImageData = canvas.toDataURL(currentFile.type || "image/jpeg", 1);
-          
-          // Image wapas chhota karne ka visual rule
-          const previewImg = document.getElementById('original-preview-img');
-          previewImg.src = croppedImageData;
-          previewImg.className = "max-h-16 lg:max-h-72 object-contain rounded shadow-sm border border-white";
-
-          document.getElementById('original-meta').innerText = `${canvas.width}x${canvas.height} PX | Cropped`;
-
-          // Button state updated to green success check
-          const toggleButton = document.getElementById('toggleCrop');
-          toggleButton.className = "text-[11px] font-black px-4 py-2 bg-emerald-50 text-emerald-700 rounded-lg border border-emerald-200 hover:bg-emerald-100 flex items-center gap-1.5 cursor-pointer";
-          toggleButton.innerHTML = '<i class="fa-solid fa-check"></i> <span>Cropped ✓</span>';
-
-          closeModal();
-        }
-
-        function processAllInOneWorkspace() {
-            if(!currentFile || !originalImgObject) {
-                alert("Kripya pehle photo select karein!");
+            if (selectedFiles.length === 0) {
+                controlPanel.classList.add('hidden');
+                filesSection.classList.add('hidden');
                 return;
             }
 
-            const grid = document.getElementById('output-grid');
-            grid.innerHTML = '';
+            controlPanel.classList.remove('hidden');
+            filesSection.classList.remove('hidden');
+            document.getElementById('queue-title').innerText = `Selected Files (${selectedFiles.length})`;
 
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
+            selectedFiles.forEach((item, index) => {
+                const originalSizeKb = Math.round(item.fileObject.size / 1024);
+                
+                let statusBadge = `<span class="px-2 py-0.5 text-[10px] font-bold uppercase rounded bg-amber-50 text-amber-700 border border-amber-200">Ready</span>`;
+                let actionButton = `<span class="text-xs text-slate-400 font-medium">Waiting...</span>`;
 
-            if (croppedImageData) {
-              const croppedImage = new Image();
-              croppedImage.onload = function() {
-                proceedProcessing(croppedImage);
-              };
-              croppedImage.src = croppedImageData;
-            } else {
-              proceedProcessing(originalImgObject);
-            }
+                if (item.status === 'converting') {
+                    statusBadge = `<span class="px-2 py-0.5 text-[10px] font-bold uppercase rounded bg-blue-50 text-blue-700 border border-blue-200 animate-pulse"><i class="fa-solid fa-spinner animate-spin mr-1"></i>Converting</span>`;
+                } else if (item.status === 'done') {
+                    statusBadge = `<span class="px-2 py-0.5 text-[10px] font-bold uppercase rounded bg-emerald-50 text-emerald-700 border border-emerald-200">Success</span>`;
+                    actionButton = `
+                        <div class="flex items-center gap-2">
+                            <span class="text-[11px] font-black text-purple-600 bg-purple-50 px-2 py-0.5 rounded">~${item.outputSize} KB</span>
+                            <a href="${item.outputUrl}" download="converted_${Date.now()}_${item.fileObject.name.split('.')[0]}.${document.getElementById('targetExt').value.split('/')[1] === 'jpeg' ? 'jpg' : document.getElementById('targetExt').value.split('/')[1]}" class="bg-emerald-500 text-white px-3 py-1.5 rounded-lg text-xs font-black uppercase tracking-wider hover:bg-emerald-600 flex items-center gap-1 shadow-2xs">
+                                <i class="fa-solid fa-download"></i> Download
+                            </a>
+                        </div>
+                    `;
+                }
 
-            function proceedProcessing(img) {
-              let targetW = img.width;
-              let targetH = img.height;
+                const fileRow = document.createElement('div');
+                fileRow.className = "bg-white border border-slate-200 rounded-xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs";
+                fileRow.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <div class="h-10 w-10 rounded bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-400 text-lg shrink-0">
+                            <i class="fa-solid fa-image"></i>
+                        </div>
+                        <div class="min-w-0">
+                            <p class="text-xs font-black text-slate-800 truncate max-w-[250px] sm:max-w-md">${item.fileObject.name}</p>
+                            <p class="text-[10px] font-bold text-slate-400 uppercase mt-0.5">Original: ${originalSizeKb} KB</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between sm:justify-end gap-4 border-t sm:border-t-0 pt-2 sm:pt-0 border-slate-100">
+                        ${statusBadge}
+                        ${actionButton}
+                    </div>
+                `;
+                listContainer.appendChild(fileRow);
+            });
+        }
 
-              // RESOLVE RESIZE OVERRIDES
-              const inputW = parseInt(document.getElementById('targetWidth').value);
-              const inputH = parseInt(document.getElementById('targetHeight').value);
-              if(!isNaN(inputW) && inputW > 0) targetW = inputW;
-              if(!isNaN(inputH) && inputH > 0) targetH = inputH;
+        function processAllImages() {
+            if (selectedFiles.length === 0) return;
 
-              canvas.width = targetW;
-              canvas.height = targetH;
+            const targetMime = document.getElementById('targetExt').value;
 
-              // RESOLVE TARGET FORMAT EXTENSION
-              let targetMime = currentFile.type || "image/jpeg";
-              const chosenExt = document.getElementById('targetExt').value;
-              if(chosenExt !== 'same') {
-                  targetMime = chosenExt;
-              }
+            selectedFiles.forEach((item, index) => {
+                if (item.status === 'done') return; // Skip already converted ones
 
-              // SMART ANTI-BLACK BACKGROUND LAYER FOR PNG TO JPG MUTATIONS
-              if(targetMime === 'image/jpeg') {
-                  ctx.fillStyle = '#ffffff';
-                  ctx.fillRect(0, 0, targetW, targetH);
-              }
+                item.status = 'converting';
+                renderFilesList();
 
-              ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, targetW, targetH);
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const img = new Image();
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
 
-              // SMART COMPRESSION PROTOCOL LOOP (Works smoothly for WebP & JPG)
-              let finalOutputUrl = canvas.toDataURL(targetMime, 0.92);
-              const maxAllowedKb = parseFloat(document.getElementById('targetKb').value) || 50;
+                        canvas.width = img.width;
+                        canvas.height = img.height;
 
-              if (targetMime !== 'image/png') {
-                  for (let compressionFactor = 0.95; compressionFactor > 0.05; compressionFactor -= 0.04) {
-                      finalOutputUrl = canvas.toDataURL(targetMime, compressionFactor);
-                      const currentIterationSize = (finalOutputUrl.length * 3) / 4 / 1024;
-                      if(currentIterationSize <= maxAllowedKb) {
-                          break;
-                      }
-                  }
-              }
+                        // Transparency support: Turn background white if converting PNG to JPG
+                        if (targetMime === 'image/jpeg') {
+                            ctx.fillStyle = '#ffffff';
+                            ctx.fillRect(0, 0, canvas.width, canvas.height);
+                        }
 
-              const processedSizeKb = Math.round((finalOutputUrl.length * 3) / 4 / 1024);
-              const verifiedExtension = targetMime.split('/')[1] === 'jpeg' ? 'jpg' : targetMime.split('/')[1];
+                        ctx.drawImage(img, 0, 0);
 
-              // Render Final Output Card
-              const card = document.createElement('div');
-              card.className = "bg-white border border-slate-200 rounded-xl p-5 text-center max-w-sm w-full flex flex-col items-center shadow-xs mb-6";
-              card.innerHTML = `
-                  <img src="${finalOutputUrl}" class="max-h-56 object-contain rounded border border-slate-100 mb-4 shadow-2xs">
-                  <div class="w-full">
-                      <span class="text-xs font-black text-purple-600 bg-purple-50 px-3 py-1 rounded-full mb-2 inline-block">~${processedSizeKb} KB Size</span>
-                      <p class="text-[11px] font-bold text-slate-500 mb-4 uppercase tracking-wider">${targetW} x ${targetH} PX | Format: ${verifiedExtension.toUpperCase()}</p>
-                      <a href="${finalOutputUrl}" download="editspark_${Date.now()}.${verifiedExtension}" class="inline-flex items-center justify-center gap-2 w-full bg-purple-600 text-white font-black text-xs uppercase py-3 rounded-lg shadow-sm hover:bg-purple-700 transition-colors">
-                          <i class="fa-solid fa-cloud-arrow-down"></i> Download Processed Image
-                      </a>
-                  </div>
-              `;
-              grid.appendChild(card);
-              document.getElementById('output-section').classList.remove('hidden');
-              document.getElementById('output-section').scrollIntoView({ behavior: 'smooth' });
-            }
+                        // Save with high quality factor (0.92)
+                        const dataUrl = canvas.toDataURL(targetMime, 0.92);
+                        
+                        item.outputUrl = dataUrl;
+                        item.outputSize = Math.round((dataUrl.length * 3) / 4 / 1024);
+                        item.status = 'done';
+
+                        renderFilesList();
+                    };
+                    img.src = event.target.result;
+                };
+                reader.readAsDataURL(item.fileObject);
+            });
+        }
+
+        function resetConverter() {
+            selectedFiles = [];
+            document.getElementById('imageInput').value = '';
+            renderFilesList();
         }
     </script>
 </body>
