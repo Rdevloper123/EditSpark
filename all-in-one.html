@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EditSpark Smart Workspace | Photo Resizer & Converter</title>
-    <meta name="description" content="Sarkari form ke liye photo aur signature tools. Multi-mode active rendering engine.">
+    <title>EditSpark Smart Workspace | Photo Resizer, Crop & Converter</title>
+    <meta name="description" content="Sarkari form ke liye photo resize, compress, crop aur format conversion ek hi jagah.">
     
     <!-- Tailwind CSS v4 -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
@@ -28,214 +28,195 @@
                         <i class="fa-solid fa-wand-magic-sparkles text-lg"></i>
                     </div>
                     <span class="text-2xl font-black tracking-tight text-slate-900">Edit<span class="text-emerald-500">Spark</span></span>
+                    <span class="text-xs font-bold text-slate-400 bg-slate-100 px-2 py-0.5 rounded-md ml-2">All-In-One Workspace</span>
                 </div>
                 <div class="flex items-center space-x-4">
                     <span class="text-xs font-bold px-2.5 py-1 bg-emerald-50 text-emerald-700 rounded-full border border-emerald-200 uppercase tracking-wider">
-                        100% Offline Secured
+                        100% Client-Side Secure
                     </span>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Main Workspace -->
+    <!-- Main Content -->
     <main class="flex-grow max-w-7xl mx-auto px-4 py-8 w-full">
         
-        <!-- Top Selector Row: Yeh tabhi dikhega jab user "All-In-One" mode me aayega -->
+        <!-- Interactive Tool Selector Grid Tabs -->
         <div id="multi-tool-selector" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
             
-            <!-- Compress Tab -->
+            <!-- 1. Compress Tab -->
             <div onclick="switchTool('compress')" id="btn-compress" class="tool-card bg-white rounded-lg p-3.5 border border-slate-200 shadow-2xs flex items-center space-x-3 group cursor-pointer active-card">
                 <div class="h-10 w-10 shrink-0 rounded-lg bg-emerald-50 text-emerald-500 flex items-center justify-center text-lg group-hover:bg-emerald-500 group-hover:text-white transition-all duration-200">
                     <i class="fa-solid fa-compress"></i>
                 </div>
                 <div class="flex-grow min-w-0">
-                    <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wide">KB Size Compressor</h3>
+                    <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wide">KB Compressor</h3>
                     <p class="text-slate-400 text-[11px] truncate">Under 20KB, 50KB, 100KB</p>
                 </div>
             </div>
 
-            <!-- Resize Tab -->
+            <!-- 2. Resize Tab -->
             <div onclick="switchTool('resize')" id="btn-resize" class="tool-card bg-white rounded-lg p-3.5 border border-slate-200 shadow-2xs flex items-center space-x-3 group cursor-pointer">
                 <div class="h-10 w-10 shrink-0 rounded-lg bg-blue-50 text-blue-500 flex items-center justify-center text-lg group-hover:bg-blue-500 group-hover:text-white transition-all duration-200">
                     <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
                 </div>
                 <div class="flex-grow min-w-0">
-                    <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wide">Size Increaser & Pixel</h3>
-                    <p class="text-slate-400 text-[11px] truncate">Width, Height & Size Plus</p>
+                    <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wide">Dimension Resizer</h3>
+                    <p class="text-slate-400 text-[11px] truncate">Width & Height Pixels</p>
                 </div>
             </div>
 
-            <!-- Format Tab -->
+            <!-- 3. Crop Tab -->
+            <div onclick="switchTool('crop')" id="btn-crop" class="tool-card bg-white rounded-lg p-3.5 border border-slate-200 shadow-2xs flex items-center space-x-3 group cursor-pointer">
+                <div class="h-10 w-10 shrink-0 rounded-lg bg-amber-50 text-amber-500 flex items-center justify-center text-lg group-hover:bg-amber-500 group-hover:text-white transition-all duration-200">
+                    <i class="fa-solid fa-crop-simple"></i>
+                </div>
+                <div class="flex-grow min-w-0">
+                    <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wide">Smart Aspect Crop</h3>
+                    <p class="text-slate-400 text-[11px] truncate">Passport (3.5x4.5) & Square</p>
+                </div>
+            </div>
+
+            <!-- 4. Format Converter Tab -->
             <div onclick="switchTool('format')" id="btn-format" class="tool-card bg-white rounded-lg p-3.5 border border-slate-200 shadow-2xs flex items-center space-x-3 group cursor-pointer">
                 <div class="h-10 w-10 shrink-0 rounded-lg bg-purple-50 text-purple-500 flex items-center justify-center text-lg group-hover:bg-purple-500 group-hover:text-white transition-all duration-200">
                     <i class="fa-solid fa-layer-group"></i>
                 </div>
                 <div class="flex-grow min-w-0">
                     <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wide">Format Converter</h3>
-                    <p class="text-slate-400 text-[11px] truncate">Convert JPG to JPEG/PNG</p>
-                </div>
-            </div>
-
-            <!-- Passport Tab -->
-            <div onclick="switchTool('passport')" id="btn-passport" class="tool-card bg-white rounded-lg p-3.5 border border-slate-200 shadow-2xs flex items-center space-x-3 group cursor-pointer">
-                <div class="h-10 w-10 shrink-0 rounded-lg bg-rose-50 text-rose-500 flex items-center justify-center text-lg group-hover:bg-rose-500 group-hover:text-white transition-all duration-200">
-                    <i class="fa-solid fa-users-viewfinder"></i>
-                </div>
-                <div class="flex-grow min-w-0">
-                    <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wide">Bulk Passport Maker</h3>
-                    <p class="text-slate-400 text-[11px] truncate">Standard 3.5x4.5 cm Grid</p>
+                    <p class="text-slate-400 text-[11px] truncate">JPG to PNG / PNG to JPG</p>
                 </div>
             </div>
         </div>
 
-        <!-- Back Button (Sirf tabhi dikhega jab user single tool mode me hoga) -->
-        <div id="back-button-container" class="mb-4 hidden">
-            <a href="index.html" class="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-emerald-500 transition-colors">
-                <i class="fa-solid fa-arrow-left"></i> Main Dashboard Par Wapas Jayein
-            </a>
-        </div>
-
-        <!-- LIVE WORKSPACE PANEL -->
+        <!-- LIVE WORKING INTERFACE -->
         <div class="bg-white rounded-xl border border-slate-200 shadow-xs p-6 max-w-4xl mx-auto">
             
             <div class="border-b border-slate-100 pb-4 mb-6">
                 <h2 id="workspace-title" class="text-base font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
                     <span class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                    Loading Engine...
+                    KB Size Compressor Active
                 </h2>
-                <p id="workspace-desc" class="text-slate-400 text-xs mt-0.5"></p>
+                <p id="workspace-desc" class="text-slate-400 text-xs mt-0.5">Apni image select karein aur exact file size match karein.</p>
             </div>
 
-            <!-- Dropzone -->
-            <div class="border-2 border-dashed border-slate-200 rounded-xl p-8 bg-slate-50 text-center cursor-pointer hover:bg-slate-100/50 transition-colors relative mb-6" id="dropzone" onclick="document.getElementById('imageInput').click()">
+            <!-- File Upload Dropzone -->
+            <div class="border-2 border-dashed border-slate-200 rounded-xl p-8 bg-slate-50 text-center cursor-pointer hover:bg-slate-100/50 transition-colors mb-6" onclick="document.getElementById('imageInput').click()">
                 <input type="file" id="imageInput" class="hidden" accept="image/*" multiple>
                 <i class="fa-solid fa-cloud-arrow-up text-3xl text-slate-300 mb-2 block"></i>
-                <span class="text-xs font-bold text-slate-700 block">Click karein ya image yahan drag karke drop karein</span>
-                <div id="file-counter" class="hidden text-xs bg-emerald-500 text-white font-bold px-2 py-1 rounded-md mt-2 inline-block"></div>
+                <span class="text-xs font-bold text-slate-700 block">Click karein ya files yahan drag karke drop karein</span>
+                <div id="file-counter" class="hidden text-xs bg-emerald-500 text-white font-bold px-2 py-1 rounded-md mt-2 inline-block shadow-sm"></div>
             </div>
 
-            <!-- Dynamic Controls -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
-                <!-- Compress Args -->
-                <div id="ctrl-compress" class="md:col-span-3 space-y-4">
-                    <div class="max-w-xs">
-                        <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">Target Max Size (KB)</label>
-                        <div class="relative">
-                            <input type="number" id="targetKb" value="50" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm font-bold focus:outline-emerald-500">
-                            <span class="absolute right-3 top-2.5 text-xs font-bold text-slate-400">KB</span>
-                        </div>
+            <!-- CONFIGURATION SETTINGS PANEL -->
+            <div class="bg-slate-50/50 border border-slate-100 rounded-lg p-4 mb-6">
+                
+                <!-- 1. COMPRESS ARGUMENTS -->
+                <div id="ctrl-compress" class="max-w-xs">
+                    <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">Target Max Size (KB)</label>
+                    <div class="relative">
+                        <input type="number" id="targetKb" value="50" class="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-sm font-bold focus:outline-emerald-500">
+                        <span class="absolute right-3 top-2.5 text-xs font-bold text-slate-400">KB</span>
                     </div>
                 </div>
 
-                <!-- Resize Args -->
-                <div id="ctrl-resize" class="md:col-span-3 hidden grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <!-- 2. RESIZE ARGUMENTS -->
+                <div id="ctrl-resize" class="hidden grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-md">
                     <div>
                         <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">Target Width (Pixels)</label>
-                        <input type="number" id="targetWidth" placeholder="Original" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm font-bold/50">
+                        <input type="number" id="targetWidth" placeholder="Original Width" class="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-sm font-bold focus:outline-blue-500">
                     </div>
                     <div>
                         <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">Target Height (Pixels)</label>
-                        <input type="number" id="targetHeight" placeholder="Original" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm font-bold/50">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">Size Inflation (KB Boost)</label>
-                        <select id="resizeKbMode" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm font-bold focus:outline-emerald-500">
-                            <option value="none">No Size Inflation</option>
-                            <option value="50">Boost up to 50KB</option>
-                            <option value="100">Boost up to 100KB</option>
-                        </select>
+                        <input type="number" id="targetHeight" placeholder="Original Height" class="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-sm font-bold focus:outline-blue-500">
                     </div>
                 </div>
 
-                <!-- Format Args -->
-                <div id="ctrl-format" class="md:col-span-3 hidden max-w-xs">
-                    <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">Target Extension</label>
-                    <select id="targetExt" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm font-bold">
-                        <option value="image/jpeg">Convert to JPEG</option>
-                        <option value="image/png">Convert to PNG</option>
-                        <option value="image/webp">Convert to WEBP</option>
+                <!-- 3. CROP ARGUMENTS -->
+                <div id="ctrl-crop" class="hidden max-w-xs">
+                    <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">Crop Preset Dimension</label>
+                    <select id="cropPreset" class="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-sm font-bold focus:outline-amber-500">
+                        <option value="passport">Sarkari Passport Size (3.5 x 4.5 cm Ratio)</option>
+                        <option value="square">Square Aspect Ratio (1:1)</option>
+                        <option value="landscape">Standard Landscape (4:3)</option>
                     </select>
                 </div>
 
-                <!-- Passport Args -->
-                <div id="ctrl-passport" class="md:col-span-3 hidden text-slate-500 text-xs font-medium">
-                    <div class="bg-amber-50 text-amber-800 border border-amber-100 rounded-lg p-3">
-                        <span>Bulk passport maker automatic standard <strong>3.5 x 4.5 cm dimension</strong> output generate karega.</span>
-                    </div>
+                <!-- 4. FORMAT CONVERTER ARGUMENTS -->
+                <div id="ctrl-format" class="hidden max-w-xs">
+                    <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">Target Output Format</label>
+                    <select id="targetExt" class="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-sm font-bold focus:outline-purple-500">
+                        <option value="image/jpeg">Convert to JPG / JPEG format</option>
+                        <option value="image/png">Convert to PNG format</option>
+                        <option value="image/webp">Convert to WEBP format</option>
+                    </select>
                 </div>
+
             </div>
 
-            <!-- Action Button -->
-            <button onclick="processWorkspace()" class="w-full mt-6 bg-emerald-500 text-white font-black uppercase text-xs tracking-widest py-3 rounded-lg shadow-md hover:bg-emerald-600 cursor-pointer">
-                Process Files & Generate Output
+            <!-- PROCESS TRIGGER BUTTON -->
+            <button onclick="processWorkspace()" class="w-full bg-emerald-500 text-white font-black uppercase text-xs tracking-widest py-3 rounded-lg shadow-md hover:bg-emerald-600 transition-colors cursor-pointer flex items-center justify-center gap-2">
+                <i class="fa-solid fa-gear"></i>
+                <span>Apply & Process Workspace</span>
             </button>
 
-            <!-- Preview Grid -->
+            <!-- LIVE DYNAMIC DOWNLOAD MATRIX GRID -->
             <div id="preview-section" class="mt-8 border-t border-slate-100 pt-6 hidden">
-                <h3 class="text-xs font-black text-slate-900 uppercase tracking-wider mb-4">Generated Output</h3>
+                <h3 class="text-xs font-black text-slate-900 uppercase tracking-wider mb-4">Processed Live Outputs</h3>
                 <div id="preview-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
             </div>
 
         </div>
     </main>
 
-    <!-- Script Routing System Engine -->
+    <!-- CORE PROCESSING JAVASCRIPT ENGINE -->
     <script>
         let activeTool = 'compress';
         let loadedFiles = [];
 
-        // Core smart URL checking logic
-        window.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const targetTool = urlParams.get('tool');
-
-            if (targetTool && ['compress', 'resize', 'format', 'passport'].includes(targetTool)) {
-                // SINGLE WORKSPACE MODE: Chupao selector bar aur direct tool open karo
-                document.getElementById('multi-tool-selector').classList.add('hidden');
-                document.getElementById('back-button-container').classList.remove('hidden');
-                switchTool(targetTool);
-            } else {
-                // ALL IN ONE MODE: Sab kuch dikhao normal
-                switchTool('compress');
-            }
-        });
-
+        // Tab Switcher Pipeline
         function switchTool(toolKey) {
             activeTool = toolKey;
             
-            document.querySelectorAll('[id^="btn-"]').forEach(el => el.classList.remove('active-card'));
-            const activeBtn = document.getElementById(`btn-${toolKey}`);
-            if(activeBtn) activeBtn.classList.add('active-card');
+            // Toggle active visual CSS cards
+            document.querySelectorAll('#multi-tool-selector > div').forEach(el => el.classList.remove('active-card'));
+            document.getElementById(`btn-${toolKey}`).classList.add('active-card');
 
-            document.querySelectorAll('[id^="ctrl-"]').forEach(el => el.classList.add('hidden'));
+            // Hide/Show correct input properties 
+            document.getElementById('ctrl-compress').classList.add('hidden');
+            document.getElementById('ctrl-resize').classList.add('hidden');
+            document.getElementById('ctrl-crop').classList.add('hidden');
+            document.getElementById('ctrl-format').classList.add('hidden');
             document.getElementById(`ctrl-${toolKey}`).classList.remove('hidden');
 
-            const titles = {
-                compress: { t: "KB Size Compressor Active", d: "Image upload karein aur desired target file size control karein." },
-                resize: { t: "Size Increaser & Pixel Controller Active", d: "Exact width/height pixels set karein aur image size footprint ko boost karein." },
-                format: { t: "Bulk Image Format Converter Active", d: "Bina quality loose kiye file extensions ko instantly change karein." },
-                passport: { t: "Bulk Passport Maker 3.5x4.5 cm Activated", d: "Kayi saari images ko auto crop karke passport sizing arrays generate karein." }
+            const headers = {
+                compress: { t: "KB Size Compressor Active", d: "Image select karein aur maximum file size custom constraint match karein." },
+                resize: { t: "Dimension Resizer Active", d: "Exact pixel width aur height coordinates map karke convert karein." },
+                crop: { t: "Smart Aspect Ratio Crop Engine", d: "Sarkari result standard size matrix ke according auto focus center bounding crop." },
+                format: { t: "JPG to PNG / PNG to JPG Matrix Converter", d: "Bina compression artifact drop kiye extension exchange layout processing." }
             };
 
-            document.getElementById('workspace-title').innerText = titles[toolKey].t;
-            document.getElementById('workspace-desc').innerText = titles[toolKey].d;
+            document.getElementById('workspace-title').innerText = headers[toolKey].t;
+            document.getElementById('workspace-desc').innerText = headers[toolKey].d;
         }
 
+        // File Selection Listener
         document.getElementById('imageInput').addEventListener('change', function(e) {
             loadedFiles = Array.from(e.target.files);
             const counter = document.getElementById('file-counter');
             if(loadedFiles.length > 0) {
-                counter.innerText = `${loadedFiles.length} Files Selected`;
+                counter.innerText = `${loadedFiles.length} Files Loaded Successfully`;
                 counter.classList.remove('hidden');
             } else {
                 counter.classList.add('hidden');
             }
         });
 
+        // Main Image Multi-Threading Processor Logic
         function processWorkspace() {
             if(loadedFiles.length === 0) {
-                alert("Please select or drop at least one image file first!");
+                alert("Pehle files upload ya drop kijiye!");
                 return;
             }
 
@@ -251,57 +232,94 @@
                         const canvas = document.createElement('canvas');
                         const ctx = canvas.getContext('2d');
 
+                        let sourceX = 0, sourceY = 0;
+                        let sourceW = img.width;
+                        let sourceH = img.height;
                         let targetW = img.width;
                         let targetH = img.height;
 
+                        // 1. DIMENSION RESIZE LAYER
                         if(activeTool === 'resize') {
                             const wVal = parseInt(document.getElementById('targetWidth').value);
                             const hVal = parseInt(document.getElementById('targetHeight').value);
-                            if(wVal) targetW = wVal;
-                            if(hVal) targetH = hVal;
-                        } else if(activeTool === 'passport') {
-                            targetW = 350;
-                            targetH = 450;
+                            targetW = wVal ? wVal : img.width;
+                            targetH = hVal ? hVal : img.height;
+                        } 
+                        // 2. CROP LOGIC LAYER (Auto-Center Matrix calculation)
+                        else if(activeTool === 'crop') {
+                            const preset = document.getElementById('cropPreset').value;
+                            let aspectRatio = 1; // Default square
+                            
+                            if(preset === 'passport') {
+                                aspectRatio = 3.5 / 4.5; // Strict Passport Dimension Ratio
+                                targetW = 350;
+                                targetH = 450;
+                            } else if(preset === 'square') {
+                                aspectRatio = 1;
+                                targetW = 400;
+                                targetH = 400;
+                            } else if(preset === 'landscape') {
+                                aspectRatio = 4 / 3;
+                                targetW = 640;
+                                targetH = 480;
+                            }
+
+                            // Math algorithms for calculating crop center coordinates
+                            if (img.width / img.height > aspectRatio) {
+                                sourceW = img.height * aspectRatio;
+                                sourceH = img.height;
+                                sourceX = (img.width - sourceW) / 2;
+                            } else {
+                                sourceW = img.width;
+                                sourceH = img.width / aspectRatio;
+                                sourceY = (img.height - sourceH) / 2;
+                            }
                         }
 
                         canvas.width = targetW;
                         canvas.height = targetH;
-                        ctx.drawImage(img, 0, 0, targetW, targetH);
+                        
+                        // Render canvas mapping context data
+                        ctx.drawImage(img, sourceX, sourceY, sourceW, sourceH, 0, 0, targetW, targetH);
 
+                        // 3. FORMAT SELECTION EXTENSION ASSIGNMENT
                         let mimeType = "image/jpeg";
                         if(activeTool === 'format') {
                             mimeType = document.getElementById('targetExt').value;
-                        } else if(file.type) {
-                            mimeType = file.type;
+                        } else {
+                            mimeType = file.type || "image/jpeg";
                         }
 
-                        let quality = 0.85;
+                        let quality = 0.90;
                         let outputUrl = canvas.toDataURL(mimeType, quality);
 
+                        // 4. KB COMPRESSION ITERATION BINARY TREE TUNING
                         if(activeTool === 'compress') {
                             const maxKb = parseFloat(document.getElementById('targetKb').value) || 50;
-                            for (let q = 0.95; q > 0.05; q -= 0.05) {
+                            for (let q = 0.95; q > 0.02; q -= 0.04) {
                                 outputUrl = canvas.toDataURL(mimeType, q);
-                                const sizeKb = (outputUrl.length * 3) / 4 / 1024;
-                                if(sizeKb <= maxKb) break;
+                                const currentKb = (outputUrl.length * 3) / 4 / 1024;
+                                if(currentKb <= maxKb) break;
                             }
                         }
 
                         const finalSize = Math.round((outputUrl.length * 3) / 4 / 1024);
+                        const fileExt = mimeType.split('/')[1];
 
-                        const outputCard = document.createElement('div');
-                        outputCard.className = "bg-slate-50 rounded-lg p-3 border border-slate-200 text-center flex flex-col items-center justify-between";
-                        outputCard.innerHTML = `
-                            <img src="${outputUrl}" class="max-h-32 rounded object-contain mb-2">
+                        // Create individual dynamic responsive output grid card
+                        const card = document.createElement('div');
+                        card.className = "bg-slate-50 border border-slate-200 rounded-lg p-3 text-center flex flex-col items-center justify-between";
+                        card.innerHTML = `
+                            <img src="${outputUrl}" class="max-h-32 object-contain rounded border border-slate-100 mb-2 shadow-2xs">
                             <div class="w-full">
-                                <span class="text-[10px] font-bold text-slate-400 block">Est. Size: ~${finalSize} KB</span>
-                                <span class="text-[10px] font-bold text-slate-500 block truncate mb-2">${targetW}x${targetH} px</span>
-                                <a href="${outputUrl}" download="editspark_${file.name.split('.')[0]}.${mimeType.split('/')[1]}" class="inline-flex items-center justify-center w-full bg-emerald-500 text-white font-bold text-[10px] uppercase py-1.5 rounded shadow-xs hover:bg-emerald-600">
-                                    Download
+                                <span class="text-[10px] font-bold text-emerald-600 block bg-emerald-50 px-2 py-0.5 rounded-full mb-1 inline-block">~${finalSize} KB</span>
+                                <p class="text-[10px] font-bold text-slate-500 truncate mb-2 uppercase">${targetW} x ${targetH} PX | ${fileExt}</p>
+                                <a href="${outputUrl}" download="editspark_${idx}.${fileExt}" class="inline-flex items-center justify-center gap-1 w-full bg-emerald-500 text-white font-black text-[10px] uppercase py-2 rounded shadow-2xs hover:bg-emerald-600 transition-colors">
+                                    <i class="fa-solid fa-cloud-arrow-down"></i> Download Asset
                                 </a>
                             </div>
                         `;
-                        grid.appendChild(outputCard);
+                        grid.appendChild(card);
                     };
                     img.src = event.target.result;
                 };
