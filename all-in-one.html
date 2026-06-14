@@ -3,12 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Primary SEO Meta Tags for India Government Exam Target -->
-    <title>All-in-One Photo Resizer & Converter | Sarkari Form Expert Tool</title>
-    <meta name="description" content="Ek hi baar me photo crop, size kam/jyada, pixel aur dimension change karein. Image format converter aur bulk passport maker ek hi page par live secure engine ke sath.">
-    <meta name="keywords" content="photo compress under 20kb, convert jpg to jpeg, 3.5 x 4.5 cm image dimension, image size increaser, image format converter, bulk passport photo maker, editspark all in one">
-    <meta name="robots" content="index, follow">
-
+    <title>EditSpark Smart Workspace | Photo Resizer & Converter</title>
+    <meta name="description" content="Sarkari form ke liye photo aur signature tools. Multi-mode active rendering engine.">
+    
     <!-- Tailwind CSS v4 -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <!-- FontAwesome Icons -->
@@ -17,7 +14,7 @@
     <style>
         .tool-card { transition: all 0.2s ease-in-out; }
         .tool-card:hover { transform: translateY(-2px); box-shadow: 0 8px 15px -3px rgba(0, 0, 0, 0.05); }
-        .active-card { border-color: #10b981 !important; bg-white: #f0fdf4 !important; }
+        .active-card { border-color: #10b981 !important; background-color: #f0fdf4 !important; }
     </style>
 </head>
 <body class="bg-[#f3f4f6] font-sans text-slate-800 min-h-screen flex flex-col">
@@ -31,7 +28,6 @@
                         <i class="fa-solid fa-wand-magic-sparkles text-lg"></i>
                     </div>
                     <span class="text-2xl font-black tracking-tight text-slate-900">Edit<span class="text-emerald-500">Spark</span></span>
-                    <span class="text-xs font-bold text-slate-400 bg-slate-100 px-2 py-0.5 rounded-md ml-2">All-In-One Pro</span>
                 </div>
                 <div class="flex items-center space-x-4">
                     <span class="text-xs font-bold px-2.5 py-1 bg-emerald-50 text-emerald-700 rounded-full border border-emerald-200 uppercase tracking-wider">
@@ -42,25 +38,13 @@
         </div>
     </nav>
 
-    <!-- Main Content Header -->
+    <!-- Main Workspace -->
     <main class="flex-grow max-w-7xl mx-auto px-4 py-8 w-full">
-        <div class="text-center max-w-3xl mx-auto mb-8 flex flex-col items-center">
-            <div class="inline-flex items-center space-x-2 bg-amber-50 border border-amber-200 px-3 py-1 rounded-full text-xs font-bold text-amber-800 mb-3 shadow-2xs">
-                <i class="fa-solid fa-bolt text-orange-500"></i>
-                <span>Super Processing Engine Activated</span>
-            </div>
-            <h1 class="text-2xl font-black text-slate-900 tracking-tight uppercase sm:text-4xl leading-none">
-                All-In-One Super Tool Workspace
-            </h1>
-            <p class="text-slate-500 font-medium text-xs sm:text-sm mt-2">
-                Neeche se koi bhi ek tool select karein, uska panel turant khul jayega aur aapka kaam bina server upload ke live hoga!
-            </p>
-        </div>
-
-        <!-- Dynamic Tools Trigger Matrix Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
+        
+        <!-- Top Selector Row: Yeh tabhi dikhega jab user "All-In-One" mode me aayega -->
+        <div id="multi-tool-selector" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
             
-            <!-- 1. COMPRESS SELECTOR -->
+            <!-- Compress Tab -->
             <div onclick="switchTool('compress')" id="btn-compress" class="tool-card bg-white rounded-lg p-3.5 border border-slate-200 shadow-2xs flex items-center space-x-3 group cursor-pointer active-card">
                 <div class="h-10 w-10 shrink-0 rounded-lg bg-emerald-50 text-emerald-500 flex items-center justify-center text-lg group-hover:bg-emerald-500 group-hover:text-white transition-all duration-200">
                     <i class="fa-solid fa-compress"></i>
@@ -71,7 +55,7 @@
                 </div>
             </div>
 
-            <!-- 2. RESIZE/SIZE INCREASER SELECTOR -->
+            <!-- Resize Tab -->
             <div onclick="switchTool('resize')" id="btn-resize" class="tool-card bg-white rounded-lg p-3.5 border border-slate-200 shadow-2xs flex items-center space-x-3 group cursor-pointer">
                 <div class="h-10 w-10 shrink-0 rounded-lg bg-blue-50 text-blue-500 flex items-center justify-center text-lg group-hover:bg-blue-500 group-hover:text-white transition-all duration-200">
                     <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
@@ -82,55 +66,58 @@
                 </div>
             </div>
 
-            <!-- 3. FORMAT CONVERTER SELECTOR -->
+            <!-- Format Tab -->
             <div onclick="switchTool('format')" id="btn-format" class="tool-card bg-white rounded-lg p-3.5 border border-slate-200 shadow-2xs flex items-center space-x-3 group cursor-pointer">
                 <div class="h-10 w-10 shrink-0 rounded-lg bg-purple-50 text-purple-500 flex items-center justify-center text-lg group-hover:bg-purple-500 group-hover:text-white transition-all duration-200">
                     <i class="fa-solid fa-layer-group"></i>
                 </div>
                 <div class="flex-grow min-w-0">
                     <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wide">Format Converter</h3>
-                    <p class="text-slate-400 text-[11px] truncate">Convert JPG to JPEG, PNG, WEBP</p>
+                    <p class="text-slate-400 text-[11px] truncate">Convert JPG to JPEG/PNG</p>
                 </div>
             </div>
 
-            <!-- 4. BULK PASSPORT SELECTOR -->
+            <!-- Passport Tab -->
             <div onclick="switchTool('passport')" id="btn-passport" class="tool-card bg-white rounded-lg p-3.5 border border-slate-200 shadow-2xs flex items-center space-x-3 group cursor-pointer">
                 <div class="h-10 w-10 shrink-0 rounded-lg bg-rose-50 text-rose-500 flex items-center justify-center text-lg group-hover:bg-rose-500 group-hover:text-white transition-all duration-200">
                     <i class="fa-solid fa-users-viewfinder"></i>
                 </div>
                 <div class="flex-grow min-w-0">
                     <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wide">Bulk Passport Maker</h3>
-                    <p class="text-slate-400 text-[11px] truncate">Standard 3.5x4.5 cm Auto Grid</p>
+                    <p class="text-slate-400 text-[11px] truncate">Standard 3.5x4.5 cm Grid</p>
                 </div>
             </div>
-
         </div>
 
-        <!-- UNIVERSAL LIVE WORKSPACE PANEL (Single Input Interface dynamically bound) -->
+        <!-- Back Button (Sirf tabhi dikhega jab user single tool mode me hoga) -->
+        <div id="back-button-container" class="mb-4 hidden">
+            <a href="index.html" class="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-emerald-500 transition-colors">
+                <i class="fa-solid fa-arrow-left"></i> Main Dashboard Par Wapas Jayein
+            </a>
+        </div>
+
+        <!-- LIVE WORKSPACE PANEL -->
         <div class="bg-white rounded-xl border border-slate-200 shadow-xs p-6 max-w-4xl mx-auto">
             
-            <!-- Dynamic Sub-Header based on active context -->
             <div class="border-b border-slate-100 pb-4 mb-6">
                 <h2 id="workspace-title" class="text-base font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
                     <span class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                    KB Size Compressor Active
+                    Loading Engine...
                 </h2>
-                <p id="workspace-desc" class="text-slate-400 text-xs mt-0.5">Apni image upload karein aur desired target file size control karein.</p>
+                <p id="workspace-desc" class="text-slate-400 text-xs mt-0.5"></p>
             </div>
 
-            <!-- File Drag & Drop Target Dropzone Zone -->
+            <!-- Dropzone -->
             <div class="border-2 border-dashed border-slate-200 rounded-xl p-8 bg-slate-50 text-center cursor-pointer hover:bg-slate-100/50 transition-colors relative mb-6" id="dropzone" onclick="document.getElementById('imageInput').click()">
                 <input type="file" id="imageInput" class="hidden" accept="image/*" multiple>
-                <i class="fa-solid fa-cloud-arrow-up text-3xl text-slate-300 group-hover:text-slate-400 mb-2 block"></i>
+                <i class="fa-solid fa-cloud-arrow-up text-3xl text-slate-300 mb-2 block"></i>
                 <span class="text-xs font-bold text-slate-700 block">Click karein ya image yahan drag karke drop karein</span>
-                <span class="text-[10px] text-slate-400 font-medium block mt-1">Supports JPG, JPEG, PNG, WEBP formats</span>
-                <div id="file-counter" class="hidden text-xs bg-emerald-500 text-white font-bold px-2 py-1 rounded-md mt-2 inline-block shadow-sm"></div>
+                <div id="file-counter" class="hidden text-xs bg-emerald-500 text-white font-bold px-2 py-1 rounded-md mt-2 inline-block"></div>
             </div>
 
-            <!-- DYNAMIC ACTIVE CONTROLS GRID PANEL CONTROLLER -->
+            <!-- Dynamic Controls -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
-                
-                <!-- 1. COMPRESS ARGUMENTS -->
+                <!-- Compress Args -->
                 <div id="ctrl-compress" class="md:col-span-3 space-y-4">
                     <div class="max-w-xs">
                         <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">Target Max Size (KB)</label>
@@ -141,141 +128,91 @@
                     </div>
                 </div>
 
-                <!-- 2. RESIZE / INCREASE SIZE ARGUMENTS -->
+                <!-- Resize Args -->
                 <div id="ctrl-resize" class="md:col-span-3 hidden grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div>
                         <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">Target Width (Pixels)</label>
-                        <input type="number" id="targetWidth" placeholder="Keep original" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm font-bold focus:outline-emerald-500">
+                        <input type="number" id="targetWidth" placeholder="Original" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm font-bold/50">
                     </div>
                     <div>
                         <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">Target Height (Pixels)</label>
-                        <input type="number" id="targetHeight" placeholder="Keep original" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm font-bold focus:outline-emerald-500">
+                        <input type="number" id="targetHeight" placeholder="Original" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm font-bold/50">
                     </div>
                     <div>
-                        <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">Size Target Mode</label>
+                        <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">Size Inflation (KB Boost)</label>
                         <select id="resizeKbMode" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm font-bold focus:outline-emerald-500">
                             <option value="none">No Size Inflation</option>
-                            <option value="50">Inflate / Boost up to 50KB</option>
-                            <option value="100">Inflate / Boost up to 100KB</option>
+                            <option value="50">Boost up to 50KB</option>
+                            <option value="100">Boost up to 100KB</option>
                         </select>
                     </div>
                 </div>
 
-                <!-- 3. FORMAT CONVERTER ARGUMENTS -->
+                <!-- Format Args -->
                 <div id="ctrl-format" class="md:col-span-3 hidden max-w-xs">
-                    <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">Convert Target Extension</label>
-                    <select id="targetExt" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm font-bold focus:outline-emerald-500">
-                        <option value="image/jpeg">Convert to JPEG format</option>
-                        <option value="image/png">Convert to PNG format</option>
-                        <option value="image/webp">Convert to WEBP format</option>
+                    <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">Target Extension</label>
+                    <select id="targetExt" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm font-bold">
+                        <option value="image/jpeg">Convert to JPEG</option>
+                        <option value="image/png">Convert to PNG</option>
+                        <option value="image/webp">Convert to WEBP</option>
                     </select>
                 </div>
 
-                <!-- 4. PASSPORT CONFIG ARGUMENTS -->
+                <!-- Passport Args -->
                 <div id="ctrl-passport" class="md:col-span-3 hidden text-slate-500 text-xs font-medium">
-                    <div class="bg-amber-50 text-amber-800 border border-amber-100 rounded-lg p-3 flex gap-2">
-                        <i class="fa-solid fa-circle-info mt-0.5 text-amber-600"></i>
-                        <span>Bulk passport maker uploads ko automate karke ek grid printable page structured layout array set karega jo perfect **3.5 x 4.5 cm image dimension** config par export hoga.</span>
+                    <div class="bg-amber-50 text-amber-800 border border-amber-100 rounded-lg p-3">
+                        <span>Bulk passport maker automatic standard <strong>3.5 x 4.5 cm dimension</strong> output generate karega.</span>
                     </div>
                 </div>
-
             </div>
 
-            <!-- ACTION ACTION EXECUTION BUTTON PANEL -->
-            <button onclick="processWorkspace()" class="w-full mt-6 bg-emerald-500 text-white font-black uppercase text-xs tracking-widest py-3 rounded-lg shadow-md shadow-emerald-500/10 hover:bg-emerald-600 transition-colors cursor-pointer flex items-center justify-center gap-2">
-                <i class="fa-solid fa-gear animate-spin-slow"></i>
-                <span>Process Files & Generate Output</span>
+            <!-- Action Button -->
+            <button onclick="processWorkspace()" class="w-full mt-6 bg-emerald-500 text-white font-black uppercase text-xs tracking-widest py-3 rounded-lg shadow-md hover:bg-emerald-600 cursor-pointer">
+                Process Files & Generate Output
             </button>
 
-            <!-- LIVE DYNAMIC PREVIEW & DOWNLOAD RENDER COMPONENT LAYER -->
+            <!-- Preview Grid -->
             <div id="preview-section" class="mt-8 border-t border-slate-100 pt-6 hidden">
-                <h3 class="text-xs font-black text-slate-900 uppercase tracking-wider mb-4">Generated Assets Matrix</h3>
+                <h3 class="text-xs font-black text-slate-900 uppercase tracking-wider mb-4">Generated Output</h3>
                 <div id="preview-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
             </div>
 
         </div>
-
-        <!-- Dynamic Horizontal Block Layout for SEO Matrix Box -->
-        <div class="max-w-4xl mx-auto mt-8 bg-white border border-slate-200 rounded-lg p-4 shadow-2xs flex flex-col sm:flex-row sm:items-center gap-4">
-            <div class="h-10 w-10 shrink-0 rounded-lg bg-emerald-50 text-emerald-500 flex items-center justify-center text-base">
-                <i class="fa-solid fa-magnifying-glass-chart"></i>
-            </div>
-            <div>
-                <h4 class="text-xs font-bold text-slate-900 uppercase tracking-wider">All-in-One Cyber Cafe Photo Optimization Suite</h4>
-                <p class="text-slate-500 text-xs mt-0.5 Atlantic leading-relaxed">
-                    EditSpark dashboard helps you easily manage online web forms. Instantly target strict parameters like **photo compress under 20kb** rules, fine-tune layouts with our **image size increaser**, **convert JPG to JPEG** via the dynamic **image format converter**, or mass process grid dimensions using the premium **bulk passport photo maker** engine calibrated specifically to hit perfect **3.5 x 4.5 cm image dimension** constraints securely.
-                </p>
-            </div>
-        </div>
     </main>
 
-    <!-- iLoveIMG Styled Multi-Column Structured Footer -->
-    <footer class="bg-white border-t border-slate-200 pt-10 pb-6 mt-12 text-sm">
-        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-            <div class="space-y-3">
-                <div class="flex items-center space-x-2">
-                    <div class="bg-emerald-500 p-1.5 rounded-md text-white text-xs">
-                        <i class="fa-solid fa-wand-magic-sparkles"></i>
-                    </div>
-                    <span class="text-lg font-black tracking-tight text-slate-900">Edit<span class="text-emerald-500">Spark</span></span>
-                </div>
-                <p class="text-slate-500 text-xs leading-relaxed">
-                    Sarkari result form, online admission aur job portals ke liye India ka sabse tez aur private photo resizing toolkit. Privacy hamari zimmedari hai.
-                </p>
-            </div>
-            <div>
-                <h4 class="font-bold text-slate-900 uppercase tracking-wider text-xs mb-3">Popular Tools</h4>
-                <ul class="space-y-2 text-xs font-medium">
-                    <li><a href="compress-image.html" class="text-slate-500 hover:text-emerald-500 flex items-center gap-1.5"><i class="fa-solid fa-compress text-[10px]"></i> Photo KB Compressor</a></li>
-                    <li><a href="resize-image.html" class="text-slate-500 hover:text-blue-500 flex items-center gap-1.5"><i class="fa-solid fa-arrows-left-right-to-line text-[10px]"></i> Dimension Resizer</a></li>
-                    <li><a href="crop-image.html" class="text-slate-500 hover:text-amber-500 flex items-center gap-1.5"><i class="fa-solid fa-crop-simple text-[10px]"></i> Passport Size Crop</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="font-bold text-slate-900 uppercase tracking-wider text-xs mb-3">Doc Tools</h4>
-                <ul class="space-y-2 text-xs font-medium">
-                    <li><a href="clear-document.html" class="text-slate-500 hover:text-purple-500 flex items-center gap-1.5"><i class="fa-solid fa-wand-magic-sparkles text-[10px]"></i> Signature Cleaner</a></li>
-                    <li><a href="all-in-one.html" class="text-slate-500 hover:text-emerald-500 flex items-center gap-1.5"><i class="fa-solid fa-bolt text-[10px]"></i> All-In-One Pro Engine</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="font-bold text-slate-900 uppercase tracking-wider text-xs mb-3">Company Info</h4>
-                <ul class="space-y-2 text-xs font-medium">
-                    <li><a href="about.html" class="text-slate-500 hover:text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-circle-info text-[10px]"></i> About Us</a></li>
-                    <li><a href="contact.html" class="text-slate-500 hover:text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-envelope text-[10px]"></i> Contact Us</a></li>
-                    <li><a href="privacy.html" class="text-slate-500 hover:text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-shield-halved text-[10px]"></i> Privacy Policy</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="max-w-7xl mx-auto px-4 pt-4 border-t border-slate-100 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-400 font-medium gap-2">
-            <div>&copy; 2026 EditSpark Studio. Security guaranteed.</div>
-            <div class="flex items-center space-x-1 text-slate-500 font-bold bg-slate-100 px-2 py-0.5 rounded">
-                <i class="fa-solid fa-shield text-emerald-500 text-[10px]"></i>
-                <span>100% Client-Side Processing</span>
-            </div>
-        </div>
-    </footer>
-
-    <!-- LOGIC PROCESSING JAVASCRIPT CORE SYSTEM ENGINE -->
+    <!-- Script Routing System Engine -->
     <script>
         let activeTool = 'compress';
         let loadedFiles = [];
 
-        // Dynamic State UI Switcher Matrix
+        // Core smart URL checking logic
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const targetTool = urlParams.get('tool');
+
+            if (targetTool && ['compress', 'resize', 'format', 'passport'].includes(targetTool)) {
+                // SINGLE WORKSPACE MODE: Chupao selector bar aur direct tool open karo
+                document.getElementById('multi-tool-selector').classList.add('hidden');
+                document.getElementById('back-button-container').classList.remove('hidden');
+                switchTool(targetTool);
+            } else {
+                // ALL IN ONE MODE: Sab kuch dikhao normal
+                switchTool('compress');
+            }
+        });
+
         function switchTool(toolKey) {
             activeTool = toolKey;
             
-            // Remove active classes from selectors
             document.querySelectorAll('[id^="btn-"]').forEach(el => el.classList.remove('active-card'));
-            document.getElementById(`btn-${toolKey}`).classList.add('active-card');
+            const activeBtn = document.getElementById(`btn-${toolKey}`);
+            if(activeBtn) activeBtn.classList.add('active-card');
 
-            // Toggle argument display grids
             document.querySelectorAll('[id^="ctrl-"]').forEach(el => el.classList.add('hidden'));
             document.getElementById(`ctrl-${toolKey}`).classList.remove('hidden');
 
-            // Dynamic titles
             const titles = {
-                compress: { t: "KB Size Compressor Active", d: "Apni image upload karein aur desired target file size control karein." },
+                compress: { t: "KB Size Compressor Active", d: "Image upload karein aur desired target file size control karein." },
                 resize: { t: "Size Increaser & Pixel Controller Active", d: "Exact width/height pixels set karein aur image size footprint ko boost karein." },
                 format: { t: "Bulk Image Format Converter Active", d: "Bina quality loose kiye file extensions ko instantly change karein." },
                 passport: { t: "Bulk Passport Maker 3.5x4.5 cm Activated", d: "Kayi saari images ko auto crop karke passport sizing arrays generate karein." }
@@ -285,19 +222,17 @@
             document.getElementById('workspace-desc').innerText = titles[toolKey].d;
         }
 
-        // File Handler Listener pipeline
         document.getElementById('imageInput').addEventListener('change', function(e) {
             loadedFiles = Array.from(e.target.files);
             const counter = document.getElementById('file-counter');
             if(loadedFiles.length > 0) {
-                counter.innerText = `${loadedFiles.length} Files Selected Successfully`;
+                counter.innerText = `${loadedFiles.length} Files Selected`;
                 counter.classList.remove('hidden');
             } else {
                 counter.classList.add('hidden');
             }
         });
 
-        // Main Image Execution Canvas Matrix Thread
         function processWorkspace() {
             if(loadedFiles.length === 0) {
                 alert("Please select or drop at least one image file first!");
@@ -319,14 +254,12 @@
                         let targetW = img.width;
                         let targetH = img.height;
 
-                        // Context state adaptations
                         if(activeTool === 'resize') {
                             const wVal = parseInt(document.getElementById('targetWidth').value);
                             const hVal = parseInt(document.getElementById('targetHeight').value);
                             if(wVal) targetW = wVal;
                             if(hVal) targetH = hVal;
                         } else if(activeTool === 'passport') {
-                            // Perfect Standardized Ratio 3.5x4.5 matching
                             targetW = 350;
                             targetH = 450;
                         }
@@ -345,34 +278,26 @@
                         let quality = 0.85;
                         let outputUrl = canvas.toDataURL(mimeType, quality);
 
-                        // Size tuning framework for Compress/Inflate limits
                         if(activeTool === 'compress') {
                             const maxKb = parseFloat(document.getElementById('targetKb').value) || 50;
-                            // Iterative rendering matching loop
                             for (let q = 0.95; q > 0.05; q -= 0.05) {
                                 outputUrl = canvas.toDataURL(mimeType, q);
                                 const sizeKb = (outputUrl.length * 3) / 4 / 1024;
                                 if(sizeKb <= maxKb) break;
                             }
-                        } else if(activeTool === 'resize' && document.getElementById('resizeKbMode').value !== 'none') {
-                            // Inflation algorithm strategy padding byte arrays
-                            const inflateTo = parseInt(document.getElementById('resizeKbMode').value);
-                            outputUrl = canvas.toDataURL("image/jpeg", 1.0);
                         }
 
-                        // Approximate Output weight size estimation
                         const finalSize = Math.round((outputUrl.length * 3) / 4 / 1024);
 
-                        // Card Generation Output Component Injection
                         const outputCard = document.createElement('div');
                         outputCard.className = "bg-slate-50 rounded-lg p-3 border border-slate-200 text-center flex flex-col items-center justify-between";
                         outputCard.innerHTML = `
-                            <img src="${outputUrl}" class="max-h-32 rounded object-contain shadow-2xs border border-slate-100 mb-2">
+                            <img src="${outputUrl}" class="max-h-32 rounded object-contain mb-2">
                             <div class="w-full">
-                                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Est. Size: ~${finalSize} KB</span>
-                                <span class="text-[10px] font-bold text-slate-500 block truncate mb-2">${targetW}x${targetH} px | Output</span>
-                                <a href="${outputUrl}" download="editspark_${idx}_${file.name.split('.')[0]}.${mimeType.split('/')[1]}" class="inline-flex items-center justify-center gap-1.5 w-full bg-emerald-500 text-white font-bold text-[10px] uppercase py-1.5 px-3 rounded shadow-xs hover:bg-emerald-600 transition-colors">
-                                    <i class="fa-solid fa-circle-down"></i> Download
+                                <span class="text-[10px] font-bold text-slate-400 block">Est. Size: ~${finalSize} KB</span>
+                                <span class="text-[10px] font-bold text-slate-500 block truncate mb-2">${targetW}x${targetH} px</span>
+                                <a href="${outputUrl}" download="editspark_${file.name.split('.')[0]}.${mimeType.split('/')[1]}" class="inline-flex items-center justify-center w-full bg-emerald-500 text-white font-bold text-[10px] uppercase py-1.5 rounded shadow-xs hover:bg-emerald-600">
+                                    Download
                                 </a>
                             </div>
                         `;
