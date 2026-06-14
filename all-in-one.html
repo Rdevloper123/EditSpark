@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All-in-One Photo Resizer & Converter | Sarkari Form Expert Tool</title>
+    <meta name="description" content="Ek hi baar me photo crop, size kam/jyada, pixel aur DPI change, aur format badlein. Fast, accurate aur 100% private offline tool chhatron aur cyber cafes ke liye.">
+    
+    <!-- Tailwind CSS v4 -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Cropper.js for Accurate Cropping -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+</head>
+<body class="bg-[#f3f4f6] font-sans text-slate-800 min-h-screen flex flex-col">
+
+    <!-- Navigation Bar -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <a href="index.html" class="flex items-center space-x-2">
+                    <div class="bg-emerald-500 p-2 rounded-lg text-white shadow-sm">
+                        <i class="fa-solid fa-wand-magic-sparkles text-lg"></i>
+                    </div>
+                    <span class="text-2xl font-black tracking-tight text-slate-900">Edit<span class="text-emerald-500">Spark</span></span>
+                </a>
+                <span class="text-xs font-bold px-2.5 py-1 bg-amber-50 text-amber-700 rounded-full border border-amber-200 uppercase">
+                    ⚡ Super Fast Offline Processing
+                </span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 py-8 w-full">
+        <div class="mb-6">
+            <h1 class="text-2xl font-black text-slate-900 uppercase tracking-tight sm:text-3xl">All-In-One Mega Resizer Tool</h1>
+            <p class="text-slate-500 text-xs sm:text-sm mt-1">Ek baar photo ya signature upload karein, aur saare badlaav ek sath apply karke download karein.</p>
+        </div>
+
+        <!-- Grid Layout: Left for Upload/Preview, Right for Settings -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            
+            <!-- LEFT COLUMN: Upload & Preview Area (5 Cols) -->
+            <div class="lg:col-span-5 flex flex-col space-y-4">
+                <!-- Upload Dropzone -->
+                <div id="dropzone" class="bg-white border-2 border-dashed border-slate-300 rounded-xl p-6 text-center cursor-pointer hover:border-emerald-500 transition-colors flex flex-col items-center justify-center min-h-[220px]">
+                    <input type="file" id="fileInput" accept="image/jpeg, image/png" class="hidden">
+                    <div class="bg-emerald-50 h-12 w-12 rounded-full flex items-center justify-center text-emerald-500 text-xl mb-3">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                    </div>
+                    <p class="text-sm font-bold text-slate-700">Yahaan Photo ya Sign Upload Karein</p>
+                    <p class="text-slate-400 text-xs mt-1">Drag & drop karein ya browse karein (JPG, PNG)</p>
+                </div>
+
+                <!-- Preview Box (Initially Hidden) -->
+                <div id="previewContainer" class="bg-white border border-slate-200 rounded-xl p-4 hidden flex-grow flex flex-col">
+                    <span class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 block"><i class="fa-solid fa-crop-simple"></i> Live Crop & Adjustment Area</span>
+                    <div class="max-h-[350px] overflow-hidden rounded bg-slate-100 flex items-center justify-center flex-grow">
+                        <img id="imagePreview" class="max-w-full max-h-full block">
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN: Multi-Option Control Dashboard (7 Cols) -->
+            <div class="lg:col-span-7">
+                <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-2xs space-y-5">
+                    
+                    <h2 class="text-sm font-black uppercase text-slate-900 tracking-wider border-b border-slate-100 pb-2"><i class="fa-solid fa-sliders text-emerald-500 mr-1"></i> Jo options chahiye bas unhe fill karein:</h2>
+
+                    <!-- 1. Dimension & Pixel Settings -->
+                    <div class="space-y-2">
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wide">1. Dimension (Pixel / Size Badlein)</label>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <span class="text-[10px] font-bold text-slate-400 block mb-1">WIDTH (PIXEL)</span>
+                                <input type="number" id="targetWidth" placeholder="e.g. 350" class="w-full text-sm bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:border-emerald-500 font-medium">
+                            </div>
+                            <div>
+                                <span class="text-[10px] font-bold text-slate-400 block mb-1">HEIGHT (PIXEL)</span>
+                                <input type="number" id="targetHeight" placeholder="e.g. 450" class="w-full text-sm bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:border-emerald-500 font-medium">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. Target KB Compression Settings -->
+                    <div class="space-y-2">
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wide">2. Target File Size (Exact KB Control)</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <span class="text-[10px] font-bold text-slate-400 block mb-1">MAX SIZE (IN KB)</span>
+                                <input type="number" id="targetKB" placeholder="e.g. 20 ya 50" class="w-full text-sm bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:border-emerald-500 font-medium">
+                            </div>
+                            <div class="flex items-end">
+                                <label class="flex items-center space-x-2 cursor-pointer bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 w-full select-none">
+                                    <input type="checkbox" id="cleanSign" class="rounded border-slate-300 text-emerald-500 focus:ring-emerald-500 h-4 w-4">
+                                    <span class="text-xs font-bold text-slate-600">SIGNATURE CLEANER (White Background)</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. DPI & Output Format Configuration -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                        <div class="space-y-1">
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wide">3. Target DPI</label>
+                            <select id="targetDPI" class="w-full text-sm bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:border-emerald-500 font-medium">
+                                <option value="72">72 DPI (Standard Web)</option>
+                                <option value="150">150 DPI (Medium Quality)</option>
+                                <option value="200" selected>200 DPI (Sarkari Form Requirement)</option>
+                                <option value="300">300 DPI (High Resolution Print)</option>
+                            </select>
+                        </div>
+                        <div class="space-y-1">
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wide">4. Convert Format</label>
+                            <select id="outputFormat" class="w-full text-sm bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:border-emerald-500 font-medium">
+                                <option value="image/jpeg" selected>Convert to JPG/JPEG</option>
+                                <option value="image/png">Convert to PNG</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Processing & Action Buttons -->
+                    <div class="pt-4 border-t border-slate-100 flex flex-col sm:flex-row gap-3">
+                        <button id="processBtn" disabled class="w-full sm:w-1/2 bg-slate-300 text-white font-bold text-sm py-3 px-4 rounded-lg cursor-not-allowed uppercase tracking-wide transition-colors flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-gears"></i> <span>Process & Convert</span>
+                        </button>
+                        <a id="downloadLink" class="hidden w-full sm:w-1/2 bg-emerald-500 hover:bg-emerald-600 text-white text-center font-bold text-sm py-3 px-4 rounded-lg uppercase tracking-wide shadow-xs transition-colors flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-download"></i> <span>Download File</span>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer Dynamic Links -->
+    <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-400 font-medium">
+        <div>&copy; 2026 EditSpark Studio. <a href="index.html" class="hover:text-slate-600 underline">Home</a> | <a href="privacy.html" class="hover:text-slate-600 underline">Privacy Policy</a></div>
+    </footer>
+
+    <!-- CLIENT SIDE LOGIC CORE ENGINE -->
+    <script>
+        const dropzone = document.getElementById('dropzone');
+        const fileInput = document.getElementById('fileInput');
+        const previewContainer = document.getElementById('previewContainer');
+        const imagePreview = document.getElementById('imagePreview');
+        const processBtn = document.getElementById('processBtn');
+        const downloadLink = document.getElementById('downloadLink');
+        
+        let cropper = null;
+
+        // Trigger file browse on click
+        dropzone.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', handleFileLoad);
+
+        // Drag and drop handlers
+        dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('border-emerald-500'); });
+        dropzone.addEventListener('dragleave', () => dropzone.classList.remove('border-emerald-500'));
+        dropzone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropzone.classList.remove('border-emerald-500');
+            if(e.dataTransfer.files.length) {
+                fileInput.files = e.dataTransfer.files;
+                handleFileLoad();
+            }
+        });
+
+        function handleFileLoad() {
+            const file = fileInput.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                if (cropper) {
+                    cropper.destroy();
+                }
+                imagePreview.src = event.target.result;
+                previewContainer.classList.remove('hidden');
+                
+                // Initialize Cropper.js instantly
+                cropper = new Cropper(imagePreview, {
+                    viewMode: 1,
+                    autoCropArea: 1,
+                    responsive: true,
+                    restore: false
+                });
+
+                // Activate central process button
+                processBtn.disabled = false;
+                processBtn.classList.remove('bg-slate-300', 'cursor-not-allowed');
+                processBtn.classList.add('bg-slate-900', 'hover:bg-slate-800', 'cursor-pointer');
+                downloadLink.classList.add('hidden');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Mega Fast Processing Core Pipeline
+        processBtn.addEventListener('click', () => {
+            if (!cropper) return;
+
+            // Step 1: Get cropped base canvas data
+            let canvas = cropper.getCroppedCanvas();
+            let ctx = canvas.getContext('2d');
+
+            // Step 2: Resize Dimension (Width / Height override) if provided
+            const targetWidth = parseInt(document.getElementById('targetWidth').value);
+            const targetHeight = parseInt(document.getElementById('targetHeight').value);
+            
+            if (targetWidth || targetHeight) {
+                const finalW = targetWidth || (canvas.width * (targetHeight / canvas.height));
+                const finalH = targetHeight || (canvas.height * (targetWidth / canvas.width));
+                
+                const resizedCanvas = document.createElement('canvas');
+                resizedCanvas.width = finalW;
+                resizedCanvas.height = finalH;
+                const rCtx = resizedCanvas.getContext('2d');
+                rCtx.drawImage(canvas, 0, 0, finalW, finalH);
+                canvas = resizedCanvas;
+                ctx = rCtx;
+            }
+
+            // Step 3: Signature Cleaner / Shadow Filter Logic
+            if (document.getElementById('cleanSign').checked) {
+                const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                const data = imgData.data;
+                for (let i = 0; i < data.length; i += 4) {
+                    let r = data[i], g = data[i+1], b = data[i+2];
+                    // Threshold check to filter out gray/shadow backgrounds into crisp pure white
+                    if (r > 130 && g > 130 && b > 130) {
+                        data[i] = 255; data[i+1] = 255; data[i+2] = 255;
+                    }
+                }
+                ctx.putImageData(imgData, 0, 0);
+            }
+
+            // Step 4: Quality & KB Compression Loop Optimization
+            const mimeType = document.getElementById('outputFormat').value;
+            const targetKB = parseFloat(document.getElementById('targetKB').value);
+            
+            let quality = 0.92;
+            let dataUrl = canvas.toDataURL(mimeType, quality);
+
+            if (targetKB && mimeType === 'image/jpeg') {
+                // Binary searching best matching quality threshold under 10 cycles for absolute speed
+                let low = 0.01, high = 1.0;
+                for (let i = 0; i < 10; i++) {
+                    let mid = (low + high) / 2;
+                    let testUrl = canvas.toDataURL('image/jpeg', mid);
+                    let sizeKB = (testUrl.length * 3 / 4) / 1024;
+                    if (sizeKB > targetKB) {
+                        high = mid;
+                    } else {
+                        low = mid;
+                        dataUrl = testUrl;
+                    }
+                }
+            }
+
+            // Step 5: Injecting exact binary metadata structure for custom DPI
+            const dpiValue = parseInt(document.getElementById('targetDPI').value);
+            if (mimeType === 'image/jpeg') {
+                dataUrl = enforceJPEGDPI(dataUrl, dpiValue);
+            }
+
+            // Reveal Download Action Target
+            const ext = mimeType === 'image/png' ? 'png' : 'jpg';
+            downloadLink.href = dataUrl;
+            downloadLink.download = `editspark_output_${Date.now()}.${ext}`;
+            downloadLink.classList.remove('hidden');
+        });
+
+        // Fast helper injects hex headers into raw JPEG stream data to configure requested DPI layout
+        function enforceJPEGDPI(dataUrl, dpi) {
+            const byteString = atob(dataUrl.split(',')[1]);
+            const arrayBuffer = new ArrayBuffer(byteString.length);
+            const uint8Array = new Uint8Array(arrayBuffer);
+            for (let i = 0; i < byteString.length; i++) {
+                uint8Array[i] = byteString.charCodeAt(i);
+            }
+            
+            // Locating safe byte block marker for JFIF headers injection
+            for (let i = 0; i < uint8Array.length; i++) {
+                if (uint8Array[i] === 0xFF && uint8Array[i+1] === 0xE0) {
+                    uint8Array[i+13] = 1; // Set density unit type to inches
+                    uint8Array[i+14] = (dpi >> 8) & 0xFF;
+                    uint8Array[i+15] = dpi & 0xFF;
+                    uint8Array[i+16] = (dpi >> 8) & 0xFF;
+                    uint8Array[i+17] = dpi & 0xFF;
+                    break;
+                }
+            }
+            return 'data:image/jpeg;base64,' + btoa(String.fromCharCode.apply(null, uint8Array));
+        }
+    </script>
+</body>
+</html>
