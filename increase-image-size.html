@@ -39,10 +39,14 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
-            <!-- Left Side: Upload Zone & Metadata Info (5 Cols) -->
+            <!-- Left Side: Dynamic Interactive Preview & Dropzone Wrapper (5 Cols) -->
             <div class="md:col-span-5 flex flex-col space-y-4">
-                <div id="dropzone" class="bg-white border-2 border-dashed border-slate-300 rounded-xl p-6 text-center cursor-pointer hover:border-blue-500 transition-colors flex flex-col items-center justify-center min-h-[200px]">
-                    <input type="file" id="fileInput" accept="image/jpeg, image/png" class="hidden">
+                
+                <!-- Hidden Native File Input -->
+                <input type="file" id="fileInput" accept="image/jpeg, image/png" class="hidden">
+
+                <!-- 1. INITIAL UPLOAD DROPZONE BOX -->
+                <div id="dropzone" class="bg-white border-2 border-dashed border-slate-300 rounded-xl p-6 text-center cursor-pointer hover:border-blue-500 transition-colors flex flex-col items-center justify-center min-h-[220px]">
                     <div class="bg-blue-50 h-12 w-12 rounded-full flex items-center justify-center text-blue-500 text-xl mb-3">
                         <i class="fa-solid fa-arrow-up-from-bracket"></i>
                     </div>
@@ -50,14 +54,22 @@
                     <p class="text-slate-400 text-[11px] mt-1">Drag & drop or click to browse</p>
                 </div>
 
+                <!-- 2. NEW SWAPPED LIVE IMAGE CONTAINER (Replaces Dropzone on selection) -->
+                <div id="activePreviewZone" class="hidden bg-white border border-slate-200 rounded-xl p-5 flex flex-col items-center justify-center space-y-4 min-h-[220px] shadow-2xs relative">
+                    <div class="w-full flex justify-center bg-slate-50 rounded-lg p-2 border border-slate-100">
+                        <img id="imagePreview" class="max-h-48 object-contain rounded shadow-3xs">
+                    </div>
+                    <button id="changeFileBtn" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-lg transition-colors border border-slate-200 flex items-center space-x-1.5 cursor-pointer">
+                        <i class="fa-solid fa-rotate text-[10px]"></i>
+                        <span>Dusri Photo Chunein</span>
+                    </button>
+                </div>
+
                 <!-- Live Status Metadata Panel -->
                 <div id="statusPanel" class="bg-white border border-slate-200 rounded-xl p-4 hidden space-y-2.5 text-xs">
                     <span class="font-bold text-slate-400 uppercase tracking-wider block border-b border-slate-100 pb-1">Current File Details</span>
                     <div class="flex justify-between"><span class="text-slate-500">Original Size:</span> <span id="origSize" class="font-bold text-slate-700">0 KB</span></div>
                     <div class="flex justify-between"><span class="text-slate-500">Dimensions:</span> <span id="origDim" class="font-bold text-slate-700">0 x 0 px</span></div>
-                    <div class="pt-2 border-t border-slate-100 flex justify-center">
-                        <img id="imagePreview" class="max-h-32 rounded border border-slate-200 p-1 bg-slate-50">
-                    </div>
                 </div>
             </div>
 
@@ -113,6 +125,8 @@
     <script>
         const fileInput = document.getElementById('fileInput');
         const dropzone = document.getElementById('dropzone');
+        const activePreviewZone = document.getElementById('activePreviewZone');
+        const changeFileBtn = document.getElementById('changeFileBtn');
         const statusPanel = document.getElementById('statusPanel');
         const imagePreview = document.getElementById('imagePreview');
         const origSize = document.getElementById('origSize');
@@ -126,6 +140,7 @@
         let loadedFile = null;
 
         dropzone.addEventListener('click', () => fileInput.click());
+        changeFileBtn.addEventListener('click', () => fileInput.click());
         fileInput.addEventListener('change', loadIncomingFile);
 
         dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('border-blue-500'); });
@@ -151,6 +166,10 @@
                 sourceImg.onload = function() {
                     origDim.textContent = `${sourceImg.width} x ${sourceImg.height} Pixels`;
                     imagePreview.src = sourceImg.src;
+                    
+                    // Toggle Views: Hide Dropzone, Show Large Active Image Box
+                    dropzone.classList.add('hidden');
+                    activePreviewZone.classList.remove('hidden');
                     statusPanel.classList.remove('hidden');
                     
                     // Activate Action Button Layout state
