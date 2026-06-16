@@ -37,22 +37,22 @@
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             border: 2px solid transparent !important;
         }
-        /* Desktop ke liye regular hover effect */
+        /* Desktop ke liye Light Pink hover effect */
         @media (min-width: 768px) {
             .tool-card:hover {
                 transform: translateY(-5px);
-                border-color: #10b981 !important;
-                box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+                border-color: #fbcfe8 !important; /* Light Pink Border */
+                box-shadow: 0 20px 25px -5px rgba(244, 63, 94, 0.05), 0 10px 10px -5px rgba(244, 63, 94, 0.03);
             }
             .tool-card:hover .icon-box {
                 transform: scale(1.1);
             }
         }
-        /* Phone par automatic scroll highlight ke liye class */
+        /* Phone par automatic scroll highlight ke liye Light Pink class */
         .mobile-active {
-            border-color: #10b981 !important;
-            box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.1), 0 4px 6px -4px rgba(16, 185, 129, 0.1);
-            transform: scale(1.02);
+            border-color: #fbcfe8 !important; /* Light Pink Border on Scroll */
+            box-shadow: 0 10px 15px -3px rgba(244, 63, 94, 0.08), 0 4px 6px -4px rgba(244, 63, 94, 0.05);
+            transform: scale(1.03);
         }
         .mobile-active .icon-box {
             transform: scale(1.1);
@@ -74,19 +74,19 @@
             <div class="flex justify-between h-16 items-center">
                 <!-- Branding Element Info -->
                 <div class="flex items-center space-x-3">
-                    <div class="bg-emerald-500 p-2 rounded-xl text-white shadow-sm flex items-center justify-center">
+                    <div class="bg-pink-400 p-2 rounded-xl text-white shadow-sm flex items-center justify-center">
                         <i class="fa-solid fa-wand-magic-sparkles text-xl"></i>
                     </div>
                     <div class="flex flex-col">
-                        <span class="text-2xl font-black tracking-tight text-slate-900 leading-none">Edit<span class="text-emerald-500">Spark</span></span>
+                        <span class="text-2xl font-black tracking-tight text-slate-900 leading-none">Edit<span class="text-pink-500">Spark</span></span>
                         <span class="text-[10px] font-bold text-slate-400 tracking-wider uppercase mt-0.5">🇮🇳 Free Government Form Photo Toolkit (India)</span>
                     </div>
                 </div>
 
                 <!-- Live Client Side Validation Status badge pill component -->
                 <div class="flex items-center space-x-4">
-                    <div class="hidden sm:inline-flex items-center space-x-1.5 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full text-xs font-bold text-emerald-700">
-                        <span class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <div class="hidden sm:inline-flex items-center space-x-1.5 bg-pink-50 border border-pink-100 px-3 py-1 rounded-full text-xs font-bold text-pink-700">
+                        <span class="h-2 w-2 rounded-full bg-pink-400 animate-pulse"></span>
                         <span>Client-Side Secured (Offline)</span>
                     </div>
                 </div>
@@ -98,13 +98,13 @@
     <main class="flex-grow max-w-7xl mx-auto px-4 py-8 sm:py-10 w-full">
         <!-- Welcome Hero Structured Text Alignment Grid Header -->
         <div class="text-center max-w-3xl mx-auto mb-10 flex flex-col items-center">
-            <span class="inline-flex items-center space-x-1.5 bg-emerald-50 border border-emerald-200 px-4 py-1.5 rounded-full text-[12px] font-bold text-emerald-800 mb-4 shadow-2xs">
-                <i class="fa-solid fa-lock text-emerald-600"></i>
+            <span class="inline-flex items-center space-x-1.5 bg-pink-50 border border-pink-100 px-4 py-1.5 rounded-full text-[12px] font-bold text-pink-800 mb-4 shadow-2xs">
+                <i class="fa-solid fa-lock text-pink-500"></i>
                 <span>🔒 100% Private • No Server Uploads • Works Offline in Your Browser</span>
             </span>
 
             <h1 class="text-2xl font-black text-slate-900 tracking-tight uppercase sm:text-4xl leading-tight">
-                Photo & Signature Resizer for <span class="text-emerald-500">SSC, Railway & UPSC</span>
+                Photo & Signature Resizer for <span class="text-pink-500">SSC, Railway & UPSC</span>
             </h1>
             <p class="text-slate-500 font-semibold text-xs sm:text-sm mt-2 max-w-xl">
                 Sarkari forms ke liye photo aur signature ka size kam karein (20KB, 50KB, 100KB) aur dimensions resize karein bina server par upload kiye.
@@ -113,7 +113,7 @@
             <!-- Popular Tools Direct Target Keyword Strip -->
             <div class="mt-6 text-xs font-semibold text-slate-400 bg-slate-50 border border-slate-200/60 px-4 py-2 rounded-lg max-w-2xl shadow-3xs">
                 <span class="text-slate-600 font-bold mr-1 uppercase text-[11px] tracking-wider">Popular Tools:</span>
-                <a href="compress-image.html" class="hover:text-emerald-500 transition-colors">Compress Image to 20KB</a> • <a href="compress-image.html" class="hover:text-emerald-500 transition-colors">Compress Image to 50KB</a> • <a href="compress-image.html" class="hover:text-emerald-500 transition-colors">Compress Image to 100KB</a> • <a href="crop-image.html" class="hover:text-emerald-500 transition-colors">Passport Size Photo Maker</a> • <a href="resize-image.html" class="hover:text-emerald-500 transition-colors">Signature Resizer</a>
+                <a href="compress-image.html" class="hover:text-pink-500 transition-colors">Compress Image to 20KB</a> • <a href="compress-image.html" class="hover:text-pink-500 transition-colors">Compress Image to 50KB</a> • <a href="compress-image.html" class="hover:text-pink-500 transition-colors">Compress Image to 100KB</a> • <a href="crop-image.html" class="hover:text-pink-500 transition-colors">Passport Size Photo Maker</a> • <a href="resize-image.html" class="hover:text-pink-500 transition-colors">Signature Resizer</a>
             </div>
         </div>
 
@@ -121,13 +121,13 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <!-- 1. PHOTO COMPRESS CARD LAYER COMPONENT -->
             <a href="compress-image.html" class="tool-card bg-white rounded-xl p-5 shadow-2xs flex items-start space-x-4 group">
-                <div class="icon-box h-12 w-12 shrink-0 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300 shadow-xs">
+                <div class="icon-box h-12 w-12 shrink-0 rounded-xl bg-pink-50 text-pink-500 flex items-center justify-center text-xl group-hover:bg-pink-400 group-hover:text-white transition-all duration-300 shadow-xs">
                     <i class="fa-solid fa-compress"></i>
                 </div>
                 <div class="flex-grow min-w-0">
                     <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider mb-1 flex items-center justify-between">
                         Compress Image to 20KB, 50KB & 100KB
-                        <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-emerald-500 group-hover:translate-x-1 transition-all"></i>
+                        <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-pink-500 group-hover:translate-x-1 transition-all"></i>
                     </h3>
                     <p class="text-slate-500 text-xs leading-relaxed font-medium">Photo ko exact 20KB, 50KB, 100KB ya custom size me compress karein. SSC, Railway, UP Police aur anya online forms ke liye perfect.</p>
                 </div>
@@ -135,13 +135,13 @@
 
             <!-- 2. PHOTO RESIZE CARD LAYER COMPONENT -->
             <a href="resize-image.html" class="tool-card bg-white rounded-xl p-5 shadow-2xs flex items-start space-x-4 group">
-                <div class="icon-box h-12 w-12 shrink-0 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-xl group-hover:bg-blue-500 group-hover:text-white transition-all duration-300 shadow-xs">
+                <div class="icon-box h-12 w-12 shrink-0 rounded-xl bg-pink-50 text-pink-500 flex items-center justify-center text-xl group-hover:bg-pink-400 group-hover:text-white transition-all duration-300 shadow-xs">
                     <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
                 </div>
                 <div class="flex-grow min-w-0">
                     <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider mb-1 flex items-center justify-between">
                         Photo Size & Dimension Resizer
-                        <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-blue-500 group-hover:translate-x-1 transition-all"></i>
+                        <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-pink-500 group-hover:translate-x-1 transition-all"></i>
                     </h3>
                     <p class="text-slate-500 text-xs leading-relaxed font-medium">Photo ki width aur height pixels ya cm me badlein. SSC, Railway, Aadhaar aur government forms ke required dimensions ke hisab se resize karein.</p>
                 </div>
@@ -149,13 +149,13 @@
 
             <!-- 3. CROP PHOTO CARD LAYER COMPONENT -->
             <a href="crop-image.html" class="tool-card bg-white rounded-xl p-5 shadow-2xs flex items-start space-x-4 group">
-                <div class="icon-box h-12 w-12 shrink-0 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center text-xl group-hover:bg-amber-500 group-hover:text-white transition-all duration-300 shadow-xs">
+                <div class="icon-box h-12 w-12 shrink-0 rounded-xl bg-pink-50 text-pink-500 flex items-center justify-center text-xl group-hover:bg-pink-400 group-hover:text-white transition-all duration-300 shadow-xs">
                     <i class="fa-solid fa-crop-simple"></i>
                 </div>
                 <div class="flex-grow min-w-0">
                     <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider mb-1 flex items-center justify-between">
                         Crop Photo
-                        <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-amber-500 group-hover:translate-x-1 transition-all"></i>
+                        <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-pink-500 group-hover:translate-x-1 transition-all"></i>
                     </h3>
                     <p class="text-slate-500 text-xs leading-relaxed font-medium">Crop image for ssc banking railway and other government examination manually.</p>
                 </div>
@@ -163,13 +163,13 @@
 
             <!-- NEW PASSPORT SIZE PHOTO MAKER -->
             <a href="passport-photo-maker.html" class="tool-card bg-white rounded-xl p-5 shadow-2xs flex items-start space-x-4 group">
-                <div class="icon-box h-12 w-12 shrink-0 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center text-xl group-hover:bg-orange-500 group-hover:text-white transition-all duration-300 shadow-xs">
+                <div class="icon-box h-12 w-12 shrink-0 rounded-xl bg-pink-50 text-pink-500 flex items-center justify-center text-xl group-hover:bg-pink-400 group-hover:text-white transition-all duration-300 shadow-xs">
                     <i class="fa-solid fa-id-card"></i>
                 </div>
                 <div class="flex-grow min-w-0">
                     <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider mb-1 flex items-center justify-between">
                         Passport Size Photo Maker
-                        <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-orange-500 group-hover:translate-x-1 transition-all"></i>
+                        <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-pink-500 group-hover:translate-x-1 transition-all"></i>
                     </h3>
                     <p class="text-slate-500 text-xs leading-relaxed font-medium">Normal photo ko passport size photo me convert karein wo bhi bulk me. Government forms, Aadhaar, PAN Card, SSC aur job applications ke liye ready.</p>
                 </div>
@@ -177,13 +177,13 @@
 
             <!-- 4. SIGNATURE CLEANER LAYER COMPONENT -->
             <a href="clear-document.html" class="tool-card bg-white rounded-xl p-5 shadow-2xs flex items-start space-x-4 group">
-                <div class="icon-box h-12 w-12 shrink-0 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center text-xl group-hover:bg-rose-500 group-hover:text-white transition-all duration-300 shadow-xs">
+                <div class="icon-box h-12 w-12 shrink-0 rounded-xl bg-pink-50 text-pink-500 flex items-center justify-center text-xl group-hover:bg-pink-400 group-hover:text-white transition-all duration-300 shadow-xs">
                     <i class="fa-solid fa-signature"></i>
                 </div>
                 <div class="flex-grow min-w-0">
                     <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider mb-1 flex items-center justify-between">
                         Signature Cleaner
-                        <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-rose-500 group-hover:translate-x-1 transition-all"></i>
+                        <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-pink-500 group-hover:translate-x-1 transition-all"></i>
                     </h3>
                     <p class="text-slate-500 text-xs leading-relaxed font-medium">Signature ka yellow ya dark background hataakar clean white background banayein. Online forms aur document uploads ke liye perfect.</p>
                 </div>
@@ -191,13 +191,13 @@
 
             <!-- 5. IMAGE FORMAT CONVERTER LAYER COMPONENT -->
             <a href="image-format-converter.html" class="tool-card bg-white rounded-xl p-5 shadow-2xs flex items-start space-x-4 group">
-                <div class="icon-box h-12 w-12 shrink-0 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center text-xl group-hover:bg-purple-500 group-hover:text-white transition-all duration-300 shadow-xs">
+                <div class="icon-box h-12 w-12 shrink-0 rounded-xl bg-pink-50 text-pink-500 flex items-center justify-center text-xl group-hover:bg-pink-400 group-hover:text-white transition-all duration-300 shadow-xs">
                     <i class="fa-solid fa-layer-group"></i>
                 </div>
                 <div class="flex-grow min-w-0">
                     <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider mb-1 flex items-center justify-between">
                         JPG, PNG & WEBP Converter
-                        <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-purple-500 group-hover:translate-x-1 transition-all"></i>
+                        <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-pink-500 group-hover:translate-x-1 transition-all"></i>
                     </h3>
                     <p class="text-slate-500 text-xs leading-relaxed font-medium">JPG ko PNG, PNG ko JPG aur WEBP me convert karein. Fast, secure aur quality loss ke bina.</p>
                 </div>
@@ -205,13 +205,13 @@
 
             <!-- 6. ONE CLICK PHOTO EDITOR -->
             <a href="all-in-one.html" class="tool-card bg-white rounded-xl p-5 shadow-2xs flex items-start space-x-4 group">
-                <div class="icon-box h-12 w-12 shrink-0 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center text-xl group-hover:bg-indigo-500 group-hover:text-white transition-all duration-300 shadow-xs">
+                <div class="icon-box h-12 w-12 shrink-0 rounded-xl bg-pink-50 text-pink-500 flex items-center justify-center text-xl group-hover:bg-pink-400 group-hover:text-white transition-all duration-300 shadow-xs">
                     <i class="fa-solid fa-bolt"></i>
                 </div>
                 <div class="flex-grow min-w-0">
                     <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider mb-1 flex items-center justify-between">
                         One click Photo editor
-                        <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-indigo-500 group-hover:translate-x-1 transition-all"></i>
+                        <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-pink-500 group-hover:translate-x-1 transition-all"></i>
                     </h3>
                     <p class="text-slate-500 text-xs leading-relaxed font-medium">Resize, compress, crop, convert aur signature clean karne ke sabhi tools ek hi jagah par. Government form filling ke liye complete solution.</p>
                 </div>
@@ -219,13 +219,13 @@
 
             <!-- 7. IMAGE SIZE INCREASER -->
             <a href="increase-image-size.html" class="tool-card bg-white rounded-xl p-5 shadow-2xs flex items-start space-x-4 group">
-                <div class="icon-box h-12 w-12 shrink-0 rounded-xl bg-teal-100 text-teal-600 flex items-center justify-center text-xl group-hover:bg-teal-500 group-hover:text-white transition-all duration-300 shadow-xs">
+                <div class="icon-box h-12 w-12 shrink-0 rounded-xl bg-pink-50 text-pink-500 flex items-center justify-center text-xl group-hover:bg-pink-400 group-hover:text-white transition-all duration-300 shadow-xs">
                     <i class="fa-solid fa-expand"></i>
                 </div>
                 <div class="flex-grow min-w-0">
                     <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider mb-1 flex items-center justify-between">
                         Photo Size Badhayein (KB)
-                        <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-teal-500 group-hover:translate-x-1 transition-all"></i>
+                        <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-pink-500 group-hover:translate-x-1 transition-all"></i>
                     </h3>
                     <p class="text-slate-500 text-xs leading-relaxed font-medium">Kam size waali blur photo ka size bina pixels kharab kiye <strong>custom KB limit (e.g. min 20kb ya 50kb)</strong> tak badhayein.</p>
                 </div>
@@ -235,27 +235,27 @@
         <!-- NEW SEO BLOCK: POPULAR IMAGE COMPRESSION TOOLS SECTION -->
         <div class="mt-12 bg-white border border-slate-200 rounded-xl p-6 shadow-2xs">
             <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider mb-4 flex items-center space-x-2">
-                <i class="fa-solid fa-circle-nodes text-emerald-500"></i>
+                <i class="fa-solid fa-circle-nodes text-pink-500"></i>
                 <span>Popular Image Compression Tools</span>
             </h3>
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
-                <a href="compress-image.html" class="border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50/30 p-3 rounded-lg text-center text-xs font-bold text-slate-600 hover:text-emerald-600 transition-all shadow-3xs flex flex-col justify-center items-center">
+                <a href="compress-image.html" class="border border-slate-200 hover:border-pink-300 hover:bg-pink-50/30 p-3 rounded-lg text-center text-xs font-bold text-slate-600 hover:text-pink-600 transition-all shadow-3xs flex flex-col justify-center items-center">
                     <i class="fa-solid fa-file-image mb-1.5 text-slate-400"></i>
                     <span>Compress Image to 20KB</span>
                 </a>
-                <a href="compress-image.html" class="border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50/30 p-3 rounded-lg text-center text-xs font-bold text-slate-600 hover:text-emerald-600 transition-all shadow-3xs flex flex-col justify-center items-center">
+                <a href="compress-image.html" class="border border-slate-200 hover:border-pink-300 hover:bg-pink-50/30 p-3 rounded-lg text-center text-xs font-bold text-slate-600 hover:text-pink-600 transition-all shadow-3xs flex flex-col justify-center items-center">
                     <i class="fa-solid fa-file-image mb-1.5 text-slate-400"></i>
                     <span>Compress Image to 50KB</span>
                 </a>
-                <a href="compress-image.html" class="border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50/30 p-3 rounded-lg text-center text-xs font-bold text-slate-600 hover:text-emerald-600 transition-all shadow-3xs flex flex-col justify-center items-center">
+                <a href="compress-image.html" class="border border-slate-200 hover:border-pink-300 hover:bg-pink-50/30 p-3 rounded-lg text-center text-xs font-bold text-slate-600 hover:text-pink-600 transition-all shadow-3xs flex flex-col justify-center items-center">
                     <i class="fa-solid fa-file-image mb-1.5 text-slate-400"></i>
                     <span>Compress Image to 100KB</span>
                 </a>
-                <a href="compress-image.html" class="border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50/30 p-3 rounded-lg text-center text-xs font-bold text-slate-600 hover:text-emerald-600 transition-all shadow-3xs flex flex-col justify-center items-center">
+                <a href="compress-image.html" class="border border-slate-200 hover:border-pink-300 hover:bg-pink-50/30 p-3 rounded-lg text-center text-xs font-bold text-slate-600 hover:text-pink-600 transition-all shadow-3xs flex flex-col justify-center items-center">
                     <i class="fa-solid fa-file-image mb-1.5 text-slate-400"></i>
                     <span>Compress Image to 200KB</span>
                 </a>
-                <a href="compress-image.html" class="border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50/30 p-3 rounded-lg text-center text-xs font-bold text-slate-600 hover:text-emerald-600 transition-all shadow-3xs flex flex-col justify-center items-center">
+                <a href="compress-image.html" class="border border-slate-200 hover:border-pink-300 hover:bg-pink-50/30 p-3 rounded-lg text-center text-xs font-bold text-slate-600 hover:text-pink-600 transition-all shadow-3xs flex flex-col justify-center items-center">
                     <i class="fa-solid fa-file-image mb-1.5 text-slate-400"></i>
                     <span>Compress Image to 500KB</span>
                 </a>
@@ -264,7 +264,7 @@
 
         <!-- TRUSTED CONVERSION CONTENT SYSTEM -->
         <div class="mt-8 bg-white border border-slate-200 rounded-xl p-6 shadow-2xs flex flex-col md:flex-row items-center md:items-start gap-5">
-            <div class="h-12 w-12 shrink-0 rounded-xl bg-emerald-50 text-emerald-500 flex items-center justify-center text-xl shadow-2xs">
+            <div class="h-12 w-12 shrink-0 rounded-xl bg-pink-50 text-pink-500 flex items-center justify-center text-xl shadow-2xs">
                 <i class="fa-solid fa-circle-check"></i>
             </div>
             <div class="space-y-3 text-center md:text-left flex-grow">
@@ -273,12 +273,12 @@
                     EditSpark helps students, cyber cafe operators and job applicants prepare photos and signatures for government forms.
                 </p>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-bold text-slate-600 max-w-2xl pt-1">
-                    <div class="flex items-center space-x-2"><span class="text-emerald-500">✔</span> <span>Compress image to 20KB, 50KB or 100KB</span></div>
-                    <div class="flex items-center space-x-2"><span class="text-emerald-500">✔</span> <span>Resize photo dimensions instantly</span></div>
-                    <div class="flex items-center space-x-2"><span class="text-emerald-500">✔</span> <span>Create passport size photos</span></div>
-                    <div class="flex items-center space-x-2"><span class="text-emerald-500">✔</span> <span>Remove signature background</span></div>
-                    <div class="flex items-center space-x-2"><span class="text-emerald-500">✔</span> <span>Convert JPG, PNG and WEBP formats</span></div>
-                    <div class="flex items-center space-x-2"><span class="text-emerald-500">✔</span> <span>100% secure - no server uploads</span></div>
+                    <div class="flex items-center space-x-2"><span class="text-pink-500">✔</span> <span>Compress image to 20KB, 50KB or 100KB</span></div>
+                    <div class="flex items-center space-x-2"><span class="text-pink-500">✔</span> <span>Resize photo dimensions instantly</span></div>
+                    <div class="flex items-center space-x-2"><span class="text-pink-500">✔</span> <span>Create passport size photos</span></div>
+                    <div class="flex items-center space-x-2"><span class="text-pink-500">✔</span> <span>Remove signature background</span></div>
+                    <div class="flex items-center space-x-2"><span class="text-pink-500">✔</span> <span>Convert JPG, PNG and WEBP formats</span></div>
+                    <div class="flex items-center space-x-2"><span class="text-pink-500">✔</span> <span>100% secure - no server uploads</span></div>
                 </div>
                 <p class="text-slate-400 text-[11px] font-semibold italic mt-2">
                     Perfect for SSC, Railway, UPSC, Banking, Police Recruitment and other online application forms.
@@ -289,7 +289,7 @@
         <!-- NEW SEO STRATEGIC ELEMENT: ACCORDION/LIST FAQ SECTION -->
         <div class="mt-12 bg-white border border-slate-200 rounded-xl p-6 shadow-2xs">
             <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider mb-6 flex items-center space-x-2">
-                <i class="fa-solid fa-circle-question text-emerald-500"></i>
+                <i class="fa-solid fa-circle-question text-pink-500"></i>
                 <span>Frequently Asked Questions (FAQs)</span>
             </h3>
             <div class="space-y-4 max-w-4xl">
@@ -335,10 +335,10 @@
             <!-- Brand description section -->
             <div class="space-y-2 col-span-1 md:col-span-1">
                 <div class="flex items-center space-x-2">
-                    <div class="bg-emerald-500 p-1 rounded-lg text-white text-[10px]">
+                    <div class="bg-pink-400 p-1 rounded-lg text-white text-[10px]">
                         <i class="fa-solid fa-wand-magic-sparkles"></i>
                     </div>
-                    <span class="text-base font-black tracking-tight text-slate-900">Edit<span class="text-emerald-500">Spark</span></span>
+                    <span class="text-base font-black tracking-tight text-slate-900">Edit<span class="text-pink-500">Spark</span></span>
                 </div>
                 <p class="text-slate-400 text-[11px] leading-normal font-medium">
                     Free secure toolkit for SSC, Railway, UPSC, Banking and other government forms. Compress images, resize dimensions and clean signatures instantly.
@@ -348,37 +348,37 @@
             <div>
                 <h4 class="font-black text-slate-900 uppercase tracking-wider text-[11px] mb-2">Popular Tools</h4>
                 <ul class="space-y-1.5 font-bold text-slate-500">
-                    <li><a href="compress-image.html" class="hover:text-emerald-500 transition-colors">Compress Image to 20KB</a></li>
-                    <li><a href="compress-image.html" class="hover:text-emerald-500 transition-colors">Compress Image to 50KB</a></li>
-                    <li><a href="compress-image.html" class="hover:text-emerald-500 transition-colors">Compress Image to 100KB</a></li>
-                    <li><a href="crop-image.html" class="hover:text-emerald-500 transition-colors">Crop Photo</a></li>
+                    <li><a href="compress-image.html" class="hover:text-pink-500 transition-colors">Compress Image to 20KB</a></li>
+                    <li><a href="compress-image.html" class="hover:text-pink-500 transition-colors">Compress Image to 50KB</a></li>
+                    <li><a href="compress-image.html" class="hover:text-pink-500 transition-colors">Compress Image to 100KB</a></li>
+                    <li><a href="crop-image.html" class="hover:text-pink-500 transition-colors">Crop Photo</a></li>
                 </ul>
             </div>
             <!-- Column 2: Photo & Signature Tools -->
             <div>
                 <h4 class="font-black text-slate-900 uppercase tracking-wider text-[11px] mb-2">Photo & Signature Tools</h4>
                 <ul class="space-y-1.5 font-bold text-slate-500">
-                    <li><a href="clear-document.html" class="hover:text-rose-500 transition-colors">Signature Cleaner</a></li>
-                    <li><a href="resize-image.html" class="hover:text-blue-500 transition-colors">Photo Resizer</a></li>
-                    <li><a href="image-format-converter.html" class="hover:text-purple-500 transition-colors">Image Converter</a></li>
-                    <li><a href="all-in-one.html" class="hover:text-indigo-500 transition-colors">One click Photo editor</a></li>
+                    <li><a href="clear-document.html" class="hover:text-pink-500 transition-colors">Signature Cleaner</a></li>
+                    <li><a href="resize-image.html" class="hover:text-pink-500 transition-colors">Photo Resizer</a></li>
+                    <li><a href="image-format-converter.html" class="hover:text-pink-500 transition-colors">Image Converter</a></li>
+                    <li><a href="all-in-one.html" class="hover:text-pink-500 transition-colors">One click Photo editor</a></li>
                 </ul>
             </div>
             <!-- Column 3: Government Forms Targets -->
             <div>
                 <h4 class="font-black text-slate-900 uppercase tracking-wider text-[11px] mb-2">Government Forms</h4>
                 <ul class="space-y-1.5 font-bold text-slate-500">
-                    <li><a href="resize-image.html" class="hover:text-emerald-500 transition-colors">SSC Photo Resize</a></li>
-                    <li><a href="resize-image.html" class="hover:text-emerald-500 transition-colors">Railway Photo Resize</a></li>
-                    <li><a href="resize-image.html" class="hover:text-emerald-500 transition-colors">UP Police Photo Resize</a></li>
-                    <li><a href="resize-image.html" class="hover:text-emerald-500 transition-colors">UPPSC Photo Resize</a></li>
+                    <li><a href="resize-image.html" class="hover:text-pink-500 transition-colors">SSC Photo Resize</a></li>
+                    <li><a href="resize-image.html" class="hover:text-pink-500 transition-colors">Railway Photo Resize</a></li>
+                    <li><a href="resize-image.html" class="hover:text-pink-500 transition-colors">UP Police Photo Resize</a></li>
+                    <li><a href="resize-image.html" class="hover:text-pink-500 transition-colors">UPPSC Photo Resize</a></li>
                 </ul>
             </div>
             <!-- Column 4: Support & Blog (Future-ready) -->
             <div>
                 <h4 class="font-black text-slate-900 uppercase tracking-wider text-[11px] mb-2">Support</h4>
                 <ul class="space-y-1.5 font-bold text-slate-500">
-                    <li><a href="blog.html" class="text-emerald-600 hover:text-emerald-700 transition-colors flex items-center space-x-1"><i class="fa-solid fa-blog text-[10px]"></i> <span>Official Blog Post</span></a></li>
+                    <li><a href="blog.html" class="text-pink-600 hover:text-pink-700 transition-colors flex items-center space-x-1"><i class="fa-solid fa-blog text-[10px]"></i> <span>Official Blog Post</span></a></li>
                     <li><a href="about.html" class="hover:text-slate-800 transition-colors">About Us</a></li>
                     <li><a href="privacy.html" class="hover:text-slate-800 transition-colors">Privacy Policy</a></li>
                     <li><a href="terms.html" class="hover:text-slate-800 transition-colors">Terms & Conditions</a></li>
@@ -389,7 +389,7 @@
         <div class="max-w-7xl mx-auto px-4 pt-4 border-t border-slate-100 flex flex-col sm:flex-row justify-between items-center text-[11px] text-slate-400 font-semibold gap-2">
             <div>&copy; 2026 EditSpark Studio. Private sandboxed environment.</div>
             <div class="flex items-center space-x-1 text-slate-600 bg-slate-100 px-2 py-0.5 rounded-md border border-slate-200 shadow-3xs">
-                <i class="fa-solid fa-shield text-emerald-500 text-[9px]"></i>
+                <i class="fa-solid fa-shield text-pink-400 text-[9px]"></i>
                 <span class="tracking-wide uppercase text-[8px] font-black">Zero-Server Leak Protocol Active</span>
             </div>
         </div>
@@ -398,14 +398,13 @@
     <!-- AUTOMATIC SCROLL MONITOR FOR MOBILE HIGHLIGHT -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            // Check if device is mobile touch screen
             if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
                 const cards = document.querySelectorAll('.tool-card');
                 
                 const observerOptions = {
                     root: null,
-                    rootMargin: '-20% 0px -20% 0px', // Screen ke center area ko target karega
-                    threshold: 0.6 // Jab card 60% dikhega tab highlight hoga
+                    rootMargin: '-25% 0px -25% 0px', // Targeting precise viewport center
+                    threshold: 0.5 
                 };
 
                 const observer = new IntersectionObserver((entries) => {
