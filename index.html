@@ -34,15 +34,27 @@
     <!-- Custom micro-interactions style sheet inside native fallback -->
     <style>
         .tool-card {
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 2px solid transparent !important; /* No ugly border initially */
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid transparent !important;
         }
-        .tool-card:hover, .tool-card:active {
-            transform: translateY(-5px);
-            border-color: #10b981 !important; /* Elegant green highlight only on hover/tap */
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        /* Desktop ke liye regular hover effect */
+        @media (min-width: 768px) {
+            .tool-card:hover {
+                transform: translateY(-5px);
+                border-color: #10b981 !important;
+                box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            }
+            .tool-card:hover .icon-box {
+                transform: scale(1.1);
+            }
         }
-        .tool-card:hover .icon-box, .tool-card:active .icon-box {
+        /* Phone par automatic scroll highlight ke liye class */
+        .mobile-active {
+            border-color: #10b981 !important;
+            box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.1), 0 4px 6px -4px rgba(16, 185, 129, 0.1);
+            transform: scale(1.02);
+        }
+        .mobile-active .icon-box {
             transform: scale(1.1);
         }
     </style>
@@ -382,5 +394,33 @@
             </div>
         </div>
     </footer>
+
+    <!-- AUTOMATIC SCROLL MONITOR FOR MOBILE HIGHLIGHT -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Check if device is mobile touch screen
+            if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+                const cards = document.querySelectorAll('.tool-card');
+                
+                const observerOptions = {
+                    root: null,
+                    rootMargin: '-20% 0px -20% 0px', // Screen ke center area ko target karega
+                    threshold: 0.6 // Jab card 60% dikhega tab highlight hoga
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('mobile-active');
+                        } else {
+                            entry.target.classList.remove('mobile-active');
+                        }
+                    });
+                }, observerOptions);
+
+                cards.forEach(card => observer.observe(card));
+            }
+        });
+    </script>
 </body>
 </html>
