@@ -35,14 +35,14 @@
     <style>
         .tool-card {
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 2px solid #e2e8f0 !important; /* Clear visible border initially */
+            border: 2px solid transparent !important; /* No ugly border initially */
         }
-        .tool-card:hover {
+        .tool-card:hover, .tool-card:active {
             transform: translateY(-5px);
-            border-color: #10b981 !important; /* Standout green highlight on hover */
+            border-color: #10b981 !important; /* Elegant green highlight only on hover/tap */
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
-        .tool-card:hover .icon-box {
+        .tool-card:hover .icon-box, .tool-card:active .icon-box {
             transform: scale(1.1);
         }
     </style>
