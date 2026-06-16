@@ -37,39 +37,22 @@
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             border: 2px solid transparent !important;
         }
-        /* Desktop ke liye Soft Border hover effect */
+        /* Desktop ke liye Soft Green Border hover effect sabhi par */
         @media (min-width: 768px) {
             .tool-card:hover {
                 transform: translateY(-5px);
-                box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.08), 0 10px 10px -5px rgba(15, 23, 42, 0.04);
+                box-shadow: 0 20px 25px -5px rgba(16, 185, 129, 0.08), 0 10px 10px -5px rgba(16, 185, 129, 0.04);
+                border-color: #10b981 !important; /* Pure Emerald Green Border */
             }
-            /* Dinamic Hover Borders matching the icon colors */
-            .card-blue:hover { border-color: #3b82f6 !important; }
-            .card-indigo:hover { border-color: #6366f1 !important; }
-            .card-amber:hover { border-color: #f59e0b !important; }
-            .card-teal:hover { border-color: #14b8a6 !important; }
-            .card-purple:hover { border-color: #a855f7 !important; }
-            .card-rose:hover { border-color: #f43f5e !important; }
-            .card-violet:hover { border-color: #8b5cf6 !important; }
-            .card-emerald:hover { border-color: #10b981 !important; }
-
             .tool-card:hover .icon-box {
                 transform: scale(1.1);
             }
         }
-        /* Phone par automatic scroll highlight classes */
-        .mobile-active.card-blue { border-color: #3b82f6 !important; }
-        .mobile-active.card-indigo { border-color: #6366f1 !important; }
-        .mobile-active.card-amber { border-color: #f59e0b !important; }
-        .mobile-active.card-teal { border-color: #14b8a6 !important; }
-        .mobile-active.card-purple { border-color: #a855f7 !important; }
-        .mobile-active.card-rose { border-color: #f43f5e !important; }
-        .mobile-active.card-violet { border-color: #8b5cf6 !important; }
-        .mobile-active.card-emerald { border-color: #10b981 !important; }
-        
+        /* Phone par automatic scroll highlight classes - Sabhi ke liye Green */
         .mobile-active {
-            box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.08);
+            box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.1);
             transform: scale(1.03);
+            border-color: #10b981 !important; /* Pure Emerald Green Border */
         }
         .mobile-active .icon-box {
             transform: scale(1.1);
@@ -127,7 +110,7 @@
                 Sarkari forms ke liye photo aur signature ka size kam karein (20KB, 50KB, 100KB) aur dimensions resize karein bina server par upload kiye.
             </p>
 
-            <!-- Popular Tools Direct Target Keyword Strip (Updated to Blue Clickable Links) -->
+            <!-- Popular Tools Direct Target Keyword Strip -->
             <div class="mt-6 text-xs font-semibold text-slate-400 bg-white/80 backdrop-blur-md border border-slate-200 px-4 py-2 rounded-lg max-w-2xl shadow-3xs">
                 <span class="text-slate-600 font-bold mr-1 uppercase text-[11px] tracking-wider">Popular Tools:</span>
                 <a href="compress-image.html" class="text-blue-600 hover:text-blue-800 hover:underline transition-colors">Compress Image to 20KB</a> • 
@@ -140,106 +123,106 @@
 
         <!-- TOOLS INTERACTIVE ROUTER CARDS MATRIX GRID LAYOUT -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- 1. PHOTO COMPRESS CARD LAYER COMPONENT (Blue Theme) -->
-            <a href="compress-image.html" class="tool-card card-blue bg-white rounded-xl p-5 shadow-2xs flex items-start space-x-4 group">
+            <!-- 1. PHOTO COMPRESS CARD LAYER COMPONENT (Blue Icon) -->
+            <a href="compress-image.html" class="tool-card bg-white rounded-xl p-5 shadow-2xs flex items-start space-x-4 group">
                 <div class="icon-box h-12 w-12 shrink-0 rounded-xl bg-blue-50 text-blue-500 flex items-center justify-center text-xl group-hover:bg-blue-500 group-hover:text-white transition-all duration-300 shadow-xs">
                     <i class="fa-solid fa-compress"></i>
                 </div>
                 <div class="flex-grow min-w-0">
                     <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider mb-1 flex items-center justify-between">
                         Compress Image to 20KB, 50KB & 100KB
-                        <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-blue-500 group-hover:translate-x-1 transition-all"></i>
+                        <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-emerald-500 group-hover:translate-x-1 transition-all"></i>
                     </h3>
                     <p class="text-slate-500 text-xs leading-relaxed font-medium">Photo ko exact 20KB, 50KB, 100KB ya custom size me compress karein. SSC, Railway, UP Police aur anya online forms ke liye perfect.</p>
                 </div>
             </a>
 
-            <!-- 2. PHOTO RESIZE CARD LAYER COMPONENT (Indigo Theme) -->
-            <a href="resize-image.html" class="tool-card card-indigo bg-white rounded-xl p-5 shadow-2xs flex items-start space-x-4 group">
+            <!-- 2. PHOTO RESIZE CARD LAYER COMPONENT (Indigo Icon) -->
+            <a href="resize-image.html" class="tool-card bg-white rounded-xl p-5 shadow-2xs flex items-start space-x-4 group">
                 <div class="icon-box h-12 w-12 shrink-0 rounded-xl bg-indigo-50 text-indigo-500 flex items-center justify-center text-xl group-hover:bg-indigo-500 group-hover:text-white transition-all duration-300 shadow-xs">
                     <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
                 </div>
                 <div class="flex-grow min-w-0">
                     <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider mb-1 flex items-center justify-between">
                         Photo Size & Dimension Resizer
-                        <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-indigo-500 group-hover:translate-x-1 transition-all"></i>
+                        <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-emerald-500 group-hover:translate-x-1 transition-all"></i>
                     </h3>
                     <p class="text-slate-500 text-xs leading-relaxed font-medium">Photo ki width aur height pixels ya cm me badlein. SSC, Railway, Aadhaar aur government forms ke required dimensions ke hisab se resize karein.</p>
                 </div>
             </a>
 
-            <!-- 3. CROP PHOTO CARD LAYER COMPONENT (Amber Theme) -->
-            <a href="crop-image.html" class="tool-card card-amber bg-white rounded-xl p-5 shadow-2xs flex items-start space-x-4 group">
+            <!-- 3. CROP PHOTO CARD LAYER COMPONENT (Amber Icon) -->
+            <a href="crop-image.html" class="tool-card bg-white rounded-xl p-5 shadow-2xs flex items-start space-x-4 group">
                 <div class="icon-box h-12 w-12 shrink-0 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center text-xl group-hover:bg-amber-500 group-hover:text-white transition-all duration-300 shadow-xs">
                     <i class="fa-solid fa-crop-simple"></i>
                 </div>
                 <div class="flex-grow min-w-0">
                     <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider mb-1 flex items-center justify-between">
                         Crop Photo
-                        <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-amber-500 group-hover:translate-x-1 transition-all"></i>
+                        <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-emerald-500 group-hover:translate-x-1 transition-all"></i>
                     </h3>
                     <p class="text-slate-500 text-xs leading-relaxed font-medium">Crop image for ssc banking railway and other government examination manually.</p>
                 </div>
             </a>
 
-            <!-- NEW PASSPORT SIZE PHOTO MAKER (Teal Theme) -->
-            <a href="passport-photo-maker.html" class="tool-card card-teal bg-white rounded-xl p-5 shadow-2xs flex items-start space-x-4 group">
+            <!-- NEW PASSPORT SIZE PHOTO MAKER (Teal Icon) -->
+            <a href="passport-photo-maker.html" class="tool-card bg-white rounded-xl p-5 shadow-2xs flex items-start space-x-4 group">
                 <div class="icon-box h-12 w-12 shrink-0 rounded-xl bg-teal-50 text-teal-500 flex items-center justify-center text-xl group-hover:bg-teal-500 group-hover:text-white transition-all duration-300 shadow-xs">
                     <i class="fa-solid fa-id-card"></i>
                 </div>
                 <div class="flex-grow min-w-0">
                     <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider mb-1 flex items-center justify-between">
                         Passport Size Photo Maker
-                        <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-teal-500 group-hover:translate-x-1 transition-all"></i>
+                        <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-emerald-500 group-hover:translate-x-1 transition-all"></i>
                     </h3>
                     <p class="text-slate-500 text-xs leading-relaxed font-medium">Normal photo ko passport size photo me convert karein wo bhi bulk me. Government forms, Aadhaar, PAN Card, SSC aur job applications ke liye ready.</p>
                 </div>
             </a>
 
-            <!-- 4. SIGNATURE CLEANER LAYER COMPONENT (Purple Theme) -->
-            <a href="clear-document.html" class="tool-card card-purple bg-white rounded-xl p-5 shadow-2xs flex items-start space-x-4 group">
+            <!-- 4. SIGNATURE CLEANER LAYER COMPONENT (Purple Icon) -->
+            <a href="clear-document.html" class="tool-card bg-white rounded-xl p-5 shadow-2xs flex items-start space-x-4 group">
                 <div class="icon-box h-12 w-12 shrink-0 rounded-xl bg-purple-50 text-purple-500 flex items-center justify-center text-xl group-hover:bg-purple-500 group-hover:text-white transition-all duration-300 shadow-xs">
                     <i class="fa-solid fa-signature"></i>
                 </div>
                 <div class="flex-grow min-w-0">
                     <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider mb-1 flex items-center justify-between">
                         Signature Cleaner
-                        <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-purple-500 group-hover:translate-x-1 transition-all"></i>
+                        <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-emerald-500 group-hover:translate-x-1 transition-all"></i>
                     </h3>
                     <p class="text-slate-500 text-xs leading-relaxed font-medium">Signature ka yellow ya dark background hataakar clean white background banayein. Online forms aur document uploads ke liye perfect.</p>
                 </div>
             </a>
 
-            <!-- 5. IMAGE FORMAT CONVERTER LAYER COMPONENT (Rose Theme) -->
-            <a href="image-format-converter.html" class="tool-card card-rose bg-white rounded-xl p-5 shadow-2xs flex items-start space-x-4 group">
+            <!-- 5. IMAGE FORMAT CONVERTER LAYER COMPONENT (Rose Icon) -->
+            <a href="image-format-converter.html" class="tool-card bg-white rounded-xl p-5 shadow-2xs flex items-start space-x-4 group">
                 <div class="icon-box h-12 w-12 shrink-0 rounded-xl bg-rose-50 text-rose-500 flex items-center justify-center text-xl group-hover:bg-rose-500 group-hover:text-white transition-all duration-300 shadow-xs">
                     <i class="fa-solid fa-layer-group"></i>
                 </div>
                 <div class="flex-grow min-w-0">
                     <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider mb-1 flex items-center justify-between">
                         JPG, PNG & WEBP Converter
-                        <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-rose-500 group-hover:translate-x-1 transition-all"></i>
+                        <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-emerald-500 group-hover:translate-x-1 transition-all"></i>
                     </h3>
                     <p class="text-slate-500 text-xs leading-relaxed font-medium">JPG ko PNG, PNG ko JPG aur WEBP me convert karein. Fast, secure aur quality loss ke bina.</p>
                 </div>
             </a>
 
-            <!-- 6. ONE CLICK PHOTO EDITOR (Violet Theme) -->
-            <a href="all-in-one.html" class="tool-card card-violet bg-white rounded-xl p-5 shadow-2xs flex items-start space-x-4 group">
+            <!-- 6. ONE CLICK PHOTO EDITOR (Violet Icon) -->
+            <a href="all-in-one.html" class="tool-card bg-white rounded-xl p-5 shadow-2xs flex items-start space-x-4 group">
                 <div class="icon-box h-12 w-12 shrink-0 rounded-xl bg-violet-50 text-violet-500 flex items-center justify-center text-xl group-hover:bg-violet-500 group-hover:text-white transition-all duration-300 shadow-xs">
                     <i class="fa-solid fa-bolt"></i>
                 </div>
                 <div class="flex-grow min-w-0">
                     <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider mb-1 flex items-center justify-between">
                         One click Photo editor
-                        <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-violet-500 group-hover:translate-x-1 transition-all"></i>
+                        <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-emerald-500 group-hover:translate-x-1 transition-all"></i>
                     </h3>
                     <p class="text-slate-500 text-xs leading-relaxed font-medium">Resize, compress, crop, convert aur signature clean karne ke sabhi tools ek hi jagah par. Government form filling ke liye complete solution.</p>
                 </div>
             </a>
 
-            <!-- 7. IMAGE SIZE INCREASER (Emerald Theme) -->
-            <a href="increase-image-size.html" class="tool-card card-emerald bg-white rounded-xl p-5 shadow-2xs flex items-start space-x-4 group">
+            <!-- 7. IMAGE SIZE INCREASER (Emerald Icon) -->
+            <a href="increase-image-size.html" class="tool-card bg-white rounded-xl p-5 shadow-2xs flex items-start space-x-4 group">
                 <div class="icon-box h-12 w-12 shrink-0 rounded-xl bg-emerald-50 text-emerald-500 flex items-center justify-center text-xl group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300 shadow-xs">
                     <i class="fa-solid fa-expand"></i>
                 </div>
@@ -253,30 +236,30 @@
             </a>
         </div>
 
-        <!-- NEW SEO BLOCK: POPULAR IMAGE COMPRESSION TOOLS SECTION (Updated to Blue Clickable Links) -->
+        <!-- NEW SEO BLOCK: POPULAR IMAGE COMPRESSION TOOLS SECTION -->
         <div class="mt-12 bg-white border border-slate-200 rounded-xl p-6 shadow-2xs">
             <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider mb-4 flex items-center space-x-2">
                 <i class="fa-solid fa-circle-nodes text-emerald-500"></i>
                 <span>Popular Image Compression Tools</span>
             </h3>
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
-                <a href="compress-image.html" class="border border-slate-200 hover:border-blue-500 hover:bg-blue-50/30 p-3 rounded-lg text-center text-xs font-bold text-blue-600 hover:text-blue-800 hover:underline transition-all shadow-3xs flex flex-col justify-center items-center">
+                <a href="compress-image.html" class="border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50/30 p-3 rounded-lg text-center text-xs font-bold text-blue-600 hover:text-blue-800 hover:underline transition-all shadow-3xs flex flex-col justify-center items-center">
                     <i class="fa-solid fa-file-image mb-1.5 text-blue-400"></i>
                     <span>Compress Image to 20KB</span>
                 </a>
-                <a href="compress-image.html" class="border border-slate-200 hover:border-blue-500 hover:bg-blue-50/30 p-3 rounded-lg text-center text-xs font-bold text-blue-600 hover:text-blue-800 hover:underline transition-all shadow-3xs flex flex-col justify-center items-center">
+                <a href="compress-image.html" class="border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50/30 p-3 rounded-lg text-center text-xs font-bold text-blue-600 hover:text-blue-800 hover:underline transition-all shadow-3xs flex flex-col justify-center items-center">
                     <i class="fa-solid fa-file-image mb-1.5 text-blue-400"></i>
                     <span>Compress Image to 50KB</span>
                 </a>
-                <a href="compress-image.html" class="border border-slate-200 hover:border-blue-500 hover:bg-blue-50/30 p-3 rounded-lg text-center text-xs font-bold text-blue-600 hover:text-blue-800 hover:underline transition-all shadow-3xs flex flex-col justify-center items-center">
+                <a href="compress-image.html" class="border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50/30 p-3 rounded-lg text-center text-xs font-bold text-blue-600 hover:text-blue-800 hover:underline transition-all shadow-3xs flex flex-col justify-center items-center">
                     <i class="fa-solid fa-file-image mb-1.5 text-blue-400"></i>
                     <span>Compress Image to 100KB</span>
                 </a>
-                <a href="compress-image.html" class="border border-slate-200 hover:border-blue-500 hover:bg-blue-50/30 p-3 rounded-lg text-center text-xs font-bold text-blue-600 hover:text-blue-800 hover:underline transition-all shadow-3xs flex flex-col justify-center items-center">
+                <a href="compress-image.html" class="border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50/30 p-3 rounded-lg text-center text-xs font-bold text-blue-600 hover:text-blue-800 hover:underline transition-all shadow-3xs flex flex-col justify-center items-center">
                     <i class="fa-solid fa-file-image mb-1.5 text-blue-400"></i>
                     <span>Compress Image to 200KB</span>
                 </a>
-                <a href="compress-image.html" class="border border-slate-200 hover:border-blue-500 hover:bg-blue-50/30 p-3 rounded-lg text-center text-xs font-bold text-blue-600 hover:text-blue-800 hover:underline transition-all shadow-3xs flex flex-col justify-center items-center">
+                <a href="compress-image.html" class="border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50/30 p-3 rounded-lg text-center text-xs font-bold text-blue-600 hover:text-blue-800 hover:underline transition-all shadow-3xs flex flex-col justify-center items-center">
                     <i class="fa-solid fa-file-image mb-1.5 text-blue-400"></i>
                     <span>Compress Image to 500KB</span>
                 </a>
@@ -307,7 +290,7 @@
             </div>
         </div>
 
-        <!-- NEW SEO STRATEGIC ELEMENT: ACCORDION/LIST FAQ SECTION -->
+        <!-- NEW FAQ SECTION -->
         <div class="mt-12 bg-white border border-slate-200 rounded-xl p-6 shadow-2xs">
             <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider mb-6 flex items-center space-x-2">
                 <i class="fa-solid fa-circle-question text-emerald-500"></i>
@@ -395,7 +378,7 @@
                     <li><a href="resize-image.html" class="hover:text-emerald-500 transition-colors">UPPSC Photo Resize</a></li>
                 </ul>
             </div>
-            <!-- Column 4: Support & Blog (Future-ready) -->
+            <!-- Column 4: Support & Blog -->
             <div>
                 <h4 class="font-black text-slate-900 uppercase tracking-wider text-[11px] mb-2">Support</h4>
                 <ul class="space-y-1.5 font-bold text-slate-500">
@@ -424,18 +407,14 @@
                 
                 const observerOptions = {
                     root: null,
-                    rootMargin: '-25% 0px -25% 0px', // Targeting precise viewport center
+                    rootMargin: '-25% 0px -25% 0px',
                     threshold: 0.5 
                 };
 
                 const observer = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
-                            // Automatically fetch the color layout class
-                            const colorClass = Array.from(entry.target.classList).find(c => c.startsWith('card-'));
-                            if (colorClass) {
-                                entry.target.classList.add('mobile-active');
-                            }
+                            entry.target.classList.add('mobile-active');
                         } else {
                             entry.target.classList.remove('mobile-active');
                         }
