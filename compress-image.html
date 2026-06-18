@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Image Compressor - Compress Image to 20KB, 50KB, 100KB | EditSpark</title>
-    <meta name="description" content="Free online image compressor. Compress your JPG, PNG, or JPEG images to exact sizes like 20KB, 50KB, or 100KB without losing quality. Perfect for government forms.">
+    <title>Online Bulk Image Compressor - Compress Images to 20KB, 50KB, 100KB | EditSpark</title>
+    <meta name="description" content="Free online bulk image compressor. Compress multiple JPG, PNG, or JPEG images together to exact sizes like 20KB, 50KB, or 100KB instantly without losing quality.">
     <link class="canonical" rel="canonical" href="https://edit-spark.vercel.app/compress-image.html" />
     
     <!-- Tailwind CSS for Styling -->
@@ -50,30 +50,35 @@
     <main class="flex-grow max-w-4xl mx-auto px-4 py-8 w-full">
         <!-- SEO Optimized Heading -->
         <div class="text-center mb-8">
-            <h1 class="text-3xl font-bold text-slate-900 sm:text-4xl">Advanced Image Compressor</h1>
-            <p class="mt-2 text-slate-600">Compress your images to specific KB sizes instantly while maintaining quality.</p>
+            <h1 class="text-3xl font-bold text-slate-900 sm:text-4xl">Advanced Bulk Image Compressor</h1>
+            <p class="mt-2 text-slate-600">Compress multiple images to your exact target KB size simultaneously and download fast.</p>
         </div>
 
         <!-- Compressor Tool Card -->
         <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 border border-slate-100">
             <!-- Dropzone -->
             <div id="compressDropzone" class="preview-box rounded-xl p-8 text-center cursor-pointer bg-slate-50 mb-6">
-                <input type="file" id="compressInput" accept="image/*" class="hidden">
+                <input type="file" id="compressInput" accept="image/*" multiple class="hidden">
                 <div id="compressPrompt">
-                    <i class="fa-solid fa-cloud-arrow-up text-4xl text-indigo-500 mb-3"></i>
-                    <p class="font-medium text-slate-700">Drag & drop your image here, or <span class="text-indigo-600">browse</span></p>
-                    <p class="text-xs text-slate-400 mt-1">Supports JPG, JPEG, PNG</p>
+                    <i class="fa-solid fa-images text-4xl text-indigo-500 mb-3"></i>
+                    <p class="font-medium text-slate-700">Drag & drop your images here, or <span class="text-indigo-600">browse</span></p>
+                    <p class="text-xs text-slate-400 mt-1">Supports multiple JPG, JPEG, PNG files together</p>
                 </div>
-                <div id="compressPreviewContainer" class="hidden flex flex-col items-center">
-                    <img id="compressPreview" class="max-h-64 rounded shadow-sm mb-3">
-                    <p id="compressFileInfo" class="text-sm text-slate-500 font-medium"></p>
+                <div id="compressPreviewContainer" class="hidden text-left">
+                    <div class="flex justify-between items-center mb-3">
+                        <span id="totalFilesInfo" class="text-sm font-bold text-indigo-600"></span>
+                        <button id="clearAllBtn" class="text-xs text-red-500 hover:text-red-700 font-semibold"><i class="fa-solid fa-trash-can mr-1"></i>Clear All</button>
+                    </div>
+                    <div id="filesList" class="max-h-48 overflow-y-auto space-y-2 pr-1 text-xs text-slate-600">
+                        <!-- Selected Files Row Will Inject Here -->
+                    </div>
                 </div>
             </div>
 
             <!-- Controls -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 <div>
-                    <label class="block text-sm font-semibold text-slate-700 mb-2">Target File Size (KB)</label>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Target File Size (Strict Max KB)</label>
                     <div class="flex space-x-2">
                         <input type="number" id="targetSize" value="50" min="5" max="5000" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 font-medium">
                         <span class="inline-flex items-center px-3 rounded-lg bg-slate-100 text-slate-500 font-medium text-sm">KB</span>
@@ -88,8 +93,8 @@
                 <div>
                     <label class="block text-sm font-semibold text-slate-700 mb-2">Output Format</label>
                     <select id="compressFormat" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 font-medium bg-white">
-                        <option value="image/jpeg">JPEG (Best for photos)</option>
-                        <option value="image/png">PNG (Lossless)</option>
+                        <option value="image/jpeg">JPEG (Best for exact KB reduction)</option>
+                        <option value="image/png">PNG (Lossless Format)</option>
                     </select>
                 </div>
             </div>
@@ -97,20 +102,36 @@
             <!-- Compress Button -->
             <button id="compressBtn" class="w-full gradient-bg hover:opacity-95 text-white font-bold py-3 px-6 rounded-xl shadow-lg shadow-indigo-100 flex items-center justify-center space-x-2 transition-all cursor-pointer">
                 <i class="fa-solid fa-file-contract"></i>
-                <span>Compress Image</span>
+                <span>Compress All Images</span>
             </button>
 
             <!-- Result Section -->
             <div id="compressResult" class="hidden mt-8 pt-6 border-t border-slate-100 text-center">
                 <div class="inline-flex items-center space-x-2 text-green-600 font-semibold mb-3">
                     <i class="fa-solid fa-circle-check text-xl"></i>
-                    <span>Compression Successful!</span>
+                    <span>All Images Processed Successfully!</span>
                 </div>
-                <p id="resultInfo" class="text-sm text-slate-600 font-medium mb-4"></p>
-                <a id="downloadCompressBtn" class="inline-flex items-center space-x-2 bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-8 rounded-xl shadow-lg shadow-emerald-100 transition-all cursor-pointer">
-                    <i class="fa-solid fa-download"></i>
-                    <span>Download Compressed Image</span>
-                </a>
+                
+                <!-- Detailed Table Result -->
+                <div class="overflow-x-auto my-4 rounded-xl border border-slate-100">
+                    <table class="w-full text-left border-collapse text-sm">
+                        <thead class="bg-slate-50 text-slate-500 font-semibold border-b border-slate-100">
+                            <tr>
+                                <th class="p-3">File Name</th>
+                                <th class="p-3">Original Size</th>
+                                <th class="p-3 text-right">Compressed Size</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultTableBody" class="text-slate-700 division-y division-slate-100 font-medium">
+                            <!-- JS Inject Rows -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <button id="downloadAllBtn" class="inline-flex items-center space-x-2 bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-8 rounded-xl shadow-lg shadow-emerald-100 transition-all cursor-pointer w-full md:w-auto justify-center">
+                    <i class="fa-solid fa-cloud-arrow-down"></i>
+                    <span>Download All Compressed Images</span>
+                </button>
             </div>
         </div>
     </main>
@@ -122,72 +143,162 @@
         </div>
     </footer>
 
-    <!-- JavaScript Logic (Directly Extracted from your original code) -->
+    <!-- JavaScript Bulk Processing Logic -->
     <script>
         const dropzone = document.getElementById('compressDropzone');
         const fileInput = document.getElementById('compressInput');
         const promptDiv = document.getElementById('compressPrompt');
         const previewContainer = document.getElementById('compressPreviewContainer');
-        const previewImg = document.getElementById('compressPreview');
-        const fileInfo = document.getElementById('compressFileInfo');
+        const filesList = document.getElementById('filesList');
+        const totalFilesInfo = document.getElementById('totalFilesInfo');
+        const clearAllBtn = document.getElementById('clearAllBtn');
         const compressBtn = document.getElementById('compressBtn');
         const compressResult = document.getElementById('compressResult');
-        const resultInfo = document.getElementById('resultInfo');
-        const downloadBtn = document.getElementById('downloadCompressBtn');
+        const resultTableBody = document.getElementById('resultTableBody');
+        const downloadAllBtn = document.getElementById('downloadAllBtn');
 
-        let activeFile = null;
+        let selectedFiles = [];
+        let compressedResults = [];
 
-        dropzone.addEventListener('click', () => fileInput.click());
+        dropzone.addEventListener('click', (e) => {
+            if (e.target !== clearAllBtn && !clearAllBtn.contains(e.target) && !filesList.contains(e.target)) {
+                fileInput.click();
+            }
+        });
+
+        clearAllBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            resetUploader();
+        });
+
         dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('border-indigo-500', 'bg-indigo-50/30'); });
         dropzone.addEventListener('dragleave', () => { dropzone.classList.remove('border-indigo-500', 'bg-indigo-50/30'); });
         dropzone.addEventListener('drop', (e) => {
             e.preventDefault();
             dropzone.classList.remove('border-indigo-500', 'bg-indigo-50/30');
-            if(e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
-        });
-        fileInput.addEventListener('change', (e) => {
-            if(e.target.files.length) handleFile(e.target.files[0]);
+            if(e.dataTransfer.files.length) handleFiles(e.dataTransfer.files);
         });
 
-        function handleFile(file) {
-            if(!file.type.startsWith('image/')) { alert('Please select a valid image file.'); return; }
-            activeFile = file;
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                previewImg.src = e.target.result;
-                promptDiv.classList.add('hidden');
-                previewContainer.classList.remove('hidden');
-                fileInfo.textContent = `${file.name} (${(file.size/1024).toFixed(1)} KB)`;
-                compressResult.classList.add('hidden');
-            };
-            reader.readAsDataURL(file);
+        fileInput.addEventListener('change', (e) => {
+            if(e.target.files.length) handleFiles(e.target.files);
+        });
+
+        function handleFiles(files) {
+            for (let file of files) {
+                if(file.type.startsWith('image/')) {
+                    // Prevent duplicates
+                    if(!selectedFiles.some(f => f.name === file.name && f.size === file.size)) {
+                        selectedFiles.push(file);
+                    }
+                }
+            }
+            renderSelectedFiles();
+        }
+
+        function renderSelectedFiles() {
+            if(selectedFiles.length === 0) {
+                resetUploader();
+                return;
+            }
+            promptDiv.classList.add('hidden');
+            previewContainer.classList.remove('hidden');
+            compressResult.classList.add('hidden');
+            totalFilesInfo.textContent = `${selectedFiles.length} Images Selected`;
+            
+            filesList.innerHTML = '';
+            selectedFiles.forEach((file, index) => {
+                const row = document.createElement('div');
+                row.className = "flex justify-between items-center bg-white p-2 rounded border border-slate-100 shadow-xs";
+                row.innerHTML = `
+                    <span class="truncate max-w-[70%] font-medium text-slate-700"><i class="fa-regular fa-image text-indigo-500 mr-2"></i>${file.name}</span>
+                    <div class="flex items-center space-x-3">
+                        <span class="text-slate-400 font-semibold">${(file.size/1024).toFixed(1)} KB</span>
+                        <button onclick="event.stopPropagation(); removeFile(${index})" class="text-slate-400 hover:text-red-500 transition-colors cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                `;
+                filesList.appendChild(row);
+            });
+        }
+
+        window.removeFile = function(index) {
+            selectedFiles.splice(index, 1);
+            renderSelectedFiles();
+        };
+
+        function resetUploader() {
+            selectedFiles = [];
+            compressedResults = [];
+            fileInput.value = '';
+            filesList.innerHTML = '';
+            promptDiv.classList.remove('hidden');
+            previewContainer.classList.add('hidden');
+            compressResult.classList.add('hidden');
         }
 
         compressBtn.addEventListener('click', async () => {
-            if(!activeFile) { alert('Please upload an image first.'); return; }
+            if(selectedFiles.length === 0) { alert('Please upload at least one image first.'); return; }
             const targetKb = parseFloat(document.getElementById('targetSize').value);
             if(!targetKb || targetKb <= 0) { alert('Please enter a valid target size.'); return; }
             
             compressBtn.disabled = true;
-            compressBtn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> <span>Processing...</span>';
+            compressBtn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> <span>Processing Bulk Files...</span>';
+            compressedResults = [];
+            resultTableBody.innerHTML = '';
 
             try {
                 const mimeType = document.getElementById('compressFormat').value;
-                const resultBlob = await compressToTargetSize(activeFile, targetKb, mimeType);
-                
-                const url = URL.createObjectURL(resultBlob);
-                downloadBtn.href = url;
-                downloadBtn.download = `editspark_compressed_${activeFile.name}`;
-                
-                resultInfo.textContent = `Original: ${(activeFile.size/1024).toFixed(1)} KB | Compressed: ${(resultBlob.size/1024).toFixed(1)} KB`;
+
+                // Process all images sequentially but fast using Promise
+                for (let file of selectedFiles) {
+                    const resultBlob = await compressToTargetSize(file, targetKb, mimeType);
+                    compressedResults.push({
+                        blob: resultBlob,
+                        name: `editspark_compressed_${file.name}`,
+                        origSize: (file.size/1024).toFixed(1),
+                        compSize: (resultBlob.size/1024).toFixed(1)
+                    });
+                }
+
+                // Render Results in Table
+                compressedResults.forEach(item => {
+                    const row = document.createElement('tr');
+                    row.className = "border-b border-slate-50 hover:bg-slate-50/50";
+                    row.innerHTML = `
+                        <td class="p-3 truncate max-w-xs font-semibold text-slate-700">${item.name.replace('editspark_compressed_', '')}</td>
+                        <td class="p-3 text-slate-400">${item.origSize} KB</td>
+                        <td class="p-3 text-right text-emerald-600 font-bold">${item.compSize} KB</td>
+                    `;
+                    resultTableBody.appendChild(row);
+                });
+
                 compressResult.classList.remove('hidden');
                 compressResult.scrollIntoView({ behavior: 'smooth' });
             } catch (err) {
                 alert('Compression failed: ' + err.message);
             } finally {
                 compressBtn.disabled = false;
-                compressBtn.innerHTML = '<i class="fa-solid fa-file-contract"></i> <span>Compress Image</span>';
+                compressBtn.innerHTML = '<i class="fa-solid fa-file-contract"></i> <span>Compress All Images</span>';
             }
+        });
+
+        // Instant and Fast Download triggers sequentially
+        downloadAllBtn.addEventListener('click', () => {
+            if(compressedResults.length === 0) return;
+            
+            compressedResults.forEach((item, index) => {
+                setTimeout(() => {
+                    const url = URL.createObjectURL(item.blob);
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = item.name;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    
+                    // Cleanup URL to release memory allocations
+                    setTimeout(() => URL.revokeObjectURL(url), 100);
+                }, index * 200); // 200ms delay protects browsers from blocking bulk popups
+            });
         });
 
         function compressToTargetSize(file, targetKb, mimeType) {
@@ -199,7 +310,6 @@
                     let width = img.width;
                     let height = img.height;
                     
-                    // Max dimensions step-down for big files
                     const maxDim = 2500;
                     if(width > maxDim || height > maxDim) {
                         if(width > height) { height = Math.round((height * maxDim) / width); width = maxDim; }
@@ -212,7 +322,6 @@
                     ctx.drawImage(img, 0, 0, width, height);
 
                     if(mimeType === 'image/png') {
-                        // PNG is lossless, step down size if too large
                         let scale = 0.9;
                         function stepDownPng() {
                             canvas.width = width * scale;
@@ -225,20 +334,23 @@
                         }
                         canvas.toBlob((blob) => { if(blob.size / 1024 <= targetKb) resolve(blob); else stepDownPng(); }, mimeType);
                     } else {
-                        // Binary search for perfect JPEG quality
+                        // Strict Binary Search quality algorithm to achieve correct target KB sizing
                         let low = 0.01, high = 1.0, bestBlob = null, iterations = 0;
                         function checkQuality() {
-                            if(iterations > 8) { resolve(bestBlob || new Blob()); return; }
+                            if(iterations > 10) { 
+                                resolve(bestBlob || new Blob()); 
+                                return; 
+                            }
                             iterations++;
                             const mid = (low + high) / 2;
                             canvas.toBlob((blob) => {
-                                if(!blob) { reject(new Error('Canvas blank')); return; }
+                                if(!blob) { reject(new Error('Canvas runtime error')); return; }
                                 const currentKb = blob.size / 1024;
                                 if(currentKb <= targetKb) {
                                     bestBlob = blob;
-                                    low = mid; // try higher quality
+                                    low = mid; 
                                 } else {
-                                    high = mid; // need lower quality
+                                    high = mid; 
                                 }
                                 checkQuality();
                             }, mimeType, mid);
