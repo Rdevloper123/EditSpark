@@ -401,7 +401,7 @@
             });
         }
 
-        // Precision Core Algorithm (Binary Search Quality Window + Resolution Scale Fallback)
+        // Precision Core Algorithm (High Accuracy Binary Search Window)
         async function compressSingleImage(sourceImage, targetSizeInBytes) {
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
@@ -413,7 +413,7 @@
 
             let minQuality = 0.01;
             let maxQuality = 1.0;
-            let iterations = 10; 
+            let iterations = 14; // Increased from 10 to 14 for ultimate precision near target KB
             let blob = null;
 
             // FIX: Transparent PNG safety logic -> Canvas backdrop color set to White
@@ -421,21 +421,21 @@
             ctx.fillRect(0, 0, width, height);
             ctx.drawImage(sourceImage, 0, 0, width, height);
 
-            // Step 1: Quality optimization loop
+            // Step 1: Micro-step quality loop
             for (let i = 0; i < iterations; i++) {
                 let midQuality = (minQuality + maxQuality) / 2;
                 blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', midQuality));
                 
                 if (blob.size > targetSizeInBytes) {
-                    maxQuality = midQuality;
+                    maxQuality = midQuality; // Size too high, shift roof down
                 } else {
-                    minQuality = midQuality;
+                    minQuality = midQuality; // Safe size, push floor up to get as close as possible
                 }
             }
 
-            // Step 2: Scale-down fallback layout loop for huge dimensions
+            // Step 2: Adaptive Scale-down step loop if dimensions are massive and overhead is huge
             if (blob && blob.size > targetSizeInBytes) {
-                let scale = 0.9;
+                let scale = 0.95;
                 while (blob.size > targetSizeInBytes && scale > 0.1) {
                     canvas.width = sourceImage.width * scale;
                     canvas.height = sourceImage.height * scale;
@@ -444,8 +444,9 @@
                     ctx.fillRect(0, 0, canvas.width, canvas.height);
                     ctx.drawImage(sourceImage, 0, 0, canvas.width, canvas.height);
                     
-                    blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', 0.35));
-                    scale -= 0.1;
+                    // Keep quality reasonable during scaling to prevent extreme blurriness
+                    blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', 0.5));
+                    scale -= 0.05; // Finer scaling steps for a closer final target match
                 }
             }
             return blob;
