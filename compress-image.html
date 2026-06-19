@@ -4,15 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EditSpark - Compress Image to Target Size</title>
-    
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-
+    <!-- JSZip Library for Bulk Download -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <style>
         :root {
             --primary: #4f46e5;
@@ -23,15 +22,14 @@
             --text-muted: #64748b;
             --border: #e2e8f0;
             --success: #10b981;
+            --danger: #ef4444;
         }
-
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
             font-family: 'Plus Jakarta Sans', sans-serif;
         }
-
         body {
             background-color: var(--bg-main);
             color: var(--text-main);
@@ -41,9 +39,8 @@
             flex-direction: column;
             align-items: center;
         }
-
         .container {
-            max-width: 800px;
+            max-width: 900px;
             width: 100%;
             background: var(--card-bg);
             padding: 2.5rem;
@@ -51,24 +48,20 @@
             box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
             border: 1px solid var(--border);
         }
-
         header {
             text-align: center;
             margin-bottom: 2.5rem;
         }
-
         header h1 {
             font-size: 2rem;
             font-weight: 700;
             color: var(--text-main);
             margin-bottom: 0.5rem;
         }
-
         header p {
             color: var(--text-muted);
             font-size: 0.95rem;
         }
-
         /* Upload Area */
         .upload-zone {
             border: 2px dashed #cbd5e1;
@@ -79,35 +72,29 @@
             transition: all 0.2s ease;
             background: #f8fafc;
         }
-
         .upload-zone:hover, .upload-zone.dragover {
             border-color: var(--primary);
             background: #f0fdf4;
         }
-
         .upload-icon {
             width: 48px;
             height: 48px;
             color: var(--primary);
             margin-bottom: 1rem;
         }
-
         .upload-zone p {
             font-size: 1rem;
             color: var(--text-main);
             font-weight: 500;
             margin-bottom: 0.25rem;
         }
-
         .upload-zone span {
             font-size: 0.85rem;
             color: var(--text-muted);
         }
-
         #fileInput {
             display: none;
         }
-
         /* Workspace Grid */
         .workspace {
             display: none;
@@ -115,14 +102,12 @@
             flex-direction: column;
             gap: 2rem;
         }
-
         .controls-card {
             background: #f8fafc;
             padding: 1.5rem;
             border-radius: 12px;
             border: 1px solid var(--border);
         }
-
         .input-group {
             display: flex;
             flex-direction: column;
@@ -130,13 +115,11 @@
             max-width: 300px;
             margin-bottom: 1.5rem;
         }
-
         .input-group label {
             font-size: 0.9rem;
             font-weight: 600;
             color: var(--text-main);
         }
-
         .input-wrapper {
             display: flex;
             align-items: center;
@@ -145,7 +128,6 @@
             border-radius: 8px;
             padding: 0.5rem 1rem;
         }
-
         .input-wrapper input {
             border: none;
             outline: none;
@@ -153,13 +135,11 @@
             font-size: 1rem;
             font-weight: 500;
         }
-
         .input-wrapper span {
             color: var(--text-muted);
             font-weight: 600;
             font-size: 0.9rem;
         }
-
         .btn {
             background: var(--primary);
             color: white;
@@ -174,41 +154,42 @@
             gap: 0.5rem;
             transition: background 0.2s;
         }
-
         .btn:hover {
             background: var(--primary-hover);
         }
-
-        /* Preview Section */
-        .preview-grid {
+        /* Dynamic Batch Preview Styles */
+        .batch-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .preview-row {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            background: #ffffff;
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1.5rem;
+            position: relative;
         }
-
         @media (max-width: 640px) {
-            .preview-grid {
+            .preview-row {
                 grid-template-columns: 1fr;
             }
         }
-
-        .preview-box {
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1rem;
-            background: #ffffff;
-        }
-
         .preview-box h3 {
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
             color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
-
         .img-container {
             width: 100%;
-            height: 250px;
+            height: 180px;
             border-radius: 8px;
             overflow: hidden;
             background: #f1f5f9;
@@ -216,21 +197,20 @@
             align-items: center;
             justify-content: center;
             margin-bottom: 0.75rem;
+            border: 1px solid var(--border);
         }
-
         .img-container img {
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
         }
-
         .file-info {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             font-size: 0.85rem;
             font-weight: 500;
         }
-
         .status-badge {
             color: var(--success);
             font-weight: 600;
@@ -238,7 +218,6 @@
             align-items: center;
             gap: 0.25rem;
         }
-
         /* Loader */
         .loader {
             display: none;
@@ -248,32 +227,37 @@
             font-size: 0.9rem;
             margin-top: 1rem;
         }
-
         .spinner {
             animation: rotate 2s linear infinite;
             width: 20px;
             height: 20px;
         }
-
         @keyframes rotate {
             100% { transform: rotate(360deg); }
+        }
+        .actions-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
         }
     </style>
 </head>
 <body>
-
     <div class="container">
         <header>
             <h1>Compress Image to Target Size</h1>
-            <p>Upload your image and specify the exact KB size you need.</p>
+            <p>Upload single or multiple images and specify the exact KB size you need.</p>
         </header>
 
         <!-- Upload Zone -->
         <div class="upload-zone" id="dropZone" onclick="document.getElementById('fileInput').click()">
             <i data-lucide="image-up" class="upload-icon"></i>
-            <p>Click to upload or drag and drop</p>
+            <p>Click to upload or drag and drop multiple images</p>
             <span>Supports PNG, JPG, JPEG, WEBP</span>
-            <input type="file" id="fileInput" accept="image/*">
+            <input type="file" id="fileInput" accept="image/*" multiple>
         </div>
 
         <!-- Workspace Section -->
@@ -287,47 +271,23 @@
                     </div>
                 </div>
                 <button class="btn" id="compressBtn">
-                    <i data-lucide="sliders"></i> Compress Image
+                    <i data-lucide="sliders"></i> Re-Compress All
                 </button>
-
                 <div class="loader" id="loader">
-                    <i data-lucide="loader-2" class="spinner"></i> Optimizing image quality to match target size...
+                    <i data-lucide="loader-2" class="spinner"></i> Processing images...
                 </div>
             </div>
 
-            <!-- Previews -->
-            <div class="preview-grid">
-                <!-- Original Image -->
-                <div class="preview-box">
-                    <h3>Original Image</h3>
-                    <div class="img-container">
-                        <img id="originalPreview" alt="Original Preview">
-                    </div>
-                    <div class="file-info">
-                        <span id="originalName">image.jpg</span>
-                        <span id="originalSize">0 KB</span>
-                    </div>
-                </div>
+            <!-- Previews Container (Dynamic Rows will sit here) -->
+            <div class="batch-container" id="batchContainer"></div>
 
-                <!-- Compressed Image -->
-                <div class="preview-box">
-                    <h3>Compressed Result</h3>
-                    <div class="img-container">
-                        <img id="compressedPreview" alt="Compressed Preview">
-                    </div>
-                    <div class="file-info">
-                        <span class="status-badge" id="statusBadge" style="display: none;">
-                            <i data-lucide="check-circle-2" style="width: 16px; height: 16px;"></i> Ready
-                        </span>
-                        <span id="compressedSize" style="margin-left: auto; font-weight: 600;">0 KB</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Action Buttons -->
-            <div style="text-align: right;">
-                <button class="btn" id="downloadBtn" style="background: var(--success);">
-                    <i data-lucide="download"></i> Download Compressed Image
+            <!-- Dynamic Global Action Buttons Footer -->
+            <div class="actions-footer">
+                <button class="btn" id="resetBtn" style="background: var(--danger);">
+                    <i data-lucide="trash-2"></i> Clear All
+                </button>
+                <button class="btn" id="downloadAllBtn" style="background: var(--success); display: none;">
+                    <i data-lucide="download"></i> Download All as ZIP
                 </button>
             </div>
         </div>
@@ -340,83 +300,103 @@
         const dropZone = document.getElementById('dropZone');
         const fileInput = document.getElementById('fileInput');
         const workspace = document.getElementById('workspace');
-        const originalPreview = document.getElementById('originalPreview');
-        const compressedPreview = document.getElementById('compressedPreview');
-        const originalSizeText = document.getElementById('originalSize');
-        const compressedSizeText = document.getElementById('compressedSize');
-        const originalNameText = document.getElementById('originalName');
+        const batchContainer = document.getElementById('batchContainer');
         const targetSizeInput = document.getElementById('targetSize');
         const compressBtn = document.getElementById('compressBtn');
-        const downloadBtn = document.getElementById('downloadBtn');
+        const downloadAllBtn = document.getElementById('downloadAllBtn');
+        const resetBtn = document.getElementById('resetBtn');
         const loader = document.getElementById('loader');
-        const statusBadge = document.getElementById('statusBadge');
 
-        let sourceImage = new Image();
-        let fileType = 'image/jpeg';
-        let fileName = 'compressed-image.jpg';
+        let uploadedFiles = [];
+        let compressedResults = []; // Array to store processed blobs for ZIP generation
 
         // Drag and Drop Logic
         ['dragenter', 'dragover'].forEach(eventName => {
-            dropZone.addEventListener(eventName, (e) => {
-                e.preventDefault();
-                dropZone.classList.add('dragover');
-            }, false);
+            dropZone.addEventListener(eventName, (e) => { e.preventDefault(); dropZone.classList.add('dragover'); }, false);
         });
-
         ['dragleave', 'drop'].forEach(eventName => {
-            dropZone.addEventListener(eventName, (e) => {
-                e.preventDefault();
-                dropZone.classList.remove('dragover');
-            }, false);
+            dropZone.addEventListener(eventName, (e) => { e.preventDefault(); dropZone.classList.remove('dragover'); }, false);
         });
 
         dropZone.addEventListener('drop', (e) => {
             const dt = e.dataTransfer;
-            const files = dt.files;
-            if (files.length > 0) handleFile(files[0]);
+            if (dt.files.length > 0) handleFiles(dt.files);
         });
 
         fileInput.addEventListener('change', (e) => {
-            if (e.target.files.length > 0) handleFile(e.target.files[0]);
+            if (e.target.files.length > 0) handleFiles(e.target.files);
         });
 
-        function handleFile(file) {
-            if (!file.type.startsWith('image/')) {
-                alert('Please upload a valid image file.');
+        function handleFiles(files) {
+            const validFiles = Array.from(files).filter(file => file.type.startsWith('image/'));
+            if (validFiles.length === 0) {
+                alert('Please upload valid image files.');
                 return;
             }
-
-            fileType = file.type;
-            fileName = file.name;
-            originalNameText.textContent = fileName;
-            originalSizeText.textContent = formatBytes(file.size);
-
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                originalPreview.src = e.target.result;
-                sourceImage.src = e.target.result;
-                
-                sourceImage.onload = () => {
-                    workspace.style.display = 'flex';
-                    dropZone.style.display = 'none';
-                    // Auto run initial compression
-                    compressImage();
-                };
-            };
-            reader.readAsDataURL(file);
+            uploadedFiles = validFiles;
+            workspace.style.display = 'flex';
+            dropZone.style.display = 'none';
+            compressAllImages();
         }
 
-        // Binary Search Compression Algorithm
-        async function compressImage() {
+        // Sequential multi-image compression processor
+        async function compressAllImages() {
             loader.style.display = 'flex';
-            statusBadge.style.display = 'none';
             compressBtn.disabled = true;
+            downloadAllBtn.style.display = 'none';
+            batchContainer.innerHTML = ''; // Clear previous UI rows
+            compressedResults = [];
 
             const targetSizeInBytes = targetSizeInput.value * 1024;
+
+            for (let i = 0; i < uploadedFiles.length; i++) {
+                const file = uploadedFiles[i];
+                
+                // Update processing loader text
+                loader.innerHTML = `<i data-lucide="loader-2" class="spinner"></i> Compressing ${i + 1} of ${uploadedFiles.length}: ${file.name}...`;
+                lucide.createIcons();
+
+                // 1. Load image file into image object
+                const img = await loadImage(file);
+
+                // 2. Perform accurate execution matching
+                const compressedBlob = await compressSingleImage(img, targetSizeInBytes);
+
+                const cleanName = `compressed_${file.name.split('.')[0]}.jpg`;
+                compressedResults.push({ blob: compressedBlob, name: cleanName });
+
+                // 3. Append explicit row with individual download options
+                createPreviewRow(file, compressedBlob, cleanName);
+            }
+
+            loader.style.display = 'none';
+            compressBtn.disabled = false;
+
+            // Show ZIP download button only if there are multiple images
+            if (uploadedFiles.length > 1) {
+                downloadAllBtn.style.display = 'inline-flex';
+                downloadAllBtn.innerHTML = `<i data-lucide="download"></i> Download All (${uploadedFiles.length}) as ZIP`;
+                lucide.createIcons();
+            }
+        }
+
+        function loadImage(file) {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.onload = () => resolve(img);
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // Precision Core Algorithm (Binary Search Quality Window + Resolution Scale Fallback)
+        async function compressSingleImage(sourceImage, targetSizeInBytes) {
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
 
-            // Setup dimensions
             let width = sourceImage.width;
             let height = sourceImage.height;
             canvas.width = width;
@@ -424,57 +404,119 @@
 
             let minQuality = 0.01;
             let maxQuality = 1.0;
-            let iterations = 8;
+            let iterations = 10; // Precision bump for perfect target matching
             let blob = null;
 
-            // Step 1: Render initially to Canvas
+            // FIX: Transparent PNG safety logic -> Canvas backdrop color set to White
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, width, height);
             ctx.drawImage(sourceImage, 0, 0, width, height);
 
-            // Step 2: Adaptive iterative adjustment loop
+            // Step 1: Quality optimization loop
             for (let i = 0; i < iterations; i++) {
                 let midQuality = (minQuality + maxQuality) / 2;
                 blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', midQuality));
                 
                 if (blob.size > targetSizeInBytes) {
-                    maxQuality = midQuality; // Reduce quality window
+                    maxQuality = midQuality;
                 } else {
-                    minQuality = midQuality; // Increase quality baseline
+                    minQuality = midQuality;
                 }
             }
 
-            // Fallback strategy if even lowest quality is larger -> scale down resolution
+            // Step 2: Scale-down fallback layout loop for huge dimensions
             if (blob && blob.size > targetSizeInBytes) {
-                let scale = 0.8;
-                while (blob.size > targetSizeInBytes && scale > 0.2) {
+                let scale = 0.9;
+                while (blob.size > targetSizeInBytes && scale > 0.1) {
                     canvas.width = sourceImage.width * scale;
                     canvas.height = sourceImage.height * scale;
+                    
+                    ctx.fillStyle = '#ffffff';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
                     ctx.drawImage(sourceImage, 0, 0, canvas.width, canvas.height);
-                    blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', 0.5));
-                    scale -= 0.15;
+                    
+                    blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', 0.35));
+                    scale -= 0.1;
                 }
             }
-
-            // Display result
-            if (blob) {
-                const url = URL.createObjectURL(blob);
-                compressedPreview.src = url;
-                compressedSizeText.textContent = formatBytes(blob.size);
-                
-                downloadBtn.onclick = () => {
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = `compressed_${fileName.split('.')[0]}.jpg`;
-                    a.click();
-                };
-
-                statusBadge.style.display = 'flex';
-            }
-
-            loader.style.display = 'none';
-            compressBtn.disabled = false;
+            return blob;
         }
 
-        compressBtn.addEventListener('click', compressImage);
+        // Dynamically creates structured UI preview grids for each file
+        function createPreviewRow(originalFile, compressedBlob, downloadName) {
+            const row = document.createElement('div');
+            row.className = 'preview-row';
+
+            const originalUrl = URL.createObjectURL(originalFile);
+            const compressedUrl = URL.createObjectURL(compressedBlob);
+
+            row.innerHTML = `
+                <!-- Left Column: Original Info -->
+                <div class="preview-box">
+                    <h3>Original: ${originalFile.name}</h3>
+                    <div class="img-container">
+                        <img src="${originalUrl}" alt="Original View">
+                    </div>
+                    <div class="file-info">
+                        <span>Size: ${formatBytes(originalFile.size)}</span>
+                    </div>
+                </div>
+                <!-- Right Column: Compressed Outcome + Custom Solo Button -->
+                <div class="preview-box">
+                    <h3>Result Configuration</h3>
+                    <div class="img-container">
+                        <img src="${compressedUrl}" alt="Compressed View">
+                    </div>
+                    <div class="file-info">
+                        <span class="status-badge">
+                            <i data-lucide="check-circle-2" style="width:16px; height:16px;"></i> Perfect (${formatBytes(compressedBlob.size)})
+                        </span>
+                        <button class="btn individual-download-btn" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; background: var(--success);">
+                            <i data-lucide="download" style="width:14px; height:14px;"></i> Download
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            // Setup dedicated unique click trigger per row element block
+            row.querySelector('.individual-download-btn').onclick = () => {
+                const a = document.createElement('a');
+                a.href = compressedUrl;
+                a.download = downloadName;
+                a.click();
+            };
+
+            batchContainer.appendChild(row);
+            lucide.createIcons();
+        }
+
+        // Bulk Zip execution
+        downloadAllBtn.onclick = () => {
+            const zip = new JSZip();
+            compressedResults.forEach(item => {
+                zip.file(item.name, item.blob);
+            });
+
+            zip.generateAsync({ type: 'blob' }).then((content) => {
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(content);
+                a.download = `EditSpark_Batch_Compressed.zip`;
+                a.click();
+            });
+        };
+
+        // Re-compress button event listener
+        compressBtn.addEventListener('click', compressAllImages);
+
+        // Reset application UI state 
+        resetBtn.onclick = () => {
+            uploadedFiles = [];
+            compressedResults = [];
+            batchContainer.innerHTML = '';
+            fileInput.value = '';
+            workspace.style.display = 'none';
+            dropZone.style.display = 'block';
+        };
 
         function formatBytes(bytes) {
             if (bytes === 0) return '0 Bytes';
