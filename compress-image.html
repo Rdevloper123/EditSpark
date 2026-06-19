@@ -50,7 +50,7 @@
         }
         header {
             text-align: center;
-            margin-bottom: 2.5rem;
+            margin-bottom: 2rem;
         }
         header h1 {
             font-size: 2rem;
@@ -62,11 +62,57 @@
             color: var(--text-muted);
             font-size: 0.95rem;
         }
+        /* Setup Configuration Card (Top Section) */
+        .config-card {
+            background: #f8fafc;
+            padding: 1.25rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .input-group {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .input-group label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+        .input-wrapper {
+            display: flex;
+            align-items: center;
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            max-width: 160px;
+        }
+        .input-wrapper input {
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        .input-wrapper span {
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-left: 0.25rem;
+        }
         /* Upload Area */
         .upload-zone {
             border: 2px dashed #cbd5e1;
             border-radius: 12px;
-            padding: 3rem 2rem;
+            padding: 3.5rem 2rem;
             text-align: center;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -98,54 +144,16 @@
         /* Workspace Grid */
         .workspace {
             display: none;
-            margin-top: 2rem;
+            margin-top: 1.5rem;
             flex-direction: column;
-            gap: 2rem;
-        }
-        .controls-card {
-            background: #f8fafc;
-            padding: 1.5rem;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-        }
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            max-width: 300px;
-            margin-bottom: 1.5rem;
-        }
-        .input-group label {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--text-main);
-        }
-        .input-wrapper {
-            display: flex;
-            align-items: center;
-            background: #ffffff;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 0.5rem 1rem;
-        }
-        .input-wrapper input {
-            border: none;
-            outline: none;
-            width: 100%;
-            font-size: 1rem;
-            font-weight: 500;
-        }
-        .input-wrapper span {
-            color: var(--text-muted);
-            font-weight: 600;
-            font-size: 0.9rem;
+            gap: 1.5rem;
         }
         .btn {
             background: var(--primary);
             color: white;
             border: none;
-            padding: 0.75rem 1.5rem;
-            font-size: 0.95rem;
+            padding: 0.65rem 1.25rem;
+            font-size: 0.9rem;
             font-weight: 600;
             border-radius: 8px;
             cursor: pointer;
@@ -156,6 +164,10 @@
         }
         .btn:hover {
             background: var(--primary-hover);
+        }
+        .btn:disabled {
+            background: var(--text-muted);
+            cursor: not-allowed;
         }
         /* Dynamic Batch Preview Styles */
         .batch-container {
@@ -225,7 +237,6 @@
             gap: 0.5rem;
             color: var(--text-muted);
             font-size: 0.9rem;
-            margin-top: 1rem;
         }
         .spinner {
             animation: rotate 2s linear infinite;
@@ -239,7 +250,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 1rem;
+            margin-top: 0.5rem;
             padding-top: 1.5rem;
             border-top: 1px solid var(--border);
         }
@@ -249,42 +260,45 @@
     <div class="container">
         <header>
             <h1>Compress Image to Target Size</h1>
-            <p>Upload single or multiple images and specify the exact KB size you need.</p>
+            <p>Set your target size first, then upload images for instant perfect compression.</p>
         </header>
+
+        <!-- Top Configuration Card (Always Visible First) -->
+        <div class="config-card">
+            <div class="input-group">
+                <label for="targetSize">Enter Target Size:</label>
+                <div class="input-wrapper">
+                    <input type="number" id="targetSize" value="50" min="1">
+                    <span>KB</span>
+                </div>
+            </div>
+            
+            <button class="btn" id="compressBtn" style="display: none;">
+                <i data-lucide="sliders"></i> Re-Compress All
+            </button>
+            
+            <div class="loader" id="loader">
+                <i data-lucide="loader-2" class="spinner"></i> Processing images...
+            </div>
+        </div>
 
         <!-- Upload Zone -->
         <div class="upload-zone" id="dropZone" onclick="document.getElementById('fileInput').click()">
             <i data-lucide="image-up" class="upload-icon"></i>
-            <p>Click to upload or drag and drop multiple images</p>
+            <p>Click to upload or drag and drop images</p>
             <span>Supports PNG, JPG, JPEG, WEBP</span>
             <input type="file" id="fileInput" accept="image/*" multiple>
         </div>
 
         <!-- Workspace Section -->
         <div class="workspace" id="workspace">
-            <div class="controls-card">
-                <div class="input-group">
-                    <label for="targetSize">Target Size</label>
-                    <div class="input-wrapper">
-                        <input type="number" id="targetSize" value="50" min="1">
-                        <span>KB</span>
-                    </div>
-                </div>
-                <button class="btn" id="compressBtn">
-                    <i data-lucide="sliders"></i> Re-Compress All
-                </button>
-                <div class="loader" id="loader">
-                    <i data-lucide="loader-2" class="spinner"></i> Processing images...
-                </div>
-            </div>
-
             <!-- Previews Container (Dynamic Rows will sit here) -->
             <div class="batch-container" id="batchContainer"></div>
 
             <!-- Dynamic Global Action Buttons Footer -->
             <div class="actions-footer">
                 <button class="btn" id="resetBtn" style="background: var(--danger);">
-                    <i data-lucide="trash-2"></i> Clear All
+                    <i data-lucide="trash-2"></i> Clear All / Upload New
                 </button>
                 <button class="btn" id="downloadAllBtn" style="background: var(--success); display: none;">
                     <i data-lucide="download"></i> Download All as ZIP
@@ -308,7 +322,7 @@
         const loader = document.getElementById('loader');
 
         let uploadedFiles = [];
-        let compressedResults = []; // Array to store processed blobs for ZIP generation
+        let compressedResults = [];
 
         // Drag and Drop Logic
         ['dragenter', 'dragover'].forEach(eventName => {
@@ -336,6 +350,7 @@
             uploadedFiles = validFiles;
             workspace.style.display = 'flex';
             dropZone.style.display = 'none';
+            compressBtn.style.display = 'inline-flex'; // Show re-compress option inside config card
             compressAllImages();
         }
 
@@ -344,7 +359,7 @@
             loader.style.display = 'flex';
             compressBtn.disabled = true;
             downloadAllBtn.style.display = 'none';
-            batchContainer.innerHTML = ''; // Clear previous UI rows
+            batchContainer.innerHTML = ''; 
             compressedResults = [];
 
             const targetSizeInBytes = targetSizeInput.value * 1024;
@@ -352,27 +367,21 @@
             for (let i = 0; i < uploadedFiles.length; i++) {
                 const file = uploadedFiles[i];
                 
-                // Update processing loader text
-                loader.innerHTML = `<i data-lucide="loader-2" class="spinner"></i> Compressing ${i + 1} of ${uploadedFiles.length}: ${file.name}...`;
+                loader.innerHTML = `<i data-lucide="loader-2" class="spinner"></i> ${i + 1}/${uploadedFiles.length}: Doing Magic...`;
                 lucide.createIcons();
 
-                // 1. Load image file into image object
                 const img = await loadImage(file);
-
-                // 2. Perform accurate execution matching
                 const compressedBlob = await compressSingleImage(img, targetSizeInBytes);
 
                 const cleanName = `compressed_${file.name.split('.')[0]}.jpg`;
                 compressedResults.push({ blob: compressedBlob, name: cleanName });
 
-                // 3. Append explicit row with individual download options
                 createPreviewRow(file, compressedBlob, cleanName);
             }
 
             loader.style.display = 'none';
             compressBtn.disabled = false;
 
-            // Show ZIP download button only if there are multiple images
             if (uploadedFiles.length > 1) {
                 downloadAllBtn.style.display = 'inline-flex';
                 downloadAllBtn.innerHTML = `<i data-lucide="download"></i> Download All (${uploadedFiles.length}) as ZIP`;
@@ -404,7 +413,7 @@
 
             let minQuality = 0.01;
             let maxQuality = 1.0;
-            let iterations = 10; // Precision bump for perfect target matching
+            let iterations = 10; 
             let blob = null;
 
             // FIX: Transparent PNG safety logic -> Canvas backdrop color set to White
@@ -451,7 +460,6 @@
             const compressedUrl = URL.createObjectURL(compressedBlob);
 
             row.innerHTML = `
-                <!-- Left Column: Original Info -->
                 <div class="preview-box">
                     <h3>Original: ${originalFile.name}</h3>
                     <div class="img-container">
@@ -461,7 +469,6 @@
                         <span>Size: ${formatBytes(originalFile.size)}</span>
                     </div>
                 </div>
-                <!-- Right Column: Compressed Outcome + Custom Solo Button -->
                 <div class="preview-box">
                     <h3>Result Configuration</h3>
                     <div class="img-container">
@@ -478,7 +485,6 @@
                 </div>
             `;
 
-            // Setup dedicated unique click trigger per row element block
             row.querySelector('.individual-download-btn').onclick = () => {
                 const a = document.createElement('a');
                 a.href = compressedUrl;
@@ -515,6 +521,7 @@
             batchContainer.innerHTML = '';
             fileInput.value = '';
             workspace.style.display = 'none';
+            compressBtn.style.display = 'none';
             dropZone.style.display = 'block';
         };
 
