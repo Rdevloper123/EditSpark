@@ -4,35 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Change Image DPI Online Free - 300 DPI Converter | EditSpark</title>
-    
     <!-- Primary SEO Meta Tags -->
     <meta name="description" content="Change image DPI online for free. Convert images to 300 DPI, 200 DPI, or any custom value instantly. Bulk convert JPG, PNG with original quality maintained." />
     <meta name="keywords" content="change image dpi, 300 dpi converter, image dpi changer online, convert image to 300 dpi, editspark dpi changer" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" class="seo-canonical" href="https://edit-spark.vercel.app/change-image-dpi.html" />
-
     <!-- JSZip Library for Bulk Downloads -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-
-    <!-- JSON-LD WebApplication Schema for Google Rich Snippets -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "EditSpark Image DPI Changer",
-      "url": "https://edit-spark.vercel.app/change-image-dpi.html",
-      "description": "Free web application to change image DPI (Dots Per Inch) to 300 DPI, 200 DPI, or custom settings instantly in bulk.",
-      "applicationCategory": "MultimediaApplication",
-      "operatingSystem": "All",
-      "browserRequirements": "Requires HTML5 Canvas and Blob support.",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      }
-    }
-    </script>
-
     <style>
         /* Base Styling matching your EditSpark Theme */
         :root {
@@ -44,7 +22,6 @@
             --text-muted: #64748b;
             --border: #e2e8f0;
         }
-
         body {
             font-family: system-ui, -apple-system, sans-serif;
             background-color: var(--bg-main);
@@ -52,7 +29,6 @@
             margin: 0;
             padding: 2rem 1rem;
         }
-
         .container {
             max-width: 800px;
             margin: 0 auto;
@@ -61,12 +37,10 @@
             border-radius: 1rem;
             box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
         }
-
         header {
             text-align: center;
             margin-bottom: 2rem;
         }
-
         .control-group {
             display: flex;
             gap: 1rem;
@@ -75,7 +49,6 @@
             margin-bottom: 2rem;
             flex-wrap: wrap;
         }
-
         select, input[type="number"] {
             padding: 0.75rem 1rem;
             border: 1px solid var(--border);
@@ -83,7 +56,6 @@
             font-size: 1rem;
             outline: none;
         }
-
         .upload-box {
             border: 2px dashed var(--primary);
             padding: 3rem;
@@ -93,11 +65,9 @@
             background: #f5f3ff;
             transition: all 0.2s;
         }
-
         .upload-box:hover {
             background: #ede9fe;
         }
-
         .btn {
             background: var(--primary);
             color: white;
@@ -107,9 +77,49 @@
             cursor: pointer;
             font-weight: 600;
         }
-
         .btn:hover {
             background: var(--primary-hover);
+        }
+        
+        /* Uploaded Info Box Styling */
+        .uploaded-info-box {
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .uploaded-info-box img {
+            max-width: 120px;
+            max-height: 120px;
+            object-fit: contain;
+            border-radius: 0.5rem;
+            border: 1px solid var(--border);
+        }
+        .meta-details {
+            flex-grow: 1;
+            text-align: left;
+        }
+        .meta-details h4 {
+            margin: 0 0 0.5rem 0;
+            color: var(--text-main);
+            word-break: break-all;
+        }
+        .meta-badge-group {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .meta-badge {
+            background: #f1f5f9;
+            color: var(--text-muted);
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
         }
 
         #preview-grid {
@@ -118,14 +128,12 @@
             grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             gap: 1rem;
         }
-
         .preview-card {
             border: 1px solid var(--border);
             padding: 0.5rem;
             border-radius: 0.5rem;
             text-align: center;
         }
-
         .preview-card img {
             max-width: 100%;
             height: auto;
@@ -134,7 +142,6 @@
     </style>
 </head>
 <body>
-
 <div class="container">
     <header>
         <h1 style="font-size: 2rem; color: var(--primary);">Online Image DPI Changer</h1>
@@ -154,18 +161,33 @@
         <input type="number" id="custom-dpi-input" style="display:none; width: 100px;" value="300" min="1" max="1200">
     </div>
 
-    <!-- Upload Box -->
-    <div class="upload-box" onclick="document.getElementById('file-input').click()">
-        <p style="margin: 0; font-weight: 600; color: var(--primary);">Click to Upload Images (Bulk Supported)</p>
+    <!-- 1. Upload Box (Pehle yeh dikhega) -->
+    <div id="upload-container" class="upload-box" onclick="document.getElementById('file-input').click()">
+        <p style="margin: 0; font-weight: 600; color: var(--primary);">Click to Upload Image</p>
         <p style="margin: 0.5rem 0 0; font-size: 0.85rem; color: var(--text-muted);">Supports JPG, JPEG, PNG</p>
-        <input type="file" id="file-input" multiple accept="image/jpeg, image/jpg, image/png" style="display: none;" onchange="processImages()">
+        <input type="file" id="file-input" accept="image/jpeg, image/jpg, image/png" style="display: none;" onchange="handleFileSelect()">
     </div>
 
-    <div id="bulk-actions" style="margin-top: 1.5rem; text-align: right; display: none;">
-        <button class="btn" onclick="downloadAllAsZip()">Download All as ZIP 📦</button>
+    <!-- 2. Uploaded Image Info Box (Image select hone ke baad upload box ki jagah yeh dikhega) -->
+    <div id="info-container" class="uploaded-info-box" style="display: none;">
+        <img id="info-img-preview" src="" alt="Preview">
+        <div class="meta-details">
+            <h4 id="info-file-name">image.jpg</h4>
+            <div class="meta-badge-group">
+                <span class="meta-badge" id="info-file-size">0 KB</span>
+                <span class="meta-badge" id="info-file-dim">0 x 0 px</span>
+                <span class="meta-badge" id="info-file-dpi">72 DPI (Original)</span>
+            </div>
+        </div>
+        <button class="btn" style="background: #ef4444; padding: 0.5rem 1rem;" onclick="resetUpload()">Remove ✕</button>
     </div>
 
-    <!-- Previews -->
+    <!-- Action Buttons -->
+    <div id="action-group" style="margin-top: 1.5rem; display: none; text-align: right; gap: 1rem; justify-content: flex-end;">
+        <button class="btn" style="background-color: #10b981;" onclick="processImages()">Convert Image ⚙️</button>
+    </div>
+
+    <!-- Previews (Converted Output) -->
     <div id="preview-grid"></div>
 
     <!-- SEO FAQ Section -->
@@ -178,6 +200,7 @@
 </div>
 
 <script>
+    let selectedFile = null;
     let processedFiles = [];
 
     function toggleCustomDpi() {
@@ -194,61 +217,91 @@
         return parseInt(select.value);
     }
 
-    function processImages() {
-        const files = document.getElementById('file-input').files;
-        const grid = document.getElementById('preview-grid');
-        const targetDpi = getSelectedDpi();
+    // Jab user image select karega
+    function handleFileSelect() {
+        const fileInput = document.getElementById('file-input');
+        if (fileInput.files.length === 0) return;
+
+        selectedFile = fileInput.files[0];
         
-        if(files.length === 0) return;
-        
-        document.getElementById('bulk-actions').style.display = files.length > 1 ? 'block' : 'none';
+        // File Size in KB/MB calculation
+        const fileSizeKB = (selectedFile.size / 1024).toFixed(1);
+        const displaySize = fileSizeKB > 1024 ? `${(fileSizeKB / 1024).toFixed(1)} MB` : `${fileSizeKB} KB`;
 
-        Array.from(files).forEach(file => {
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                const img = new Image();
-                img.onload = function() {
-                    // Create a canvas to process the image data
-                    const canvas = document.createElement('canvas');
-                    canvas.width = img.width;
-                    canvas.height = img.height;
-                    const ctx = canvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0);
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const img = new Image();
+            img.onload = function() {
+                // Dimensons (Width x Height)
+                const dimensions = `${img.width} x ${img.height} px`;
+                
+                // Default browser images usually 72 ya 96 DPI show karti hain jab tak change na ho
+                const originalDpi = "72 DPI"; 
 
-                    // Convert to blob with specific layout properties
-                    canvas.toBlob((blob) => {
-                        // Change metadata fields via canvas resolution or store blob reference
-                        const url = URL.createObjectURL(blob);
-                        
-                        processedFiles.push({ name: `dpi-${targetDpi}-${file.name}`, blob: blob });
+                // UI elements update karein
+                document.getElementById('info-img-preview').src = e.target.result;
+                document.getElementById('info-file-name').innerText = selectedFile.name;
+                document.getElementById('info-file-size').innerText = displaySize;
+                document.getElementById('info-file-dim').innerText = dimensions;
+                document.getElementById('info-file-dpi').innerText = `${originalDpi} (Original)`;
 
-                        // Render preview item
-                        const item = document.createElement('div');
-                        item.className = 'preview-card';
-                        item.innerHTML = `
-                            <img src="${url}">
-                            <p style="font-size:0.8rem; margin:5px 0;">${targetDpi} DPI Set</p>
-                            <a href="${url}" download="dpi-${targetDpi}-${file.name}" style="font-size:0.85rem; color:var(--primary); font-weight:bold; text-decoration:none;">Download</a>
-                        `;
-                        grid.appendChild(item);
-                    }, file.type);
-                };
-                img.src = event.target.result;
+                // Toggle Containers (Upload box chhupao, Info box dikhao)
+                document.getElementById('upload-container').style.display = 'none';
+                document.getElementById('info-container').style.display = 'flex';
+                document.getElementById('action-group').style.display = 'flex';
             };
-            reader.readAsDataURL(file);
-        });
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(selectedFile);
     }
 
-    async function downloadAllAsZip() {
-        const zip = new JSZip();
-        processedFiles.forEach(file => {
-            zip.file(file.name, file.blob);
-        });
-        const content = await zip.generateAsync({ type: "blob" });
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(content);
-        link.download = "editspark-dpi-images.zip";
-        link.click();
+    // Image remove karke wapas upload box par aane ke liye
+    function resetUpload() {
+        selectedFile = null;
+        document.getElementById('file-input').value = '';
+        document.getElementById('preview-grid').innerHTML = '';
+        
+        document.getElementById('upload-container').style.display = 'block';
+        document.getElementById('info-container').style.display = 'none';
+        document.getElementById('action-group').style.display = 'none';
+    }
+
+    // DPI Convert karne ka logic
+    function processImages() {
+        if (!selectedFile) return;
+
+        const grid = document.getElementById('preview-grid');
+        grid.innerHTML = ''; 
+        
+        const targetDpi = getSelectedDpi();
+        const reader = new FileReader();
+        
+        reader.onload = function(event) {
+            const img = new Image();
+            img.onload = function() {
+                const canvas = document.createElement('canvas');
+                canvas.width = img.width;
+                canvas.height = img.height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0);
+
+                canvas.toBlob((blob) => {
+                    const url = URL.createObjectURL(blob);
+
+                    // Render Final output card
+                    const item = document.createElement('div');
+                    item.className = 'preview-card';
+                    item.innerHTML = `
+                        <img src="${url}">
+                        <p style="font-size:0.85rem; margin:5px 0; color: #10b981; font-weight: 600;">Converted: ${targetDpi} DPI</p>
+                        <a href="${url}" download="dpi-${targetDpi}-${selectedFile.name}" class="btn" style="font-size:0.85rem; padding: 0.4rem 0.8rem; display: inline-block; text-decoration: none;">Download</a>
+                    `;
+                    grid.appendChild(item);
+                }, selectedFile.type);
+            };
+            img.src = event.target.result;
+        };
+        reader.readAsDataURL(selectedFile);
     }
 </script>
 </body>
