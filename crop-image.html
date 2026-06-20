@@ -28,6 +28,7 @@
             position: relative;
             display: inline-block;
             max-width: 100%;
+            touch-action: none; /* Mobile par screen scroll/bounce hone se rokne ke liye */
         }
         .crop-overlay {
             position: absolute;
@@ -35,6 +36,7 @@
             background: rgba(239, 68, 68, 0.1);
             cursor: move;
             box-sizing: border-box;
+            touch-action: none; /* Dragging smooth karne ke liye */
         }
         /* Grid Lines inside crop box */
         .crop-overlay::before, .crop-overlay::after {
@@ -47,13 +49,14 @@
         
         .resize-handle {
             position: absolute;
-            width: 10px;
-            height: 10px;
+            width: 15px; /* Mobile par touch karne ke liye handle thoda bada kiya hai */
+            height: 15px;
             background: #ef4444;
-            bottom: -5px;
-            right: -5px;
+            bottom: -7px;
+            right: -7px;
             cursor: se-resize;
             border-radius: 50%;
+            touch-action: none;
         }
     </style>
 </head>
@@ -199,28 +202,30 @@
             reader.readAsDataURL(file);
         }
 
-        // --- Interaction Logic for Crop Box ---
-        cropBox.addEventListener('mousedown', (e) => {
+        // --- Interaction Logic for Crop Box (Pointer Events Supported for Mobile) ---
+        cropBox.addEventListener('pointerdown', (e) => {
             if (e.target === resizeHandle) return;
             isDragging = true;
             startX = e.clientX;
             startY = e.clientY;
             startLeft = cropBox.offsetLeft;
             startTop = cropBox.offsetTop;
+            cropBox.setPointerCapture(e.pointerId); // Drags smoothly on mobile
             e.preventDefault();
         });
 
-        resizeHandle.addEventListener('mousedown', (e) => {
+        resizeHandle.addEventListener('pointerdown', (e) => {
             isResizing = true;
             startX = e.clientX;
             startY = e.clientY;
             startWidth = cropBox.offsetWidth;
             startHeight = cropBox.offsetHeight;
+            resizeHandle.setPointerCapture(e.pointerId); // Resizes smoothly on mobile
             e.preventDefault();
             e.stopPropagation();
         });
 
-        window.addEventListener('mousemove', (e) => {
+        window.addEventListener('pointermove', (e) => {
             if (isDragging) {
                 let dx = e.clientX - startX;
                 let dy = e.clientY - startY;
@@ -253,7 +258,10 @@
             }
         });
 
-        window.addEventListener('mouseup', () => { isDragging = false; isResizing = false; });
+        window.addEventListener('pointerup', (e) => { 
+            isDragging = false; 
+            isResizing = false; 
+        });
 
         // --- Presets Aspect Ratio Handlers ---
         const btnFree = document.getElementById('presetFree');
