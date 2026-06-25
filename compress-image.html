@@ -4,13 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EditSpark - Compress Image to 20KB, 50KB, 100KB Online Free | EditSpark</title>
-    <!-- SEO Canonical Tag with Custom Class -->
+    
     <link rel="canonical" class="seo-canonical" href="https://edit-spark.vercel.app/compress-image.html" />
-    <!-- Primary SEO Meta Tags -->
+    
     <meta name="description" content="Compress images to an exact target size (KB) online. Bulk compress JPG, PNG, and WEBP instantly with zero quality loss on EditSpark. Free & fast!" />
-    <meta name="keywords" content="compress image to 20kb, image compressor to exact size, bulk image compressor, online image compressor in kb, editspark" />
+    <meta name="keywords" content="compress image to 20kb, image compressor to exact size, bulk image compressor, online image compressor in kb, editspark, compress image to 50kb, compress image for ssc, passport photo size reducer" />
     <meta name="robots" content="index, follow" />
-    <!-- JSON-LD WebApplication Schema for Google Rich Snippets -->
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://edit-spark.vercel.app/compress-image.html">
+    <meta property="og:title" content="EditSpark - Compress Image to 20KB, 50KB, 100KB Online Free">
+    <meta property="og:description" content="Free web tool to bulk compress images to exact target KB size (20KB, 50KB, 100KB) online instantly with zero quality loss. 100% secure.">
+    <meta property="og:image" content="https://edit-spark.vercel.app/assets/og-compress-image.jpg">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://edit-spark.vercel.app/compress-image.html">
+    <meta name="twitter:title" content="EditSpark - Compress Image to 20KB, 50KB, 100KB Online Free">
+    <meta name="twitter:description" content="Free web tool to bulk compress images to exact target KB size online instantly with zero quality loss.">
+    <meta name="twitter:image" content="https://edit-spark.vercel.app/assets/og-compress-image.jpg">
+
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -28,14 +40,89 @@
       }
     }
     </script>
-    <!-- Google Fonts -->
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://edit-spark.vercel.app/"
+      },{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Compress Image",
+        "item": "https://edit-spark.vercel.app/compress-image.html"
+      }]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "How do I compress image to 50KB?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "To compress an image to 50KB, enter '50' in the Target Size input field on EditSpark, upload your image, and our smart algorithm will automatically adjust the quality to match your exact requested size perfectly."
+        }
+      },{
+        "@type": "Question",
+        "name": "Can I compress image to 20KB?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes! You can compress any supported image down to 20KB or less, which is ideal for government jobs, admissions, and exam application portals like SSC or UPSC."
+        }
+      },{
+        "@type": "Question",
+        "name": "Does EditSpark reduce image quality?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "EditSpark uses an advanced binary search compression algorithm that aims to preserve maximum visual clarity while reducing the file size. You get optimal compression with negligible quality loss."
+        }
+      },{
+        "@type": "Question",
+        "name": "Is EditSpark free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, EditSpark is 100% free to use. There are no hidden charges, subscription fees, or watermarks on your compressed files."
+        }
+      },{
+        "@type": "Question",
+        "name": "Are my images uploaded to servers?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No, your privacy is our top priority. All operations and image compressions happen locally inside your browser using HTML5 Canvas APIs. Your files are never sent to any server."
+        }
+      },{
+        "@type": "Question",
+        "name": "Can I compress multiple images?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, EditSpark supports batch processing. You can select and upload multiple images at once, compress them sequentially to your target size, and download them all together in a single ZIP file."
+        }
+      },{
+        "@type": "Question",
+        "name": "Which formats are supported?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We support all standard popular web formats including JPEG, JPG, PNG, and WEBP files."
+        }
+      }]
+    }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Lucide Icons (Optimized with defer) -->
+
     <script src="https://unpkg.com/lucide@latest" defer></script>
-    <!-- JSZip Library for Bulk Download (Optimized with defer) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" defer></script>
+
     <style>
         :root {
             --primary: #4f46e5;
@@ -86,7 +173,6 @@
             color: var(--text-muted);
             font-size: 0.95rem;
         }
-        /* Setup Configuration Card (Top Section) */
         .config-card {
             background: #f8fafc;
             padding: 1.25rem;
@@ -132,7 +218,6 @@
             font-size: 0.9rem;
             margin-left: 0.25rem;
         }
-        /* Upload Area */
         .upload-zone {
             border: 2px dashed #cbd5e1;
             border-radius: 12px;
@@ -162,10 +247,7 @@
             font-size: 0.85rem;
             color: var(--text-muted);
         }
-        #fileInput {
-            display: none;
-        }
-        /* Workspace Grid */
+        #fileInput { display: none; }
         .workspace {
             display: none;
             margin-top: 1.5rem;
@@ -186,19 +268,9 @@
             gap: 0.5rem;
             transition: background 0.2s;
         }
-        .btn:hover {
-            background: var(--primary-hover);
-        }
-        .btn:disabled {
-            background: var(--text-muted);
-            cursor: not-allowed;
-        }
-        /* Dynamic Batch Preview Styles (SEO Friendly Class) */
-        .batch-container {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
+        .btn:hover { background: var(--primary-hover); }
+        .btn:disabled { background: var(--text-muted); cursor: not-allowed; }
+        .batch-container { display: flex; flex-direction: column; gap: 1.5rem; }
         .preview-row {
             border: 1px solid var(--border);
             border-radius: 12px;
@@ -209,11 +281,7 @@
             gap: 1.5rem;
             position: relative;
         }
-        @media (max-width: 640px) {
-            .preview-row {
-                grid-template-columns: 1fr;
-            }
-        }
+        @media (max-width: 640px) { .preview-row { grid-template-columns: 1fr; } }
         .preview-title {
             font-size: 0.85rem;
             font-weight: 600;
@@ -235,49 +303,31 @@
             margin-bottom: 0.75rem;
             border: 1px solid var(--border);
         }
-        .img-container img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
-        .file-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.85rem;
-            font-weight: 500;
-        }
-        .status-badge {
-            color: var(--success);
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-        }
-        /* Loader */
-        .loader {
-            display: none;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-        .spinner {
-            animation: rotate 2s linear infinite;
-            width: 20px;
-            height: 20px;
-        }
-        @keyframes rotate {
-            100% { transform: rotate(360deg); }
-        }
-        .actions-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 0.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--border);
-        }
+        .img-container img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .file-info { display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; font-weight: 500; }
+        .status-badge { color: var(--success); font-weight: 600; display: flex; align-items: center; gap: 0.25rem; }
+        .loader { display: none; align-items: center; gap: 0.5rem; color: var(--text-muted); font-size: 0.9rem; }
+        .spinner { animation: rotate 2s linear infinite; width: 20px; height: 20px; }
+        @keyframes rotate { 100% { transform: rotate(360deg); } }
+        .actions-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+
+        /* Enhanced Content Layout Styles */
+        .seo-section { margin-top: 3.5rem; border-top: 1px solid var(--border); padding-top: 2.5rem; max-width: 900px; width: 100%; }
+        .seo-section h2 { font-size: 1.6rem; font-weight: 700; color: var(--text-main); margin-bottom: 1.25rem; margin-top: 2rem; }
+        .seo-section h3 { font-size: 1.25rem; font-weight: 600; color: var(--text-main); margin-bottom: 0.75rem; margin-top: 1.5rem; }
+        .seo-section p { color: var(--text-muted); font-size: 0.98rem; line-height: 1.7; margin-bottom: 1.25rem; }
+        .seo-section ul, .seo-section ol { color: var(--text-muted); font-size: 0.98rem; line-height: 1.7; margin-left: 1.5rem; margin-bottom: 1.5rem; }
+        .seo-section li { margin-bottom: 0.5rem; }
+        
+        /* FAQ Styling */
+        .faq-block { background: #f8fafc; border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
+        .faq-question { font-weight: 700; font-size: 1.05rem; color: var(--text-main); margin-bottom: 0.5rem; display: flex; align-items: flex-start; gap: 0.5rem; }
+        .faq-answer { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; }
+
+        /* Internal Links Footer Grid */
+        .internal-links-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+        .internal-links-grid a { background: #ffffff; border: 1px solid var(--border); padding: 0.75rem 1rem; border-radius: 8px; color: var(--primary); font-weight: 600; font-size: 0.9rem; text-decoration: none; text-align: center; transition: all 0.2s; display: block; }
+        .internal-links-grid a:hover { background: var(--primary); color: #ffffff; border-color: var(--primary); box-shadow: 0 4px 12px rgba(79, 70, 229, 0.15); }
     </style>
 </head>
 <body>
@@ -287,7 +337,6 @@
             <p>Set your target size first, then upload images for instant perfect compression.</p>
         </header>
 
-        <!-- Top Configuration Card (Always Visible First) -->
         <div class="config-card">
             <div class="input-group">
                 <label for="targetSize">Enter Target Size:</label>
@@ -296,17 +345,14 @@
                     <span>KB</span>
                 </div>
             </div>
-            
             <button class="btn" id="compressBtn" style="display: none;">
                 <i data-lucide="sliders"></i> Re-Compress All
             </button>
-            
             <div class="loader" id="loader">
                 <i data-lucide="loader-2" class="spinner"></i> Processing images...
             </div>
         </div>
 
-        <!-- Upload Zone -->
         <div class="upload-zone" id="dropZone" onclick="document.getElementById('fileInput').click()">
             <i data-lucide="image-up" class="upload-icon"></i>
             <p>Click to upload or drag and drop images</p>
@@ -314,12 +360,8 @@
             <input type="file" id="fileInput" accept="image/*" multiple>
         </div>
 
-        <!-- Workspace Section -->
         <div class="workspace" id="workspace">
-            <!-- Previews Container (Dynamic Rows will sit here) -->
             <div class="batch-container" id="batchContainer"></div>
-
-            <!-- Dynamic Global Action Buttons Footer -->
             <div class="actions-footer">
                 <button class="btn" id="resetBtn" style="background: var(--danger);">
                     <i data-lucide="trash-2"></i> Clear All / Upload New
@@ -331,30 +373,84 @@
         </div>
     </div>
 
-    <!-- SEO Informational Section -->
-    <section style="margin-top: 3rem; border-top: 1px solid var(--border); padding-top: 2rem;">
-        <h2 style="font-size: 1.4rem; font-weight: 700; color: var(--text-main); margin-bottom: 1rem;">
-            How to Compress Image to Exact KB Size Online?
-        </h2>
-        <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem;">
-            Whether you need to <strong>compress image to 20kb</strong> for government job forms, passport portals, or reduce photo size to 50kb/100kb, EditSpark uses an intelligent optimization algorithm to give you the exact file size without destroying image quality.
-        </p>
+    <main class="seo-section">
+        <h2>What is Image Compression?</h2>
+        <p>Image compression is the process of reducing the file size of a graphics file in bytes without degrading the visual quality of the image to an unacceptable level. This is accomplished by mathematically encoding the data more efficiently, or by selectively discarding unnecessary details that the human eye cannot easily perceive. On EditSpark, we utilize advanced client-side processing algorithms to scan through your images and adaptively scale down high-frequency pixel regions, enabling quick size transformations to precise specifications like 20KB or 50KB seamlessly.</p>
 
-        <h3 style="font-size: 1.1rem; font-weight: 600; color: var(--text-main); margin-bottom: 0.5rem;">
-            Features of EditSpark Bulk Image Compressor:
-        </h3>
-        <ul style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-left: 1.5rem;">
-            <li><strong>Batch Compression:</strong> Upload and process multiple photos at the same time.</li>
-            <li><strong>100% Secure & Local:</strong> Your images never leave your device. Compression happens completely inside your browser.</li>
-            <li><strong>Format Support:</strong> Works perfectly for JPG, JPEG, PNG, and WEBP formats.</li>
+        <h2>Why Should You Compress Images?</h2>
+        <p>Large uncompressed images pose substantial challenges across the digital landscape. Firstly, massive file sizes slow down web page loading times, severely hurting user experience and negatively impacting search engine optimization (SEO) performance. Secondly, a majority of central government portals, educational councils, and banking recruitment agencies enforce strict file size thresholds for document uploads. Compressing images helps ensure that your identity proofs, educational marksheet scans, and signatures meet compliance criteria without sacrificing legibility.</p>
+
+        <h3>Compress Image for SSC Forms</h3>
+        <p>Staff Selection Commission (SSC) portals regularly mandate highly strict photo and signature constraints. The passport photograph must strictly fall within the 20KB to 50KB window, whereas scanned signature files are typically restricted between 10KB to 20KB. Utilizing our intelligent batch compressor, you can plug in the target size of 20 or 50 KB, dump your files into the local system engine, and receive perfect digital submissions optimized for instant upload approval.</p>
+
+        <h3>Compress Image for Railway (RRB) Forms</h3>
+        <p>Railway Recruitment Boards (RRB) exams necessitate processing large quantities of online applications daily, forcing their servers to restrict upload footprints. For continuous portal updates, applicant photographs must lean closer to a stable 50KB limit while matching absolute dimension standards. EditSpark assists thousands of candidates by resizing and optimizing passport sizes to accurate byte targets without crashing application interfaces.</p>
+
+        <h3>Compress Image for Banking Forms</h3>
+        <p>Major corporate and state banking recruitment bodies like IBPS, SBI, and RBI put forward rigorous constraints requiring uploaded documents, thumb impressions, and handwritten declarations to reside comfortably beneath 100KB or 50KB limits. Since poor configurations might render small texts unreadable, our unique internal search index maps out the structural values of your graphics, lowering file metrics smoothly while maintaining crisp contrast levels for secure visual verifications.</p>
+
+        <h2>Supported Image Formats</h2>
+        <p>Our algorithm is designed to natively parse and optimize popular web extensions without cross-platform formatting restrictions:</p>
+        <ul>
+            <li><strong>JPEG / JPG:</strong> The standard format for photography. Excellent compression properties matching specific pixel constraints.</li>
+            <li><strong>PNG:</strong> Known for lossless properties and alpha transparencies. Optimized elegantly by transferring outputs to robust high-compression layout maps.</li>
+            <li><strong>WEBP:</strong> Next-generation web formatting module that offers exceptional compression ratios right inside your local browser.</li>
         </ul>
-    </section>
+
+        <hr style="border: 0; border-top: 1px solid var(--border); margin: 2.5rem 0;">
+
+        <h2>Frequently Asked Questions (FAQs)</h2>
+        
+        <div class="faq-block">
+            <div class="faq-question">Q. How do I compress image to 50KB?</div>
+            <div class="faq-answer">To compress an image to 50KB, simply enter the value '50' into our Target Size selector field above, upload single or multiple files, and watch our algorithm automatically tailor your file sizes to precision.</div>
+        </div>
+
+        <div class="faq-block">
+            <div class="faq-question">Q. Can I compress image to 20KB?</div>
+            <div class="faq-answer">Yes, absolutely! EditSpark can adaptively adjust rendering densities to drop configurations safely to 20KB or less, ideal for fast submission forms.</div>
+        </div>
+
+        <div class="faq-block">
+            <div class="faq-question">Q. Does EditSpark reduce image quality?</div>
+            <div class="faq-answer">EditSpark utilizes a smart adaptive binary search tree structure on canvas blobs. This maintains high quality up to your absolute size barrier, yielding minimum compression degradation.</div>
+        </div>
+
+        <div class="faq-block">
+            <div class="faq-question">Q. Is EditSpark free to use?</div>
+            <div class="faq-answer">Yes, EditSpark is 100% free with no premium paywalls, size caps, or hidden registration setups required.</div>
+        </div>
+
+        <div class="faq-block">
+            <div class="faq-question">Q. Are my images uploaded to external servers?</div>
+            <div class="faq-answer">No! Privacy is built into our architecture. All files are evaluated and processed using HTML5 APIs right inside your local browser tab. No backend data collection happens.</div>
+        </div>
+
+        <div class="faq-block">
+            <div class="faq-question">Q. Can I compress multiple images simultaneously?</div>
+            <div class="faq-answer">Yes. You can multi-select files for batch processing, compress them altogether, and export them directly as a standard ZIP directory instantly.</div>
+        </div>
+
+        <div class="faq-block">
+            <div class="faq-question">Q. Which formats are supported?</div>
+            <div class="faq-answer">We fully support standard web formatting layers including PNG, JPG, JPEG, and modern WEBP image structures.</div>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid var(--border); margin: 2.5rem 0;">
+
+        <h2>Related Tools & Navigation</h2>
+        <div class="internal-links-grid">
+            <a href="https://edit-spark.vercel.app/compress-image.html?size=20">Compress Image to 20KB</a>
+            <a href="https://edit-spark.vercel.app/compress-image.html?size=50">Compress Image to 50KB</a>
+            <a href="https://edit-spark.vercel.app/compress-image.html?size=100">Compress Image to 100KB</a>
+            <a href="https://edit-spark.vercel.app/resize-image.html">Resize Image</a>
+            <a href="https://edit-spark.vercel.app/passport-photo-maker.html">Passport Photo Maker</a>
+            <a href="https://edit-spark.vercel.app/clear-signature.html">Clear Signature</a>
+        </div>
+    </main>
 
     <script>
-        // Initialize Lucide Icons Safely after DOM and Defer Scripts load
-        window.addEventListener('DOMContentLoaded', () => {
-            if (typeof lucide !== 'undefined') lucide.createIcons();
-        });
+        window.addEventListener('DOMContentLoaded', () => { if (typeof lucide !== 'undefined') lucide.createIcons(); });
 
         const dropZone = document.getElementById('dropZone');
         const fileInput = document.getElementById('fileInput');
@@ -369,7 +465,12 @@
         let uploadedFiles = [];
         let compressedResults = [];
 
-        // Drag and Drop Logic
+        // Check query parameters to dynamically set default size if targeted via internal links
+        const urlParams = new URLSearchParams(window.location.search);
+        if(urlParams.has('size')) {
+            targetSizeInput.value = parseInt(urlParams.get('size')) || 50;
+        }
+
         ['dragenter', 'dragover'].forEach(eventName => {
             dropZone.addEventListener(eventName, (e) => { e.preventDefault(); dropZone.classList.add('dragover'); }, false);
         });
@@ -381,17 +482,13 @@
             const dt = e.dataTransfer;
             if (dt.files.length > 0) handleFiles(dt.files);
         });
-
         fileInput.addEventListener('change', (e) => {
             if (e.target.files.length > 0) handleFiles(e.target.files);
         });
 
         function handleFiles(files) {
             const validFiles = Array.from(files).filter(file => file.type.startsWith('image/'));
-            if (validFiles.length === 0) {
-                alert('Please upload valid image files.');
-                return;
-            }
+            if (validFiles.length === 0) { alert('Please upload valid image files.'); return; }
             uploadedFiles = validFiles;
             workspace.style.display = 'flex';
             dropZone.style.display = 'none';
@@ -399,34 +496,28 @@
             compressAllImages();
         }
 
-        // Sequential multi-image compression processor
         async function compressAllImages() {
             loader.style.display = 'flex';
             compressBtn.disabled = true;
             downloadAllBtn.style.display = 'none';
-            batchContainer.innerHTML = ''; 
+            batchContainer.innerHTML = '';
             compressedResults = [];
-
             const targetSizeInBytes = targetSizeInput.value * 1024;
 
             for (let i = 0; i < uploadedFiles.length; i++) {
                 const file = uploadedFiles[i];
-                
                 loader.innerHTML = `<i data-lucide="loader-2" class="spinner"></i> ${i + 1}/${uploadedFiles.length}: Doing Magic...`;
                 if (typeof lucide !== 'undefined') lucide.createIcons();
 
                 const img = await loadImage(file);
                 const compressedBlob = await compressSingleImage(img, targetSizeInBytes);
-
                 const cleanName = `compressed_${file.name.split('.')[0]}.jpg`;
+                
                 compressedResults.push({ blob: compressedBlob, name: cleanName });
-
                 createPreviewRow(file, compressedBlob, cleanName);
             }
-
             loader.style.display = 'none';
             compressBtn.disabled = false;
-
             if (uploadedFiles.length > 1) {
                 downloadAllBtn.style.display = 'inline-flex';
                 downloadAllBtn.innerHTML = `<i data-lucide="download"></i> Download All (${uploadedFiles.length}) as ZIP`;
@@ -446,11 +537,9 @@
             });
         }
 
-        // Precision Core Algorithm (High Accuracy Binary Search Window)
         async function compressSingleImage(sourceImage, targetSizeInBytes) {
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
-
             let width = sourceImage.width;
             let height = sourceImage.height;
             canvas.width = width;
@@ -458,7 +547,7 @@
 
             let minQuality = 0.01;
             let maxQuality = 1.0;
-            let iterations = 14; 
+            let iterations = 14;
             let blob = null;
 
             ctx.fillStyle = '#ffffff';
@@ -468,12 +557,8 @@
             for (let i = 0; i < iterations; i++) {
                 let midQuality = (minQuality + maxQuality) / 2;
                 blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', midQuality));
-                
-                if (blob.size > targetSizeInBytes) {
-                    maxQuality = midQuality; 
-                } else {
-                    minQuality = midQuality; 
-                }
+                if (blob.size > targetSizeInBytes) { maxQuality = midQuality; } 
+                else { minQuality = midQuality; }
             }
 
             if (blob && blob.size > targetSizeInBytes) {
@@ -481,26 +566,22 @@
                 while (blob.size > targetSizeInBytes && scale > 0.1) {
                     canvas.width = sourceImage.width * scale;
                     canvas.height = sourceImage.height * scale;
-                    
                     ctx.fillStyle = '#ffffff';
                     ctx.fillRect(0, 0, canvas.width, canvas.height);
                     ctx.drawImage(sourceImage, 0, 0, canvas.width, canvas.height);
-                    
                     blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', 0.5));
-                    scale -= 0.05; 
+                    scale -= 0.05;
                 }
             }
             return blob;
         }
 
-        // Dynamically creates structured UI preview grids (SEO Cleaned - No Heading Clutter)
         function createPreviewRow(originalFile, compressedBlob, downloadName) {
             const row = document.createElement('div');
             row.className = 'preview-row';
-
             const originalUrl = URL.createObjectURL(originalFile);
             const compressedUrl = URL.createObjectURL(compressedBlob);
-
+            
             row.innerHTML = `
                 <div class="preview-box">
                     <div class="preview-title">Original: ${originalFile.name}</div>
@@ -526,25 +607,19 @@
                     </div>
                 </div>
             `;
-
             row.querySelector('.individual-download-btn').onclick = () => {
                 const a = document.createElement('a');
                 a.href = compressedUrl;
                 a.download = downloadName;
                 a.click();
             };
-
             batchContainer.appendChild(row);
             if (typeof lucide !== 'undefined') lucide.createIcons();
         }
 
-        // Bulk Zip execution
         downloadAllBtn.onclick = () => {
             const zip = new JSZip();
-            compressedResults.forEach(item => {
-                zip.file(item.name, item.blob);
-            });
-
+            compressedResults.forEach(item => { zip.file(item.name, item.blob); });
             zip.generateAsync({ type: 'blob' }).then((content) => {
                 const a = document.createElement('a');
                 a.href = URL.createObjectURL(content);
@@ -554,15 +629,9 @@
         };
 
         compressBtn.addEventListener('click', compressAllImages);
-
         resetBtn.onclick = () => {
-            uploadedFiles = [];
-            compressedResults = [];
-            batchContainer.innerHTML = '';
-            fileInput.value = '';
-            workspace.style.display = 'none';
-            compressBtn.style.display = 'none';
-            dropZone.style.display = 'block';
+            uploadedFiles = []; compressedResults = []; batchContainer.innerHTML = ''; fileInput.value = '';
+            workspace.style.display = 'none'; compressBtn.style.display = 'none'; dropZone.style.display = 'block';
         };
 
         function formatBytes(bytes) {
