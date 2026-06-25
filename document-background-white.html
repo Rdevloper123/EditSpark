@@ -3,30 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>document background white online - clean document & signature free | EditSpark</title>
-    <meta name="description" content="Enhance your scanned documents and digital signatures online for free. Automatically clear backgrounds to pure white and darken signatures for job forms.">
-   <link class="canonical" rel="canonical" href="https://edit-spark.vercel.app/document-background-white.html" />
-    <!-- Tailwind CSS -->
+    <title>Document Background White Online Free | Make Signature Dark Black - EditSpark</title>
+    <meta name="description" content="Make document backgrounds pure white and signatures dark black online for free. Perfect for SSC, Railway, Banking and Government form uploads. 100% private and secure.">
+    <meta name="keywords" content="document background white online, signature cleaner online, white background signature, document cleaner, signature dark black, railway form signature, ssc form signature, remove shadow from document online">
+    <link class="canonical" rel="canonical" href="https://edit-spark.vercel.app/document-background-white.html" />
+
+    <meta property="og:title" content="Document Background White Online Free | EditSpark">
+    <meta property="og:description" content="Make document backgrounds pure white and signatures dark black online. Perfect for online job application forms.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://edit-spark.vercel.app/document-background-white.html">
+
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        .btn-purple {
-            background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%);
-        }
-        .preview-box {
-            border: 2px dashed #cbd5e1;
-            transition: all 0.3s ease;
-        }
-        .preview-box:hover {
-            border-color: #a855f7;
-        }
+        .btn-purple { background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%); }
+        .preview-box { border: 2px dashed #cbd5e1; transition: all 0.3s ease; }
+        .preview-box:hover { border-color: #a855f7; }
     </style>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "@id": "https://edit-spark.vercel.app/document-background-white.html#webapp",
+          "url": "https://edit-spark.vercel.app/document-background-white.html",
+          "name": "Document Background White & Signature Cleaner",
+          "applicationCategory": "ImageApplication",
+          "operatingSystem": "All",
+          "browserRequirements": "Requires HTML5 Canvas support.",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://edit-spark.vercel.app/document-background-white.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Does this tool remove document shadows?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, this tool automatically detects grey shadows caused by phone cameras or poor lighting and converts them into a clean, crisp, pure white background."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I make my signature dark black?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Absolutely! The smart pixel engine darkens blue or faded ink lines into a sharp, clear dark black color so that it complies with official guidelines."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is this tool free and safe to use?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, it is 100% free with no hidden charges. All processing happens locally inside your browser, meaning your personal documents are never uploaded to any server."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I use it for SSC and Railway forms?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, this tool is specifically optimized to meet the strict photo and signature uploading guidelines of SSC, UPSC, Railway, Banking, and state-level government forms."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
 </head>
 <body class="bg-[#f3f4f6] font-sans text-slate-800 min-h-screen flex flex-col">
 
-    <!-- Navigation Bar -->
     <nav class="bg-white border-b border-slate-200 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
@@ -45,15 +102,13 @@
         </div>
     </nav>
 
-    <!-- Main Content -->
     <main class="flex-grow max-w-4xl mx-auto px-4 py-12 w-full">
         <div class="text-center mb-8">
-            <h1 class="text-3xl font-black text-slate-900 tracking-tight uppercase">Make Document & Signature Background White Online</h1>
+            <h1 class="text-3xl font-black text-slate-900 tracking-tight uppercase">Document Background White & Signature Cleaner Online Free</h1>
             <p class="mt-2 text-slate-500 font-medium">1-Click AI Filter: Automatically removes background shadows and makes signatures dark black.</p>
         </div>
 
         <div class="bg-white rounded-xl shadow-xs border border-slate-200 p-6 md:p-8">
-            <!-- Dropzone -->
             <div id="enhanceDropzone" class="preview-box rounded-xl p-8 text-center cursor-pointer bg-slate-50 mb-6">
                 <input type="file" id="enhanceInput" accept="image/*" class="hidden">
                 <div id="enhancePrompt">
@@ -62,18 +117,16 @@
                     <p class="text-xs text-slate-400 mt-1">Drag & drop works too. Supports JPG, JPEG, PNG</p>
                 </div>
                 <div id="enhancePreviewContainer" class="hidden flex flex-col items-center">
-                    <img id="enhancePreview" class="max-h-64 rounded shadow-xs mb-3">
+                    <img id="enhancePreview" class="max-h-64 rounded shadow-xs mb-3" alt="EditSpark Document Background White Preview Image">
                     <p id="enhanceFileInfo" class="text-sm text-slate-500 font-bold"></p>
                 </div>
             </div>
 
-            <!-- Magic Auto Clean Button -->
             <button id="enhanceBtn" class="w-full btn-purple text-white font-bold py-4 px-6 rounded-lg shadow-md flex items-center justify-center space-x-2 transition-all cursor-pointer uppercase tracking-wider text-base">
                 <i class="fa-solid fa-bolt animate-pulse"></i>
                 <span>Magic Auto-Clean (Pure White & Dark Sign)</span>
             </button>
 
-            <!-- Result Section -->
             <div id="enhanceResult" class="hidden mt-8 pt-6 border-t border-slate-200 text-center">
                 <div class="inline-flex items-center space-x-2 text-emerald-600 font-bold uppercase tracking-wide mb-4 text-sm">
                     <i class="fa-solid fa-circle-check text-xl"></i>
@@ -88,16 +141,80 @@
                 </a>
             </div>
         </div>
+
+        <hr class="my-12 border-slate-200">
+
+        <section class="prose max-w-none text-slate-600 space-y-8">
+            <div>
+                <h2 class="text-2xl font-extrabold text-slate-900 mb-3">What is the Document Background White Tool?</h2>
+                <p class="leading-relaxed">When you take a photo of a document or an official signature using a mobile phone, it often looks dull, dark, or covered in grey shadows. Most government online application portals require a crystal-clear file with a pure white background. This online tool is designed to instantly solve that issue. It intelligently separates the text or signature from the unwanted background, removes all shadows, and leaves you with a professional, clean image ready for official submission.</p>
+            </div>
+
+            <div>
+                <h2 class="text-2xl font-extrabold text-slate-900 mb-3">How to Make Document Background White Online?</h2>
+                <p class="leading-relaxed mb-2">Cleaning your files on EditSpark is incredibly simple and takes less than five seconds. Follow these quick steps:</p>
+                <ul class="list-disc pl-5 space-y-1">
+                    <li>Click on the browse area or drag and drop your image into the tool.</li>
+                    <li>Hit the <strong>Magic Auto-Clean</strong> button to let the pixel engine analyze the file.</li>
+                    <li>The background shadows will disappear, and faded ink will become rich dark black.</li>
+                    <li>Click the download button to save your updated high-quality image.</li>
+                </ul>
+            </div>
+
+            <div>
+                <h2 class="text-2xl font-extrabold text-slate-900 mb-3">Why Use This Signature Cleaner Tool?</h2>
+                <p class="leading-relaxed">Unlike heavy software like Photoshop that requires complex skills, our tool functions seamlessly with a single click. It employs a smart dynamic thresholding mechanism that scans the contrast levels of your uploaded file. If the lines of a signature are faded or captured in low light, it boosts the core color channels to turn the signature dark black. Simultaneously, it pushes the grey paper background to maximum brightness, transforming it into 100% white.</p>
+            </div>
+
+            <div>
+                <h2 class="text-2xl font-extrabold text-slate-900 mb-3">Perfect for SSC, Railway & Banking Forms</h2>
+                <p class="leading-relaxed">Major online examination bodies such as Staff Selection Commission (SSC), Institute of Banking Personnel Selection (IBPS), Railway Recruitment Boards (RRB), and UPSC have very strict parameters. Uploading an image with a dark or yellowish tint can lead to application rejection. This portal serves as a safe and reliable utility to ensure your digital signatures look exactly like official scanned copies, saving you time and preventing stressful mistakes.</p>
+            </div>
+
+            <hr class="my-8 border-slate-200">
+
+            <div>
+                <h2 class="text-2xl font-extrabold text-slate-900 mb-6 text-center">Frequently Asked Questions (FAQs)</h2>
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-1">Does this tool remove document shadows?</h3>
+                        <p class="leading-relaxed">Yes, the tool scans the entire canvas to evaluate varying light layouts. It completely irons out uneven grey mobile camera shadows, converting the paper sheet backdrop into standard white color while protecting the text lines.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-1">Can I make my signature dark black?</h3>
+                        <p class="leading-relaxed">Absolutely. Blue, light grey, or faded ink shapes are identified by our threshold system and amplified into distinct, rich dark black strokes to make reading and verification completely effortless.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-1">Is this online utility completely free to use?</h3>
+                        <p class="leading-relaxed">Yes, it is entirely free. There are no registration processes, hidden premium barriers, or watermarks attached to your final processed images.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-1">Is it safe to upload confidential papers here?</h3>
+                        <p class="leading-relaxed">Your privacy is fully protected. Our engine utilizes client-side javascript rendering. This means your files are opened and polished entirely inside your device's browser window; no data ever leaves your device or touches an external server.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-1">Which image formats are supported?</h3>
+                        <p class="leading-relaxed">You can comfortably drop or upload standard digital image layouts including JPG, JPEG, and PNG formats.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-white border-t border-slate-200 py-6 mt-12">
-        <div class="max-w-7xl mx-auto px-4 text-center text-sm text-slate-400 font-medium">
-            &copy; 2026 EditSpark Studio. Locally Processed (100% Private & Safe).
+    <footer class="bg-white border-t border-slate-200 py-8 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <div class="flex flex-wrap justify-center gap-4 md:gap-6 mb-6 text-sm font-semibold text-purple-600">
+                <a href="compress-image.html" class="hover:text-purple-800 transition-colors">Compress Image to 20KB/50KB</a>
+                <a href="resize-image.html" class="hover:text-purple-800 transition-colors">Resize Image & Signature</a>
+                <a href="passport-photo-maker.html" class="hover:text-purple-800 transition-colors">Passport Photo Maker</a>
+                <a href="index.html" class="hover:text-purple-800 transition-colors">All Online Tools</a>
+            </div>
+            <div class="text-sm text-slate-400 font-medium">
+                &copy; 2026 EditSpark Studio. Locally Processed (100% Private & Safe).
+            </div>
         </div>
     </footer>
 
-    <!-- Smart Auto-Threshold Pixel Engine -->
     <script>
         const dropzone = document.getElementById('enhanceDropzone');
         const fileInput = document.getElementById('enhanceInput');
@@ -109,23 +226,34 @@
         const enhanceResult = document.getElementById('enhanceResult');
         const canvas = document.getElementById('resultCanvas');
         const downloadBtn = document.getElementById('downloadEnhanceBtn');
-
         let activeFile = null;
 
         dropzone.addEventListener('click', () => fileInput.click());
-        dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('border-purple-500', 'bg-purple-50/30'); });
-        dropzone.addEventListener('dragleave', () => { dropzone.classList.remove('border-purple-500', 'bg-purple-50/30'); });
+
+        dropzone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropzone.classList.add('border-purple-500', 'bg-purple-50/30');
+        });
+
+        dropzone.addEventListener('dragleave', () => {
+            dropzone.classList.remove('border-purple-500', 'bg-purple-50/30');
+        });
+
         dropzone.addEventListener('drop', (e) => {
             e.preventDefault();
             dropzone.classList.remove('border-purple-500', 'bg-purple-50/30');
             if(e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
         });
+
         fileInput.addEventListener('change', (e) => {
             if(e.target.files.length) handleFile(e.target.files[0]);
         });
 
         function handleFile(file) {
-            if(!file.type.startsWith('image/')) { alert('Please select a valid image file.'); return; }
+            if(!file.type.startsWith('image/')) {
+                alert('Please select a valid image file.');
+                return;
+            }
             activeFile = file;
             const reader = new FileReader();
             reader.onload = (e) => {
@@ -138,13 +266,14 @@
             reader.readAsDataURL(file);
         }
 
-        // --- Core Intelligent Thresholding Engine ---
         enhanceBtn.addEventListener('click', () => {
-            if(!activeFile) { alert('Please upload an image first.'); return; }
-            
+            if(!activeFile) {
+                alert('Please upload an image first.');
+                return;
+            }
             enhanceBtn.disabled = true;
             enhanceBtn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> <span>Analyzing Pixels...</span>';
-
+            
             const img = new Image();
             img.src = previewImg.src;
             img.onload = () => {
@@ -152,49 +281,43 @@
                 canvas.height = img.height;
                 const ctx = canvas.getContext('2d');
                 ctx.drawImage(img, 0, 0);
-
+                
                 const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
                 const data = imgData.data;
-
-                // Step 1: Calculate average luminance to find the perfect signature cutoff mark dynamically
+                
                 let totalLuminance = 0;
                 let pixelCount = data.length / 4;
+                
                 for (let i = 0; i < data.length; i += 4) {
                     totalLuminance += (data[i] * 0.299 + data[i+1] * 0.587 + data[i+2] * 0.114);
                 }
-                const avgLuminance = totalLuminance / pixelCount;
                 
-                // Adaptive offset to handle slightly dark mobile clicks cleanly
+                const avgLuminance = totalLuminance / pixelCount;
                 const threshold = avgLuminance * 0.85;
-
-                // Step 2: Distribute pixels cleanly (Dark text becomes darker, light backgrounds snap to pure white)
+                
                 for (let i = 0; i < data.length; i += 4) {
                     let r = data[i], g = data[i+1], b = data[i+2];
-                    let v = (r * 0.299 + g * 0.587 + b * 0.114); // current pixel luminance
-
+                    let v = (r * 0.299 + g * 0.587 + b * 0.114);
+                    
                     if (v < threshold) {
-                        // Snaps target ink pixels to rich prominent dark shades smoothly
                         let scale = v / threshold;
-                        data[i] = Math.max(0, r * scale * 0.5);   // Red
-                        data[i+1] = Math.max(0, g * scale * 0.5); // Green
-                        data[i+2] = Math.max(0, b * scale * 0.5); // Blue
+                        data[i] = Math.max(0, r * scale * 0.5);   
+                        data[i+1] = Math.max(0, g * scale * 0.5); 
+                        data[i+2] = Math.max(0, b * scale * 0.5); 
                     } else {
-                        // Snaps shadow/grey backgrounds directly to 100% Crisp Pure White
                         data[i] = 255;
                         data[i+1] = 255;
                         data[i+2] = 255;
                     }
                 }
-
+                
                 ctx.putImageData(imgData, 0, 0);
-
-                // Export out compressed high quality configuration package
+                
                 downloadBtn.href = canvas.toDataURL('image/jpeg', 0.90);
                 downloadBtn.download = `editspark_magic_clean_${activeFile.name}`;
-
+                
                 enhanceResult.classList.remove('hidden');
                 enhanceResult.scrollIntoView({ behavior: 'smooth' });
-
                 enhanceBtn.disabled = false;
                 enhanceBtn.innerHTML = '<i class="fa-solid fa-bolt"></i> <span>Magic Auto-Clean (Pure White & Dark Sign)</span>';
             };
