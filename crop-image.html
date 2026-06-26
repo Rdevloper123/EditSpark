@@ -42,9 +42,19 @@
         .feature-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; list-style: none; padding: 0; margin: 1.5rem 0; font-weight: 500; color: #475569; font-size: 0.9rem; }
         .feature-item { background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; padding: 0.35rem 0.75rem; border-radius: 20px; font-weight: 600; text-align: center; }
         
-        .btn { background: #2563eb; color: white; padding: 0.85rem 2rem; border: none; border-radius: 6px; cursor: pointer; font-size: 1.1rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 6px -1px rgba(37,99,235,0.2); }
+        .btn { background: #2563eb; color: white; padding: 0.85rem 2rem; border: none; border-radius: 6px; cursor: pointer; font-size: 1.1rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 6px -1px rgba(37,99,235,0.2); margin: 0.5rem; }
         .btn:hover { background: #1d4ed8; }
+        .btn-success { background: #16a34a; box-shadow: 0 4px 6px -1px rgba(22,163,74,0.2); }
+        .btn-success:hover { background: #15803d; }
         
+        /* Cropper Workspace Styles */
+        .work-area { display: none; max-width: 600px; margin: 2rem auto; position: relative; background: #0f172a; border-radius: 8px; overflow: hidden; box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06); }
+        #canvasContainer { position: relative; width: 100%; display: flex; justify-content: center; align-items: center; }
+        canvas { max-width: 100%; display: block; user-select: none; }
+        
+        .control-panel { display: none; justify-content: center; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap; }
+        .select-input { padding: 0.6rem 1rem; border-radius: 6px; border: 1px solid #cbd5e1; font-size: 1rem; color: #334155; background: white; cursor: pointer; }
+
         .article-section { background: white; border-radius: 12px; padding: 3rem 2.5rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); margin-top: 2rem; }
         h1 { font-size: 2.25rem; color: #0f172a; margin-bottom: 0.5rem; line-height: 1.2; }
         h2 { font-size: 1.5rem; color: #0f172a; margin-top: 2.5rem; margin-bottom: 1rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem; line-height: 1.3; }
@@ -52,7 +62,6 @@
         ul, ol { margin-bottom: 1.25rem; padding-left: 1.75rem; color: #475569; line-height: 1.75; }
         li { margin-bottom: 0.5rem; }
         
-        /* Related Tools & Topical Authority Navigation Component */
         .related-tools-box { background: #f8fafc; border: 1px solid #e2e8f0; padding: 1.5rem; margin: 2rem 0; border-radius: 8px; }
         .related-tools-box h3 { margin-top: 0; margin-bottom: 1rem; font-size: 1.1rem; color: #0f172a; font-weight: 600; }
         .tools-links-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem; }
@@ -208,15 +217,37 @@
             <p style="max-width: 650px; margin: 0 auto 1.5rem auto;">
                 Select your photo, crop out the extra borders, and download the cropped image instantly. No installations, no registrations, and completely private processing inside your device browser.
             </p>
-            <button class="btn">
+
+            <!-- Active Upload Interaction Elements -->
+            <button class="btn" id="uploadTriggerBtn">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
                 Upload Your Image
             </button>
+            <input type="file" id="imageFileInput" accept="image/jpeg, image/png, image/jpg" style="display: none;">
+
+            <!-- Functional Workspace Area -->
+            <div class="work-area" id="workspaceContainer">
+                <div id="canvasContainer">
+                    <canvas id="editorCanvas"></canvas>
+                </div>
+            </div>
+
+            <!-- Operational Control Triggers -->
+            <div class="control-panel" id="controlsWrapper">
+                <select class="select-input" id="aspectRatioSelector">
+                    <option value="free">Free Crop (Custom)</option>
+                    <option value="passport">Passport Size (3.5:4.5)</option>
+                    <option value="signature">Signature Crop (2:1)</option>
+                    <option value="square">Square Frame (1:1)</option>
+                </select>
+                <button class="btn btn-success" id="downloadCroppedBtn">
+                    Download Cropped Image
+                </button>
+            </div>
         </div>
 
         <!-- Clean Informative Content Area -->
         <div class="article-section">
-            
             <h2>Crop JPG & PNG Online Free Without Losing Quality</h2>
             <p>If you need to quickly remove the unwanted outer background from a picture, our web tool helps you crop photo online free with complete precision. Most basic online editors tend to blur or distort pictures during export. EditSpark functions differently; it isolates your changes locally and keeps your original image quality intact so that text fields, lines, and edges remain sharp and readable.</p>
             <p>Whether you upload standard camera snapshots to crop jpg online free or use high-contrast graphics files to crop png online free, your files are handled safely. You can manually adjust the bounding handles, choose custom crops, and download the finished picture directly to your device storage in seconds.</p>
@@ -300,5 +331,257 @@
         </div>
     </div>
 
+    <!-- Core Native Processing Logic Script -->
+    <script>
+        const uploadTriggerBtn = document.getElementById('uploadTriggerBtn');
+        const imageFileInput = document.getElementById('imageFileInput');
+        const workspaceContainer = document.getElementById('workspaceContainer');
+        const controlsWrapper = document.getElementById('controlsWrapper');
+        const editorCanvas = document.getElementById('editorCanvas');
+        const aspectRatioSelector = document.getElementById('aspectRatioSelector');
+        const downloadCroppedBtn = document.getElementById('downloadCroppedBtn');
+        const ctx = editorCanvas.getContext('2d');
+
+        let sourceImg = new Image();
+        let cropState = { x: 50, y: 50, w: 200, h: 200 };
+        let dragMode = null;
+        let startMousePos = { x: 0, y: 0 };
+        let activeHandleIndex = -1;
+
+        // Custom Bounding Boxes Config
+        const handlesArray = [
+            { x: 0, y: 0 }, { x: 0.5, y: 0 }, { x: 1, y: 0 },
+            { x: 0, y: 0.5 },                 { x: 1, y: 0.5 },
+            { x: 0, y: 1 }, { x: 0.5, y: 1 }, { x: 1, y: 1 }
+        ];
+
+        uploadTriggerBtn.addEventListener('click', () => imageFileInput.click());
+
+        imageFileInput.addEventListener('change', (e) => {
+            const chosenFile = e.target.files[0];
+            if (!chosenFile) return;
+
+            const readerInstance = new FileReader();
+            readerInstance.onload = (event) => {
+                sourceImg.src = event.target.result;
+            };
+            readerInstance.readAsDataURL(chosenFile);
+        });
+
+        sourceImg.onload = () => {
+            const containerMaxW = Math.min(window.innerWidth - 40, 600);
+            const scaleFactor = containerMaxW / sourceImg.width;
+            
+            editorCanvas.width = containerMaxW;
+            editorCanvas.height = sourceImg.height * scaleFactor;
+
+            // Default safe starting values
+            cropState.w = editorCanvas.width * 0.6;
+            cropState.h = editorCanvas.height * 0.6;
+            cropState.x = (editorCanvas.width - cropState.w) / 2;
+            cropState.y = (editorCanvas.height - cropState.h) / 2;
+
+            workspaceContainer.style.display = 'block';
+            controlsWrapper.style.display = 'flex';
+            applyRatioRules();
+            renderFrame();
+        };
+
+        function renderFrame() {
+            ctx.clearRect(0, 0, editorCanvas.width, editorCanvas.height);
+            ctx.drawImage(sourceImg, 0, 0, editorCanvas.width, editorCanvas.height);
+
+            // Translucent Mask Overlay
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.55)';
+            ctx.fillRect(0, 0, editorCanvas.width, editorCanvas.height);
+
+            // Transparent Window Clearing
+            ctx.clearRect(cropState.x, cropState.y, cropState.w, cropState.h);
+            ctx.drawImage(sourceImg, cropState.x, cropState.y, cropState.w, cropState.h, cropState.x, cropState.y, cropState.w, cropState.h);
+
+            // Bounding Box Outlines
+            ctx.strokeStyle = '#2563eb';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(cropState.x, cropState.y, cropState.w, cropState.h);
+
+            // Grid Layout Guides
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.35)';
+            ctx.lineWidth = 1;
+            for (let i = 1; i <= 2; i++) {
+                ctx.beginPath();
+                ctx.moveTo(cropState.x + (cropState.w / 3) * i, cropState.y);
+                ctx.lineTo(cropState.x + (cropState.w / 3) * i, cropState.y + cropState.h);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.moveTo(cropState.x, cropState.y + (cropState.h / 3) * i);
+                ctx.lineTo(cropState.x + cropState.w, cropState.y + (cropState.h / 3) * i);
+                ctx.stroke();
+            }
+
+            // Draw Interaction Knobs
+            ctx.fillStyle = '#2563eb';
+            handlesArray.forEach(h => {
+                ctx.beginPath();
+                ctx.arc(cropState.x + cropState.w * h.x, cropState.y + cropState.h * h.y, 6, 0, 2 * Math.PI);
+                ctx.fill();
+            });
+        }
+
+        function applyRatioRules() {
+            const mode = aspectRatioSelector.value;
+            if (mode === 'passport') {
+                cropState.h = cropState.w * (4.5 / 3.5);
+            } else if (mode === 'signature') {
+                cropState.h = cropState.w * (1 / 2);
+            } else if (mode === 'square') {
+                cropState.h = cropState.w;
+            }
+            
+            // Constrain constraints inside current boundaries
+            if (cropState.y + cropState.h > editorCanvas.height) {
+                cropState.h = editorCanvas.height - cropState.y;
+                if (mode === 'passport') cropState.w = cropState.h * (3.5 / 4.5);
+                if (mode === 'signature') cropState.w = cropState.h * 2;
+                if (mode === 'square') cropState.w = cropState.h;
+            }
+        }
+
+        aspectRatioSelector.addEventListener('change', () => {
+            applyRatioRules();
+            renderFrame();
+        });
+
+        // Mouse & Touch Interaction Mechanics
+        function getActionTarget(clientX, clientY) {
+            const rect = editorCanvas.getBoundingClientRect();
+            const mouseX = clientX - rect.left;
+            const mouseY = clientY - rect.top;
+
+            for (let i = 0; i < handlesArray.length; i++) {
+                const hX = cropState.x + cropState.w * handlesArray[i].x;
+                const hY = cropState.y + cropState.h * handlesArray[i].y;
+                if (Math.hypot(mouseX - hX, mouseY - hY) < 12) {
+                    return { type: 'resize', index: i };
+                }
+            }
+
+            if (mouseX > cropState.x && mouseX < cropState.x + cropState.w &&
+                mouseY > cropState.y && mouseY < cropState.y + cropState.h) {
+                return { type: 'move' };
+            }
+            return null;
+        }
+
+        function handleInputStart(clientX, clientY) {
+            const action = getActionTarget(clientX, clientY);
+            if (!action) return;
+
+            const rect = editorCanvas.getBoundingClientRect();
+            startMousePos = { x: clientX - rect.left, y: clientY - rect.top };
+
+            if (action.type === 'resize') {
+                dragMode = 'resize';
+                activeHandleIndex = action.index;
+            } else if (action.type === 'move') {
+                dragMode = 'move';
+            }
+        }
+
+        function handleInputMove(clientX, clientY) {
+            if (!dragMode) return;
+
+            const rect = editorCanvas.getBoundingClientRect();
+            const currX = clientX - rect.left;
+            const currY = clientY - rect.top;
+            
+            const dx = currX - startMousePos.x;
+            const dy = currY - startMousePos.y;
+
+            if (dragMode === 'move') {
+                cropState.x = Math.max(0, Math.min(editorCanvas.width - cropState.w, cropState.x + dx));
+                cropState.y = Math.max(0, Math.min(editorCanvas.height - cropState.h, cropState.y + dy));
+            } else if (dragMode === 'resize') {
+                const h = handlesArray[activeHandleIndex];
+                const activeMode = aspectRatioSelector.value;
+
+                if (activeMode !== 'free') {
+                    // Locked aspect ratio resizing logic
+                    if (h.x === 1 || (h.x === 0.5 && h.y === 1)) {
+                        let newW = Math.max(30, cropState.w + dx);
+                        let newH = newW * (activeMode === 'passport' ? 4.5/3.5 : activeMode === 'signature' ? 0.5 : 1);
+                        if (cropState.x + newW <= editorCanvas.width && cropState.y + newH <= editorCanvas.height) {
+                            cropState.w = newW;
+                            cropState.h = newH;
+                        }
+                    }
+                } else {
+                    // Free layout scaling mechanics
+                    if (h.x === 1) cropState.w = Math.max(30, Math.min(editorCanvas.width - cropState.x, cropState.w + dx));
+                    if (h.y === 1) cropState.h = Math.max(30, Math.min(editorCanvas.height - cropState.y, cropState.h + dy));
+                    if (h.x === 0) {
+                        const targetW = cropState.w - dx;
+                        if (targetW > 30 && cropState.x + dx >= 0) {
+                            cropState.x += dx;
+                            cropState.w = targetW;
+                        }
+                    }
+                    if (h.y === 0) {
+                        const targetH = cropState.h - dy;
+                        if (targetH > 30 && cropState.y + dy >= 0) {
+                            cropState.y += dy;
+                            cropState.h = targetH;
+                        }
+                    }
+                }
+            }
+
+            startMousePos = { x: currX, y: currY };
+            renderFrame();
+        }
+
+        function handleInputEnd() {
+            dragMode = null;
+            activeHandleIndex = -1;
+        }
+
+        // Native Mouse Event Hooks
+        editorCanvas.addEventListener('mousedown', e => handleInputStart(e.clientX, e.clientY));
+        window.addEventListener('mousemove', e => handleInputMove(e.clientX, e.clientY));
+        window.addEventListener('mouseup', handleInputEnd);
+
+        // Mobile Friendly Touch Event Hooks
+        editorCanvas.addEventListener('touchstart', e => {
+            if (e.touches.length === 1) handleInputStart(e.touches[0].clientX, e.touches[0].clientY);
+        }, { passive: true });
+        window.addEventListener('touchmove', e => {
+            if (e.touches.length === 1) handleInputMove(e.touches[0].clientX, e.touches[0].clientY);
+        }, { passive: true });
+        window.addEventListener('touchend', handleInputEnd);
+
+        // Download Pipeline Processing
+        downloadCroppedBtn.addEventListener('click', () => {
+            const exportCanvas = document.createElement('canvas');
+            const exportCtx = exportCanvas.getContext('2d');
+
+            const nativeScaleX = sourceImg.width / editorCanvas.width;
+            const nativeScaleY = sourceImg.height / editorCanvas.height;
+
+            exportCanvas.width = cropState.w * nativeScaleX;
+            exportCanvas.height = cropState.h * nativeScaleY;
+
+            exportCtx.drawImage(
+                sourceImg,
+                cropState.x * nativeScaleX, cropState.y * nativeScaleY,
+                cropState.w * nativeScaleX, cropState.h * nativeScaleY,
+                0, 0, exportCanvas.width, exportCanvas.height
+            );
+
+            const downloadLink = document.createElement('a');
+            downloadLink.download = `editspark-cropped-${Date.now()}.png`;
+            downloadLink.href = exportCanvas.toDataURL('image/png', 1.0);
+            downloadLink.click();
+        });
+    </script>
 </body>
 </html>
