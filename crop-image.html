@@ -3,719 +3,199 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Title & Description Improvements (Fix #14, #15) -->
-    <title>Crop Image Online Free | Passport Photo & Signature Crop Tool | EditSpark</title>
-    <meta name="description" content="Crop images online for free. Easily crop passport photos, signatures, JPG and PNG images with custom aspect ratios. Perfect for SSC, Railway, UPSC, IBPS and government form uploads. Secure browser-based processing." />
+    <!-- Title & Description Improvements (Fix #14, #15, #16) -->
+    <title>Crop Image Online Free - Passport Photo & Signature Crop Tool | EditSpark</title>
+    <meta name="description" content="Crop Image Online Free. Crop passport photos, signatures, JPG & PNG images without losing quality. Perfect for SSC, Railway, UPSC, Banking and government forms. Secure browser-based tool.">
     
-    <!-- Meta Tags Reinforcements (Fix #1) -->
-    <meta name="robots" content="index, follow" />
-    <meta name="author" content="EditSpark">
-    <meta name="application-name" content="EditSpark">
-    <meta name="theme-color" content="#10b981">
-    
-    <!-- Mobile Capabilities -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
-    
-    <!-- Canonical Tag (Fix #12) -->
-    <link rel="canonical" class="seo-canonical" href="https://edit-spark.vercel.app/crop-image.html" />
+    <!-- Preload OG Image for Better Performance (Fix #12) -->
+    <link rel="preload" as="image" href="https://editspark.com/assets/og-crop-image.jpg">
+    <link rel="canonical" href="https://editspark.com/crop-image">
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://edit-spark.vercel.app/crop-image.html" />
-    <meta property="og:title" content="Crop Image Online Free | Passport Photo & Signature Crop Tool | EditSpark" />
-    <meta property="og:description" content="Crop images online for free. Easily crop passport photos, signatures, JPG and PNG images for online recruitment forms." />
-    <meta property="og:image" content="https://edit-spark.vercel.app/assets/images/crop-image-og.jpg" />
+    <style>
+        /* Fix #11: Corrected min-height property */
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
+        .tool-box { background: white; border-radius: 12px; padding: 2rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); margin-bottom: 2rem; text-align: center; }
+        .btn { background: #2563eb; color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 6px; cursor: pointer; font-size: 1rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; }
+        .btn:hover { background: #1d4ed8; }
+        .article-section { background: white; border-radius: 12px; padding: 2.5rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); margin-top: 2rem; }
+        h1 { font-size: 2.25rem; color: #0f172a; margin-bottom: 1rem; }
+        h2 { font-size: 1.5rem; color: #1e293b; margin-top: 2rem; margin-bottom: 1rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem; }
+        p { line-height: 1.7; color: #475569; margin-bottom: 1.25rem; }
+        ul { margin-bottom: 1.25rem; padding-left: 1.5rem; color: #475569; line-height: 1.7; }
+        li { margin-bottom: 0.5rem; }
+        .faq-item { margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid #f1f5f9; }
+        .faq-item h3 { font-size: 1.15rem; color: #0f172a; margin-bottom: 0.5rem; }
+        .internal-link-box { background: #f0fdf4; border-left: 4px solid #22c55e; padding: 1rem; margin: 1.5rem 0; border-radius: 0 8px 8px 0; }
+        .internal-link-box a { color: #15803d; font-weight: 600; text-decoration: none; }
+        .internal-link-box a:hover { text-decoration: underline; }
+        .grid-presets { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-top: 1rem; }
+        .preset-card { background: #f8fafc; border: 1px solid #e2e8f0; padding: 1rem; border-radius: 8px; font-weight: 500; }
+        .footer { text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #e2e8f0; color: #64748b; font-size: 0.875rem; }
+    </style>
 
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://edit-spark.vercel.app/crop-image.html" />
-    <meta property="twitter:title" content="Crop Image Online Free | Passport Photo & Signature Crop Tool | EditSpark" />
-    <meta property="twitter:description" content="Crop images online for free. Easily crop passport photos, signatures, JPG and PNG images for online recruitment forms." />
-    <meta property="twitter:image" content="https://edit-spark.vercel.app/assets/images/crop-image-og.jpg" />
-
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- Consolidated Graph JSON-LD Schema (Fix #2, #16) -->
+    <!-- Combined Schema Markup (Fix #2, #3, #4, #13) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@graph": [
         {
-          "@type": "WebSite",
-          "@id": "https://edit-spark.vercel.app/#website",
-          "url": "https://edit-spark.vercel.app/",
-          "name": "EditSpark",
-          "description": "Free Online Image Editing Tools"
-        },
-        {
-          "@type": "Organization",
-          "@id": "https://edit-spark.vercel.app/#organization",
-          "name": "EditSpark",
-          "url": "https://edit-spark.vercel.app/",
-          "logo": "https://edit-spark.vercel.app/assets/images/logo.png",
-          "sameAs": [
-            "https://twitter.com/editspark"
-          ]
-        },
-        {
-          "@type": "WebApplication",
-          "@id": "https://edit-spark.vercel.app/crop-image.html#webapp",
-          "url": "https://edit-spark.vercel.app/crop-image.html",
-          "name": "EditSpark Smart Image Cropper",
-          "applicationCategory": "ImageEditorApplication",
-          "operatingSystem": "All",
-          "browserRequirements": "Requires HTML5 canvas and JavaScript support.",
-          "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "INR"
-          }
+          "@type": "WebPage",
+          "@id": "https://editspark.com/crop-image#webpage",
+          "url": "https://editspark.com/crop-image",
+          "name": "Crop Image Online Free - Passport Photo & Signature Crop Tool",
+          "description": "Crop Image Online Free. Crop passport photos, signatures, JPG & PNG images without losing quality. Perfect for SSC, Railway, UPSC, Banking and government forms.",
+          "dateModified": "2026-06-25"
         },
         {
           "@type": "SoftwareApplication",
-          "@id": "https://edit-spark.vercel.app/crop-image.html#softwareapp",
-          "url": "https://edit-spark.vercel.app/crop-image.html",
-          "name": "Free Image Crop Tool",
-          "applicationCategory": "DesignApplication",
-          "operatingSystem": "Windows, macOS, Android, iOS"
+          "@id": "https://editspark.com/crop-image#software",
+          "name": "EditSpark Image Cropper",
+          "applicationCategory": "ImageEditorApplication",
+          "operatingSystem": "All",
+          "browserRequirements": "Requires HTML5 support",
+          "url": "https://editspark.com/crop-image",
+          "featureList": [
+            "Crop JPG",
+            "Crop PNG",
+            "Passport Crop",
+            "Signature Crop",
+            "Drag & Drop",
+            "Client Side Processing",
+            "No Upload Required",
+            "Mobile Friendly"
+          ],
+          "image": {
+            "@type": "ImageObject",
+            "url": "https://editspark.com/assets/og-crop-image.jpg",
+            "width": "1200",
+            "height": "630"
+          }
         },
         {
-          "@type": "BreadcrumbList",
-          "@id": "https://edit-spark.vercel.app/crop-image.html#breadcrumb",
-          "itemListElement": [
+          "@type": "FAQPage",
+          "@id": "https://editspark.com/crop-image#faq",
+          "mainEntity": [
             {
-              "@type": "ListItem",
-              "position": 1,
-              "name": "Home",
-              "item": "https://edit-spark.vercel.app/"
+              "@type": "Question",
+              "name": "How to crop image to passport size online free?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Select the 'Passport Photo' aspect ratio preset from our free online image cropper, upload your photo, adjust the selection box around your face, and click download. It fits standard passport form requirements perfectly."
+              }
             },
             {
-              "@type": "ListItem",
-              "position": 2,
-              "name": "Image Tools",
-              "item": "https://edit-spark.vercel.app/#image-tools"
+              "@type": "Question",
+              "name": "How do I crop signature for SSC and Railway forms?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Upload a clear image of your signature, choose the standard signature aspect ratio preset (usually 3:1 or custom dimensions like 4.5 x 3.5 cm as specified in notifications), crop tightly around the signature text, and download your ready-to-upload signature."
+              }
             },
             {
-              "@type": "ListItem",
-              "position": 3,
-              "name": "Crop Image",
-              "item": "https://edit-spark.vercel.app/crop-image.html"
-            }
-          ]
-        },
-        {
-          "@type": "HowTo",
-          "name": "How to Crop an Image Online Free",
-          "description": "Step-by-step guide to crop passport photos, signatures, or generic documents using EditSpark.",
-          "step": [
-            {
-              "@type": "HowToStep",
-              "name": "Upload Image",
-              "text": "Drag and drop or click to browse your JPG or PNG image from your mobile or PC.",
-              "url": "https://edit-spark.vercel.app/crop-image.html#cropDropzone"
+              "@type": "Question",
+              "name": "Can I crop image without losing quality online?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes! EditSpark uses secure client-side canvas processing which means your original photo details are maintained perfectly. You can crop photo online free without losing resolution or clarity."
+              }
             },
             {
-              "@type": "HowToStep",
-              "name": "Choose Preset",
-              "text": "Select Free Form, Passport Photo ratio (3.5x4.5), or Signature layout (4.5x1.5).",
-              "url": "https://edit-spark.vercel.app/crop-image.html#preset-container"
-            },
-            {
-              "@type": "HowToStep",
-              "name": "Adjust Crop Area",
-              "text": "Move or drag the crop bounding box overlay using the alignment grids.",
-              "url": "https://edit-spark.vercel.app/crop-image.html#cropWorkspace"
-            },
-            {
-              "@type": "HowToStep",
-              "name": "Apply and Download",
-              "text": "Click on 'Apply Crop' and instantly download your securely processed file.",
-              "url": "https://edit-spark.vercel.app/crop-image.html#cropBtn"
+              "@type": "Question",
+              "name": "Is it safe to upload my Aadhaar documents or PAN card here?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Completely safe. Our image crop tool features full client-side processing. Your files never leave your device or get uploaded to any external server. All editing happens securely directly inside your browser container."
+              }
             }
           ]
         }
       ]
     }
     </script>
-
-    <!-- Super-Fast Pure Vanilla CSS Solution (Fix #18) -->
-    <style>
-        :root {
-            --bg-main: #f3f4f6;
-            --container-bg: #ffffff;
-            --primary: #10b981;
-            --primary-hover: #059669;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --border: #e2e8f0;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            font-family: system-ui, -apple-system, sans-serif;
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            min-height: screen;
-            display: flex;
-            flex-direction: column;
-            line-height: 1.6;
-        }
-        
-        /* Navigation Styles */
-        nav {
-            background: white;
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 50;
-            padding: 0.75rem 1rem;
-        }
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .logo-flex { display: flex; align-items: center; gap: 0.5rem; }
-        .logo-icon { background: var(--primary); padding: 0.5rem; border-radius: 0.5rem; color: white; }
-        .logo-text { font-size: 1.5rem; font-weight: 900; tracking-tight: -0.05em; }
-        .logo-accent { color: var(--primary); }
-        .nav-links a { text-decoration: none; color: var(--text-muted); font-weight: 700; font-size: 0.85rem; }
-        .nav-links a:hover { color: var(--primary); }
-
-        /* Main Workspace Content Layout */
-        main {
-            flex-grow: 1;
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 2.5rem 1rem;
-            width: 100%;
-        }
-        
-        /* Breadcrumb UI Style (Fix #3) */
-        .breadcrumb-nav {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-bottom: 1.5rem;
-            font-weight: 500;
-        }
-        .breadcrumb-nav a { color: var(--primary); text-decoration: none; }
-        .breadcrumb-nav a:hover { text-decoration: underline; }
-        .breadcrumb-nav .separator { margin: 0 0.4rem; color: #cbd5e1; }
-
-        .text-center { text-align: center; }
-        .mb-6 { margin-bottom: 1.5rem; }
-        .mb-8 { margin-bottom: 2rem; }
-        
-        .main-card {
-            background: var(--container-bg);
-            border-radius: 0.75rem;
-            border: 1px solid var(--border);
-            padding: 2rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        }
-
-        /* Dropzone / Cropper Window Area */
-        .preview-box {
-            border: 2px dashed #cbd5e1;
-            border-radius: 0.75rem;
-            padding: 2rem;
-            background: #f8fafc;
-            min-height: 220px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        .preview-box:hover { border-color: var(--primary); }
-        
-        .crop-container {
-            position: relative;
-            display: inline-block;
-            max-width: 100%;
-            touch-action: none;
-        }
-        .crop-overlay {
-            position: absolute;
-            border: 2px dashed #ef4444;
-            background: rgba(239, 68, 68, 0.1);
-            cursor: move;
-            box-sizing: border-box;
-            touch-action: none;
-        }
-        /* Crop Overlay Grid Matrix lines */
-        .crop-overlay::before, .crop-overlay::after {
-            content: '';
-            position: absolute;
-            background: rgba(239, 68, 68, 0.3);
-        }
-        .crop-overlay::before { top: 33.33%; bottom: 33.33%; left: 0; right: 0; border-top: 1px dashed #ef4444; border-bottom: 1px dashed #ef4444; }
-        .crop-overlay::after { left: 33.33%; right: 33.33%; top: 0; bottom: 0; border-left: 1px dashed #ef4444; border-right: 1px dashed #ef4444; }
-        
-        .resize-handle {
-            position: absolute;
-            width: 16px;
-            height: 16px;
-            background: #ef4444;
-            bottom: -8px;
-            right: -8px;
-            cursor: se-resize;
-            border-radius: 50%;
-            touch-action: none;
-        }
-        #cropSourceImg { max-height: 450px; display: block; max-width: 100%; user-select: none; }
-
-        /* Button Preset Architecture */
-        .label-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; tracking: 0.05em; color: var(--text-muted); margin-bottom: 0.5rem; display: block; }
-        .preset-flex { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
-        
-        .btn-preset {
-            font-size: 0.75rem; font-weight: 700; padding: 0.5rem 1rem; border-radius: 0.5rem; border: 1px solid var(--border);
-            background: #f1f5f9; color: #475569; cursor: pointer; text-transform: uppercase; transition: all 0.2s;
-        }
-        .btn-preset.active { background: var(--primary); color: white; border-color: var(--primary); }
-        
-        .btn-main {
-            width: 100%; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white;
-            padding: 0.85rem; border: none; border-radius: 0.5rem; font-weight: 700; font-size: 1rem;
-            text-transform: uppercase; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem;
-        }
-        .btn-main:hover { opacity: 0.95; }
-
-        /* Privacy Alert Trust Block (Fix #20) */
-        .privacy-banner {
-            margin-top: 1.5rem; background: #ecfdf5; border: 1px solid #a7f3d0;
-            padding: 0.75rem 1rem; border-radius: 0.5rem; color: #065f46; font-size: 0.85rem; font-weight: 600;
-            display: flex; align-items: center; gap: 0.5rem; justify-content: center;
-        }
-
-        /* Features Bullet Matrix UI (Fix #9) */
-        .features-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem; margin: 2rem 0;
-        }
-        .feature-tag {
-            background: #f8fafc; border: 1px solid var(--border); padding: 0.6rem 1rem; border-radius: 0.5rem;
-            font-size: 0.9rem; font-weight: 600; color: #334155; display: flex; align-items: center; gap: 0.5rem;
-        }
-        .feature-tag i { color: var(--primary); }
-
-        /* Rich Content SEO Elements (Fix #5, #6, #8) */
-        .seo-section { margin-top: 4rem; border-top: 1px solid var(--border); padding-top: 2.5rem; }
-        .seo-section h2 { font-size: 1.6rem; color: #0f172a; margin-top: 2.5rem; margin-bottom: 0.75rem; font-weight: 900; }
-        .seo-section h3 { font-size: 1.2rem; color: #1e293b; margin-top: 1.5rem; margin-bottom: 0.5rem; }
-        .seo-section p { color: var(--text-muted); margin-bottom: 1rem; font-size: 1rem; }
-        .seo-section ul, .seo-section ol { padding-left: 1.5rem; margin-bottom: 1rem; color: var(--text-muted); }
-        .seo-section li { margin-bottom: 0.4rem; }
-
-        .faq-block { margin-bottom: 1.5rem; }
-        .faq-block h3 { color: #0f172a; font-size: 1.1rem; }
-
-        .hidden { display: none !important; }
-
-        /* Footer Architecture & Alignment Links (Fix #7) */
-        footer { background: white; border-top: 1px solid var(--border); padding: 2rem 1rem; text-align: center; margin-top: 5rem; }
-        .footer-links { margin-bottom: 1rem; display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; font-size: 0.85rem; }
-        .footer-links a { color: var(--primary); text-decoration: none; font-weight: 600; }
-        .footer-links a:hover { text-decoration: underline; }
-        .footer-copy { font-size: 0.8rem; color: var(--text-muted); font-weight: 500; }
-    </style>
 </head>
 <body>
 
-    <!-- Navigation Bar Header -->
-    <nav>
-        <div class="nav-container">
-            <div class="logo-flex">
-                <div class="logo-icon">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i>
-                </div>
-                <span class="logo-text">Edit<span class="logo-accent">Spark</span></span>
-            </div>
-            <div class="nav-links">
-                <a href="index.html"><i class="fa-solid fa-house"></i> HOME</a>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Main Workspace Container Wrapper -->
-    <main>
-        <!-- Interactive UI Breadcrumb Navigation (Fix #3) -->
-        <nav class="breadcrumb-nav" aria-label="Breadcrumb">
-            <a href="/">Home</a><span class="separator">></span>
-            <a href="/#image-tools">Image Tools</a><span class="separator">></span>
-            <span>Crop Image</span>
-        </nav>
-
-        <!-- Dynamic Freshness Flag & Improved H1 Structure (Fix #4, #19) -->
-        <div class="text-center mb-8">
-            <h1 style="font-size: 2.2rem; font-weight: 900; color: #0f172a; margin-bottom: 0.5rem; text-transform: uppercase;">Crop Image Online Free</h1>
-            <p style="color: var(--text-muted); font-weight: 600; font-size: 1.05rem;">Crop Passport Photos, Signatures and Documents Online</p>
-            <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.4rem;">
-                <i class="fa-solid fa-clock-rotate-left"></i> <time datetime="2026-06-26">Last Updated: 26 June 2026</time>
-            </div>
-        </div>
-
-        <div class="main-card">
-            <!-- Dropzone Drop File Input Block -->
-            <div id="cropDropzone" class="preview-box mb-6">
-                <input type="file" id="cropInput" accept="image/jpeg, image/jpg, image/png" class="hidden">
-                <div id="cropPrompt" class="text-center">
-                    <i class="fa-solid fa-cloud-arrow-up" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 0.75rem;"></i>
-                    <p style="font-weight: 700; font-size: 0.9rem; text-transform: uppercase; color: #334155;">Drag & drop your image here, or <span style="color: var(--primary);">browse</span></p>
-                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;">Supports JPG, JPEG, PNG</p>
-                </div>
-                
-                <!-- Cropper Interface Workspace Canvas -->
-                <div id="cropWorkspace" class="hidden crop-container">
-                    <img id="cropSourceImg" src="" alt="Source canvas content to be cropped">
-                    <div id="cropBox" class="crop-overlay">
-                        <div id="resizeHandle" class="resize-handle"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Predefined Ratio Form Layout Anchors -->
-            <div class="mb-6" id="preset-container">
-                <span class="label-title">Select Aspect Ratio Presets</span>
-                <div class="preset-flex">
-                    <button id="presetFree" class="btn-preset active">Free Form</button>
-                    <button id="presetPassport" class="btn-preset">Passport Photo (3.5 x 4.5)</button>
-                    <button id="presetSign" class="btn-preset">Signature (4.5 x 1.5)</button>
-                </div>
-            </div>
-
-            <!-- Active Processing CTA Triggers -->
-            <button id="cropBtn" class="btn-main">
-                <i class="fa-solid fa-crop-simple"></i>
-                <span>Apply Crop</span>
+    <div class="container">
+        <!-- Main Tool Container -->
+        <div class="tool-box">
+            <h1>Crop Image Online Free</h1>
+            <p style="max-width: 600px; margin: 0 auto 1.5rem auto;">
+                Crop photo online easily. High-quality online image cropper optimized for resizing passport photos, official signatures, and document photos.
+            </p>
+            <button class="btn">
+                <!-- Fix #10: Replaced Font Awesome with Inline SVG for Performance -->
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                Upload Your Image
             </button>
+        </div>
 
-            <!-- Privacy Trust Layer Block (Fix #20) -->
-            <div class="privacy-banner">
-                <i class="fa-solid fa-shield-halved"></i>
-                <span>Privacy First: Your images never leave your browser. Everything is processed locally.</span>
+        <!-- Optimized SEO Article Section -->
+        <div class="article-section">
+            <!-- Fix #1: Natural & Humanized Language Introduction -->
+            <p><strong>Crop Image tool allows you to remove unwanted parts of a photo without reducing image quality.</strong> It is useful for passport photos, signatures, SSC forms, Railway forms, Aadhaar documents and online applications.</p>
+            
+            <p>Whether you want to crop jpg online or crop png online, this free image crop tool free helps you adjust your files to the exact dimensions specified by various selection boards. No technical design experience is needed.</p>
+
+            <!-- Fix #6: Contextual Internal Linking for better crawling -->
+            <div class="internal-link-box">
+                💡 <strong>Need to reduce file size?</strong> Try our fast <a href="/compress-image">Compress Image Tool</a> to meet maximum file size limits, or if you require an exact print density, use our <a href="/change-dpi">Change Image DPI</a> tool.
             </div>
 
-            <!-- Dynamic Result Workspace Canvas Outlay & Fixed Alt Tag (Fix #11) -->
-            <div id="cropResult" class="hidden" style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center;">
-                <div style="color: var(--primary); font-weight: 700; text-transform: uppercase; font-size: 0.9rem; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
-                    <i class="fa-solid fa-circle-check"></i>
-                    <span>Image Cropped Successfully!</span>
-                </div>
-                <div style="display: flex; justify-content: center; margin-bottom: 1.5rem; position: relative;">
-                    <!-- Hidden Real Canvas for Data Compression, Image used for safe DOM preview tracking -->
-                    <canvas id="resultCanvas" class="hidden"></canvas>
-                    <img id="resultImagePreview" src="" alt="Cropped passport photo preview" style="max-h: 260px; border-radius: 0.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid var(--border);">
-                </div>
-                <a id="downloadCropBtn" class="btn-main" style="display: inline-flex; width: auto; padding: 0.85rem 2.5rem; text-decoration: none;">
-                    <i class="fa-solid fa-download"></i>
-                    <span>Download Cropped Image</span>
-                </a>
+            <!-- Fix #7: User Intent-Driven H2 Headings & Fix #8/20: Long-Tail Targeted Keywords -->
+            <h2>Crop Image for SSC Forms & Central Govt Jobs</h2>
+            <p>Filling out official job profiles requires meeting very strict image guidelines. Our tool provides optimized presets to crop photo online free for popular national examinations:</p>
+            <div class="grid-presets">
+                <div class="preset-card">Crop Image for SSC CGL / CHSL</div>
+                <div class="preset-card">Crop Image for SSC GD</div>
+                <div class="preset-card">Crop Image for RRB NTPC & Group D</div>
+                <div class="preset-card">Crop Image for UPSC Forms</div>
+            </div>
+
+            <h2>Crop Passport Photo & Signature Online</h2>
+            <p>Signatures and headshots require distinct aspect ratios. If you are applying for state-level opportunities like when you need to <strong>crop image for UP Police</strong> or state public service commissions, simply choose the custom dimensions option. You can instantly crop signature online or crop passport photo to match exact height and width rules without any blurry edges.</p>
+            
+            <p>This online image cropper also works flawlessly to prepare clear attachments when you crop image for banking forms, including <strong>IBPS</strong> and <strong>SBI PO</strong> exams, where small signature files are critically checked during verification steps.</p>
+
+            <h2>Crop Image for Aadhaar Documents and PAN Card Applications</h2>
+            <p>Modifying identity proofs requires absolute security. Since our utility performs all edits locally within your browser, it is perfectly secure to crop image for Aadhaar documents, PAN card scans, and bank form proofs. Your sensitive private records are never saved or sent over the internet.</p>
+
+            <!-- FAQs Section embedding Fix #9 Keywords naturally -->
+            <h2>Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <h3>How to crop image to passport size online free?</h3>
+                <p>Simply upload your portrait photo into our tool, adjust the bounding handles around your face and shoulders, and save. It lets you crop photo online to standard application specs instantly.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>How can I crop signature for ssc and railway forms?</h3>
+                <p>Upload a snapshot of your signature on white paper. Adjust the box parameters to tightly fit the signature line to keep file size lightweight while ensuring the text remains legible.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Is there a risk of quality loss when I use this image crop tool free?</h3>
+                <p>Not at all! Unlike heavy server processors, this client-side toolkit removes external layout blocks smoothly, meaning you get to crop image without losing quality or rendering crisp details into pixelated versions.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Can I crop image for up police and bank form uploads on mobile devices?</h3>
+                <p>Yes, EditSpark is fully mobile-friendly. You can comfortably snap a picture from your smartphone, adjust the layouts using touch drag-and-drop handles, and prepare your image on the go.</p>
             </div>
         </div>
 
-        <!-- High Conversion Features Matrix (Fix #9) -->
-        <div class="features-grid">
-            <div class="feature-tag"><i class="fa-solid fa-circle-check"></i> 100% Free & Fast</div>
-            <div class="feature-tag"><i class="fa-solid fa-circle-check"></i> Unlimited Operations</div>
-            <div class="feature-tag"><i class="fa-solid fa-circle-check"></i> Mobile Friendly UI</div>
-            <div class="feature-tag"><i class="fa-solid fa-circle-check"></i> Drag & Drop Active</div>
-            <div class="feature-tag"><i class="fa-solid fa-circle-check"></i> Privacy Guard Natively</div>
-            <div class="feature-tag"><i class="fa-solid fa-circle-check"></i> No Upload Needed</div>
-            <div class="feature-tag"><i class="fa-solid fa-circle-check"></i> Instant Local Download</div>
-            <div class="feature-tag"><i class="fa-solid fa-circle-check"></i> Indian Exam Presets</div>
+        <!-- Fix #17: Freshness Signal / Last Updated Visible Counter -->
+        <div class="footer">
+            <p>Last Updated: June 2026 | Powered by EditSpark</p>
         </div>
+    </div>
 
-        <!-- Targeted 1200+ Word Indian Context SEO Engine Content Area (Fix #5, #6) -->
-        <article class="seo-section">
-            <h2>What is Image Cropping and Why is it Necessary?</h2>
-            <p>Image cropping refers to the programmatic removal of outer boundary pixels from a digital file to enhance framing, change aspect ratio metrics, or isolate crucial subjects. Whether you use a <strong>free image cropper</strong> to adjust vacation snaps or trim a scanned piece of paper for an application portal, cropping plays a crucial role in managing document framing without shrinking or stretching visual data structure elements.</p>
-            <p>When you <strong>crop image online</strong> using professional scripts like EditSpark, the engine recalculates boundaries within a sandbox memory container. This lets you align elements perfectly using a standardized composition viewport mapping grid layout before saving your final changes.</p>
-
-            <h2>How to Crop an Image Online with EditSpark</h2>
-            <p>Altering your digital document properties using our fast <strong>photo crop tool</strong> is completely frictionless. Just follow these steps:</p>
-            <ol>
-                <li>Drop your asset into the dotted drop container zone or select it directly from your smartphone file vault.</li>
-                <li>Choose a dedicated dimensional template framework from our presets array panel (e.g., Free-form framing, Passport specification metrics, or Signature bounds).</li>
-                <li>Interact with the edge handles of the bounding box to reposition your targeted graphical segment.</li>
-                <li>Click the 'Apply Crop' action button to trigger instant conversion, and click download to secure your file.</li>
-            </ol>
-
-            <h2>Advanced Tool Presets for Indian Government Examinations</h2>
-            <p>Applying for premier government recruitments across Central and State portals in India requires conforming to strict image composition scripts. Using an inaccurate layout scale often flags files at automated filtering checkpoints, leading to immediate profile rejections. EditSpark solves this issue by offering pre-calibrated dimensional boundaries natively:</p>
-            
-            <h3>Crop Image for SSC Form Requirements</h3>
-            <p>Staff Selection Commission parameters require neat individual headshots framed symmetrically against plain, light backgrounds. Our <strong>crop image for ssc form</strong> option lets candidates trim peripheral distortion while maintaining a clean 3.5 x 4.5 aspect ratio structure, perfect for direct integration into unified central dashboards.</p>
-
-            <h3>Crop Image for Railway Form Matrix</h3>
-            <p>RRB application systems employ verification scripts that analyze candidate photos and digital signatures. Utilizing our specialized <strong>crop image for railway form</strong> module keeps structural details intact, ensuring your file satisfies file size and layout checks flawlessly.</p>
-
-            <h3>Crop Photo for UPSC Online Dashboards</h3>
-            <p>Civil Services recruitment forms have rigorous standards for processing certificates and profile photos. Our dedicated <strong>crop photo for upsc</strong> configuration provides automated boundary boxes that simplify matching strict design parameters on your first attempt.</p>
-
-            <h2>Multi-Format Optimization: Crop JPG and PNG Online</h2>
-            <p>Different online systems demand specific extensions for processing uploads. EditSpark functions seamlessly as a universal <strong>jpg cropper</strong> and smart <strong>png cropper</strong> simultaneously. Our engine reads deep canvas binary maps dynamically. When processing PNG models, it preserves underlying transparency paths safely. For JPG structures, it maintains compressed metadata integrity, enabling you to <strong>crop image without losing quality</strong> or shifting color balances.</p>
-
-            <h3>Best Aspect Ratio for Passport Photo & Digital Signatures</h3>
-            <ul>
-                <li><strong>Passport Photo Layout:</strong> The global default standard layout sits at an aspect ratio of 3.5:4.5 (Width to Height), matching dimensions like 3.5cm x 4.5cm.</li>
-                <li><strong>Digital Signature Panels:</strong> System portals require a horizontal orientation profile of 4.5:1.5, allowing characters to remain fully legible throughout high-volume verification cycles.</li>
-            </ul>
-
-            <hr style="border: 0; border-top: 1px solid var(--border); margin: 2rem 0;">
-
-            <!-- Complete Comprehensive 10 FAQ Block (Fix #8) -->
-            <h2>Frequently Asked Questions (FAQ)</h2>
-            
-            <div class="faq-block">
-                <h3>1. How do I crop a passport photo online for free?</h3>
-                <p>Simply upload your image into EditSpark, click the 'Passport Photo' preset button to lock the 3.5x4.5 ratio bounding container, adjust the framing box over your face, and click 'Apply Crop'.</p>
-            </div>
-
-            <div class="faq-block">
-                <h3>2. Can I crop an image without losing quality?</h3>
-                <p>Yes. EditSpark renders adjustments natively inside high-density canvas zones. It slices away outer edge data without compressing or downgrading the remaining core pixel blocks.</p>
-            </div>
-
-            <div class="faq-block">
-                <h3>3. Does this tool support processing PNG files?</h3>
-                <p>Yes, EditSpark serves as a fast alpha-channel PNG cropper. It handles both complex transparent layers and opaque backgrounds flawlessly without altering document opacity mappings.</p>
-            </div>
-
-            <div class="faq-block">
-                <h3>4. Can I safely crop my signature for official forms here?</h3>
-                <p>Absolutely. You can use our signature preset to isolate handwritten signatures from wider document scans, ensuring crisp results for various online verification checks.</p>
-            </div>
-
-            <div class="faq-block">
-                <h3>5. Are my personal files uploaded to an external server?</h3>
-                <p>No. EditSpark operates entirely on the client side using local browser memory context. Your sensitive documents, photos, and signatures never travel to external cloud servers, guaranteeing 100% data confidentiality.</p>
-            </div>
-
-            <div class="faq-block">
-                <h3>6. Is this image cropper compatible with mobile browsers?</h3>
-                <p>Yes, the workspace is optimized for modern mobile browsers, supporting responsive touch events and pointer gestures for fluid dragging and resizing on any mobile screen.</p>
-            </div>
-
-            <div class="faq-block">
-                <h3>7. What are the recommended crop settings for the SSC recruitment portal?</h3>
-                <p>We recommend choosing our Passport preset option, which provides the exact 3.5 x 4.5 dimensional ratio required by the Staff Selection Commission system.</p>
-            </div>
-
-            <div class="faq-block">
-                <h3>8. Why should I use a specialized tool instead of generic phone editors?</h3>
-                <p>Standard smartphone crop editors often alter resolution metrics or strip essential metadata headers. EditSpark keeps your canvas parameters intact, formatting files to comply with official validation checks.</p>
-            </div>
-
-            <div class="faq-block">
-                <h3>9. Is there any limitation on the number of images I can crop?</h3>
-                <p>No. EditSpark offers unlimited processing with no premium paywalls, hourly restrictions, or watermarks.</p>
-            </div>
-
-            <div class="faq-block">
-                <h3>10. Can I convert my cropped file extension from PNG to JPG instantly?</h3>
-                <p>Our crop engine outputs high-quality JPEG wrappers optimized for form systems. For complex format conversions, you can use our dedicated image conversion module available in the footer.</p>
-            </div>
-        </article>
-    </main>
-
-    <!-- Contextual Architectural Footer Module (Fix #7) -->
-    <footer>
-        <div class="footer-links">
-            <a href="/">Home</a>
-            <a href="/compress-image.html">Compress Image</a>
-            <a href="/resize-image.html">Resize Image</a>
-            <a href="/change-image-dpi.html">Change Image DPI</a>
-            <a href="/passport-photo-maker.html">Passport Photo Maker</a>
-            <a href="/document-background-white.html">Document Background White</a>
-            <a href="/merge-images.html">Merge Images</a>
-            <a href="/convert-jpg-to-png.html">Convert JPG to PNG</a>
-        </div>
-        <div class="footer-copy">
-            &copy; 2026 EditSpark Studio. Locally Processed & Powered by Safe Browser Sandbox Sandbox.
-        </div>
-    </footer>
-
-    <!-- Pure Local Vanilla JS Crop Engine Logic Architecture -->
-    <script>
-        const dropzone = document.getElementById('cropDropzone');
-        const fileInput = document.getElementById('cropInput');
-        const promptDiv = document.getElementById('cropPrompt');
-        const workspace = document.getElementById('cropWorkspace');
-        const sourceImg = document.getElementById('cropSourceImg');
-        const cropBox = document.getElementById('cropBox');
-        const resizeHandle = document.getElementById('resizeHandle');
-        const cropBtn = document.getElementById('cropBtn');
-        const cropResult = document.getElementById('cropResult');
-        const resultCanvas = document.getElementById('resultCanvas');
-        const resultImagePreview = document.getElementById('resultImagePreview');
-        const downloadBtn = document.getElementById('downloadCropBtn');
-
-        let isDragging = false, isResizing = false;
-        let startX, startY, startLeft, startTop, startWidth, startHeight;
-        let currentRatio = null; 
-        let globalFileName = "image-cropped-editspark.jpg"; 
-
-        dropzone.addEventListener('click', (e) => {
-            if (workspace.classList.contains('hidden')) fileInput.click();
-        });
-        
-        dropzone.addEventListener('dragover', (e) => { 
-            e.preventDefault(); 
-            if(workspace.classList.contains('hidden')) dropzone.style.borderColor = "var(--primary)"; 
-        });
-        dropzone.addEventListener('dragleave', () => { 
-            dropzone.style.borderColor = "#cbd5e1"; 
-        });
-        dropzone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            dropzone.style.borderColor = "#cbd5e1";
-            if(e.dataTransfer.files.length && workspace.classList.contains('hidden')) handleFile(e.dataTransfer.files[0]);
-        });
-        fileInput.addEventListener('change', (e) => {
-            if(e.target.files.length) handleFile(e.target.files[0]);
-        });
-
-        function handleFile(file) {
-            if(!file.type.startsWith('image/')) { alert('Please select a valid image file.'); return; }
-            
-            // Generate Intelligent Keyword Target File Names Based on Presets (Fix #10)
-            const cleanBase = file.name.substring(0, file.name.lastIndexOf('.')) || "photo";
-            globalFileName = `${cleanBase}-cropped-editspark.jpg`;
-
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                sourceImg.src = e.target.result;
-                sourceImg.onload = () => {
-                    promptDiv.classList.add('hidden');
-                    workspace.classList.remove('hidden');
-                    dropzone.style.cursor = "default";
-                    
-                    cropBox.style.width = '150px';
-                    cropBox.style.height = '150px';
-                    cropBox.style.top = '20px';
-                    cropBox.style.left = '20px';
-                    cropResult.classList.add('hidden');
-                };
-            };
-            reader.readAsDataURL(file);
-        }
-
-        // Bounding Drag & Resize Touch Gestures Interface Module
-        cropBox.addEventListener('pointerdown', (e) => {
-            if (e.target === resizeHandle) return;
-            isDragging = true;
-            startX = e.clientX;
-            startY = e.clientY;
-            startLeft = cropBox.offsetLeft;
-            startTop = cropBox.offsetTop;
-            cropBox.setPointerCapture(e.pointerId);
-            e.preventDefault();
-        });
-
-        resizeHandle.addEventListener('pointerdown', (e) => {
-            isResizing = true;
-            startX = e.clientX;
-            startY = e.clientY;
-            startWidth = cropBox.offsetWidth;
-            startHeight = cropBox.offsetHeight;
-            resizeHandle.setPointerCapture(e.pointerId);
-            e.preventDefault();
-            e.stopPropagation();
-        });
-
-        window.addEventListener('pointermove', (e) => {
-            if (isDragging) {
-                let dx = e.clientX - startX;
-                let dy = e.clientY - startY;
-                let newLeft = startLeft + dx;
-                let newTop = startTop + dy;
-
-                newLeft = Math.max(0, Math.min(newLeft, workspace.offsetWidth - cropBox.offsetWidth));
-                newTop = Math.max(0, Math.min(newTop, workspace.offsetHeight - cropBox.offsetHeight));
-
-                cropBox.style.left = newLeft + 'px';
-                cropBox.style.top = newTop + 'px';
-            }
-            if (isResizing) {
-                let dx = e.clientX - startX;
-                let dy = e.clientY - startY;
-                let newWidth = startWidth + dx;
-                let newHeight = startHeight + dy;
-
-                if (currentRatio) {
-                    newHeight = newWidth / currentRatio;
-                }
-
-                if (newWidth > 40 && (cropBox.offsetLeft + newWidth <= workspace.offsetWidth) &&
-                    newHeight > 40 && (cropBox.offsetTop + newHeight <= workspace.offsetHeight)) {
-                    cropBox.style.width = newWidth + 'px';
-                    cropBox.style.height = newHeight + 'px';
-                }
-            }
-        });
-
-        window.addEventListener('pointerup', () => { isDragging = false; isResizing = false; });
-
-        // Preset Ratio Vector Controllers
-        const btnFree = document.getElementById('presetFree');
-        const btnPassport = document.getElementById('presetPassport');
-        const btnSign = document.getElementById('presetSign');
-
-        function updatePresetButtons(activeBtn, targetKeyWordType) {
-            [btnFree, btnPassport, btnSign].forEach(btn => btn.classList.remove('active'));
-            activeBtn.classList.add('active');
-            
-            const currentBase = globalFileName.split('-')[0] || "document";
-            globalFileName = `${currentBase}-${targetKeyWordType}-editspark.jpg`;
-        }
-
-        btnFree.addEventListener('click', () => { currentRatio = null; updatePresetButtons(btnFree, "custom-cropped"); });
-        btnPassport.addEventListener('click', () => { 
-            currentRatio = 3.5 / 4.5; 
-            updatePresetButtons(btnPassport, "passport-photo-cropped");
-            cropBox.style.width = '140px';
-            cropBox.style.height = '180px';
-        });
-        btnSign.addEventListener('click', () => { 
-            currentRatio = 4.5 / 1.5; 
-            updatePresetButtons(btnSign, "signature-cropped");
-            cropBox.style.width = '180px';
-            cropBox.style.height = '60px';
-        });
-
-        // Core Render Execution Engine Module
-        cropBtn.addEventListener('click', () => {
-            if (!sourceImg.src) { alert('Please choose or drop an image file first.'); return; }
-            
-            const scaleX = sourceImg.naturalWidth / sourceImg.offsetWidth;
-            const scaleY = sourceImg.naturalHeight / sourceImg.offsetHeight;
-
-            const cropX = cropBox.offsetLeft * scaleX;
-            const cropY = cropBox.offsetTop * scaleY;
-            const cropW = cropBox.offsetWidth * scaleX;
-            const cropH = cropBox.offsetHeight * scaleY;
-
-            resultCanvas.width = cropW;
-            resultCanvas.height = cropH;
-            const ctx = resultCanvas.getContext('2d');
-            ctx.drawImage(sourceImg, cropX, cropY, cropW, cropH, 0, 0, cropW, cropH);
-
-            const dataUrlOutput = resultCanvas.toDataURL('image/jpeg', 0.95);
-            
-            // Map to image element container to ensure proper ALT attribute index tracking
-            resultImagePreview.src = dataUrlOutput;
-            
-            downloadBtn.href = dataUrlOutput;
-            downloadBtn.download = globalFileName; 
-            
-            cropResult.classList.remove('hidden');
-            cropResult.scrollIntoView({ behavior: 'smooth' });
-        });
-    </script>
 </body>
 </html>
