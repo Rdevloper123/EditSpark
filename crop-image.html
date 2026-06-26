@@ -50,8 +50,8 @@
         /* Fixed & User-Friendly Small Preview Box */
         .work-area { 
             display: none; 
-            max-width: 500px; /* Purii screen par failne se rokega */
-            height: 400px;    /* Chhota constant square-ish structure */
+            max-width: 500px; 
+            height: 400px;    
             margin: 2rem auto; 
             background: #0f172a; 
             border-radius: 12px; 
@@ -100,7 +100,6 @@
         .footer { text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #e2e8f0; color: #64748b; font-size: 0.875rem; }
         time { font-weight: 600; color: #475569; }
 
-        /* Mobile specific layout balancing */
         @media (max-width: 600px) {
             .work-area {
                 max-width: 350px;
@@ -257,7 +256,6 @@
         });
 
         sourceImg.onload = () => {
-            // Box container max layouts matching the styling rules
             const bounds = document.getElementById('canvasContainer').getBoundingClientRect();
             const maxDisplayWidth = bounds.width || 476; 
             const maxDisplayHeight = bounds.height || 376; 
@@ -265,7 +263,6 @@
             let renderWidth = sourceImg.width;
             let renderHeight = sourceImg.height;
 
-            // Safe Downscaling to tightly fit the canvas into the 500x400 viewing box
             if (renderWidth > maxDisplayWidth) {
                 const ratio = maxDisplayWidth / renderWidth;
                 renderWidth = maxDisplayWidth;
@@ -281,7 +278,6 @@
             editorCanvas.width = renderWidth;
             editorCanvas.height = renderHeight;
 
-            // Initial crop box frame calculation inside the compact square view
             cropState.w = editorCanvas.width * 0.7;
             cropState.h = editorCanvas.height * 0.7;
             
@@ -307,28 +303,39 @@
             workspaceContainer.style.display = 'block';
             controlsWrapper.style.display = 'flex';
             
-            // Smooth view focus shift
             workspaceContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             renderFrame();
         };
 
+        // FIXED USER INTERFACE RENDERING ENGINE
         function renderFrame() {
             ctx.clearRect(0, 0, editorCanvas.width, editorCanvas.height);
+            
+            // 1. Base Layer: Puri image canvas par normal draw hogi
             ctx.drawImage(sourceImg, 0, 0, editorCanvas.width, editorCanvas.height);
 
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
+            // 2. Overlay Layer: Halka light transparent background (Bina photo chhupaye)
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.35)';
             ctx.fillRect(0, 0, editorCanvas.width, editorCanvas.height);
 
+            // 3. Clear Window Layer: Crop area ke upar ka transparent clear photo representation
             ctx.clearRect(cropState.x, cropState.y, cropState.w, cropState.h);
-            ctx.drawImage(sourceImg, cropState.x, cropState.y, cropState.w, cropState.h, cropState.x, cropState.y, cropState.w, cropState.h);
+            ctx.drawImage(
+                sourceImg, 
+                cropState.x, cropState.y, cropState.w, cropState.h, 
+                cropState.x, cropState.y, cropState.w, cropState.h
+            );
 
+            // 4. Border Grid Layer: Crop border design highlights
             ctx.strokeStyle = '#2563eb';
-            ctx.lineWidth = 2;
+            ctx.lineWidth = 2.5;
             ctx.strokeRect(cropState.x, cropState.y, cropState.w, cropState.h);
 
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
+            // Rule of thirds grids inside the active clean crop box view
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
             ctx.lineWidth = 1;
             for (let i = 1; i <= 2; i++) {
+                ctx.getLineDash = [4, 4]; // Dotted line effect for better visibility
                 ctx.beginPath();
                 ctx.moveTo(cropState.x + (cropState.w / 3) * i, cropState.y);
                 ctx.lineTo(cropState.x + (cropState.w / 3) * i, cropState.y + cropState.h);
@@ -340,11 +347,15 @@
                 ctx.stroke();
             }
 
+            // 5. Drag Handle Controllers Layer
             ctx.fillStyle = '#2563eb';
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 1.5;
             handlesArray.forEach(h => {
                 ctx.beginPath();
-                ctx.arc(cropState.x + cropState.w * h.x, cropState.y + cropState.h * h.y, 6, 0, 2 * Math.PI);
+                ctx.arc(cropState.x + cropState.w * h.x, cropState.y + cropState.h * h.y, 7, 0, 2 * Math.PI);
                 ctx.fill();
+                ctx.stroke();
             });
         }
 
@@ -379,7 +390,7 @@
             for (let i = 0; i < handlesArray.length; i++) {
                 const hX = cropState.x + cropState.w * handlesArray[i].x;
                 const hY = cropState.y + cropState.h * handlesArray[i].y;
-                if (Math.hypot(mouseX - hX, mouseY - hY) < 12) {
+                if (Math.hypot(mouseX - hX, mouseY - hY) < 14) {
                     return { type: 'resize', index: i };
                 }
             }
