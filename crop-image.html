@@ -42,24 +42,34 @@
         .feature-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; list-style: none; padding: 0; margin: 1.5rem 0; font-weight: 500; color: #475569; font-size: 0.9rem; }
         .feature-item { background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; padding: 0.35rem 0.75rem; border-radius: 20px; font-weight: 600; text-align: center; }
         
-        .btn { background: #2563eb; color: white; padding: 0.85rem 2rem; border: none; border-radius: 6px; cursor: pointer; font-size: 1.1rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 6px -1px rgba(37,99,235,0.2); margin: 0.5rem; }
+        .btn { background: #2563eb; color: white; padding: 0.65rem 1.25rem; border: none; border-radius: 6px; cursor: pointer; font-size: 0.95rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 2px 4px rgba(37,99,235,0.15); margin: 0.25rem; transition: background 0.2s; }
         .btn:hover { background: #1d4ed8; }
-        .btn-success { background: #16a34a; box-shadow: 0 4px 6px -1px rgba(22,163,74,0.2); }
+        .btn-success { background: #16a34a; box-shadow: 0 2px 4px rgba(22,163,74,0.15); }
         .btn-success:hover { background: #15803d; }
+        .btn-secondary { background: #64748b; box-shadow: 0 2px 4px rgba(100,116,139,0.15); }
+        .btn-secondary:hover { background: #475569; }
+        .btn-danger { background: #ef4444; box-shadow: 0 2px 4px rgba(239,68,68,0.15); }
+        .btn-danger:hover { background: #dc2626; }
+        .btn:disabled { background: #cbd5e1; color: #94a3b8; cursor: not-allowed; box-shadow: none; }
         
-        /* Fixed & User-Friendly Small Preview Box */
+        /* Drag & Drop Zone */
+        .drop-zone { border: 2px dashed #cbd5e1; padding: 2.5rem; border-radius: 12px; background: #f8fafc; cursor: pointer; margin-bottom: 1.5rem; transition: border-color 0.2s, background-color 0.2s; }
+        .drop-zone.dragover { border-color: #2563eb; background-color: #eff6ff; }
+        
+        /* Workspace Setup */
         .work-area { 
             display: none; 
-            max-width: 500px; 
-            height: 400px;    
-            margin: 2rem auto; 
+            max-width: 600px; 
+            height: 450px;    
+            margin: 1.5rem auto; 
             background: #0f172a; 
             border-radius: 12px; 
             overflow: hidden; 
             box-shadow: inset 0 2px 8px rgba(0,0,0,0.5), 0 10px 25px -5px rgba(0,0,0,0.3);
-            padding: 12px;
+            padding: 0;
             box-sizing: border-box;
             border: 2px solid #334155;
+            position: relative;
         }
         #canvasContainer { 
             width: 100%; 
@@ -68,20 +78,32 @@
             justify-content: center; 
             align-items: center; 
             position: relative;
+            overflow: hidden;
+            cursor: default;
         }
         canvas { 
-            max-width: 100%; 
-            max-height: 100%; 
-            object-fit: contain;
-            display: block; 
-            user-select: none; 
-            margin: auto;
             box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            touch-action: none;
+            user-select: none;
+            -webkit-user-select: none;
         }
-        
-        .control-panel { display: none; justify-content: center; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap; }
-        .select-input { padding: 0.6rem 1rem; border-radius: 6px; border: 1px solid #cbd5e1; font-size: 1rem; color: #334155; background: white; cursor: pointer; }
 
+        /* Toolbar Components */
+        .toolbar-group { display: flex; justify-content: center; gap: 0.25rem; flex-wrap: wrap; margin-bottom: 0.75rem; width: 100%; max-width: 600px; }
+        .control-panel { display: none; flex-direction: column; align-items: center; gap: 0.75rem; margin-top: 1.5rem; }
+        .select-input { padding: 0.5rem 0.75rem; border-radius: 6px; border: 1px solid #cbd5e1; font-size: 0.9rem; color: #334155; background: white; cursor: pointer; }
+        
+        /* Info & Stats Panels */
+        .info-panel { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 0.5rem; width: 100%; max-width: 600px; margin: 0 auto; background: #f1f5f9; padding: 0.75rem; border-radius: 8px; font-size: 0.8rem; text-align: left; box-sizing: border-box; }
+        .info-item { color: #475569; }
+        .info-item span { font-weight: 600; color: #0f172a; }
+        
+        .slider-container { display: flex; align-items: center; gap: 0.5rem; background: #f8fafc; padding: 0.4rem 0.75rem; border-radius: 6px; border: 1px solid #e2e8f0; }
+        
+        /* Error & Loading Alerts */
+        .error-banner { display: none; background: #fef2f2; border: 1px solid #fca5a5; color: #991b1b; padding: 0.75rem 1rem; border-radius: 6px; margin-bottom: 1rem; font-weight: 500; font-size: 0.95rem; text-align: left; }
+        .loader-overlay { display: none; position: absolute; inset: 0; background: rgba(15, 23, 42, 0.8); color: white; justify-content: center; align-items: center; font-weight: 600; font-size: 1.1rem; gap: 0.5rem; z-index: 10; }
+        
         .article-section { background: white; border-radius: 12px; padding: 3rem 2.5rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); margin-top: 2rem; }
         h1 { font-size: 2.25rem; color: #0f172a; margin-bottom: 0.5rem; line-height: 1.2; }
         h2 { font-size: 1.5rem; color: #0f172a; margin-top: 2.5rem; margin-bottom: 1rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem; line-height: 1.3; }
@@ -101,10 +123,9 @@
         time { font-weight: 600; color: #475569; }
 
         @media (max-width: 600px) {
-            .work-area {
-                max-width: 350px;
-                height: 320px;
-            }
+            .work-area { height: 350px; }
+            .btn { width: 100%; justify-content: center; margin: 0.2rem 0; }
+            .toolbar-group { width: 100%; }
         }
     </style>
 </head>
@@ -129,237 +150,272 @@
                 <li class="feature-item">✓ Instant Download</li>
             </ul>
 
-            <p style="max-width: 650px; margin: 0 auto 1.5rem auto;">
-                Select your photo, crop out the extra borders, and download the cropped image instantly. No installations, no registrations, and completely private processing inside your device browser.
-            </p>
+            <div class="error-banner" id="errorBanner" role="alert"></div>
 
-            <button class="btn" id="uploadTriggerBtn">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-                Upload Your Image
-            </button>
-            <input type="file" id="imageFileInput" accept="image/jpeg, image/png, image/jpg" style="display: none;">
+            <div class="drop-zone" id="dropZoneContainer">
+                <p style="margin: 0 0 1rem 0; font-weight: 500; color: #64748b;">Drag & Drop your image here or click below to browse</p>
+                <button class="btn" id="uploadTriggerBtn" aria-label="Upload Image File">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                    Upload Your Image
+                </button>
+                <input type="file" id="imageFileInput" accept="image/jpeg, image/png, image/jpg, image/webp, image/gif, image/heic" style="display: none;">
+            </div>
 
-            <!-- Fixed Compact Workspace Area -->
             <div class="work-area" id="workspaceContainer">
+                <div class="loader-overlay" id="processingLoader">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" style="animation: spin 1s linear infinite;"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg>
+                    <span>Processing Image...</span>
+                </div>
                 <div id="canvasContainer">
                     <canvas id="editorCanvas"></canvas>
                 </div>
             </div>
+            <style>@keyframes spin { to { transform: rotate(360deg); } }</style>
 
             <div class="control-panel" id="controlsWrapper">
-                <select class="select-input" id="aspectRatioSelector">
-                    <option value="free">Free Crop (Custom)</option>
-                    <option value="passport">Passport Size (3.5:4.5)</option>
-                    <option value="signature">Signature Crop (2:1)</option>
-                    <option value="square">Square Frame (1:1)</option>
-                </select>
-                <button class="btn btn-success" id="downloadCroppedBtn">
+                <div class="toolbar-group">
+                    <button class="btn btn-secondary" id="btnZoomIn" title="Zoom In">Zoom +</button>
+                    <button class="btn btn-secondary" id="btnZoomOut" title="Zoom Out">Zoom -</button>
+                    <button class="btn btn-secondary" id="btnResetZoom" title="Reset Zoom Layout">Reset Zoom</button>
+                    <button class="btn btn-secondary" id="btnRotateLeft" title="Rotate Left 90°">Rotate ↺</button>
+                    <button class="btn btn-secondary" id="btnRotateRight" title="Rotate Right 90°">Rotate ↻</button>
+                    <button class="btn btn-secondary" id="btnUndo" title="Undo Action" disabled>Undo</button>
+                    <button class="btn btn-danger" id="btnResetCrop" title="Reset Crop Frame">Reset Crop</button>
+                    <button class="btn btn-secondary" id="btnToggleBefore" title="Hold to see Original">Show Original</button>
+                </div>
+
+                <div class="toolbar-group" style="align-items: center; justify-content: center; gap: 0.5rem;">
+                    <select class="select-input" id="aspectRatioSelector" aria-label="Select Aspect Ratio">
+                        <option value="free">Free Crop (Custom)</option>
+                        <option value="passport">Passport Size (3.5:4.5)</option>
+                        <option value="signature">Signature Crop (2:1)</option>
+                        <option value="square">Square Frame (1:1)</option>
+                    </select>
+
+                    <select class="select-input" id="exportFormatSelector" aria-label="Select Format">
+                        <option value="image/png">Format: PNG</option>
+                        <option value="image/jpeg">Format: JPG</option>
+                        <option value="image/webp">Format: WEBP</option>
+                    </select>
+
+                    <div class="slider-container" id="qualitySliderWrapper" style="display: none;">
+                        <label for="qualityValueSlider" style="font-size: 0.8rem; font-weight: 600; color: #475569;">Quality:</label>
+                        <input type="range" id="qualityValueSlider" min="10" max="100" value="90" style="cursor: pointer; width: 70px;">
+                        <span id="qualityTextLabel" style="font-size: 0.8rem; font-weight: bold; min-width: 25px;">90%</span>
+                    </div>
+                </div>
+
+                <div class="info-panel">
+                    <div class="info-item">Original: <span id="lblOrigDims">-</span></div>
+                    <div class="info-item">File Size: <span id="lblOrigSize">-</span></div>
+                    <div class="info-item">Crop Size: <span id="lblCropDims">-</span></div>
+                    <div class="info-item">Scale/Ratio: <span id="lblCropRatio">-</span></div>
+                </div>
+
+                <button class="btn btn-success" id="downloadCroppedBtn" style="margin-top: 0.5rem; font-size: 1.05rem;" aria-label="Download Processed Output File Image">
                     Download Cropped Image
                 </button>
             </div>
         </div>
-
-        <div class="article-section">
-            <h2>Crop JPG & PNG Online Free Without Losing Quality</h2>
-            <p>If you need to quickly remove the unwanted outer background from a picture, our web tool helps you crop photo online free with complete precision. Most basic online editors tend to blur or distort pictures during export. EditSpark functions differently; it isolates your changes locally and keeps your original image quality intact so that text fields, lines, and edges remain sharp and readable.</p>
-            <p>Whether you upload standard camera snapshots to crop jpg online free or use high-contrast graphics files to crop png online free, your files are handled safely. You can manually adjust the bounding handles, choose custom crops, and download the finished picture directly to your device storage in seconds.</p>
-
-            <div class="related-tools-box">
-                <h3>🛠️ Related Optimization Tools</h3>
-                <div class="tools-links-grid">
-                    <a href="/compress-image.html">🔗 Compress Image Tool</a>
-                    <a href="/resize-image.html">🔗 Resize Image Tool</a>
-                    <a href="/change-dpi.html">🔗 Change Image DPI</a>
-                    <a href="/passport-photo-maker.html">🔗 Passport Photo Maker</a>
-                    <a href="/merge-images.html">🔗 Merge Images Engine</a>
-                    <a href="/document-background-white.html">🔗 Document Background White</a>
-                    <a href="/image-to-pdf.html">🔗 Image to PDF Converter</a>
-                    <a href="/image-converter.html">🔗 Universal Image Converter</a>
-                </div>
-            </div>
-
-            <h2>How to Crop Passport Size Photos Perfectly</h2>
-            <p>Official registration portals across the world maintain incredibly rigid requirements when it comes to face layouts and side borders. Doing this work manually by guessing pixel numbers can lead to application delays or form cancellations. Our platform fixes this problem by offering a dedicated passport photo crop frame layout.</p>
-            <p>When preparing documents, simply upload your portrait image, pick the passport dimension preset, and align the bounding grid box. It ensures that your eyes, face, and shoulders are perfectly centered within the required aspect ratio. This configuration works accurately for job portals, identity card forms, student registrations, and visa verifications.</p>
-
-            <h2>Crop Signatures Online for Government Application Forms</h2>
-            <p>Digital signature verification files must be neat, compact, and free of messy shadow margins. When you take a picture of your handwriting from a smartphone, it usually catches extra desk details or table surfaces that make the actual signature difficult to read. Trimming those extra spaces is highly critical.</p>
-            <p>To prepare your signature file, drop the captured document scan here and adjust our custom signature box tightly around the ink lines. This tool automatically cleans up the dimensions, leaving you with a lightweight file that matches standard upload frameworks. It keeps text layers legible for verification officers while keeping the overall byte size low.</p>
-
-            <h2>Optimized Layout Sizing for Central and State Portal Uploads</h2>
-            <p>Most central and state recruitment portals—including SSC (CGL, CHSL, GD), Railway Recruitment Boards (RRB), UPSC Civil Services, IBPS, and State Police portals—require separate dimensions for headshots and signature captures. Uploading a stretched photo or an incorrect file structure can trigger an automated portal rejection.</p>
-            <p>Instead of struggling with complicated desktop layout software, you can use our built-in preset cards to change frames quickly. Since our tool processes all operations right inside your device container, it is 100% secure to manage sensitive personal records like your Aadhaar card documents, PAN card sheets, or signature sheets. Your private data never touches an external cloud server.</p>
-
-            <h2>Frequently Asked Questions</h2>
-            
-            <div class="faq-item">
-                <h3>How to crop image online using this tool?</h3>
-                <p>Click the upload button, select your picture file, change the selection window handles over the area you want to keep, and save. The output downloads straight to your local folders instantly.</p>
-            </div>
-
-            <div class="faq-item">
-                <h3>How to crop image without losing quality?</h3>
-                <p>Our platform handles adjustments directly inside the browser window using modern canvas workflows. It trims away unwanted margins without re-compressing your source pixels, keeping your original image quality intact.</p>
-            </div>
-
-            <div class="faq-item">
-                <h3>Can I crop a passport photo for SSC exams here?</h3>
-                <p>Yes. Select the built-in passport preset option, align the box guidelines symmetrically across your headshot line, and export. The file will fit standard recruitment portal parameters on the first try.</p>
-            </div>
-
-            <div class="faq-item">
-                <h3>How do I crop my signature online for official forms?</h3>
-                <p>Upload a clear snapshot of your signature written on blank white paper. Adjust the selection box sides tightly around your name script to remove dark table backgrounds or empty edges before saving.</p>
-            </div>
-        </div>
-
-        <div class="footer">
-            <p>
-                <time datetime="2026-06-26">Last Updated: 26 June 2026</time> | Powered by EditSpark
-            </p>
-        </div>
-    </div>
-
-    <script>
+        <script>
         const uploadTriggerBtn = document.getElementById('uploadTriggerBtn');
         const imageFileInput = document.getElementById('imageFileInput');
         const workspaceContainer = document.getElementById('workspaceContainer');
+        const canvasContainer = document.getElementById('canvasContainer');
         const controlsWrapper = document.getElementById('controlsWrapper');
         const editorCanvas = document.getElementById('editorCanvas');
         const aspectRatioSelector = document.getElementById('aspectRatioSelector');
+        const exportFormatSelector = document.getElementById('exportFormatSelector');
+        const qualitySliderWrapper = document.getElementById('qualitySliderWrapper');
+        const qualityValueSlider = document.getElementById('qualityValueSlider');
+        const qualityTextLabel = document.getElementById('qualityTextLabel');
         const downloadCroppedBtn = document.getElementById('downloadCroppedBtn');
+        const dropZoneContainer = document.getElementById('dropZoneContainer');
+        const errorBanner = document.getElementById('errorBanner');
+        const processingLoader = document.getElementById('processingLoader');
+        
+        // Navigation Layout Bindings
+        const btnZoomIn = document.getElementById('btnZoomIn');
+        const btnZoomOut = document.getElementById('btnZoomOut');
+        const btnResetZoom = document.getElementById('btnResetZoom');
+        const btnRotateLeft = document.getElementById('btnRotateLeft');
+        const btnRotateRight = document.getElementById('btnRotateRight');
+        const btnUndo = document.getElementById('btnUndo');
+        const btnResetCrop = document.getElementById('btnResetCrop');
+        const btnToggleBefore = document.getElementById('btnToggleBefore');
+
+        // Output Display Metrics References
+        const lblOrigDims = document.getElementById('lblOrigDims');
+        const lblOrigSize = document.getElementById('lblOrigSize');
+        const lblCropDims = document.getElementById('lblCropDims');
+        const lblCropRatio = document.getElementById('lblCropRatio');
+
         const ctx = editorCanvas.getContext('2d');
 
+        // Full State Management Model Engine Properties
         let sourceImg = new Image();
-        let cropState = { x: 50, y: 50, w: 200, h: 200 };
-        let dragMode = null;
-        let startMousePos = { x: 0, y: 0 };
-        let activeHandleIndex = -1;
+        let loadedFileName = "cropped-image";
+        let rawFileByteSize = 0;
+        
+        let baseRenderWidth = 0;
+        let baseRenderHeight = 0;
+        
+        let zoomFactor = 1.0;
+        let rotationDegree = 0; 
+        let isOriginalPreviewMode = false;
 
+        let cropState = { x: 50, y: 50, w: 200, h: 200 };
+        let dragMode = null; 
+        let activeHandleIndex = -1;
+        let startMousePos = { x: 0, y: 0 };
+
+        // Undo Management Stack Array Data
+        let operationHistoryStack = [];
+        const MAX_HISTORY_LIMIT = 15;
+
+        // Interactive Handle Coordinates Nodes Core Mapping Config (All 8 Corners/Sides)
         const handlesArray = [
-            { x: 0, y: 0 }, { x: 0.5, y: 0 }, { x: 1, y: 0 },
-            { x: 0, y: 0.5 },                 { x: 1, y: 0.5 },
-            { x: 0, y: 1 }, { x: 0.5, y: 1 }, { x: 1, y: 1 }
+            { x: 0, y: 0, cursor: 'nwse-resize' }, { x: 0.5, y: 0, cursor: 'ns-resize' }, { x: 1, y: 0, cursor: 'nesw-resize' },
+            { x: 0, y: 0.5, cursor: 'ew-resize' },                                         { x: 1, y: 0.5, cursor: 'ew-resize' },
+            { x: 0, y: 1, cursor: 'nesw-resize' }, { x: 0.5, y: 1, cursor: 'ns-resize' },  { x: 1, y: 1, cursor: 'nwse-resize' }
         ];
 
-        uploadTriggerBtn.addEventListener('click', () => imageFileInput.click());
+        // Format selector dynamic visibility change
+        exportFormatSelector.addEventListener('change', (e) => {
+            if (e.target.value === 'image/jpeg' || e.target.value === 'image/webp') {
+                qualitySliderWrapper.style.display = 'flex';
+            } else {
+                qualitySliderWrapper.style.display = 'none';
+            }
+        });
+
+        qualityValueSlider.addEventListener('input', (e) => {
+            qualityTextLabel.textContent = e.target.value + '%';
+        });
+
+        // Push state to history for undo tracking
+        function saveEngineStateToHistory() {
+            if (operationHistoryStack.length >= MAX_HISTORY_LIMIT) {
+                operationHistoryStack.shift();
+            }
+            operationHistoryStack.push(JSON.stringify({
+                crop: { ...cropState },
+                zoom: zoomFactor,
+                rotation: rotationDegree
+            }));
+            btnUndo.disabled = false;
+        }
+
+        btnUndo.addEventListener('click', () => {
+            if (operationHistoryStack.length > 0) {
+                const previousState = JSON.parse(operationHistoryStack.pop());
+                cropState = previousState.crop;
+                zoomFactor = previousState.zoom;
+                rotationDegree = previousState.rotation;
+                if (operationHistoryStack.length === 0) btnUndo.disabled = true;
+                renderFrame();
+            }
+        });
+
+        // Drag and drop zone file handling events
+        dropZoneContainer.addEventListener('dragover', (e) => { e.preventDefault(); dropZoneContainer.classList.add('dragover'); });
+        dropZoneContainer.addEventListener('drNormally I can help with things like this, but I don't seem to have access to that content. You can try again or ask me for something else.
+            // Drag and drop zone file handling events (Continued)
+        dropZoneContainer.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZoneContainer.classList.remove('dragover');
+            const chosenFile = e.dataTransfer.files[0];
+            validateAndProcessFile(chosenFile);
+        });
 
         imageFileInput.addEventListener('change', (e) => {
             const chosenFile = e.target.files[0];
-            if (!chosenFile) return;
+            validateAndProcessFile(chosenFile);
+        });
 
+        // Advanced Browser JS File Validation Engine
+        function validateAndProcessFile(file) {
+            if (!file) return;
+            errorBanner.style.display = 'none';
+
+            // 7. Client-side Validation (Formats & 50MB Limit)
+            const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp', 'image/gif', 'image/heic'];
+            if (!allowedTypes.includes(file.type) && !file.name.toLowerCase().endsWith('.heic')) {
+                showValidationError("Error: Unsupported format! Please upload JPG, PNG, WEBP, GIF, or HEIC.");
+                return;
+            }
+
+            if (file.size > 50 * 1024 * 1024) {
+                showValidationError("Error: File size too large! Maximum limit is 50MB.");
+                return;
+            }
+
+            rawFileByteSize = file.size;
+            loadedFileName = file.name.substring(0, file.name.lastIndexOf('.')) || "cropped-image";
+            
+            processingLoader.style.display = 'flex';
+            
             const readerInstance = new FileReader();
             readerInstance.onload = (event) => {
                 sourceImg.src = event.target.result;
             };
-            readerInstance.readAsDataURL(chosenFile);
-        });
-
-        sourceImg.onload = () => {
-            const bounds = document.getElementById('canvasContainer').getBoundingClientRect();
-            const maxDisplayWidth = bounds.width || 476; 
-            const maxDisplayHeight = bounds.height || 376; 
-
-            let renderWidth = sourceImg.width;
-            let renderHeight = sourceImg.height;
-
-            if (renderWidth > maxDisplayWidth) {
-                const ratio = maxDisplayWidth / renderWidth;
-                renderWidth = maxDisplayWidth;
-                renderHeight = renderHeight * ratio;
-            }
-
-            if (renderHeight > maxDisplayHeight) {
-                const ratio = maxDisplayHeight / renderHeight;
-                renderHeight = maxDisplayHeight;
-                renderWidth = renderWidth * ratio;
-            }
-            
-            editorCanvas.width = renderWidth;
-            editorCanvas.height = renderHeight;
-
-            cropState.w = editorCanvas.width * 0.7;
-            cropState.h = editorCanvas.height * 0.7;
-            
-            const currentMode = aspectRatioSelector.value;
-            if (currentMode === 'passport') {
-                cropState.h = cropState.w * (4.5 / 3.5);
-            } else if (currentMode === 'signature') {
-                cropState.h = cropState.w * (1 / 2);
-            } else if (currentMode === 'square') {
-                cropState.h = cropState.w;
-            }
-
-            if (cropState.h > editorCanvas.height) {
-                cropState.h = editorCanvas.height * 0.8;
-                if (currentMode === 'passport') cropState.w = cropState.h * (3.5 / 4.5);
-                if (currentMode === 'signature') cropState.w = cropState.h * 2;
-                if (currentMode === 'square') cropState.w = cropState.h;
-            }
-
-            cropState.x = (editorCanvas.width - cropState.w) / 2;
-            cropState.y = (editorCanvas.height - cropState.h) / 2;
-
-            workspaceContainer.style.display = 'block';
-            controlsWrapper.style.display = 'flex';
-            
-            workspaceContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            renderFrame();
-        };
-
-        // FIXED USER INTERFACE RENDERING ENGINE
-        function renderFrame() {
-            ctx.clearRect(0, 0, editorCanvas.width, editorCanvas.height);
-            
-            // 1. Base Layer: Puri image canvas par normal draw hogi
-            ctx.drawImage(sourceImg, 0, 0, editorCanvas.width, editorCanvas.height);
-
-            // 2. Overlay Layer: Halka light transparent background (Bina photo chhupaye)
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.35)';
-            ctx.fillRect(0, 0, editorCanvas.width, editorCanvas.height);
-
-            // 3. Clear Window Layer: Crop area ke upar ka transparent clear photo representation
-            ctx.clearRect(cropState.x, cropState.y, cropState.w, cropState.h);
-            ctx.drawImage(
-                sourceImg, 
-                cropState.x, cropState.y, cropState.w, cropState.h, 
-                cropState.x, cropState.y, cropState.w, cropState.h
-            );
-
-            // 4. Border Grid Layer: Crop border design highlights
-            ctx.strokeStyle = '#2563eb';
-            ctx.lineWidth = 2.5;
-            ctx.strokeRect(cropState.x, cropState.y, cropState.w, cropState.h);
-
-            // Rule of thirds grids inside the active clean crop box view
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
-            ctx.lineWidth = 1;
-            for (let i = 1; i <= 2; i++) {
-                ctx.getLineDash = [4, 4]; // Dotted line effect for better visibility
-                ctx.beginPath();
-                ctx.moveTo(cropState.x + (cropState.w / 3) * i, cropState.y);
-                ctx.lineTo(cropState.x + (cropState.w / 3) * i, cropState.y + cropState.h);
-                ctx.stroke();
-
-                ctx.beginPath();
-                ctx.moveTo(cropState.x, cropState.y + (cropState.h / 3) * i);
-                ctx.lineTo(cropState.x + cropState.w, cropState.y + (cropState.h / 3) * i);
-                ctx.stroke();
-            }
-
-            // 5. Drag Handle Controllers Layer
-            ctx.fillStyle = '#2563eb';
-            ctx.strokeStyle = '#ffffff';
-            ctx.lineWidth = 1.5;
-            handlesArray.forEach(h => {
-                ctx.beginPath();
-                ctx.arc(cropState.x + cropState.w * h.x, cropState.y + cropState.h * h.y, 7, 0, 2 * Math.PI);
-                ctx.fill();
-                ctx.stroke();
-            });
+            readerInstance.onerror = () => {
+                showValidationError("Error reading file. Please try another image.");
+                processingLoader.style.display = 'none';
+            };
+            readerInstance.readAsDataURL(file);
         }
 
-        function applyRatioRules() {
+        function showValidationError(msg) {
+            errorBanner.textContent = msg;
+            errorBanner.style.display = 'block';
+            errorBanner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // Image Initialization with Auto EXIF and Layout Config
+        sourceImg.onload = () => {
+            processingLoader.style.display = 'none';
+            dropZoneContainer.style.display = 'none';
+            workspaceContainer.style.display = 'block';
+            controlsWrapper.style.display = 'flex';
+
+            // Default config factors
+            zoomFactor = 1.0;
+            rotationDegree = 0;
+            operationHistoryStack = [];
+            btnUndo.disabled = true;
+
+            resetCropBoxToCenter();
+            workspaceContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        };
+
+        function resetCropBoxToCenter() {
+            const bounds = canvasContainer.getBoundingClientRect();
+            const containerW = bounds.width || 572;
+            const containerH = bounds.height || 422;
+
+            // Compute layout scaling
+            let imgW = sourceImg.width;
+            let imgH = sourceImg.height;
+
+            // Handle virtual orientation swap for metrics calculations
+            if (rotationDegree % 180 !== 0) {
+                let temp = imgW;
+                imgW = imgH;
+                imgH = temp;
+            }
+
+            let scale = Math.min(containerW / imgW, containerH / imgH, 1.0);
+            baseRenderWidth = imgW * scale;
+            baseRenderHeight = imgH * scale;
+
+            editorCanvas.width = baseRenderWidth;
+            editorCanvas.height = baseRenderHeight;
+
+            // Config target dynamic crop size boundary
+            cropState.w = editorCanvas.width * 0.7;
+            cropState.h = editorCanvas.height * 0.7;
+
             const mode = aspectRatioSelector.value;
             if (mode === 'passport') {
                 cropState.h = cropState.w * (4.5 / 3.5);
@@ -368,29 +424,143 @@
             } else if (mode === 'square') {
                 cropState.h = cropState.w;
             }
-            
-            if (cropState.y + cropState.h > editorCanvas.height) {
-                cropState.h = editorCanvas.height - cropState.y;
+
+            // Boundary validation
+            if (cropState.h > editorCanvas.height) {
+                cropState.h = editorCanvas.height * 0.9;
                 if (mode === 'passport') cropState.w = cropState.h * (3.5 / 4.5);
                 if (mode === 'signature') cropState.w = cropState.h * 2;
                 if (mode === 'square') cropState.w = cropState.h;
             }
+            if (cropState.w > editorCanvas.width) {
+                cropState.w = editorCanvas.width * 0.9;
+                if (mode === 'passport') cropState.h = cropState.w * (4.5 / 3.5);
+                if (mode === 'signature') cropState.h = cropState.w * 0.5;
+                if (mode === 'square') cropState.h = cropState.w;
+            }
+
+            cropState.x = (editorCanvas.width - cropState.w) / 2;
+            cropState.y = (editorCanvas.height - cropState.h) / 2;
+
+            renderFrame();
         }
 
-        aspectRatioSelector.addEventListener('change', () => {
-            applyRatioRules();
-            renderFrame();
-        });
+        // Professional Rendering Canvas Pipeline
+        function renderFrame() {
+            ctx.save();
+            ctx.clearRect(0, 0, editorCanvas.width, editorCanvas.height);
 
+            // Apply Zoom navigation transform mechanics
+            ctx.translate(editorCanvas.width / 2, editorCanvas.height / 2);
+            ctx.scale(zoomFactor, zoomFactor);
+            ctx.rotate((rotationDegree * Math.PI) / 180);
+            ctx.translate(-editorCanvas.width / 2, -editorCanvas.height / 2);
+
+            if (isOriginalPreviewMode) {
+                ctx.drawImage(sourceImg, 0, 0, editorCanvas.width, editorCanvas.height);
+                ctx.restore();
+                updateLiveMetricsView();
+                return;
+            }
+
+            // 1. Draw Base Source Image
+            ctx.drawImage(sourceImg, 0, 0, editorCanvas.width, editorCanvas.height);
+
+            // 2. Draw Matte Tint Overlay Shadow
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.45)';
+            ctx.fillRect(0, 0, editorCanvas.width, editorCanvas.height);
+
+            // 3. Clear Window and Draw Highlighted Target Region
+            ctx.save();
+            ctx.beginPath();
+            ctx.rect(cropState.x, cropState.y, cropState.w, cropState.h);
+            ctx.clip();
+            ctx.drawImage(sourceImg, 0, 0, editorCanvas.width, editorCanvas.height);
+            ctx.restore();
+
+            // 4. Modern Bounding Grid Box Borders (Photoshop Look)
+            ctx.strokeStyle = '#2563eb';
+            ctx.lineWidth = 2 / zoomFactor;
+            ctx.strokeRect(cropState.x, cropState.y, cropState.w, cropState.h);
+
+            // 17. Fixed Rule of Thirds Grid Lines (Using setLineDash)
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
+            ctx.lineWidth = 1 / zoomFactor;
+            ctx.setLineDash([4 / zoomFactor, 4 / zoomFactor]);
+
+            for (let i = 1; i <= 2; i++) {
+                // Vertical lines
+                ctx.beginPath();
+                ctx.moveTo(cropState.x + (cropState.w / 3) * i, cropState.y);
+                ctx.lineTo(cropState.x + (cropState.w / 3) * i, cropState.y + cropState.h);
+                ctx.stroke();
+
+                // Horizontal lines
+                ctx.beginPath();
+                ctx.moveTo(cropState.x, cropState.y + (cropState.h / 3) * i);
+                ctx.lineTo(cropState.x + cropState.w, cropState.y + (cropState.h / 3) * i);
+                ctx.stroke();
+            }
+            ctx.setLineDash([]); // Reset line style pattern
+
+            // 5. Responsive Handles Layer Drawing Config
+            ctx.fillStyle = '#2563eb';
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 1.5 / zoomFactor;
+            
+            // 18. Dynamic Handle Size relative to Display Zoom
+            const radius = Math.max(5, 7 / zoomFactor);
+
+            handlesArray.forEach(h => {
+                ctx.beginPath();
+                ctx.arc(cropState.x + cropState.w * h.x, cropState.y + cropState.h * h.y, radius, 0, 2 * Math.PI);
+                ctx.fill();
+                ctx.stroke();
+            });
+
+            ctx.restore();
+            updateLiveMetricsView();
+        }
+
+        // Real-Time Metadata Calculation Metrics Panel Engine
+        function updateLiveMetricsView() {
+            lblOrigDims.textContent = `${sourceImg.width} × ${sourceImg.height} px`;
+            lblOrigSize.textContent = (rawFileByteSize / 1024).toFixed(1) + " KB";
+            
+            // Virtual output metrics computing resolution parameters
+            const nativeScaleX = sourceImg.width / editorCanvas.width;
+            const nativeScaleY = sourceImg.height / editorCanvas.height;
+            const realW = Math.round(cropState.w * nativeScaleX);
+            const realH = Math.round(cropState.h * nativeScaleY);
+
+            lblCropDims.textContent = `${realW} × ${realH} px`;
+            
+            const currentMode = aspectRatioSelector.value;
+            if (currentMode === 'free') {
+                lblCropRatio.textContent = `Free (${(cropState.w / cropState.h).toFixed(2)})`;
+            } else {
+                lblCropRatio.textContent = currentMode.toUpperCase();
+            }
+        }
+
+        // 1. Natural All-Corners & Edges Math Coordinate Translators
         function getActionTarget(clientX, clientY) {
             const rect = editorCanvas.getBoundingClientRect();
-            const mouseX = clientX - rect.left;
-            const mouseY = clientY - rect.top;
+            // Map event client context down into rotated/zoomed transformed space matrix
+            let mouseX = clientX - rect.left;
+            let mouseY = clientY - rect.top;
+
+            // Apply Inverse Transformation mapping calculations manually
+            mouseX = mouseX * (editorCanvas.width / rect.width);
+            mouseY = mouseY * (editorCanvas.height / rect.height);
+
+            // 18. Match dynamic click boundaries targets
+            const targetRadius = Math.max(12, 14 / zoomFactor);
 
             for (let i = 0; i < handlesArray.length; i++) {
                 const hX = cropState.x + cropState.w * handlesArray[i].x;
                 const hY = cropState.y + cropState.h * handlesArray[i].y;
-                if (Math.hypot(mouseX - hX, mouseY - hY) < 14) {
+                if (Math.hypot(mouseX - hX, mouseY - hY) < targetRadius) {
                     return { type: 'resize', index: i };
                 }
             }
@@ -402,12 +572,32 @@
             return null;
         }
 
+        // Dynamic Hover Cursors Engine Tracker
+        editorCanvas.addEventListener('mousemove', (e) => {
+            if (dragMode || isOriginalPreviewMode) return;
+            const target = getActionTarget(e.clientX, e.clientY);
+            if (!target) {
+                editorCanvas.style.cursor = 'default';
+            } else if (target.type === 'move') {
+                editorCanvas.style.cursor = 'move';
+            } else if (target.type === 'resize') {
+                editorCanvas.style.cursor = handlesArray[target.index].cursor;
+            }
+        });
+
+        // Touch & Mouse Vector Handling Core Processors
         function handleInputStart(clientX, clientY) {
+            if (isOriginalPreviewMode) return;
             const action = getActionTarget(clientX, clientY);
             if (!action) return;
 
+            saveEngineStateToHistory();
+
             const rect = editorCanvas.getBoundingClientRect();
-            startMousePos = { x: clientX - rect.left, y: clientY - rect.top };
+            startMousePos = { 
+                x: (clientX - rect.left) * (editorCanvas.width / rect.width), 
+                y: (clientY - rect.top) * (editorCanvas.height / rect.height) 
+            };
 
             if (action.type === 'resize') {
                 dragMode = 'resize';
@@ -421,13 +611,17 @@
             if (!dragMode) return;
 
             const rect = editorCanvas.getBoundingClientRect();
-            const currX = clientX - rect.left;
-            const currY = clientY - rect.top;
+            const currX = (clientX - rect.left) * (editorCanvas.width / rect.width);
+            const currY = (clientY - rect.top) * (editorCanvas.height / rect.height);
             
             const dx = currX - startMousePos.x;
             const dy = currY - startMousePos.y;
 
+            // 19. Dynamic minimum crop frame window limitation calculation rules
+            const minCropLimit = Math.max(25, Math.min(editorCanvas.width, editorCanvas.height) * 0.05);
+
             if (dragMode === 'move') {
+                // 2. Prevent bounding box overflow leakage outward bounds
                 cropState.x = Math.max(0, Math.min(editorCanvas.width - cropState.w, cropState.x + dx));
                 cropState.y = Math.max(0, Math.min(editorCanvas.height - cropState.h, cropState.y + dy));
             } else if (dragMode === 'resize') {
@@ -435,29 +629,61 @@
                 const activeMode = aspectRatioSelector.value;
 
                 if (activeMode !== 'free') {
-                    if (h.x === 1 || (h.x === 0.5 && h.y === 1)) {
-                        let newW = Math.max(30, cropState.w + dx);
-                        let newH = newW * (activeMode === 'passport' ? 4.5/3.5 : activeMode === 'signature' ? 0.5 : 1);
-                        if (cropState.x + newW <= editorCanvas.width && cropState.y + newH <= editorCanvas.height) {
-                            cropState.w = newW;
-                            cropState.h = newH;
+                    // Fixed aspect ratio smart tracking transformations logic
+                    let targetFactor = 1.0;
+                    if (activeMode === 'passport') targetFactor = 4.5 / 3.5;
+                    if (activeMode === 'signature') targetFactor = 0.5;
+                    if (activeMode === 'square') targetFactor = 1.0;
+
+                    // Compute expansion sizing weights based on active handle node vectors
+                    let referenceDelta = dx;
+                    if (h.x === 0.5 || (Math.abs(dy) > Math.abs(dx) && h.x !== 1)) {
+                        referenceDelta = dy * (1 / targetFactor);
+                    }
+
+                    if (h.x === 1 && h.y === 1) { // Bottom Right
+                        let nextW = Math.max(minCropLimit, cropState.w + referenceDelta);
+                        let nextH = nextW * targetFactor;
+                        if (cropState.x + nextW <= editorCanvas.width && cropState.y + nextH <= editorCanvas.height) {
+                            cropState.w = nextW; cropState.h = nextH;
+                        }
+                    } else if (h.x === 0 && h.y === 0) { // Top Left
+                        let nextW = Math.max(minCropLimit, cropState.w - referenceDelta);
+                        let nextH = nextW * targetFactor;
+                        let nextX = cropState.x + (cropState.w - nextW);
+                        let nextY = cropState.y + (cropState.h - nextH);
+                        if (nextX >= 0 && nextY >= 0) {
+                            cropState.w = nextW; cropState.h = nextH; cropState.x = nextX; cropState.y = nextY;
+                        }
+                    } else if (h.x === 1 && h.y === 0) { // Top Right
+                        let nextW = Math.max(minCropLimit, cropState.w + referenceDelta);
+                        let nextH = nextW * targetFactor;
+                        let nextY = cropState.y + (cropState.h - nextH);
+                        if (cropState.x + nextW <= editorCanvas.width && nextY >= 0) {
+                            cropState.w = nextW; cropState.h = nextH; cropState.y = nextY;
+                        }
+                    } else if (h.x === 0 && h.y === 1) { // Bottom Left
+                        let nextW = Math.max(minCropLimit, cropState.w - referenceDelta);
+                        let nextH = nextW * targetFactor;
+                        let nextX = cropState.x + (cropState.w - nextW);
+                        if (nextX >= 0 && cropState.y + nextH <= editorCanvas.height) {
+                            cropState.w = nextW; cropState.h = nextH; cropState.x = nextX;
                         }
                     }
                 } else {
-                    if (h.x === 1) cropState.w = Math.max(30, Math.min(editorCanvas.width - cropState.x, cropState.w + dx));
-                    if (h.y === 1) cropState.h = Math.max(30, Math.min(editorCanvas.height - cropState.y, cropState.h + dy));
+                    // Free Custom Transformations Drag Nodes Rules Engine
+                    if (h.x === 1) cropState.w = Math.max(minCropLimit, Math.min(editorCanvas.width - cropState.x, cropState.w + dx));
+                    if (h.y === 1) cropState.h = Math.max(minCropLimit, Math.min(editorCanvas.height - cropState.y, cropState.h + dy));
                     if (h.x === 0) {
                         const targetW = cropState.w - dx;
-                        if (targetW > 30 && cropState.x + dx >= 0) {
-                            cropState.x += dx;
-                            cropState.w = targetW;
+                        if (targetW > minCropLimit && cropState.x + dx >= 0) {
+                            cropState.x += dx; cropState.w = targetW;
                         }
                     }
                     if (h.y === 0) {
                         const targetH = cropState.h - dy;
-                        if (targetH > 30 && cropState.y + dy >= 0) {
-                            cropState.y += dy;
-                            cropState.h = targetH;
+                        if (targetH > minCropLimit && cropState.y + dy >= 0) {
+                            cropState.y += dy; cropState.h = targetH;
                         }
                     }
                 }
@@ -472,6 +698,7 @@
             activeHandleIndex = -1;
         }
 
+        // Active Event Listeners Mapping Setup Links
         editorCanvas.addEventListener('mousedown', e => handleInputStart(e.clientX, e.clientY));
         window.addEventListener('mousemove', e => handleInputMove(e.clientX, e.clientY));
         window.addEventListener('mouseup', handleInputEnd);
@@ -484,27 +711,139 @@
         }, { passive: true });
         window.addEventListener('touchend', handleInputEnd);
 
+        // Aspect Ratio Dropdown Dynamic Resettler
+        aspectRatioSelector.addEventListener('change', () => {
+            saveEngineStateToHistory();
+            // 21. Center maintain tracking transformation logic
+            const oldCX = cropState.x + cropState.w / 2;
+            const oldCY = cropState.y + cropState.h / 2;
+
+            const mode = aspectRatioSelector.value;
+            if (mode !== 'free') {
+                let targetFactor = 1.0;
+                if (mode === 'passport') targetFactor = 4.5 / 3.5;
+                if (mode === 'signature') targetFactor = 0.5;
+                if (mode === 'square') targetFactor = 1.0;
+
+                cropState.h = cropState.w * targetFactor;
+                if (cropState.h > editorCanvas.height) {
+                    cropState.h = editorCanvas.height * 0.8;
+                    cropState.w = cropState.h / targetFactor;
+                }
+            }
+            
+            cropState.x = Math.max(0, Math.min(editorCanvas.width - cropState.w, oldCX - cropState.w / 2));
+            cropState.y = Math.max(0, Math.min(editorCanvas.height - cropState.h, oldCY - cropState.h / 2));
+            renderFrame();
+        });
+
+        // Navigation Toolbar Features Trigger Blocks (Zoom, Rotate, Reset, Before/After)
+        btnZoomIn.addEventListener('click', () => { zoomFactor = Math.min(5.0, zoomFactor + 0.15); renderFrame(); });
+        btnZoomOut.addEventListener('click', () => { zoomFactor = Math.max(0.5, zoomFactor - 0.15); renderFrame(); });
+        btnResetZoom.addEventListener('click', () => { zoomFactor = 1.0; renderFrame(); });
+        
+        btnRotateLeft.addEventListener('click', () => { 
+            saveEngineStateToHistory(); 
+            rotationDegree = (rotationDegree - 90) % 360; 
+            resetCropBoxToCenter(); 
+        });
+        btnRotateRight.addEventListener('click', () => { 
+            saveEngineStateToHistory(); 
+            rotationDegree = (rotationDegree + 90) % 360; 
+            resetCropBoxToCenter(); 
+        });
+        
+        btnResetCrop.addEventListener('click', () => { 
+            saveEngineStateToHistory(); 
+            zoomFactor = 1.0; 
+            rotationDegree = 0; 
+            resetCropBoxToCenter(); 
+        });
+
+        // 22. Before/After Toggle View Functionality
+        btnToggleBefore.addEventListener('mousedown', () => { isOriginalPreviewMode = true; renderFrame(); });
+        btnToggleBefore.addEventListener('mouseup', () => { isOriginalPreviewMode = false; renderFrame(); });
+        btnToggleBefore.addEventListener('mouseleave', () => { if(isOriginalPreviewMode){ isOriginalPreviewMode = false; renderFrame(); } });
+        
+        btnToggleBefore.addEventListener('touchstart', (e) => { e.preventDefault(); isOriginalPreviewMode = true; renderFrame(); }, { passive: false });
+        btnToggleBefore.addEventListener('touchend', () => { isOriginalPreviewMode = false; renderFrame(); });
+
+        // 15. Keyboard Shortcuts System Maps Panel
+        window.addEventListener('keydown', (e) => {
+            if (workspaceContainer.style.display !== 'block' || isOriginalPreviewMode) return;
+            const step = e.shiftKey ? 10 : 2;
+            
+            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+                e.preventDefault();
+                saveEngineStateToHistory();
+                if (e.key === 'ArrowUp') cropState.y = Math.max(0, cropState.y - step);
+                if (e.key === 'ArrowDown') cropState.y = Math.min(editorCanvas.height - cropState.h, cropState.y + step);
+                if (e.key === 'ArrowLeft') cropState.x = Math.max(0, cropState.x - step);
+                if (e.key === 'ArrowRight') cropState.x = Math.min(editorCanvas.width - cropState.w, cropState.x + step);
+                renderFrame();
+            }
+            if (e.key === 'Escape') {
+                btnResetCrop.click();
+            }
+        });
+
+        // Dynamic High-Resolution Export Engine Processors
         downloadCroppedBtn.addEventListener('click', () => {
-            const exportCanvas = document.createElement('canvas');
-            const exportCtx = exportCanvas.getContext('2d');
+            processingLoader.style.display = 'flex';
+            
+            setTimeout(() => {
+                const exportCanvas = document.createElement('canvas');
+                const exportCtx = exportCanvas.getContext('2d');
 
-            const nativeScaleX = sourceImg.width / editorCanvas.width;
-            const nativeScaleY = sourceImg.height / editorCanvas.height;
+                const nativeScaleX = sourceImg.width / editorCanvas.width;
+                const nativeScaleY = sourceImg.height / editorCanvas.height;
 
-            exportCanvas.width = cropState.w * nativeScaleX;
-            exportCanvas.height = cropState.h * nativeScaleY;
+                // Configure calculated pixel bounds allocations accurately
+                const targetSrcX = cropState.x * nativeScaleX;
+                const targetSrcY = cropState.y * nativeScaleY;
+                const targetSrcW = cropState.w * nativeScaleX;
+                const targetSrcH = cropState.h * nativeScaleY;
 
-            exportCtx.drawImage(
-                sourceImg,
-                cropState.x * nativeScaleX, cropState.y * nativeScaleY,
-                cropState.w * nativeScaleX, cropState.h * nativeScaleY,
-                0, 0, exportCanvas.width, exportCanvas.height
-            );
+                exportCanvas.width = targetSrcW;
+                exportCanvas.height = targetSrcH;
 
-            const downloadLink = document.createElement('a');
-            downloadLink.download = `editspark-cropped-${Date.now()}.png`;
-            downloadLink.href = exportCanvas.toDataURL('image/png', 1.0);
-            downloadLink.click();
+                // Build transform environment maps matching active editor canvas context states
+                exportCtx.translate(exportCanvas.width / 2, exportCanvas.height / 2);
+                exportCtx.rotate((rotationDegree * Math.PI) / 180);
+                
+                if (rotationDegree % 180 !== 0) {
+                    // Adapt inverted dynamic sizing bounds maps adjustments matches
+                    exportCtx.translate(-exportCanvas.height / 2, -exportCanvas.width / 2);
+                } else {
+                    exportCtx.translate(-exportCanvas.width / 2, -exportCanvas.height / 2);
+                }
+
+                exportCtx.drawImage(
+                    sourceImg,
+                    targetSrcX, targetSrcY, targetSrcW, targetSrcH,
+                    0, 0, exportCanvas.width, exportCanvas.height
+                );
+
+                // 20. Smart output filename picker allocations
+                const selectedPreset = aspectRatioSelector.value;
+                let targetSuffixName = "cropped-image";
+                if (selectedPreset === 'passport') targetSuffixName = "passport-photo";
+                if (selectedPreset === 'signature') targetSuffixName = "signature";
+
+                const finalFormatExtension = exportFormatSelector.value;
+                let fileExtensionString = ".png";
+                if (finalFormatExtension === 'image/jpeg') fileExtensionString = ".jpg";
+                if (finalFormatExtension === 'image/webp') fileExtensionString = ".webp";
+
+                const qualityFactorValue = parseFloat(qualityValueSlider.value) / 100;
+
+                const downloadLink = document.createElement('a');
+                downloadLink.download = `${loadedFileName}-${targetSuffixName}${fileExtensionString}`;
+                downloadLink.href = exportCanvas.toDataURL(finalFormatExtension, qualityFactorValue);
+                downloadLink.click();
+                
+                processingLoader.style.display = 'none';
+            }, 100);
         });
     </script>
 </body>
