@@ -12,14 +12,35 @@
     <meta property="og:description" content="Make document backgrounds pure white and signatures dark black online. Perfect for online job application forms.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://edit-spark.vercel.app/document-background-white.html">
-
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- Optimized Native CSS (Replaced Tailwind Browser CDN) -->
     <style>
-        .btn-purple { background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%); }
-        .preview-box { border: 2px dashed #cbd5e1; transition: all 0.3s ease; }
+        body { background-color: #f3f4f6; font-family: ui-sans-serif, system-ui, sans-serif; color: #1e293b; min-height: 100vh; display: flex; flex-direction: column; margin: 0; }
+        .nav-bg { background-color: #ffffff; border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; z-index: 50; }
+        .max-w-7xl { max-width: 80rem; margin-left: auto; margin-right: auto; px-4; }
+        .flex-row-nav { display: flex; justify-content: space-between; height: 4rem; align-items: center; padding: 0 1rem; }
+        .btn-purple { background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%); cursor: pointer; }
+        .btn-purple:disabled { opacity: 0.7; cursor: not-allowed; }
+        .preview-box { border: 2px dashed #cbd5e1; transition: all 0.3s ease; background-color: #f8fafc; }
         .preview-box:hover { border-color: #a855f7; }
+        .main-container { flex-grow: 1; max-width: 56rem; margin-left: auto; margin-right: auto; padding: 3rem 1rem; width: 100%; box-sizing: border-box; }
+        .card { background-color: #ffffff; border-radius: 0.75rem; border: 1px solid #e2e8f0; padding: 1.5rem; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); }
+        @media (min-width: 768px) { .card { padding: 2rem; } }
+        .hidden { display: none !important; }
+        .text-center { text-align: center; }
+        .uppercase { text-transform: uppercase; }
+        .font-black { font-weight: 900; }
+        .tracking-tight { letter-spacing: -0.025em; }
+        .text-slate-900 { color: #0f172a; }
+        .text-purple-500 { color: #a855f7; }
+        .prose h2 { font-size: 1.5rem; font-weight: 800; color: #0f172a; margin-top: 2rem; margin-bottom: 0.75rem; }
+        .prose p { color: #475569; line-height: 1.625; margin-bottom: 1rem; }
+        .prose ul { list-style-type: disc; padding-left: 1.25rem; color: #475569; }
+        .prose li { margin-bottom: 0.25rem; }
+        .animate-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
+        .animate-spin { animation: spin 1s linear infinite; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
     </style>
 
     <script type="application/ld+json">
@@ -100,78 +121,87 @@
     }
     </script>
 </head>
-<body class="bg-[#f3f4f6] font-sans text-slate-800 min-h-screen flex flex-col">
+<body>
 
-    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 items-center">
-                <div class="flex items-center space-x-2">
-                    <div class="bg-purple-500 p-2 rounded-lg text-white shadow-sm">
-                        <i class="fa-solid fa-wand-magic-sparkles text-lg"></i>
+    <nav class="nav-bg">
+        <div class="max-w-7xl">
+            <div class="flex-row-nav">
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <div style="background-color: #a855f7; padding: 0.5rem; border-radius: 0.5rem; color: white; display: flex; align-items: center; box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);">
+                        <!-- SVG Icon: wand-magic-sparkles -->
+                        <svg style="width: 1.25rem; height: 1.25rem;" fill="currentColor" viewBox="0 0 512 512"><path d="M4.1 38.2C1.4 34.2 0 29.4 0 24.6C0 11 11 0 24.6 0H133.9c13.1 0 25.1 7.2 31.2 18.8l48 91.4L372.9 22.4c6.1-4.9 13.8-7.6 21.8-7.6c19.5 0 35.4 15.9 35.4 35.4V168.3l82.7 62c11.6 8.7 15.6 24.3 9.4 37.4l-48 101.4c-4.9 10.4-15.3 17-26.9 17H342.3c-10.8 0-21-5.3-27.1-14.2L249.4 276.1l-65.7 78.9c-6.6 7.9-16.6 12.5-27.1 12.5H41.1c-15.7 0-29.3-10.5-33.3-25.7l-32-121.4c-3.1-11.8 .4-24.3 9.4-32.9L108 181.7 4.1 38.2zM277.2 408.3c5-4.2 11.4-6.5 18-6.5h85.1c11 0 20.8 6.4 25.1 16.5l32 75.4c4.9 11.5 .4 24.8-10.4 31c-4.9 2.8-10.4 4.3-16 4.3H320.7c-12 0-22.9-6.8-28.2-17.6l-26.6-54.6c-5.1-10.4-1.4-23 8.3-29.2l3-1.9z"/></svg>
                     </div>
-                    <span class="text-2xl font-black tracking-tight text-slate-900">Edit<span class="text-purple-500">Spark</span></span>
+                    <span class="text-2xl font-black tracking-tight text-slate-900" style="font-size: 1.5rem;">Edit<span class="text-purple-500">Spark</span></span>
                 </div>
-                <div class="flex items-center space-x-4">
-                    <a href="index.html" class="text-sm font-bold text-slate-600 hover:text-purple-500 transition-colors">
-                        <i class="fa-solid fa-house mr-1"></i> HOME
+                <div style="display: flex; align-items: center;">
+                    <a href="index.html" style="font-size: 0.875rem; font-weight: 700; color: #475569; text-decoration: none; display: flex; align-items: center; gap: 0.25rem;">
+                        <!-- SVG Icon: house -->
+                        <svg style="width: 1rem; height: 1rem; color: #a855f7;" fill="currentColor" viewBox="0 0 576 512"><path d="M575.8 255.5c0 18-15 32.1-32 32.1h-32v216.5c0 4.1-3.3 7.4-7.4 7.4H351.8c-4.1 0-7.4-3.3-7.4-7.4V343.8c0-4.1-3.3-7.4-7.4-7.4h-72.1c-4.1 0-7.4 3.3-7.4 7.4v160.3c0 4.1-3.3 7.4-7.4 7.4H71.7c-4.1 0-7.4-3.3-7.4-7.4V287.6H32.1c-17.1 0-32.1-14.1-32.1-32.1c0-9.4 4.2-18.4 11.6-24.5L257.2 15.4c17-14.2 42.5-14.2 59.5 0l247.4 215.6c7.5 6 11.7 15.1 11.7 24.5z"/></svg>
+                        HOME
                     </a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <main class="flex-grow max-w-4xl mx-auto px-4 py-12 w-full">
-        <div class="text-center mb-8">
-            <h1 class="text-3xl font-black text-slate-900 tracking-tight uppercase">Document Background White & Signature Cleaner Online Free</h1>
-            <p class="mt-2 text-slate-500 font-medium max-w-2xl mx-auto">This Document Background White Online tool helps you convert grey or shadowed document backgrounds into pure white while making signatures dark black instantly.</p>
+    <main class="main-container">
+        <div class="text-center" style="margin-bottom: 2rem;">
+            <h1 class="text-3xl font-black text-slate-900 tracking-tight uppercase" style="font-size: 1.875rem; margin: 0;">Document Background White & Signature Cleaner Online Free</h1>
+            <p class="mt-2 text-slate-500 font-medium max-w-2xl mx-auto" style="color: #64748b; font-weight: 500; margin-top: 0.5rem; max-width: 42rem; margin-left: auto; margin-right: auto;">This Document Background White Online tool helps you convert grey or shadowed document backgrounds into pure white while making signatures dark black instantly.</p>
         </div>
 
-        <div class="bg-white rounded-xl shadow-xs border border-slate-200 p-6 md:p-8">
-            <div id="enhanceDropzone" class="preview-box rounded-xl p-8 text-center cursor-pointer bg-slate-50 mb-6">
+        <div class="card">
+            <div id="enhanceDropzone" class="preview-box" style="border-radius: 0.75rem; padding: 2rem; text-center; cursor: pointer; margin-bottom: 1.5rem; text-align: center;">
                 <input type="file" id="enhanceInput" accept="image/*" class="hidden">
                 <div id="enhancePrompt">
-                    <i class="fa-solid fa-wand-magic-sparkles text-4xl text-purple-500 mb-3"></i>
-                    <p class="font-bold text-slate-700 uppercase tracking-wide text-sm">Upload Signature or Document <span class="text-purple-500">browse</span></p>
-                    <p class="text-xs text-slate-400 mt-1">Drag & drop works too. Supports JPG, JPEG, PNG</p>
+                    <!-- SVG Icon: wand-magic-sparkles (Large) -->
+                    <svg style="width: 2.5rem; height: 2.5rem; color: #a855f7; margin-bottom: 0.75rem; display: inline-block;" fill="currentColor" viewBox="0 0 512 512"><path d="M4.1 38.2C1.4 34.2 0 29.4 0 24.6C0 11 11 0 24.6 0H133.9c13.1 0 25.1 7.2 31.2 18.8l48 91.4L372.9 22.4c6.1-4.9 13.8-7.6 21.8-7.6c19.5 0 35.4 15.9 35.4 35.4V168.3l82.7 62c11.6 8.7 15.6 24.3 9.4 37.4l-48 101.4c-4.9 10.4-15.3 17-26.9 17H342.3c-10.8 0-21-5.3-27.1-14.2L249.4 276.1l-65.7 78.9c-6.6 7.9-16.6 12.5-27.1 12.5H41.1c-15.7 0-29.3-10.5-33.3-25.7l-32-121.4c-3.1-11.8 .4-24.3 9.4-32.9L108 181.7 4.1 38.2zM277.2 408.3c5-4.2 11.4-6.5 18-6.5h85.1c11 0 20.8 6.4 25.1 16.5l32 75.4c4.9 11.5 .4 24.8-10.4 31c-4.9 2.8-10.4 4.3-16 4.3H320.7c-12 0-22.9-6.8-28.2-17.6l-26.6-54.6c-5.1-10.4-1.4-23 8.3-29.2l3-1.9z"/></svg>
+                    <p style="font-weight: 700; color: #334155; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.875rem; margin: 0;">Upload Signature or Document <span class="text-purple-500">browse</span></p>
+                    <p style="font-size: 0.75rem; color: #94a3b8; margin-top: 0.25rem;">Drag & drop works too. Supports JPG, JPEG, PNG</p>
                 </div>
-                <div id="enhancePreviewContainer" class="hidden flex flex-col items-center">
-                    <img id="enhancePreview" class="max-h-64 rounded shadow-xs mb-3" alt="EditSpark Document Background White Preview Image">
-                    <p id="enhanceFileInfo" class="text-sm text-slate-500 font-bold"></p>
+                <div id="enhancePreviewContainer" class="hidden" style="flex-direction: column; align-items: center; display: flex;">
+                    <img id="enhancePreview" style="max-height: 16rem; border-radius: 0.25rem; box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05); margin-bottom: 0.75rem;" alt="EditSpark Document Background White Preview Image">
+                    <p id="enhanceFileInfo" style="font-size: 0.875rem; color: #64748b; font-weight: 700; margin: 0;"></p>
                 </div>
             </div>
 
-            <button id="enhanceBtn" class="w-full btn-purple text-white font-bold py-4 px-6 rounded-lg shadow-md flex items-center justify-center space-x-2 transition-all cursor-pointer uppercase tracking-wider text-base">
-                <i class="fa-solid fa-bolt animate-pulse"></i>
-                <span>Magic Auto-Clean (Pure White & Dark Sign)</span>
+            <button id="enhanceBtn" class="btn-purple" style="width: 100%; color: white; font-weight: 700; padding: 1rem; border-radius: 0.5rem; border: none; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; gap: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em; font-size: 1rem;">
+                <span id="btnIcon" class="animate-pulse" style="display: inline-flex; align-items: center;">
+                    <!-- SVG Icon: bolt -->
+                    <svg style="width: 1rem; height: 1rem;" fill="currentColor" viewBox="0 0 384 512"><path d="M0 256L28.5 218.2l198.7-23.5c10.4-1.2 19-8.7 21.7-18.9L288 32H144c-17.7 0-32 14.3-32 32V176c0 8.8-7.2 16-16 16H32c-17.7 0-32 14.3-32 32V256zm384 0l-28.5 37.8L156.8 317.3c-10.4 1.2-19 8.7-21.7 18.9L96 480H240c17.7 0/32-14.3 32-32V336c0-8.8 7.2-16 16-16h64c17.7 0 32-14.3 32-32V256z"/></svg>
+                </span>
+                <span id="btnText">Magic Auto-Clean (Pure White & Dark Sign)</span>
             </button>
 
-            <div id="enhanceResult" class="hidden mt-8 pt-6 border-t border-slate-200 text-center">
-                <div class="inline-flex items-center space-x-2 text-emerald-600 font-bold uppercase tracking-wide mb-4 text-sm">
-                    <i class="fa-solid fa-circle-check text-xl"></i>
+            <div id="enhanceResult" class="hidden" style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #e2e8f0; text-align: center;">
+                <div style="display: inline-flex; align-items: center; gap: 0.5rem; color: #059669; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; font-size: 0.875rem;">
+                    <!-- SVG Icon: circle-check -->
+                    <svg style="width: 1.25rem; height: 1.25rem;" fill="currentColor" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>
                     <span>Background Cleaned & Signature Enhanced!</span>
                 </div>
-                <div class="flex justify-center mb-6">
-                    <canvas id="resultCanvas" class="max-h-64 rounded shadow-md border border-slate-300 bg-white"></canvas>
+                <div style="display: flex; justify-content: center; margin-bottom: 1.5rem;">
+                    <canvas id="resultCanvas" style="max-height: 16rem; border-radius: 0.375rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border: 1px solid #cbd5e1; background-color: #ffffff;"></canvas>
                 </div>
-                <a id="downloadEnhanceBtn" class="inline-flex items-center space-x-2 bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg shadow-sm transition-all cursor-pointer uppercase tracking-wider">
-                    <i class="fa-solid fa-download"></i>
+                <a id="downloadEnhanceBtn" style="display: inline-flex; align-items: center; gap: 0.5rem; background-color: #10b981; color: white; font-weight: 700; padding: 0.75rem 2rem; border-radius: 0.5rem; text-decoration: none; box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05); text-transform: uppercase; letter-spacing: 0.05em; transition: background-color 0.2s;">
+                    <!-- SVG Icon: download -->
+                    <svg style="width: 1rem; height: 1rem;" fill="currentColor" viewBox="0 0 512 512"><path d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V274.7L115.3 166c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7V32zM64 416c-17.7 0-32 14.3-32 32s14.3 32 32 32H448c17.7 0 32-14.3 32-32s-14.3-32-32-32H64z"/></svg>
                     <span>Download Cleaned Image</span>
                 </a>
             </div>
         </div>
 
-        <hr class="my-12 border-slate-200">
+        <hr style="margin-top: 3rem; margin-bottom: 3rem; border: 0; border-top: 1px solid #e2e8f0;">
 
-        <section class="prose max-w-none text-slate-600 space-y-8">
+        <section class="prose">
             <div>
-                <h2 class="text-2xl font-extrabold text-slate-900 mb-3">What is the Document Background White Tool?</h2>
-                <p class="leading-relaxed">When you take a photo of a document or an official signature using a mobile phone, it often looks dull, dark, or covered in grey shadows. Most government online application portals require a crystal-clear file with a pure white background. This online tool is designed to instantly solve that issue. It intelligently separates the text or signature from the unwanted background, removes all shadows, and leaves you with a professional, clean image ready for official submission.</p>
+                <h2>What is the Document Background White Tool?</h2>
+                <p>When you take a photo of a document or an official signature using a mobile phone, it often looks dull, dark, or covered in grey shadows. Most government online application portals require a crystal-clear file with a pure white background. This online tool is designed to instantly solve that issue. It intelligently separates the text or signature from the unwanted background, removes all shadows, and leaves you with a professional, clean image ready for official submission.</p>
             </div>
 
             <div>
-                <h2 class="text-2xl font-extrabold text-slate-900 mb-3">How to Make Document Background White Online?</h2>
-                <p class="leading-relaxed mb-2">Cleaning your files on EditSpark is incredibly simple and takes less than five seconds. Follow these quick steps:</p>
-                <ul class="list-disc pl-5 space-y-1">
+                <h2>How to Make Document Background White Online?</h2>
+                <p style="margin-bottom: 0.5rem;">Cleaning your files on EditSpark is incredibly simple and takes less than five seconds. Follow these quick steps:</p>
+                <ul>
                     <li>Click on the browse area or drag and drop your image into the tool.</li>
                     <li>Hit the <strong>Magic Auto-Clean</strong> button to let the pixel engine analyze the file.</li>
                     <li>The background shadows will disappear, and faded ink will become rich dark black.</li>
@@ -180,54 +210,54 @@
             </div>
 
             <div>
-                <h2 class="text-2xl font-extrabold text-slate-900 mb-3">Why Use This Signature Cleaner Tool?</h2>
-                <p class="leading-relaxed">Unlike heavy software like Photoshop that requires complex skills, our tool functions seamlessly with a single click. It employs a smart dynamic thresholding mechanism that scans the contrast levels of your uploaded file. If the lines of a signature are faded or captured in low light, it boosts the core color channels to turn the signature dark black. Simultaneously, it pushes the grey paper background to maximum brightness, transforming it into 100% white.</p>
+                <h2>Why Use This Signature Cleaner Tool?</h2>
+                <p>Unlike heavy software like Photoshop that requires complex skills, our tool functions seamlessly with a single click. It employs a smart dynamic thresholding mechanism that scans the contrast levels of your uploaded file. If the lines of a signature are faded or captured in low light, it boosts the core color channels to turn the signature dark black. Simultaneously, it pushes the grey paper background to maximum brightness, transforming it into 100% white.</p>
             </div>
 
             <div>
-                <h2 class="text-2xl font-extrabold text-slate-900 mb-3">Perfect for SSC, Railway & Banking Forms</h2>
-                <p class="leading-relaxed">Major online examination portals require clean uploads to ensure automated verification runs smoothly. Uploading an image with a dark shadow or deep yellowish tint can sometimes cause unnecessary delays or risk form rejection. This web utility functions as a quick, secure helper to make your digital files look exactly like flat scanned copies, giving you peace of mind during form submissions.</p>
+                <h2>Perfect for SSC, Railway & Banking Forms</h2>
+                <p>Major online examination portals require clean uploads to ensure automated verification runs smoothly. Uploading an image with a dark shadow or deep yellowish tint can sometimes cause unnecessary delays or risk form rejection. This web utility functions as a quick, secure helper to make your digital files look exactly like flat scanned copies, giving you peace of mind during form submissions.</p>
             </div>
 
-            <hr class="my-8 border-slate-200">
+            <hr style="margin-top: 2rem; margin-bottom: 2rem; border: 0; border-top: 1px solid #e2e8f0;">
 
             <div>
-                <h2 class="text-2xl font-extrabold text-slate-900 mb-6 text-center">Frequently Asked Questions (FAQs)</h2>
-                <div class="space-y-6">
+                <h2 style="text-align: center; margin-bottom: 1.5rem;">Frequently Asked Questions (FAQs)</h2>
+                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
                     <div>
-                        <h3 class="text-lg font-bold text-slate-900 mb-1">Does this tool remove document shadows?</h3>
-                        <p class="leading-relaxed">Yes, the tool scans the entire canvas to evaluate varying light layouts. It completely irons out uneven grey mobile camera shadows, converting the paper sheet backdrop into standard white color while protecting the text lines.</p>
+                        <h3 style="font-size: 1.125rem; font-weight: 700; color: #0f172a; margin: 0 0 0.25rem 0;">Does this tool remove document shadows?</h3>
+                        <p style="margin: 0;">Yes, the tool scans the entire canvas to evaluate varying light layouts. It completely irons out uneven grey mobile camera shadows, converting the paper sheet backdrop into standard white color while protecting the text lines.</p>
                     </div>
                     <div>
-                        <h3 class="text-lg font-bold text-slate-900 mb-1">Can I make my signature dark black?</h3>
-                        <p class="leading-relaxed">Absolutely. Blue, light grey, or faded ink shapes are identified by our threshold system and amplified into distinct, rich dark black strokes to make reading and verification completely effortless.</p>
+                        <h3 style="font-size: 1.125rem; font-weight: 700; color: #0f172a; margin: 0 0 0.25rem 0;">Can I make my signature dark black?</h3>
+                        <p style="margin: 0;">Absolutely. Blue, light grey, or faded ink shapes are identified by our threshold system and amplified into distinct, rich dark black strokes to make reading and verification completely effortless.</p>
                     </div>
                     <div>
-                        <h3 class="text-lg font-bold text-slate-900 mb-1">Is this online utility completely free to use?</h3>
-                        <p class="leading-relaxed">Yes, it is entirely free. There are no registration processes, hidden premium barriers, or watermarks attached to your final processed images.</p>
+                        <h3 style="font-size: 1.125rem; font-weight: 700; color: #0f172a; margin: 0 0 0.25rem 0;">Is this online utility completely free to use?</h3>
+                        <p style="margin: 0;">Yes, it is entirely free. There are no registration processes, hidden premium barriers, or watermarks attached to your final processed images.</p>
                     </div>
                     <div>
-                        <h3 class="text-lg font-bold text-slate-900 mb-1">Can I use it for SSC and Railway forms?</h3>
-                        <p class="leading-relaxed">Yes, this tool is commonly used for SSC, Railway, Banking and other government form submissions to make sure your images and signatures look clear and legible.</p>
+                        <h3 style="font-size: 1.125rem; font-weight: 700; color: #0f172a; margin: 0 0 0.25rem 0;">Can I use it for SSC and Railway forms?</h3>
+                        <p style="margin: 0;">Yes, this tool is commonly used for SSC, Railway, Banking and other government form submissions to make sure your images and signatures look clear and legible.</p>
                     </div>
                     <div>
-                        <h3 class="text-lg font-bold text-slate-900 mb-1">Is it safe to upload confidential papers here?</h3>
-                        <p class="leading-relaxed">Your privacy is fully protected. Our engine utilizes client-side javascript rendering. This means your files are opened and polished entirely inside your device's browser window; no data ever leaves your device or touches an external server.</p>
+                        <h3 style="font-size: 1.125rem; font-weight: 700; color: #0f172a; margin: 0 0 0.25rem 0;">Is it safe to upload confidential papers here?</h3>
+                        <p style="margin: 0;">Your privacy is fully protected. Our engine utilizes client-side javascript rendering. This means your files are opened and polished entirely inside your device's browser window; no data ever leaves your device or touches an external server.</p>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer class="bg-white border-t border-slate-200 py-8 mt-12">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <div class="flex flex-wrap justify-center gap-4 md:gap-6 mb-6 text-sm font-semibold text-purple-600">
-                <a href="compress-image.html" class="hover:text-purple-800 transition-colors">Compress Image to 20KB/50KB</a>
-                <a href="resize-image.html" class="hover:text-purple-800 transition-colors">Resize Image & Signature</a>
-                <a href="passport-photo-maker.html" class="hover:text-purple-800 transition-colors">Passport Photo Maker</a>
-                <a href="index.html" class="hover:text-purple-800 transition-colors">All Online Tools</a>
+    <footer style="background-color: #ffffff; border-top: 1px solid #e2e8f0; padding: 2rem 0; margin-top: 3rem;">
+        <div style="max-w-7xl; text-align: center;">
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin-bottom: 1.5rem; font-size: 0.875rem; font-weight: 600;">
+                <a href="compress-image.html" style="color: #a855f7; text-decoration: none;">Compress Image to 20KB/50KB</a>
+                <a href="resize-image.html" style="color: #a855f7; text-decoration: none;">Resize Image & Signature</a>
+                <a href="passport-photo-maker.html" style="color: #a855f7; text-decoration: none;">Passport Photo Maker</a>
+                <a href="index.html" style="color: #a855f7; text-decoration: none;">All Online Tools</a>
             </div>
-            <div class="text-sm text-slate-400 font-medium">
+            <div style="font-size: 0.875rem; color: #94a3b8; font-weight: 500;">
                 &copy; 2026 EditSpark Studio. Locally Processed (100% Private & Safe).
             </div>
         </div>
@@ -241,6 +271,8 @@
         const previewImg = document.getElementById('enhancePreview');
         const fileInfo = document.getElementById('enhanceFileInfo');
         const enhanceBtn = document.getElementById('enhanceBtn');
+        const btnIcon = document.getElementById('btnIcon');
+        const btnText = document.getElementById('btnText');
         const enhanceResult = document.getElementById('enhanceResult');
         const canvas = document.getElementById('resultCanvas');
         const downloadBtn = document.getElementById('downloadEnhanceBtn');
@@ -250,16 +282,19 @@
 
         dropzone.addEventListener('dragover', (e) => {
             e.preventDefault();
-            dropzone.classList.add('border-purple-500', 'bg-purple-50/30');
+            dropzone.style.borderColor = '#a855f7';
+            dropzone.style.backgroundColor = 'rgba(245, 243, 255, 0.5)';
         });
 
         dropzone.addEventListener('dragleave', () => {
-            dropzone.classList.remove('border-purple-500', 'bg-purple-50/30');
+            dropzone.style.borderColor = '#cbd5e1';
+            dropzone.style.backgroundColor = '#f8fafc';
         });
 
         dropzone.addEventListener('drop', (e) => {
             e.preventDefault();
-            dropzone.classList.remove('border-purple-500', 'bg-purple-50/30');
+            dropzone.style.borderColor = '#cbd5e1';
+            dropzone.style.backgroundColor = '#f8fafc';
             if(e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
         });
 
@@ -290,7 +325,8 @@
                 return;
             }
             enhanceBtn.disabled = true;
-            enhanceBtn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> <span>Analyzing Pixels...</span>';
+            btnIcon.innerHTML = '<svg class="animate-spin" style="width: 1rem; height: 1rem;" fill="currentColor" viewBox="0 0 512 512"><path d="M304 48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zm0 416a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM48 304a48 48 0 1 0 0-96 48 48 0 1 0 0 96zm416 0a48 48 0 1 0 0-96 48 48 0 1 0 0 96zM122.5 122.5a48 48 0 1 0 -67.9-67.9 48 48 0 1 0 67.9 67.9zm267 267a48 48 0 1 0 -67.9-67.9 48 48 0 1 0 67.9 67.9zM122.5 389.5a48 48 0 1 0 -67.9 67.9 48 48 0 1 0 67.9-67.9z"/></svg>';
+            btnText.textContent = 'Analyzing Pixels...';
             
             const img = new Image();
             img.src = previewImg.src;
@@ -337,7 +373,8 @@
                 enhanceResult.classList.remove('hidden');
                 enhanceResult.scrollIntoView({ behavior: 'smooth' });
                 enhanceBtn.disabled = false;
-                enhanceBtn.innerHTML = '<i class="fa-solid fa-bolt"></i> <span>Magic Auto-Clean (Pure White & Dark Sign)</span>';
+                btnIcon.innerHTML = '<svg style="width: 1rem; height: 1rem;" fill="currentColor" viewBox="0 0 384 512"><path d="M0 256L28.5 218.2l198.7-23.5c10.4-1.2 19-8.7 21.7-18.9L288 32H144c-17.7 0-32 14.3-32 32V176c0 8.8-7.2 16-16 16H32c-17.7 0-32 14.3-32 32V256zm384 0l-28.5 37.8L156.8 317.3c-10.4 1.2-19 8.7-21.7 18.9L96 480H240c17.7 0 32-14.3 32-32V336c0-8.8 7.2-16 16-16h64c17.7 0 32-14.3 32-32V256z"/></svg>';
+                btnText.textContent = 'Magic Auto-Clean (Pure White & Dark Sign)';
             };
         });
     </script>
