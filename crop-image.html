@@ -47,10 +47,36 @@
         .btn-success { background: #16a34a; box-shadow: 0 4px 6px -1px rgba(22,163,74,0.2); }
         .btn-success:hover { background: #15803d; }
         
-        /* Cropper Workspace Styles */
-        .work-area { display: none; max-width: 600px; margin: 2rem auto; position: relative; background: #0f172a; border-radius: 8px; overflow: hidden; box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06); }
-        #canvasContainer { position: relative; width: 100%; display: flex; justify-content: center; align-items: center; }
-        canvas { max-width: 100%; display: block; user-select: none; }
+        /* Responsive & Centered Workspace */
+        .work-area { 
+            display: none; 
+            max-width: 100%; 
+            margin: 1.5rem auto; 
+            background: #1e293b; 
+            border-radius: 8px; 
+            overflow: hidden; 
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        #canvasContainer { 
+            width: 100%; 
+            max-height: 450px; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            overflow: auto; 
+            background: #0f172a;
+            border-radius: 6px;
+        }
+        canvas { 
+            max-width: 100%; 
+            max-height: 400px; 
+            object-fit: contain;
+            display: block; 
+            user-select: none; 
+            margin: auto;
+        }
         
         .control-panel { display: none; justify-content: center; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap; }
         .select-input { padding: 0.6rem 1rem; border-radius: 6px; border: 1px solid #cbd5e1; font-size: 1rem; color: #334155; background: white; cursor: pointer; }
@@ -348,7 +374,6 @@
         let startMousePos = { x: 0, y: 0 };
         let activeHandleIndex = -1;
 
-        // Custom Bounding Boxes Config
         const handlesArray = [
             { x: 0, y: 0 }, { x: 0.5, y: 0 }, { x: 1, y: 0 },
             { x: 0, y: 0.5 },                 { x: 1, y: 0.5 },
@@ -369,21 +394,57 @@
         });
 
         sourceImg.onload = () => {
-            const containerMaxW = Math.min(window.innerWidth - 40, 600);
-            const scaleFactor = containerMaxW / sourceImg.width;
-            
-            editorCanvas.width = containerMaxW;
-            editorCanvas.height = sourceImg.height * scaleFactor;
+            // Screen width aur height constraints for user-friendly preview
+            const maxDisplayWidth = Math.min(window.innerWidth - 60, 550);
+            const maxDisplayHeight = 400; 
 
-            // Default safe starting values
-            cropState.w = editorCanvas.width * 0.6;
-            cropState.h = editorCanvas.height * 0.6;
+            let renderWidth = sourceImg.width;
+            let renderHeight = sourceImg.height;
+
+            // Safe Downscaling logic to fit cleanly in container
+            if (renderWidth > maxDisplayWidth) {
+                const ratio = maxDisplayWidth / renderWidth;
+                renderWidth = maxDisplayWidth;
+                renderHeight = renderHeight * ratio;
+            }
+
+            if (renderHeight > maxDisplayHeight) {
+                const ratio = maxDisplayHeight / renderHeight;
+                renderHeight = maxDisplayHeight;
+                renderWidth = renderWidth * ratio;
+            }
+            
+            editorCanvas.width = renderWidth;
+            editorCanvas.height = renderHeight;
+
+            // Initialize crop box sizing rules responsive layouts
+            cropState.w = editorCanvas.width * 0.7;
+            cropState.h = editorCanvas.height * 0.7;
+            
+            const currentMode = aspectRatioSelector.value;
+            if (currentMode === 'passport') {
+                cropState.h = cropState.w * (4.5 / 3.5);
+            } else if (currentMode === 'signature') {
+                cropState.h = cropState.w * (1 / 2);
+            } else if (currentMode === 'square') {
+                cropState.h = cropState.w;
+            }
+
+            if (cropState.h > editorCanvas.height) {
+                cropState.h = editorCanvas.height * 0.8;
+                if (currentMode === 'passport') cropState.w = cropState.h * (3.5 / 4.5);
+                if (currentMode === 'signature') cropState.w = cropState.h * 2;
+                if (currentMode === 'square') cropState.w = cropState.h;
+            }
+
             cropState.x = (editorCanvas.width - cropState.w) / 2;
             cropState.y = (editorCanvas.height - cropState.h) / 2;
 
             workspaceContainer.style.display = 'block';
             controlsWrapper.style.display = 'flex';
-            applyRatioRules();
+            
+            // Focus and smooth scroll directly into framework box view
+            workspaceContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             renderFrame();
         };
 
@@ -391,20 +452,16 @@
             ctx.clearRect(0, 0, editorCanvas.width, editorCanvas.height);
             ctx.drawImage(sourceImg, 0, 0, editorCanvas.width, editorCanvas.height);
 
-            // Translucent Mask Overlay
             ctx.fillStyle = 'rgba(0, 0, 0, 0.55)';
             ctx.fillRect(0, 0, editorCanvas.width, editorCanvas.height);
 
-            // Transparent Window Clearing
             ctx.clearRect(cropState.x, cropState.y, cropState.w, cropState.h);
             ctx.drawImage(sourceImg, cropState.x, cropState.y, cropState.w, cropState.h, cropState.x, cropState.y, cropState.w, cropState.h);
 
-            // Bounding Box Outlines
             ctx.strokeStyle = '#2563eb';
             ctx.lineWidth = 2;
             ctx.strokeRect(cropState.x, cropState.y, cropState.w, cropState.h);
 
-            // Grid Layout Guides
             ctx.strokeStyle = 'rgba(255, 255, 255, 0.35)';
             ctx.lineWidth = 1;
             for (let i = 1; i <= 2; i++) {
@@ -419,7 +476,6 @@
                 ctx.stroke();
             }
 
-            // Draw Interaction Knobs
             ctx.fillStyle = '#2563eb';
             handlesArray.forEach(h => {
                 ctx.beginPath();
@@ -438,7 +494,6 @@
                 cropState.h = cropState.w;
             }
             
-            // Constrain constraints inside current boundaries
             if (cropState.y + cropState.h > editorCanvas.height) {
                 cropState.h = editorCanvas.height - cropState.y;
                 if (mode === 'passport') cropState.w = cropState.h * (3.5 / 4.5);
@@ -452,7 +507,6 @@
             renderFrame();
         });
 
-        // Mouse & Touch Interaction Mechanics
         function getActionTarget(clientX, clientY) {
             const rect = editorCanvas.getBoundingClientRect();
             const mouseX = clientX - rect.left;
@@ -506,7 +560,6 @@
                 const activeMode = aspectRatioSelector.value;
 
                 if (activeMode !== 'free') {
-                    // Locked aspect ratio resizing logic
                     if (h.x === 1 || (h.x === 0.5 && h.y === 1)) {
                         let newW = Math.max(30, cropState.w + dx);
                         let newH = newW * (activeMode === 'passport' ? 4.5/3.5 : activeMode === 'signature' ? 0.5 : 1);
@@ -516,7 +569,6 @@
                         }
                     }
                 } else {
-                    // Free layout scaling mechanics
                     if (h.x === 1) cropState.w = Math.max(30, Math.min(editorCanvas.width - cropState.x, cropState.w + dx));
                     if (h.y === 1) cropState.h = Math.max(30, Math.min(editorCanvas.height - cropState.y, cropState.h + dy));
                     if (h.x === 0) {
@@ -545,12 +597,10 @@
             activeHandleIndex = -1;
         }
 
-        // Native Mouse Event Hooks
         editorCanvas.addEventListener('mousedown', e => handleInputStart(e.clientX, e.clientY));
         window.addEventListener('mousemove', e => handleInputMove(e.clientX, e.clientY));
         window.addEventListener('mouseup', handleInputEnd);
 
-        // Mobile Friendly Touch Event Hooks
         editorCanvas.addEventListener('touchstart', e => {
             if (e.touches.length === 1) handleInputStart(e.touches[0].clientX, e.touches[0].clientY);
         }, { passive: true });
@@ -559,7 +609,6 @@
         }, { passive: true });
         window.addEventListener('touchend', handleInputEnd);
 
-        // Download Pipeline Processing
         downloadCroppedBtn.addEventListener('click', () => {
             const exportCanvas = document.createElement('canvas');
             const exportCtx = exportCanvas.getContext('2d');
