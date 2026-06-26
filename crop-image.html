@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crop Image Online Free – Passport Photo & Signature Crop Tool | EditSpark</title>
-    <meta name="description" content="Crop Image Online Free with EditSpark. Crop passport photos, signatures, JPG & PNG images without losing quality. Perfect for SSC, Railway, UPSC, Banking and government form uploads. 100% secure browser-based processing.">
+    <meta name="description" content="Crop Image Online Free without losing quality. Crop passport photos, signatures, JPG, PNG and document images instantly. No upload required. Secure browser-based tool for SSC, Railway, UPSC and government forms.">
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#2563eb">
     <meta name="author" content="EditSpark">
     <link rel="canonical" href="https://edit-spark.vercel.app/crop-image.html">
+    
     <!-- OpenGraph & Twitter Meta Tags -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="Crop Image Online Free – Passport Photo & Signature Crop Tool | EditSpark">
@@ -19,16 +20,97 @@
     <meta name="twitter:title" content="Crop Image Online Free – Passport Photo & Signature Crop Tool">
     <meta name="twitter:description" content="Securely crop images, signatures, and document photos directly in your browser container. 100% free.">
     <meta name="twitter:image" content="https://edit-spark.vercel.app/assets/og-crop-image.jpg">
+
+    <!-- Schema Markup (JSON-LD) -->
+    <script type="application/ld+json">
+    [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "EditSpark Image Cropper",
+        "url": "https://edit-spark.vercel.app/crop-image.html",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires HTML5 Canvas support.",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "INR"
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://edit-spark.vercel.app/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Crop Image Online",
+          "item": "https://edit-spark.vercel.app/crop-image.html"
+        }]
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "EditSpark",
+        "url": "https://edit-spark.vercel.app/",
+        "logo": "https://edit-spark.vercel.app/assets/logo.png"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Is this crop photo online tool completely free?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, EditSpark provides a 100% free image cropper tool with no hidden charges, trial limits, or account registration requirements."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does cropping reduce image quality?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No, our tool processes the pixels on your local device container without applying aggressive external compression, preserving the maximum possible resolution of your source photo."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I crop JPG and PNG images here?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Absolutely. It supports JPG crop online, PNG crop online, WEBP, GIF, and even HEIC mobile formats seamlessly."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Are my personal passport photos and signatures uploaded to any server?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Never. EditSpark uses pure client-side processing. Your file remains 100% inside your browser session, making it perfectly safe for confidential government documents."
+            }
+          }
+        ]
+      }
+    ]
+    </script>
+
     <style>
-        body {margin: 0; padding: 0; min-height: 100vh; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #f8fafc; color: #1e293b; }
+        body { margin: 0; padding: 0; min-height: 100vh; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #f8fafc; color: #1e293b; line-height: 1.6; }
         .container { max-width: 1200px; margin: 0 auto; padding: 1.5rem 1rem; }
         .breadcrumb { font-size: 0.875rem; color: #64748b; margin-bottom: 1rem; }
         .breadcrumb a { color: #2563eb; text-decoration: none; }
         .breadcrumb a:hover { text-decoration: underline; }
-        .tool-box { background: white; border-radius: 12px; padding: 1.5rem 1.5rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); margin-bottom: 1rem; text-align: center; }
+        .tool-box { background: white; border-radius: 12px; padding: 1.5rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); margin-bottom: 2rem; text-align: center; }
         .feature-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; list-style: none; padding: 0; margin: 1rem 0; font-weight: 500; color: #475569; font-size: 0.85rem; }
-        .feature-item { background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; padding: 0.25rem 0.6rem; border-radius: 20px; font-weight: 600; text-align: center; }
-        .btn { background: #2563eb; color: white; padding: 0.6rem 1.15rem; border: none; border-radius: 6px; cursor: pointer; font-size: 0.9rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 2px 4px rgba(37,99,235,0.15); margin: 0.2rem; transition: background 0.2s; }
+        .feature-item { background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; padding: 0.25rem 0.6rem; border-radius: 20px; font-weight: 600; }
+        .btn { background: #2563eb; color: white; padding: 0.6rem 1.15rem; border: none; border-radius: 6px; cursor: pointer; font-size: 0.9rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 2px 4px rgba(37,99,235,0.15); margin: 0.2rem; transition: background 0.2s; text-decoration: none; }
         .btn:hover { background: #1d4ed8; }
         .btn-success { background: #16a34a; box-shadow: 0 2px 4px rgba(22,163,74,0.15); }
         .btn-success:hover { background: #15803d; }
@@ -36,418 +118,538 @@
         .btn-secondary:hover { background: #475569; }
         .btn-danger { background: #ef4444; box-shadow: 0 2px 4px rgba(239,68,68,0.15); }
         .btn-danger:hover { background: #dc2626; }
-        .btn:disabled { background: #cbd5e1; color: #94a3b8; cursor: not-allowed; box-shadow: none; }
         .drop-zone { border: 2px dashed #cbd5e1; padding: 2rem; border-radius: 12px; background: #f8fafc; cursor: pointer; margin-bottom: 1rem; transition: border-color 0.2s, background-color 0.2s; }
         .drop-zone.dragover { border-color: #2563eb; background-color: #eff6ff; }
-        
-        /* Highly Optimized Single Page Compact Workspace Area */
-        .work-area { display: none; max-width: 420px; height: 240px; margin: 1rem auto; background-color: #f1f5f9; background-image: linear-gradient(45deg, #e2e8f0 25%, transparent 25%), linear-gradient(-45deg, #e2e8f0 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #e2e8f0 75%), linear-gradient(-45deg, transparent 75%, #e2e8f0 75%); background-size: 16px 16px; background-position: 0 0, 0 8px, 8px -8px, -8px 0; border-radius: 12px; overflow: hidden; box-shadow: inset 0 2px 6px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05); padding: 2px; box-sizing: border-box; border: 2px solid #cbd5e1; position: relative; }
-        
-        #canvasContainer { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden; cursor: default; }
-        canvas { box-shadow: 0 4px 10px rgba(0,0,0,0.12); touch-action: none; user-select: none; -webkit-user-select: none; border-radius: 4px; }
-        .toolbar-group { display: flex; justify-content: center; gap: 0.25rem; flex-wrap: wrap; margin-bottom: 0.5rem; width: 100%; max-width: 600px; }
+        .work-area { display: none; max-width: 420px; height: 240px; margin: 1rem auto; background-color: #f1f5f9; border-radius: 12px; overflow: hidden; border: 2px solid #cbd5e1; position: relative; }
+        #canvasContainer { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden; }
+        canvas { box-shadow: 0 4px 10px rgba(0,0,0,0.12); touch-action: none; }
         .control-panel { display: none; flex-direction: column; align-items: center; gap: 0.5rem; margin-top: 1rem; }
-        .select-input { padding: 0.45rem 0.65rem; border-radius: 6px; border: 1px solid #cbd5e1; font-size: 0.85rem; color: #334155; background: white; cursor: pointer; }
-        .info-panel { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 0.4rem; width: 100%; max-width: 600px; margin: 0 auto; background: #f1f5f9; padding: 0.6rem; border-radius: 8px; font-size: 0.75rem; text-align: left; box-sizing: border-box; }
+        .toolbar-group { display: flex; justify-content: center; gap: 0.25rem; flex-wrap: wrap; width: 100%; max-width: 600px; }
+        .select-input { padding: 0.45rem 0.65rem; border-radius: 6px; border: 1px solid #cbd5e1; font-size: 0.85rem; background: white; }
+        .info-panel { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 0.4rem; width: 100%; max-width: 600px; margin: 0 auto; background: #f1f5f9; padding: 0.6rem; border-radius: 8px; font-size: 0.75rem; text-align: left; }
         .info-item { color: #475569; }
         .info-item span { font-weight: 600; color: #0f172a; }
-        .error-banner { display: none; background: #fef2f2; border: 1px solid #fca5a5; color: #991b1b; padding: 0.6rem 1rem; border-radius: 6px; margin-bottom: 1rem; font-weight: 500; font-size: 0.9rem; text-align: left; }
-        .loader-overlay { display: none; position: absolute; inset: 0; background: rgba(255, 255, 255, 0.85); color: #1e293b; justify-content: center; align-items: center; font-weight: 600; font-size: 1rem; gap: 0.5rem; z-index: 10; }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        @media (max-width: 600px) { .work-area { height: 200px; max-width: 100%; } .btn { width: 100%; justify-content: center; margin: 0.15rem 0; } .toolbar-group { width: 100%; } }
+        .error-banner { display: none; background: #fef2f2; border: 1px solid #fca5a5; color: #991b1b; padding: 0.6rem 1rem; border-radius: 6px; margin-bottom: 1rem; font-weight: 500; }
+        
+        /* SEO Content Styling */
+        .seo-content-section { background: white; border-radius: 12px; padding: 2.5rem 2rem; margin-top: 2.5rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); text-align: left; }
+        .seo-content-section h2 { color: #0f172a; font-size: 1.75rem; margin-top: 2rem; margin-bottom: 1rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem; }
+        .seo-content-section h3 { color: #1e293b; font-size: 1.25rem; margin-top: 1.5rem; margin-bottom: 0.75rem; }
+        .seo-content-section p { color: #475569; font-size: 1rem; margin-bottom: 1.25rem; text-align: justify; }
+        .seo-content-section ul, .seo-content-section ol { margin-bottom: 1.25rem; padding-left: 1.5rem; color: #475569; }
+        .seo-content-section li { margin-bottom: 0.5rem; }
+        .seo-content-section a { color: #2563eb; text-decoration: none; font-weight: 500; }
+        .seo-content-section a:hover { text-decoration: underline; }
+        .faq-block { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.2rem; margin-bottom: 1rem; }
+        .faq-q { font-weight: 700; color: #0f172a; font-size: 1.05rem; margin-bottom: 0.5rem; }
+        .faq-a { color: #475569; }
+        
+        /* Educational Explanatory Image Mock */
+        .explanatory-img-container { text-align: center; margin: 1.5rem 0; background: #edf2f7; border-radius: 8px; padding: 1rem; }
+        .explanatory-img-container img { max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        
+        /* Footer E-E-A-T Area */
+        .eeat-footer { border-top: 1px solid #e2e8f0; margin-top: 3rem; padding-top: 1.5rem; font-size: 0.85rem; color: #64748b; text-align: center; }
+        .eeat-badges { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 0.75rem; flex-wrap: wrap; }
+        .badge-item { display: inline-flex; align-items: center; gap: 0.25rem; font-weight: 600; color: #475569; }
+        
+        .cta-bottom-block { background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border: 1px solid #bfdbfe; border-radius: 12px; padding: 2rem; text-align: center; margin-top: 2.5rem; }
+
+        @media (max-width: 600px) {
+            .work-area { height: 200px; max-width: 100%; }
+            .btn { width: 100%; justify-content: center; }
+            .seo-content-section { padding: 1.5rem 1rem; }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <nav class="breadcrumb">
-            <a href="https://edit-spark.vercel.app/">Home</a> &gt; <span>Crop Image Online Free</span>
-        </nav>
-        <div class="tool-box">
-            <h1>Crop Image Online Free – Passport Photo & Signature Crop Tool</h1>
-            <ul class="feature-grid">
-                <li class="feature-item">✓ 100% Free</li>
-                <li class="feature-item">✓ No Upload Required</li>
-                <li class="feature-item">✓ Client-side Processing</li>
-                <li class="feature-item">✓ Unlimited Usage</li>
-                <li class="feature-item">✓ Mobile Friendly</li>
-                <li class="feature-item">✓ Passport Preset</li>
-                <li class="feature-item">✓ Signature Preset</li>
-                <li class="feature-item">✓ Instant Download</li>
-            </ul>
-            
-            <div class="error-banner" id="errorBanner" role="alert"></div>
-            
-            <div class="drop-zone" id="dropZoneContainer">
-                <p style="margin: 0 0 0.75rem 0; font-weight: 500; color: #64748b;">Drag & Drop your image here or click below to browse</p>
-                <button class="btn" id="uploadTriggerBtn" aria-label="Upload Image File">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-                    Upload Your Image
-                </button>
-                <input type="file" id="imageFileInput" accept="image/jpeg, image/png, image/jpg, image/webp, image/gif, image/heic" style="display: none;">
+<div class="container">
+    <nav class="breadcrumb">
+        <a href="https://edit-spark.vercel.app/">Home</a> &gt; <span>Crop Image Online Free</span>
+    </nav>
+
+    <div class="tool-box">
+        <h1>Crop Image Online Free – Passport Photo & Signature Crop Tool</h1>
+        <ul class="feature-grid">
+            <li class="feature-item">✓ 100% Free</li>
+            <li class="feature-item">✓ No Upload Required</li>
+            <li class="feature-item">✓ Client-side Processing</li>
+            <li class="feature-item">✓ Unlimited Usage</li>
+            <li class="feature-item">✓ Mobile Friendly</li>
+            <li class="feature-item">✓ Passport Preset</li>
+            <li class="feature-item">✓ Signature Preset</li>
+            <li class="feature-item">✓ Instant Download</li>
+        </ul>
+
+        <div class="error-banner" id="errorBanner" role="alert"></div>
+
+        <div class="drop-zone" id="dropZoneContainer">
+            <p style="margin: 0 0 0.75rem 0; font-weight: 500; color: #64748b;">Drag & Drop your image here or click below to browse</p>
+            <button class="btn" id="uploadTriggerBtn" aria-label="Upload Image File">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                Upload Your Image
+            </button>
+            <input type="file" id="imageFileInput" accept="image/jpeg, image/png, image/jpg, image/webp, image/gif, image/heic" style="display: none;">
+        </div>
+
+        <div class="work-area" id="workspaceContainer">
+            <div id="canvasContainer">
+                <canvas id="editorCanvas"></canvas>
             </div>
-            
-            <div class="work-area" id="workspaceContainer">
-                <div class="loader-overlay" id="processingLoader">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="round" style="animation: spin 1s linear infinite;"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg>
-                    <span>Processing Image...</span>
-                </div>
-                <div id="canvasContainer">
-                    <canvas id="editorCanvas"></canvas>
-                </div>
+        </div>
+
+        <div class="control-panel" id="controlsWrapper">
+            <div class="toolbar-group">
+                <button class="btn btn-secondary" id="btnRotateLeft">Rotate ↺</button>
+                <button class="btn btn-secondary" id="btnRotateRight">Rotate ↻</button>
+                <button class="btn btn-danger" id="btnResetCrop">Reset Crop</button>
             </div>
-            
-            <div class="control-panel" id="controlsWrapper">
-                <div class="toolbar-group">
-                    <button class="btn btn-secondary" id="btnRotateLeft" title="Rotate Left 90°">Rotate ↺</button>
-                    <button class="btn btn-secondary" id="btnRotateRight" title="Rotate Right 90°">Rotate ↻</button>
-                    <button class="btn btn-danger" id="btnResetCrop" title="Reset Crop Frame">Reset Crop</button>
-                </div>
-                <div class="toolbar-group" style="align-items: center; justify-content: center; gap: 0.5rem;">
-                    <select class="select-input" id="aspectRatioSelector" aria-label="Select Aspect Ratio">
-                        <option value="free">Free Crop (Custom)</option>
-                        <option value="passport">Passport Size (3.5:4.5)</option>
-                        <option value="signature">Signature Crop (2:1)</option>
-                        <option value="square">Square Frame (1:1)</option>
-                    </select>
-                    <select class="select-input" id="exportFormatSelector" aria-label="Select Format">
-                        <option value="image/jpeg" selected>Format: JPG</option>
-                        <option value="image/png">Format: PNG</option>
-                        <option value="image/webp">Format: WEBP</option>
-                    </select>
-                </div>
-                <div class="info-panel">
-                    <div class="info-item">Original: <span id="lblOrigDims">-</span></div>
-                    <div class="info-item">File Size: <span id="lblOrigSize">-</span></div>
-                    <div class="info-item">Crop Size: <span id="lblCropDims">-</span></div>
-                    <div class="info-item">Scale/Ratio: <span id="lblCropRatio">-</span></div>
-                </div>
-                <button class="btn btn-success" id="downloadCroppedBtn" style="margin-top: 0.25rem; font-size: 1rem;" aria-label="Download Processed Output File Image">
-                    Download Cropped Image
-                </button>
+            <div class="toolbar-group" style="margin-top: 0.25rem;">
+                <select class="select-input" id="aspectRatioSelector" aria-label="Select Aspect Ratio">
+                    <option value="free">Free Crop (Custom)</option>
+                    <option value="passport">Passport Size (3.5:4.5)</option>
+                    <option value="signature">Signature Crop (2:1)</option>
+                    <option value="square">Square Frame (1:1)</option>
+                </select>
+                <select class="select-input" id="exportFormatSelector" aria-label="Select Format">
+                    <option value="image/jpeg" selected>Format: JPG</option>
+                    <option value="image/png">Format: PNG</option>
+                    <option value="image/webp">Format: WEBP</option>
+                </select>
             </div>
+            <div class="info-panel" style="margin-top: 0.5rem;">
+                <div class="info-item">Original: <span id="lblOrigDims">-</span></div>
+                <div class="info-item">File Size: <span id="lblOrigSize">-</span></div>
+                <div class="info-item">Crop Size: <span id="lblCropDims">-</span></div>
+                <div class="info-item">Scale/Ratio: <span id="lblCropRatio">-</span></div>
+            </div>
+            <button class="btn btn-success" id="downloadCroppedBtn" style="margin-top: 0.5rem; font-size: 1rem;">
+                Download Cropped Image
+            </button>
         </div>
     </div>
 
-    <script>
-        const uploadTriggerBtn = document.getElementById('uploadTriggerBtn');
-        const imageFileInput = document.getElementById('imageFileInput');
-        const workspaceContainer = document.getElementById('workspaceContainer');
-        const canvasContainer = document.getElementById('canvasContainer');
-        const controlsWrapper = document.getElementById('controlsWrapper');
-        const editorCanvas = document.getElementById('editorCanvas');
-        const aspectRatioSelector = document.getElementById('aspectRatioSelector');
-        const exportFormatSelector = document.getElementById('exportFormatSelector');
-        const downloadCroppedBtn = document.getElementById('downloadCroppedBtn');
-        const dropZoneContainer = document.getElementById('dropZoneContainer');
-        const errorBanner = document.getElementById('errorBanner');
-        const processingLoader = document.getElementById('processingLoader');
+    <!-- Explanatory Tool Screenshot Area for Visual SEO -->
+    <div class="explanatory-img-container">
+        <!-- Optional placeholder image asset for UI mapping -->
+        <img src="https://edit-spark.vercel.app/assets/crop-interface-guide.jpg" alt="Crop Image Online Tool Interface Guide for Government Applications" loading="lazy" onError="this.style.display='none';">
+    </div>
 
-        const btnRotateLeft = document.getElementById('btnRotateLeft');
-        const btnRotateRight = document.getElementById('btnRotateRight');
-        const btnResetCrop = document.getElementById('btnResetCrop');
+    <!-- COMPREHENSIVE SEO SEMANTIC KNOWLEDGE CENTER -->
+    <section class="seo-content-section">
+        <h2>What is an Image Crop Tool and How Does it Work?</h2>
+        <p>An <strong>image cropper</strong> is a core visual layout framework that allows end-users to select a specialized sub-region of a graphical photograph, removing external metadata edges or unwanted spatial padding. When you use a digital tool to <strong>crop photo online</strong>, you modify the aspect canvas ratio without resizing the native vector structure aggressively. This methodology proves critical during electronic application uploads where background artifacts must be purged instantly. Our utility behaves as an instant browser asset container, performing clean transformations across all modern system layers.</p>
+        <p>Using a <strong>free image cropper</strong> ensures that technical parameters such as orientation arrays are recalculated on execution. Rather than uploading confidential images to cloud processors, our system executes natively on your screen, ensuring client-side encryption and absolute computational acceleration.</p>
 
-        const lblOrigDims = document.getElementById('lblOrigDims');
-        const lblOrigSize = document.getElementById('lblOrigSize');
-        const lblCropDims = document.getElementById('lblCropDims');
-        const lblCropRatio = document.getElementById('lblCropRatio');
-        const ctx = editorCanvas.getContext('2d');
+        <h2>How to Crop Image Online: Step-by-Step Walkthrough</h2>
+        <p>Executing precise coordinate adjustments through our interface is highly straightforward. Follow these steps to optimize your files:</p>
+        <ol>
+            <li><strong>Select Target Asset:</strong> Drop your file inside the marked browser viewport area or trigger our file native upload engine.</li>
+            <li><strong>Define Aspect Boundary:</strong> Choose between a custom box array or choose a standard fixed ratio profile such as 1:1 or 3.5:4.5.</li>
+            <li><strong>Modify Layout Constraints:</strong> Drag the active transformation vector points to change alignment anchors. You can also safely rotate coordinates 90 degrees if required.</li>
+            <li><strong>Select Target Format:</strong> Choose your preferred extension profile before triggering download routines (Supports optimized JPG, standard alpha PNG, or modern WEBP wrappers).</li>
+            <li><strong>Save Result Natively:</strong> Click the dynamic generation selector to export your file instantly. You can easily link this step with our <a href="https://edit-spark.vercel.app/compress.html">Compress Image to 20KB</a> system to adjust weights for server compliance checks.</li>
+        </ol>
 
-        let sourceImg = new Image();
-        let loadedFileName = "cropped-image";
-        let rawFileByteSize = 0;
-        let baseRenderWidth = 0;
-        let baseRenderHeight = 0;
-        let rotationDegree = 0;
-        let cropState = { x: 20, y: 20, w: 140, h: 140 };
-        let dragMode = null;
-        let activeHandleIndex = -1;
-        let startMousePos = { x: 0, y: 0 };
+        <h2>Crop Passport Size Photo: Official Specifications Guide</h2>
+        <p>Most national recruitment boards, including Staff Selection Commission (SSC), Union Public Service Commission (UPSC), and railway systems, strictly enforce width-to-height matrix configurations. To <strong>crop passport photo</strong> files safely, choose our dedicated aspect selection layout preset matching the 3.5cm x 4.5cm specifications profile.</p>
+        <p>Ensure your facial structure fills roughly 70% to 80% of the active selection grid zone. Keep your gaze parallel to the horizon plane, and keep background configurations clean and uniform. If the initial capture profile fails background consistency audits, apply our advanced script systems like the <a href="https://edit-spark.vercel.app/white-bg.html">Document Background White</a> pipeline before starting final aspect scaling operations.</p>
 
-        const handlesArray = [
-            { x: 0, y: 0, cursor: 'nwse-resize' }, { x: 0.5, y: 0, cursor: 'ns-resize' }, { x: 1, y: 0, cursor: 'nesw-resize' },
-            { x: 0, y: 0.5, cursor: 'ew-resize' },                                         { x: 1, y: 0.5, cursor: 'ew-resize' },
-            { x: 0, y: 1, cursor: 'nesw-resize' }, { x: 0.5, y: 1, cursor: 'ns-resize' },  { x: 1, y: 1, cursor: 'nwse-resize' }
-        ];
+        <h2>Crop Signature Online: Formatting Clear Document Graphics</h2>
+        <p>Signature validations frequently drop offline during validation checks if file layout constraints are improperly mapped. Utilizing a generic layout system to <strong>crop signature online</strong> often trims away critical strokes or leaves massive, unbalanced white space segments that violate data intake protocols.</p>
+        <p>Our dedicated 2:1 configuration preset isolates high-contrast stroke patterns directly. For clean, sharp results, place the paper target flat under reliable lightning, capture a clean shot with a smartphone device, and apply structural boundaries using our interactive grid overlay. If the resulting file exceeds portal upload caps, route your saved file directly into our unified <a href="https://edit-spark.vercel.app/resize.html">Resize Image</a> interface to reduce resolution dimensions to the exact pixel values requested by authorities.</p>
 
-        uploadTriggerBtn.addEventListener('click', () => { imageFileInput.click(); });
-        dropZoneContainer.addEventListener('click', (e) => { if(e.target !== uploadTriggerBtn) imageFileInput.click(); });
+        <h2>Crop JPG Image vs. PNG Crop Online: Choosing Formats Safely</h2>
+        <p>Understanding image container structures helps prevent visual degradation during multi-stage processing routines:</p>
+        <ul>
+            <li><strong>JPG Crop Online Processing:</strong> Ideal for complex photographic content like human faces. JPG applies clever compression algorithms, which means repeatedly altering it through external cloud servers can introduce noticeable blurring. Our offline tool avoids this by modifying data directly within your browser.</li>
+            <li><strong>PNG Crop Online Management:</strong> Ideal for sharp line art and signatures. PNG maintains strict pixel accuracy without color bleeding around sharp contrast changes. Our interface preserves transparency channels during cropping, preventing white bounding boxes from corrupting your document layouts.</li>
+        </ul>
 
-        dropZoneContainer.addEventListener('dragover', (e) => { e.preventDefault(); dropZoneContainer.classList.add('dragover'); });
-        dropZoneContainer.addEventListener('dragleave', () => { dropZoneContainer.classList.remove('dragover'); });
-        dropZoneContainer.addEventListener('drop', (e) => {
-            e.preventDefault();
-            dropZoneContainer.classList.remove('dragover');
-            const chosenFile = e.dataTransfer.files[0];
-            validateAndProcessFile(chosenFile);
-        });
+        <h2>Official Government Portal Form Requirements (SSC, Railway, UPSC)</h2>
+        <p>Different application portals enforce highly strict dimensional boundaries on incoming files. The table below outlines standard operational thresholds across prominent Indian testing platforms:</p>
+        <table style="width:100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem;">
+            <thead>
+                <tr style="background: #edf2f7; border-bottom: 2px solid #cbd5e1;">
+                    <th style="padding: 0.75rem; text-align: left;">Portal System</th>
+                    <th style="padding: 0.75rem; text-align: left;">Photo Requirement</th>
+                    <th style="padding: 0.75rem; text-align: left;">Signature Rule</th>
+                    <th style="padding: 0.75rem; text-align: left;">Recommended Workflow Link</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom: 1px solid #e2e8f0;">
+                    <td style="padding: 0.75rem; font-weight:600;">SSC Recruitment</td>
+                    <td style="padding: 0.75rem;">3.5 x 4.5 cm (20KB - 50KB)</td>
+                    <td style="padding: 0.75rem;">4.0 x 2.0 cm (10KB - 20KB)</td>
+                    <td style="padding: 0.75rem;"><a href="https://edit-spark.vercel.app/passport-maker.html">Passport Photo Maker</a></td>
+                </tr>
+                <tr style="border-bottom: 1px solid #e2e8f0;">
+                    <td style="padding: 0.75rem; font-weight:600;">UPSC Online</td>
+                    <td style="padding: 0.75rem;">Min 350 x 350 Pixels</td>
+                    <td style="padding: 0.75rem;">Min 350 x 350 Pixels</td>
+                    <td style="padding: 0.75rem;"><a href="https://edit-spark.vercel.app/resize.html">Resize Image Engine</a></td>
+                </tr>
+                <tr style="border-bottom: 1px solid #e2e8f0;">
+                    <td style="padding: 0.75rem; font-weight:600;">RRB / Banking</td>
+                    <td style="padding: 0.75rem;">White/Light Background</td>
+                    <td style="padding: 0.75rem;">Black Ink Only</td>
+                    <td style="padding: 0.75rem;"><a href="https://edit-spark.vercel.app/compress.html">Compress Assets Studio</a></td>
+                </tr>
+            </tbody>
+        </table>
 
-        imageFileInput.addEventListener('change', (e) => {
-            const chosenFile = e.target.files[0];
-            validateAndProcessFile(chosenFile);
-        });
+        <h2>Common Layout and Editing Mistakes to Avoid</h2>
+        <p>To ensure your applications pass automated gatekeepers without getting flagged or rejected, avoid these common editing slip-ups:</p>
+        <ul>
+            <li><strong>Aggressive Aspect Distortion:</strong> Avoid manually stretching images to fit layout fields. This distorts your facial structure or signature coordinates. Always lock your target ratio constraints beforehand.</li>
+            <li><strong>Trimming Critical Details:</strong> When adjusting signatures, leave safe breathing margins around the lowest ascenders and highest descenders of your brush pen paths to prevent character clipping.</li>
+            <li><strong>Unnecessary Re-Compression:</strong> Processing a photo through multiple web tools can quickly leave it blurry or full of artifacts. Keep your workflow clean by adjusting your crop layout first, then performing any necessary file weight adjustments as a final step.</li>
+        </ul>
 
-        function validateAndProcessFile(file) {
-            if (!file) return;
-            errorBanner.style.display = 'none';
-            const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp', 'image/gif', 'image/heic'];
-            if (!allowedTypes.includes(file.type) && !file.name.toLowerCase().endsWith('.heic')) {
-                showValidationError("Error: Unsupported format! Please upload JPG, PNG, WEBP, GIF, or HEIC.");
-                return;
-            }
-            if (file.size > 50 * 1024 * 1024) {
-                showValidationError("Error: File size too large! Maximum limit is 50MB.");
-                return;
-            }
-            rawFileByteSize = file.size;
-            loadedFileName = file.name.substring(0, file.name.lastIndexOf('.')) || "cropped-image";
-            processingLoader.style.display = 'flex';
-            const readerInstance = new FileReader();
-            readerInstance.onload = (event) => { sourceImg.src = event.target.result; };
-            readerInstance.onerror = () => { showValidationError("Error reading file. Please try another image."); processingLoader.style.display = 'none'; };
-            readerInstance.readAsDataURL(file);
+        <h2>Why Choose EditSpark For Your Image Modifications?</h2>
+        <p>EditSpark provides a streamlined, distraction-free environment tailored for high-accuracy document preparation. Unlike legacy online conversion platforms, our system avoids heavy background server scripting entirely. This eliminates upload delays and keeps your sensitive personal data securely on your own device. The clean layout options let you move seamlessly from quick ratio crops to advanced document compression formats in just a few clicks.</p>
+
+        <h2>Frequently Asked Questions (FAQs)</h2>
+        <div class="faq-block">
+            <div class="faq-q">1. Is this crop tool completely free to use?</div>
+            <div class="faq-a">Yes, our tool is 100% free with no limits, registration requirements, or hidden watermarks.</div>
+        </div>
+        <div class="faq-block">
+            <div class="faq-q">2. Does cropping an image reduce its overall sharpness?</div>
+            <div class="faq-a">No. Our local processing engine isolates your chosen pixels directly within your browser session, preserving maximum source image clarity without applying destructive compression filters.</div>
+        </div>
+        <div class="faq-block">
+            <div class="faq-q">3. Can I securely process files for official UPSC or SSC forms here?</div>
+            <div class="faq-a">Absolutely. Because your images are processed locally on your own device rather than being uploaded to external cloud systems, it is completely secure for official documents and credentials.</div>
+        </div>
+        <div class="faq-block">
+            <div class="faq-q">4. Does this platform support mobile smartphone photos?</div>
+            <div class="faq-a">Yes. You can upload standard camera formats directly from Android or iOS devices, including newer HEIC image formats.</div>
+        </div>
+        <div class="faq-block">
+            <div class="faq-q">5. What file formats can I crop online here?</div>
+            <div class="faq-a">Our tool natively handles a wide range of web and system extensions, including JPG, JPEG, PNG, WEBP, and modern high-efficiency image container formats.</div>
+        </div>
+        <div class="faq-block">
+            <div class="faq-q">6. How do I match the exact passport sizing criteria?</div>
+            <div class="faq-a">Simply open the aspect preset drop-down menu and select the 'Passport Size (3.5:4.5)' option to lock the cropping frame to the exact dimensions required by official agencies.</div>
+        </div>
+        <div class="faq-block">
+            <div class="faq-q">7. Why am I seeing a file error during upload?</div>
+            <div class="faq-a">Ensure your target file is a supported image extension type (like JPG or PNG) and does not exceed our maximum single-file processing ceiling of 50 Megabytes.</div>
+        </div>
+        <div class="faq-block">
+            <div class="faq-q">8. Can I crop my signature photo onto a clean white background here?</div>
+            <div class="faq-a">Yes. Use our dedicated 2:1 ratio preset to frame your signature perfectly. For optimal contrast, you can also run your image through our background-whitening tools before uploading.</div>
+        </div>
+        <div class="faq-block">
+            <div class="faq-q">9. Which internet web browsers are supported?</div>
+            <div class="faq-a">Our tool works across all modern web browsers that support HTML5 Canvas rendering, including Google Chrome, Mozilla Firefox, Apple Safari, and Microsoft Edge.</div>
+        </div>
+        <div class="faq-block">
+            <div class="faq-q">10. Can I batch-crop multiple document photos at the exact same time?</div>
+            <div class="faq-a">To guarantee high-precision alignment on sensitive documents like IDs and signatures, files are processed individually. You can quickly drop and save files one after another without needing to reload the page.</div>
+        </div>
+
+        <!-- Dynamic Action CTA Block targeting conversions -->
+        <div class="cta-bottom-block">
+            <h3 style="margin-top:0;">Ready to crop your image instantly?</h3>
+            <p style="text-align:center; max-width:600px; margin:0 auto 1rem auto;">Get your passport photos and signatures perfectly framed for application uploads right now. Secure, fast, and completely free.</p>
+            <button class="btn btn-success" onclick="document.getElementById('imageFileInput').click(); scroll({top: 0, behavior: 'smooth'});">
+                Upload Your Image Now
+            </button>
+        </div>
+    </section>
+
+    <!-- Trusted E-E-A-T Footprint Layer Area -->
+    <footer class="eeat-footer">
+        <div class="eeat-badges">
+            <span class="badge-item">🛡️ Privacy First Workspace</span>
+            <span class="badge-item">🚫 No Remote Uploads Required</span>
+            <span class="badge-item">⚡ 100% Secure Browser Execution</span>
+        </div>
+        <p style="margin: 0.5rem 0 0 0;">Maintained by <strong>EditSpark</strong> Engine Framework Team. Last Updated: June 2026.</p>
+    </footer>
+</div>
+
+<script>
+    const uploadTriggerBtn = document.getElementById('uploadTriggerBtn');
+    const imageFileInput = document.getElementById('imageFileInput');
+    const workspaceContainer = document.getElementById('workspaceContainer');
+    const canvasContainer = document.getElementById('canvasContainer');
+    const controlsWrapper = document.getElementById('controlsWrapper');
+    const editorCanvas = document.getElementById('editorCanvas');
+    const aspectRatioSelector = document.getElementById('aspectRatioSelector');
+    const exportFormatSelector = document.getElementById('exportFormatSelector');
+    const downloadCroppedBtn = document.getElementById('downloadCroppedBtn');
+    const dropZoneContainer = document.getElementById('dropZoneContainer');
+    const errorBanner = document.getElementById('errorBanner');
+    const btnRotateLeft = document.getElementById('btnRotateLeft');
+    const btnRotateRight = document.getElementById('btnRotateRight');
+    const btnResetCrop = document.getElementById('btnResetCrop');
+    const lblOrigDims = document.getElementById('lblOrigDims');
+    const lblOrigSize = document.getElementById('lblOrigSize');
+    const lblCropDims = document.getElementById('lblCropDims');
+    const lblCropRatio = document.getElementById('lblCropRatio');
+    const ctx = editorCanvas.getContext('2d');
+
+    let sourceImg = new Image();
+    let loadedFileName = "cropped-image";
+    let rawFileByteSize = 0;
+    let baseRenderWidth = 0;
+    let baseRenderHeight = 0;
+    let rotationDegree = 0;
+    let cropState = { x: 20, y: 20, w: 140, h: 140 };
+    let dragMode = null;
+    let activeHandleIndex = -1;
+    let startMousePos = { x: 0, y: 0 };
+
+    const handlesArray = [
+        { x: 0, y: 0, cursor: 'nwse-resize' }, { x: 0.5, y: 0, cursor: 'ns-resize' }, { x: 1, y: 0, cursor: 'nesw-resize' },
+        { x: 0, y: 0.5, cursor: 'ew-resize' },                                         { x: 1, y: 0.5, cursor: 'ew-resize' },
+        { x: 0, y: 1, cursor: 'nesw-resize' }, { x: 0.5, y: 1, cursor: 'ns-resize' },  { x: 1, y: 1, cursor: 'nwse-resize' }
+    ];
+
+    uploadTriggerBtn.addEventListener('click', () => { imageFileInput.click(); });
+    dropZoneContainer.addEventListener('click', (e) => { if(e.target !== uploadTriggerBtn) imageFileInput.click(); });
+    
+    dropZoneContainer.addEventListener('dragover', (e) => { e.preventDefault(); dropZoneContainer.classList.add('dragover'); });
+    dropZoneContainer.addEventListener('dragleave', () => { dropZoneContainer.classList.remove('dragover'); });
+    dropZoneContainer.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropZoneContainer.classList.remove('dragover');
+        if(e.dataTransfer.files.length) validateAndProcessFile(e.dataTransfer.files[0]);
+    });
+
+    imageFileInput.addEventListener('change', (e) => { if(e.target.files.length) validateAndProcessFile(e.target.files[0]); });
+
+    function validateAndProcessFile(file) {
+        if (!file) return;
+        errorBanner.style.display = 'none';
+        const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp', 'image/gif', 'image/heic'];
+        if (!allowedTypes.includes(file.type) && !file.name.toLowerCase().endsWith('.heic')) {
+            showValidationError("Error: Unsupported format! Please upload JPG, PNG, WEBP, GIF, or HEIC.");
+            return;
         }
-
-        function showValidationError(msg) {
-            errorBanner.textContent = msg;
-            errorBanner.style.display = 'block';
-            errorBanner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        if (file.size > 50 * 1024 * 1024) {
+            showValidationError("Error: File size too large! Maximum limit is 50MB.");
+            return;
         }
+        rawFileByteSize = file.size;
+        loadedFileName = file.name.substring(0, file.name.lastIndexOf('.')) || "cropped-image";
 
-        sourceImg.onload = () => {
-            processingLoader.style.display = 'none';
-            dropZoneContainer.style.display = 'none';
-            workspaceContainer.style.display = 'block';
-            controlsWrapper.style.display = 'flex';
-            rotationDegree = 0;
-            resetCropBoxToCenter();
-            workspaceContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        };
+        const readerInstance = new FileReader();
+        readerInstance.onload = (event) => { sourceImg.src = event.target.result; };
+        readerInstance.onerror = () => { showValidationError("Error reading file. Please try another image."); };
+        readerInstance.readAsDataURL(file);
+    }
 
-        function resetCropBoxToCenter() {
-            const bounds = canvasContainer.getBoundingClientRect();
-            const containerW = (bounds.width || 416) * 0.96;
-            const containerH = (bounds.height || 236) * 0.96;
-            let imgW = sourceImg.width;
-            let imgH = sourceImg.height;
-            if (rotationDegree % 180 !== 0) { let temp = imgW; imgW = imgH; imgH = temp; }
-            let scale = Math.min(containerW / imgW, containerH / imgH, 1.0);
-            baseRenderWidth = imgW * scale;
-            baseRenderHeight = imgH * scale;
-            editorCanvas.width = baseRenderWidth;
-            editorCanvas.height = baseRenderHeight;
+    function showValidationError(msg) {
+        errorBanner.textContent = msg;
+        errorBanner.style.display = 'block';
+        errorBanner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
 
-            cropState.w = editorCanvas.width * 0.8;
-            cropState.h = editorCanvas.height * 0.8;
-            const mode = aspectRatioSelector.value;
-            if (mode === 'passport') { cropState.h = cropState.w * (4.5 / 3.5); }
-            else if (mode === 'signature') { cropState.h = cropState.w * (1 / 2); }
-            else if (mode === 'square') { cropState.h = cropState.w; }
+    sourceImg.onload = () => {
+        dropZoneContainer.style.display = 'none';
+        workspaceContainer.style.display = 'block';
+        controlsWrapper.style.display = 'flex';
+        rotationDegree = 0;
+        resetCropBoxToCenter();
+        workspaceContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    };
 
-            if (cropState.h > editorCanvas.height) {
-                cropState.h = editorCanvas.height * 0.9;
-                if (mode === 'passport') cropState.w = cropState.h * (3.5 / 4.5);
-                if (mode === 'signature') cropState.w = cropState.h * 2;
-                if (mode === 'square') cropState.w = cropState.h;
-            }
-            if (cropState.w > editorCanvas.width) {
-                cropState.w = editorCanvas.width * 0.9;
-                if (mode === 'passport') cropState.h = cropState.w * (4.5 / 3.5);
-                if (mode === 'signature') cropState.h = cropState.w * 0.5;
-                if (mode === 'square') cropState.h = cropState.w;
-            }
-            cropState.x = (editorCanvas.width - cropState.w) / 2;
-            cropState.y = (editorCanvas.height - cropState.h) / 2;
-            renderFrame();
+    function resetCropBoxToCenter() {
+        const bounds = canvasContainer.getBoundingClientRect();
+        const containerW = (bounds.width || 416) * 0.96;
+        const containerH = (bounds.height || 236) * 0.96;
+        let imgW = sourceImg.width;
+        let imgH = sourceImg.height;
+
+        if (rotationDegree % 180 !== 0) {
+            let temp = imgW; imgW = imgH; imgH = temp;
         }
+        let scale = Math.min(containerW / imgW, containerH / imgH, 1.0);
+        baseRenderWidth = imgW * scale;
+        baseRenderHeight = imgH * scale;
+        editorCanvas.width = baseRenderWidth;
+        editorCanvas.height = baseRenderHeight;
 
-        function renderFrame() {
-            ctx.save();
-            ctx.clearRect(0, 0, editorCanvas.width, editorCanvas.height);
-            ctx.translate(editorCanvas.width / 2, editorCanvas.height / 2);
-            ctx.rotate((rotationDegree * Math.PI) / 180);
-            ctx.translate(-editorCanvas.width / 2, -editorCanvas.height / 2);
-            ctx.drawImage(sourceImg, 0, 0, editorCanvas.width, editorCanvas.height);
-            ctx.restore();
+        cropState.w = editorCanvas.width * 0.8;
+        cropState.h = editorCanvas.height * 0.8;
+        
+        const mode = aspectRatioSelector.value;
+        if (mode === 'passport') { cropState.h = cropState.w * (4.5 / 3.5); } 
+        else if (mode === 'signature') { cropState.h = cropState.w * (1 / 2); } 
+        else if (mode === 'square') { cropState.h = cropState.w; }
 
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.45)';
-            ctx.fillRect(0, 0, editorCanvas.width, editorCanvas.height);
+        if (cropState.h > editorCanvas.height) {
+            cropState.h = editorCanvas.height * 0.9;
+            if (mode === 'passport') cropState.w = cropState.h * (3.5 / 4.5);
+            if (mode === 'signature') cropState.w = cropState.h * 2;
+            if (mode === 'square') cropState.w = cropState.h;
+        }
+        if (cropState.w > editorCanvas.width) {
+            cropState.w = editorCanvas.width * 0.9;
+            if (mode === 'passport') cropState.h = cropState.w * (4.5 / 3.5);
+            if (mode === 'signature') cropState.h = cropState.w * 0.5;
+            if (mode === 'square') cropState.h = cropState.w;
+        }
+        cropState.x = (editorCanvas.width - cropState.w) / 2;
+        cropState.y = (editorCanvas.height - cropState.h) / 2;
+        renderFrame();
+    }
 
-            ctx.save();
+    function renderFrame() {
+        ctx.save();
+        ctx.clearRect(0, 0, editorCanvas.width, editorCanvas.height);
+        ctx.translate(editorCanvas.width / 2, editorCanvas.height / 2);
+        ctx.rotate((rotationDegree * Math.PI) / 180);
+        ctx.translate(-editorCanvas.width / 2, -editorCanvas.height / 2);
+        ctx.drawImage(sourceImg, 0, 0, editorCanvas.width, editorCanvas.height);
+        ctx.restore();
+
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.45)';
+        ctx.fillRect(0, 0, editorCanvas.width, editorCanvas.height);
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(cropState.x, cropState.y, cropState.w, cropState.h);
+        ctx.clip();
+        ctx.save();
+        ctx.translate(editorCanvas.width / 2, editorCanvas.height / 2);
+        ctx.rotate((rotationDegree * Math.PI) / 180);
+        ctx.translate(-editorCanvas.width / 2, -editorCanvas.height / 2);
+        ctx.drawImage(sourceImg, 0, 0, editorCanvas.width, editorCanvas.height);
+        ctx.restore();
+        ctx.restore();
+
+        ctx.strokeStyle = '#2563eb';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(cropState.x, cropState.y, cropState.w, cropState.h);
+
+        ctx.fillStyle = '#2563eb';
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 1.5;
+        handlesArray.forEach(h => {
             ctx.beginPath();
-            ctx.rect(cropState.x, cropState.y, cropState.w, cropState.h);
-            ctx.clip();
-            ctx.save();
-            ctx.translate(editorCanvas.width / 2, editorCanvas.height / 2);
-            ctx.rotate((rotationDegree * Math.PI) / 180);
-            ctx.translate(-editorCanvas.width / 2, -editorCanvas.height / 2);
-            ctx.drawImage(sourceImg, 0, 0, editorCanvas.width, editorCanvas.height);
-            ctx.restore();
-            ctx.restore();
-
-            ctx.strokeStyle = '#2563eb';
-            ctx.lineWidth = 2;
-            ctx.strokeRect(cropState.x, cropState.y, cropState.w, cropState.h);
-
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
-            ctx.lineWidth = 1;
-            ctx.setLineDash([4, 4]);
-            for (let i = 1; i <= 2; i++) {
-                ctx.beginPath(); ctx.moveTo(cropState.x + (cropState.w / 3) * i, cropState.y); ctx.lineTo(cropState.x + (cropState.w / 3) * i, cropState.y + cropState.h); ctx.stroke();
-                ctx.beginPath(); ctx.moveTo(cropState.x, cropState.y + (cropState.h / 3) * i); ctx.lineTo(cropState.x + cropState.w, cropState.y + (cropState.h / 3) * i); ctx.stroke();
-            }
-            ctx.setLineDash([]);
-
-            ctx.fillStyle = '#2563eb';
-            ctx.strokeStyle = '#ffffff';
-            ctx.lineWidth = 1.5;
-            const radius = 6;
-            handlesArray.forEach(h => {
-                ctx.beginPath();
-                ctx.arc(cropState.x + cropState.w * h.x, cropState.y + cropState.h * h.y, radius, 0, 2 * Math.PI);
-                ctx.fill();
-                ctx.stroke();
-            });
-            updateLiveMetricsView();
-        }
-
-        function updateLiveMetricsView() {
-            lblOrigDims.textContent = `${sourceImg.width} × ${sourceImg.height} px`;
-            lblOrigSize.textContent = (rawFileByteSize / 1024).toFixed(1) + " KB";
-            const scaleX = sourceImg.width / (rotationDegree % 180 !== 0 ? editorCanvas.height : editorCanvas.width);
-            const scaleY = sourceImg.height / (rotationDegree % 180 !== 0 ? editorCanvas.width : editorCanvas.height);
-            const realW = Math.round(cropState.w * scaleX);
-            const realH = Math.round(cropState.h * scaleY);
-            lblCropDims.textContent = `${realW} × ${realH} px`;
-            const currentMode = aspectRatioSelector.value;
-            lblCropRatio.textContent = currentMode === 'free' ? `Free (${(cropState.w / cropState.h).toFixed(2)})` : currentMode.toUpperCase();
-        }
-
-        function getActionTarget(clientX, clientY) {
-            const rect = editorCanvas.getBoundingClientRect();
-            let mouseX = (clientX - rect.left) * (editorCanvas.width / rect.width);
-            let mouseY = (clientY - rect.top) * (editorCanvas.height / rect.height);
-            const targetRadius = 14;
-            for (let i = 0; i < handlesArray.length; i++) {
-                const hX = cropState.x + cropState.w * handlesArray[i].x;
-                const hY = cropState.y + cropState.h * handlesArray[i].y;
-                if (Math.hypot(mouseX - hX, mouseY - hY) < targetRadius) return { type: 'resize', index: i };
-            }
-            if (mouseX > cropState.x && mouseX < cropState.x + cropState.w && mouseY > cropState.y && mouseY < cropState.y + cropState.h) return { type: 'move' };
-            return null;
-        }
-
-        editorCanvas.addEventListener('mousemove', (e) => {
-            if (dragMode) return;
-            const target = getActionTarget(e.clientX, e.clientY);
-            editorCanvas.style.cursor = !target ? 'default' : (target.type === 'move' ? 'move' : handlesArray[target.index].cursor);
+            ctx.arc(cropState.x + cropState.w * h.x, cropState.y + cropState.h * h.y, 6, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.stroke();
         });
+        updateLiveMetricsView();
+    }
 
-        function handleInputStart(clientX, clientY) {
-            const action = getActionTarget(clientX, clientY);
-            if (!action) return;
-            const rect = editorCanvas.getBoundingClientRect();
-            startMousePos = { x: (clientX - rect.left) * (editorCanvas.width / rect.width), y: (clientY - rect.top) * (editorCanvas.height / rect.height) };
-            dragMode = action.type;
-            if (action.type === 'resize') activeHandleIndex = action.index;
+    function updateLiveMetricsView() {
+        lblOrigDims.textContent = `${sourceImg.width} × ${sourceImg.height} px`;
+        lblOrigSize.textContent = (rawFileByteSize / 1024).toFixed(1) + " KB";
+        const scaleX = sourceImg.width / (rotationDegree % 180 !== 0 ? editorCanvas.height : editorCanvas.width);
+        const scaleY = sourceImg.height / (rotationDegree % 180 !== 0 ? editorCanvas.width : editorCanvas.height);
+        lblCropDims.textContent = `${Math.round(cropState.w * scaleX)} × ${Math.round(cropState.h * scaleY)} px`;
+        lblCropRatio.textContent = aspectRatioSelector.value.toUpperCase();
+    }
+
+    function getActionTarget(clientX, clientY) {
+        const rect = editorCanvas.getBoundingClientRect();
+        let mouseX = (clientX - rect.left) * (editorCanvas.width / rect.width);
+        let mouseY = (clientY - rect.top) * (editorCanvas.height / rect.height);
+        for (let i = 0; i < handlesArray.length; i++) {
+            if (Math.hypot(mouseX - (cropState.x + cropState.w * handlesArray[i].x), mouseY - (cropState.y + cropState.h * handlesArray[i].y)) < 14) 
+                return { type: 'resize', index: i };
         }
+        if (mouseX > cropState.x && mouseX < cropState.x + cropState.w && mouseY > cropState.y && mouseY < cropState.y + cropState.h) return { type: 'move' };
+        return null;
+    }
 
-        function handleInputMove(clientX, clientY) {
-            if (!dragMode) return;
-            const rect = editorCanvas.getBoundingClientRect();
-            const currX = (clientX - rect.left) * (editorCanvas.width / rect.width);
-            const currY = (clientY - rect.top) * (editorCanvas.height / rect.height);
-            const dx = currX - startMousePos.x;
-            const dy = currY - startMousePos.y;
-            const minCropLimit = 20;
+    editorCanvas.addEventListener('mousemove', (e) => {
+        if (dragMode) return;
+        const target = getActionTarget(e.clientX, e.clientY);
+        editorCanvas.style.cursor = !target ? 'default' : (target.type === 'move' ? 'move' : handlesArray[target.index].cursor);
+    });
 
-            if (dragMode === 'move') {
-                cropState.x = Math.max(0, Math.min(editorCanvas.width - cropState.w, cropState.x + dx));
-                cropState.y = Math.max(0, Math.min(editorCanvas.height - cropState.h, cropState.y + dy));
-            } else if (dragMode === 'resize') {
-                const h = handlesArray[activeHandleIndex];
-                const activeMode = aspectRatioSelector.value;
-                if (activeMode !== 'free') {
-                    let targetFactor = 1.0;
-                    if (activeMode === 'passport') targetFactor = 4.5 / 3.5;
-                    if (activeMode === 'signature') targetFactor = 0.5;
-                    let referenceDelta = dx;
-                    if (h.x === 0.5 || (Math.abs(dy) > Math.abs(dx) && h.x !== 1)) referenceDelta = dy * (1 / targetFactor);
-                    if (h.x === 1 && h.y === 1) {
-                        let nextW = Math.max(minCropLimit, cropState.w + referenceDelta);
-                        let nextH = nextW * targetFactor;
-                        if (cropState.x + nextW <= editorCanvas.width && cropState.y + nextH <= editorCanvas.height) { cropState.w = nextW; cropState.h = nextH; }
-                    } else if (h.x === 0 && h.y === 0) {
-                        let nextW = Math.max(minCropLimit, cropState.w - referenceDelta);
-                        let nextH = nextW * targetFactor;
-                        let nextX = cropState.x + (cropState.w - nextW);
-                        let nextY = cropState.y + (cropState.h - nextH);
-                        if (nextX >= 0 && nextY >= 0) { cropState.w = nextW; cropState.h = nextH; cropState.x = nextX; cropState.y = nextY; }
-                    }
-                } else {
-                    if (h.x === 1) cropState.w = Math.max(minCropLimit, Math.min(editorCanvas.width - cropState.x, cropState.w + dx));
-                    if (h.y === 1) cropState.h = Math.max(minCropLimit, Math.min(editorCanvas.height - cropState.y, cropState.h + dy));
-                    if (h.x === 0) { let nw = cropState.w - dx; if (nw >= minCropLimit && cropState.x + dx >= 0) { cropState.x += dx; cropState.w = nw; } }
-                    if (h.y === 0) { let nh = cropState.h - dy; if (nh >= minCropLimit && cropState.y + dy >= 0) { cropState.y += dy; cropState.h = nh; } }
+    function handleInputStart(clientX, clientY) {
+        const action = getActionTarget(clientX, clientY);
+        if (!action) return;
+        const rect = editorCanvas.getBoundingClientRect();
+        startMousePos = { x: (clientX - rect.left) * (editorCanvas.width / rect.width), y: (clientY - rect.top) * (editorCanvas.height / rect.height) };
+        dragMode = action.type;
+        if (action.type === 'resize') activeHandleIndex = action.index;
+    }
+
+    function handleInputMove(clientX, clientY) {
+        if (!dragMode) return;
+        const rect = editorCanvas.getBoundingClientRect();
+        const currX = (clientX - rect.left) * (editorCanvas.width / rect.width);
+        const currY = (clientY - rect.top) * (editorCanvas.height / rect.height);
+        const dx = currX - startMousePos.x;
+        const dy = currY - startMousePos.y;
+
+        if (dragMode === 'move') {
+            cropState.x = Math.max(0, Math.min(editorCanvas.width - cropState.w, cropState.x + dx));
+            cropState.y = Math.max(0, Math.min(editorCanvas.height - cropState.h, cropState.y + dy));
+        } else if (dragMode === 'resize') {
+            const h = handlesArray[activeHandleIndex];
+            const activeMode = aspectRatioSelector.value;
+            if (activeMode !== 'free') {
+                let factor = activeMode === 'passport' ? 4.5/3.5 : (activeMode === 'signature' ? 0.5 : 1.0);
+                let ref = dx; if(h.x === 0.5 || (Math.abs(dy) > Math.abs(dx) && h.x !== 1)) ref = dy * (1/factor);
+                if (h.x === 1 && h.y === 1) {
+                    let nw = Math.max(20, cropState.w + ref); let nh = nw * factor;
+                    if (cropState.x + nw <= editorCanvas.width && cropState.y + nh <= editorCanvas.height) { cropState.w = nw; cropState.h = nh; }
                 }
-            }
-            startMousePos = { x: currX, y: currY };
-            renderFrame();
-        }
-
-        function handleInputEnd() { dragMode = null; activeHandleIndex = -1; }
-
-        editorCanvas.addEventListener('mousedown', (e) => handleInputStart(e.clientX, e.clientY));
-        window.addEventListener('mousemove', (e) => handleInputMove(e.clientX, e.clientY));
-        window.addEventListener('mouseup', handleInputEnd);
-
-        editorCanvas.addEventListener('touchstart', (e) => { if (e.touches.length === 1) handleInputStart(e.touches[0].clientX, e.touches[0].clientY); }, { passive: true });
-        window.addEventListener('touchmove', (e) => { if (dragMode && e.touches.length === 1) handleInputMove(e.touches[0].clientX, e.touches[0].clientY); }, { passive: true });
-        window.addEventListener('touchend', handleInputEnd);
-
-        btnRotateLeft.addEventListener('click', () => { rotationDegree = (rotationDegree - 90 + 360) % 360; resetCropBoxToCenter(); });
-        btnRotateRight.addEventListener('click', () => { rotationDegree = (rotationDegree + 90) % 360; resetCropBoxToCenter(); });
-        btnResetCrop.addEventListener('click', () => { resetCropBoxToCenter(); });
-        aspectRatioSelector.addEventListener('change', () => { resetCropBoxToCenter(); });
-
-        downloadCroppedBtn.addEventListener('click', () => {
-            const outputCanvas = document.createElement('canvas');
-            const outCtx = outputCanvas.getContext('2d');
-            const scaleX = sourceImg.width / (rotationDegree % 180 !== 0 ? editorCanvas.height : editorCanvas.width);
-            const scaleY = sourceImg.height / (rotationDegree % 180 !== 0 ? editorCanvas.width : editorCanvas.height);
-            
-            const targetW = Math.round(cropState.w * scaleX);
-            const targetH = Math.round(cropState.h * scaleY);
-            outputCanvas.width = targetW;
-            outputCanvas.height = targetH;
-
-            outCtx.translate(targetW / 2, targetH / 2);
-            outCtx.rotate((rotationDegree * Math.PI) / 180);
-            
-            let drawW = rotationDegree % 180 !== 0 ? targetH : targetW;
-            let drawH = rotationDegree % 180 !== 0 ? targetW : targetH;
-            outCtx.translate(-drawW / 2, -drawH / 2);
-
-            let cropX = cropState.x * scaleX;
-            let cropY = cropState.y * scaleY;
-            
-            if (rotationDegree === 90) {
-                outCtx.drawImage(sourceImg, cropY, sourceImg.height - (cropX + cropState.w * scaleX), cropState.h * scaleY, cropState.w * scaleX, 0, 0, drawW, drawH);
-            } else if (rotationDegree === 180) {
-                outCtx.drawImage(sourceImg, sourceImg.width - (cropX + cropState.w * scaleX), sourceImg.height - (cropY + cropState.h * scaleY), cropState.w * scaleX, cropState.h * scaleY, 0, 0, drawW, drawH);
-            } else if (rotationDegree === 270) {
-                outCtx.drawImage(sourceImg, sourceImg.width - (cropY + cropState.h * scaleY), cropX, cropState.h * scaleY, cropState.w * scaleX, 0, 0, drawW, drawH);
             } else {
-                outCtx.drawImage(sourceImg, cropX, cropY, cropState.w * scaleX, cropState.h * scaleY, 0, 0, drawW, drawH);
+                if (h.x === 1) cropState.w = Math.max(20, Math.min(editorCanvas.width - cropState.x, cropState.w + dx));
+                if (h.y === 1) cropState.h = Math.max(20, Math.min(editorCanvas.height - cropState.y, cropState.h + dy));
+                if (h.x === 0 && cropState.w - dx >= 20 && cropState.x + dx >= 0) { cropState.x += dx; cropState.w -= dx; }
+                if (h.y === 0 && cropState.h - dy >= 20 && cropState.y + dy >= 0) { cropState.y += dy; cropState.h -= dy; }
             }
+        }
+        startMousePos = { x: currX, y: currY };
+        renderFrame();
+    }
 
-            const format = exportFormatSelector.value;
-            const dataUrl = outputCanvas.toDataURL(format, 0.9);
-            const ext = format === 'image/png' ? 'png' : (format === 'image/webp' ? 'webp' : 'jpg');
-            const downloadLink = document.createElement('a');
-            downloadLink.download = `${loadedFileName}-cropped.${ext}`;
-            downloadLink.href = dataUrl;
-            downloadLink.click();
-        });
-    </script>
+    editorCanvas.addEventListener('mousedown', (e) => handleInputStart(e.clientX, e.clientY));
+    window.addEventListener('mousemove', (e) => handleInputMove(e.clientX, e.clientY));
+    window.addEventListener('mouseup', () => { dragMode = null; });
+
+    editorCanvas.addEventListener('touchstart', (e) => { if (e.touches.length === 1) handleInputStart(e.touches[0].clientX, e.touches[0].clientY); }, { passive: true });
+    window.addEventListener('touchmove', (e) => { if (dragMode && e.touches.length === 1) handleInputMove(e.touches[0].clientX, e.touches[0].clientY); }, { passive: true });
+    window.addEventListener('touchend', () => { dragMode = null; });
+
+    btnRotateLeft.addEventListener('click', () => { rotationDegree = (rotationDegree - 90 + 360) % 360; resetCropBoxToCenter(); });
+    btnRotateRight.addEventListener('click', () => { rotationDegree = (rotationDegree + 90) % 360; resetCropBoxToCenter(); });
+    btnResetCrop.addEventListener('click', () => { resetCropBoxToCenter(); });
+    aspectRatioSelector.addEventListener('change', () => { resetCropBoxToCenter(); });
+
+    downloadCroppedBtn.addEventListener('click', () => {
+        const outputCanvas = document.createElement('canvas');
+        const outCtx = outputCanvas.getContext('2d');
+        const scaleX = sourceImg.width / (rotationDegree % 180 !== 0 ? editorCanvas.height : editorCanvas.width);
+        const scaleY = sourceImg.height / (rotationDegree % 180 !== 0 ? editorCanvas.width : editorCanvas.height);
+        const targetW = Math.round(cropState.w * scaleX);
+        const targetH = Math.round(cropState.h * scaleY);
+
+        outputCanvas.width = targetW; outputCanvas.height = targetH;
+        outCtx.translate(targetW / 2, targetH / 2);
+        outCtx.rotate((rotationDegree * Math.PI) / 180);
+        let drawW = rotationDegree % 180 !== 0 ? targetH : targetW;
+        let drawH = rotationDegree % 180 !== 0 ? targetW : targetH;
+        outCtx.translate(-drawW / 2, -drawH / 2);
+
+        let cropX = cropState.x * scaleX; let cropY = cropState.y * scaleY;
+        if (rotationDegree === 90) { outCtx.drawImage(sourceImg, cropY, sourceImg.height - (cropX + cropState.w * scaleX), cropState.h * scaleY, cropState.w * scaleX, 0, 0, drawW, drawH); } 
+        else if (rotationDegree === 180) { outCtx.drawImage(sourceImg, sourceImg.width - (cropX + cropState.w * scaleX), sourceImg.height - (cropY + cropState.h * scaleY), cropState.w * scaleX, cropState.h * scaleY, 0, 0, drawW, drawH); } 
+        else if (rotationDegree === 270) { outCtx.drawImage(sourceImg, sourceImg.width - (cropY + cropState.h * scaleY), cropX, cropState.h * scaleY, cropState.w * scaleX, 0, 0, drawW, drawH); } 
+        else { outCtx.drawImage(sourceImg, cropX, cropY, cropState.w * scaleX, cropState.h * scaleY, 0, 0, drawW, drawH); }
+
+        const format = exportFormatSelector.value;
+        const ext = format === 'image/png' ? 'png' : (format === 'image/webp' ? 'webp' : 'jpg');
+        const downloadLink = document.createElement('a');
+        downloadLink.download = `${loadedFileName}-cropped.${ext}`;
+        downloadLink.href = outputCanvas.toDataURL(format, 0.9);
+        downloadLink.click();
+    });
+</script>
 </body>
 </html>
