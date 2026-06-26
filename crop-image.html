@@ -39,9 +39,12 @@
         .btn:disabled { background: #cbd5e1; color: #94a3b8; cursor: not-allowed; box-shadow: none; }
         .drop-zone { border: 2px dashed #cbd5e1; padding: 2.5rem; border-radius: 12px; background: #f8fafc; cursor: pointer; margin-bottom: 1.5rem; transition: border-color 0.2s, background-color 0.2s; }
         .drop-zone.dragover { border-color: #2563eb; background-color: #eff6ff; }
-        .work-area {display: none; max-width: 600px; height: 450px; margin: 1.5rem auto; background: #0f172a; border-radius: 12px; overflow: hidden; box-shadow: inset 0 2px 8px rgba(0,0,0,0.5), 0 10px 25px -5px rgba(0,0,0,0.3); padding: 0; box-sizing: border-box; border: 2px solid #334155; position: relative; }
-        #canvasContainer {width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden; cursor: default; }
-        canvas {box-shadow: 0 4px 12px rgba(0,0,0,0.5); touch-action: none; user-select: none; -webkit-user-select: none; }
+        
+        /* Updated Work Area with Premium Transparent Grid instead of Ugly Black */
+        .work-area { display: none; max-width: 550px; height: 380px; margin: 1.5rem auto; background-color: #f1f5f9; background-image: linear-gradient(45deg, #e2e8f0 25%, transparent 25%), linear-gradient(-45deg, #e2e8f0 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #e2e8f0 75%), linear-gradient(-45deg, transparent 75%, #e2e8f0 75%); background-size: 16px 16px; background-position: 0 0, 0 8px, 8px -8px, -8px 0; border-radius: 12px; overflow: hidden; box-shadow: inset 0 2px 6px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05); padding: 0; box-sizing: border-box; border: 2px solid #cbd5e1; position: relative; }
+        
+        #canvasContainer { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden; cursor: default; }
+        canvas { box-shadow: 0 4px 10px rgba(0,0,0,0.12); touch-action: none; user-select: none; -webkit-user-select: none; border-radius: 4px; }
         .toolbar-group { display: flex; justify-content: center; gap: 0.25rem; flex-wrap: wrap; margin-bottom: 0.75rem; width: 100%; max-width: 600px; }
         .control-panel { display: none; flex-direction: column; align-items: center; gap: 0.75rem; margin-top: 1.5rem; }
         .select-input { padding: 0.5rem 0.75rem; border-radius: 6px; border: 1px solid #cbd5e1; font-size: 0.9rem; color: #334155; background: white; cursor: pointer; }
@@ -49,9 +52,9 @@
         .info-item { color: #475569; }
         .info-item span { font-weight: 600; color: #0f172a; }
         .error-banner { display: none; background: #fef2f2; border: 1px solid #fca5a5; color: #991b1b; padding: 0.75rem 1rem; border-radius: 6px; margin-bottom: 1rem; font-weight: 500; font-size: 0.95rem; text-align: left; }
-        .loader-overlay { display: none; position: absolute; inset: 0; background: rgba(15, 23, 42, 0.8); color: white; justify-content: center; align-items: center; font-weight: 600; font-size: 1.1rem; gap: 0.5rem; z-index: 10; }
+        .loader-overlay { display: none; position: absolute; inset: 0; background: rgba(255, 255, 255, 0.85); color: #1e293b; justify-content: center; align-items: center; font-weight: 600; font-size: 1.1rem; gap: 0.5rem; z-index: 10; }
         @keyframes spin { to { transform: rotate(360deg); } }
-        @media (max-width: 600px) {.work-area { height: 350px; } .btn { width: 100%; justify-content: center; margin: 0.2rem 0; } .toolbar-group { width: 100%; } }
+        @media (max-width: 600px) {.work-area { height: 320px; } .btn { width: 100%; justify-content: center; margin: 0.2rem 0; } .toolbar-group { width: 100%; } }
     </style>
 </head>
 <body>
@@ -85,7 +88,7 @@
             
             <div class="work-area" id="workspaceContainer">
                 <div class="loader-overlay" id="processingLoader">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" style="animation: spin 1s linear infinite;"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="round" style="animation: spin 1s linear infinite;"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg>
                     <span>Processing Image...</span>
                 </div>
                 <div id="canvasContainer">
@@ -155,7 +158,7 @@
         let baseRenderWidth = 0;
         let baseRenderHeight = 0;
         let rotationDegree = 0;
-        let cropState = { x: 50, y: 50, w: 200, h: 200 };
+        let cropState = { x: 30, y: 30, w: 150, h: 150 };
         let dragMode = null;
         let activeHandleIndex = -1;
         let startMousePos = { x: 0, y: 0 };
@@ -224,8 +227,9 @@
 
         function resetCropBoxToCenter() {
             const bounds = canvasContainer.getBoundingClientRect();
-            const containerW = bounds.width || 572;
-            const containerH = bounds.height || 422;
+            // Restricting the render maximum scaling bounds inside workspace box container
+            const containerW = (bounds.width || 546) * 0.85;
+            const containerH = (bounds.height || 376) * 0.85;
             let imgW = sourceImg.width;
             let imgH = sourceImg.height;
             if (rotationDegree % 180 !== 0) { let temp = imgW; imgW = imgH; imgH = temp; }
@@ -235,21 +239,21 @@
             editorCanvas.width = baseRenderWidth;
             editorCanvas.height = baseRenderHeight;
 
-            cropState.w = editorCanvas.width * 0.7;
-            cropState.h = editorCanvas.height * 0.7;
+            cropState.w = editorCanvas.width * 0.75;
+            cropState.h = editorCanvas.height * 0.75;
             const mode = aspectRatioSelector.value;
             if (mode === 'passport') { cropState.h = cropState.w * (4.5 / 3.5); }
             else if (mode === 'signature') { cropState.h = cropState.w * (1 / 2); }
             else if (mode === 'square') { cropState.h = cropState.w; }
 
             if (cropState.h > editorCanvas.height) {
-                cropState.h = editorCanvas.height * 0.9;
+                cropState.h = editorCanvas.height * 0.85;
                 if (mode === 'passport') cropState.w = cropState.h * (3.5 / 4.5);
                 if (mode === 'signature') cropState.w = cropState.h * 2;
                 if (mode === 'square') cropState.w = cropState.h;
             }
             if (cropState.w > editorCanvas.width) {
-                cropState.w = editorCanvas.width * 0.9;
+                cropState.w = editorCanvas.width * 0.85;
                 if (mode === 'passport') cropState.h = cropState.w * (4.5 / 3.5);
                 if (mode === 'signature') cropState.h = cropState.w * 0.5;
                 if (mode === 'square') cropState.h = cropState.w;
@@ -299,7 +303,7 @@
             ctx.fillStyle = '#2563eb';
             ctx.strokeStyle = '#ffffff';
             ctx.lineWidth = 1.5;
-            const radius = 7;
+            const radius = 6;
             handlesArray.forEach(h => {
                 ctx.beginPath();
                 ctx.arc(cropState.x + cropState.w * h.x, cropState.y + cropState.h * h.y, radius, 0, 2 * Math.PI);
@@ -357,7 +361,7 @@
             const currY = (clientY - rect.top) * (editorCanvas.height / rect.height);
             const dx = currX - startMousePos.x;
             const dy = currY - startMousePos.y;
-            const minCropLimit = 25;
+            const minCropLimit = 20;
 
             if (dragMode === 'move') {
                 cropState.x = Math.max(0, Math.min(editorCanvas.width - cropState.w, cropState.x + dx));
