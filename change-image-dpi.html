@@ -7,8 +7,15 @@
     
     <!-- Primary SEO Meta Tags -->
     <meta name="description" content="Change image DPI online for free. Convert JPG and PNG images to 300 DPI, 200 DPI, 150 DPI or custom DPI instantly. Perfect for printing, SSC, Railway and government forms." />
-    <meta name="keywords" content="change image dpi, image dpi changer, 300 dpi converter, convert image to 300 dpi online, 200 dpi image, dpi changer online" />
     <meta name="robots" content="index, follow" />
+    <meta name="author" content="EditSpark">
+    <meta name="application-name" content="EditSpark">
+    <meta name="theme-color" content="#4f46e5">
+    
+    <!-- Mobile Web App Capability -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    
     <link rel="canonical" class="seo-canonical" href="https://edit-spark.vercel.app/change-image-dpi.html" />
 
     <!-- Open Graph / Facebook -->
@@ -28,11 +35,29 @@
     <!-- Page Speed Optimization: Deferred JSZip -->
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
-    <!-- Structured Data / JSON-LD Schemas (Includes WebApplication, Breadcrumb, HowTo, and FAQPage) -->
+    <!-- Consolidated JSON-LD Structured Data / Schemas -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://edit-spark.vercel.app/#website",
+          "url": "https://edit-spark.vercel.app/",
+          "name": "EditSpark",
+          "description": "Free Online Image Editing Tools"
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://edit-spark.vercel.app/#organization",
+          "name": "EditSpark",
+          "url": "https://edit-spark.vercel.app/",
+          "logo": "https://edit-spark.vercel.app/assets/images/logo.png",
+          "sameAs": [
+            "https://twitter.com/editspark",
+            "https://github.com/Rdevloper123/EditSpark"
+          ]
+        },
         {
           "@type": "WebApplication",
           "@id": "https://edit-spark.vercel.app/change-image-dpi.html#webapp",
@@ -48,6 +73,14 @@
           }
         },
         {
+          "@type": "SoftwareApplication",
+          "@id": "https://edit-spark.vercel.app/change-image-dpi.html#softwareapp",
+          "url": "https://edit-spark.vercel.app/change-image-dpi.html",
+          "name": "Free Online DPI Converter",
+          "applicationCategory": "DesignApplication",
+          "operatingSystem": "Windows, macOS, Android, iOS"
+        },
+        {
           "@type": "BreadcrumbList",
           "@id": "https://edit-spark.vercel.app/change-image-dpi.html#breadcrumb",
           "itemListElement": [
@@ -60,6 +93,12 @@
             {
               "@type": "ListItem",
               "position": 2,
+              "name": "Image Tools",
+              "item": "https://edit-spark.vercel.app/#image-tools"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
               "name": "Change Image DPI",
               "item": "https://edit-spark.vercel.app/change-image-dpi.html"
             }
@@ -103,18 +142,10 @@
             },
             {
               "@type": "Question",
-              "name": "Why did Windows properties show 72 DPI on my original file?",
+              "name": "What is the best image DPI for SSC and UPSC forms?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Browsers and smartphones save images with default meta tags (72/96 DPI). EditSpark updates these flags so tools like Photoshop or Windows Explorer recognize the target resolution."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "Is it safe to convert government application photos here?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Completely safe. The tool processes everything client-side in your web browser; your files are never uploaded to any server."
+                "text": "Most Indian government application forms like SSC, UPSC, and Railway require passport photos and signatures to be exactly 200 DPI or 300 DPI."
               }
             }
           ]
@@ -149,6 +180,25 @@
             border-radius: 1rem;
             box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
         }
+        
+        /* Breadcrumb UI Styles */
+        .breadcrumb-nav {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+        .breadcrumb-nav a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        .breadcrumb-nav a:hover {
+            text-decoration: underline;
+        }
+        .breadcrumb-nav .separator {
+            margin: 0 0.5rem;
+            color: #cbd5e1;
+        }
+
         header {
             text-align: center;
             margin-bottom: 2.5rem;
@@ -274,7 +324,6 @@
             margin-bottom: 0.5rem;
         }
         
-        /* Internal Linking Style */
         .internal-links {
             margin: 2rem 0;
             padding: 1rem;
@@ -290,7 +339,6 @@
         }
         .internal-links a:hover { text-decoration: underline; }
 
-        /* Data Table Styling */
         .dpi-table {
             width: 100%;
             border-collapse: collapse;
@@ -307,7 +355,6 @@
             font-weight: 600;
         }
 
-        /* Contextual Callout Links inside FAQ */
         .faq-context-links {
             margin-top: 0.5rem;
             font-size: 0.9rem;
@@ -331,9 +378,9 @@
         .seo-content h2 { font-size: 1.6rem; color: var(--text-main); margin-top: 2rem; }
         .seo-content h3 { font-size: 1.25rem; color: #1e293b; margin-top: 1.5rem; }
         .seo-content p, .seo-content li { color: var(--text-muted); font-size: 1rem; }
-        .seo-content ul { padding-left: 1.25rem; }
+        .seo-content ul, .seo-content ol { padding-left: 1.25rem; }
         .faq-item { margin-bottom: 1.5rem; }
-        .faq-item h3 { margin-bottom: 0.5rem; }
+        .faq-item h3 { margin-bottom: 0.5rem; font-size: 1.15rem; color: var(--text-main); }
 
         footer {
             margin-top: 4rem;
@@ -357,9 +404,19 @@
 <body>
 
 <div class="container">
+    <!-- Breadcrumb UI Element (Fix #19) -->
+    <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+        <a href="/">Home</a><span class="separator">></span>
+        <a href="/#image-tools">Image Tools</a><span class="separator">></span>
+        <span>Change Image DPI</span>
+    </nav>
+
     <header>
         <h1 style="font-size: 2.2rem; color: var(--primary); margin-bottom: 0.5rem;">Change Image DPI Online Free</h1>
-        <div class="meta-freshness">Last Updated: June 2026</div>
+        <!-- Dynamic Time Meta (Fix #3) -->
+        <div class="meta-freshness">
+            <time datetime="2026-06-26">Last Updated: 26 June 2026</time>
+        </div>
         <p style="color: var(--text-muted); margin: 0; max-width: 700px; margin: 0 auto;">
             EditSpark lets you change image DPI online for free. Convert JPG and PNG images to 300 DPI, 200 DPI, 150 DPI, or any custom DPI without uploading your files to an external server.
         </p>
@@ -416,84 +473,119 @@
     </div>
     <div id="preview-grid"></div>
 
-    <!-- Crisp SEO Content Section (~800 Words & Targeted Keywords) -->
+    <!-- Indian SEO Content Optimization (~800 Words - Fix #8 & #9) -->
     <article class="seo-content">
         <h2>What is Image DPI and Why is 300 DPI Important?</h2>
-        <p>DPI stands for <strong>Dots Per Inch</strong>. It is a measurement that dictates how many dots of ink a printer places within a linear inch of an image. In digital files, it acts as a layout metadata layer telling hardware components how to size an image during physical output. While computer screens depend completely on pixel dimensions, physical printing and document scanners require proper embedded DPI values to look sharp.</p>
-        <p>Setting your asset to <strong>300 DPI</strong> is the gold standard because it compresses pixel density to a degree where human eyes can no longer distinguish individual pixel grids. This results in ultra-clear prints without blurs or fuzzy jagged edges.</p>
+        <p>DPI stands for <strong>Dots Per Inch</strong>. It dictates how many dots of ink a printer places within a linear inch of a physical document. In digital platforms, it acts as a layout metadata layer telling hardware tools how to scale an image during print output. While mobile screens depend completely on pixel width and height, physical printing and scanners require correct embedded values to avoid a blurry output.</p>
+        <p>Using a <strong>photo DPI converter</strong> to set your asset to <strong>300 DPI image</strong> format is highly recommended because it compresses pixel clusters. This density ensures that individual grids remain invisible to the naked human eye, resulting in clean, razor-sharp documents.</p>
 
         <h2>Standard Image DPI Guidelines</h2>
-        <p>Depending on whether you are compiling web banners or processing your signature for an online dashboard, using the correct density value is critical:</p>
+        <p>Whether you need a **signature DPI changer** or a layout tool for web banners, using the correct target resolution ensures your image uploads successfully:</p>
         
         <table class="dpi-table">
             <thead>
                 <tr>
-                    <th>DPI</th>
-                    <th>Best Use Case / Requirement</th>
+                    <th>Target DPI</th>
+                    <th>Best Use Case / Recruitment Requirement</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td><strong>72 DPI</strong></td>
-                    <td>Website Images, Screen Layouts, Social Media App feeds.</td>
+                    <td>Website Graphics, Blogs, and Social Media Display Images.</td>
                 </tr>
                 <tr>
                     <td><strong>150 DPI</strong></td>
-                    <td>Large Scale Posters, Indoor Wall Banners, Advertising boards.</td>
+                    <td>Medium Resolution Printing, Pamphlets, and Indoor Posters.</td>
                 </tr>
                 <tr>
                     <td><strong>200 DPI</strong></td>
-                    <td>Indian Government Forms, Recruitment Exams, Legal Portals.</td>
+                    <td>Indian Government Forms, Recruitment Exams, Legal Document Scans.</td>
                 </tr>
                 <tr>
                     <td><strong>300 DPI</strong></td>
-                    <td>High-Resolution Printing, Professional Photography, Brochures.</td>
+                    <td>High-Resolution Printing, Professional Passport Photos, Brochures.</td>
                 </tr>
             </tbody>
         </table>
 
-        <h2>Best Image DPI for SSC, Railway, and Government Forms</h2>
-        <p>When applying for public competitive examinations in India, recruitment portals have rigid validation scripts. Ensuring the correct <strong>Image DPI for SSC</strong> or matching the exact <strong>Railway Photo DPI</strong> parameters is mandatory to avoid automated form rejections.</p>
+        <h2>Best Image DPI for SSC, Railway, and UPSC Forms</h2>
+        <p>When applying for recruitment exams in India, online state portals have absolute validation scripts. Making sure you use a dedicated **image DPI changer** to get the correct <strong>300 DPI image for SSC</strong> or matching the exact <strong>Railway photo DPI</strong> and <strong>UPSC photo DPI</strong> rule is mandatory to prevent automated application rejection.</p>
         <ul>
-            <li><strong>Passport Photo DPI:</strong> Most administrative portals like UPSC, IBPS, and state government pipelines require photos configured at exactly 200 or 300 DPI.</li>
-            <li><strong>Signature Verification:</strong> Signatures must often be enhanced using a 200 DPI target to remain completely legible after algorithmic file scanning.</li>
-            <li><strong>Government form image DPI:</strong> If your meta tags are broken or set to a default mobile device property, automated upload containers might flag your document as invalid.</li>
+            <li><strong>Passport Photo 300 DPI:</strong> Most national portals like UPSC, IBPS, and Regional Railway Boards require photos configured at exactly 200 or 300 DPI resolution.</li>
+            <li><strong>Signature DPI Changer:</strong> Candidate signatures must often be enhanced using a 200 DPI target to remain completely legible after high-speed backend image scanning.</li>
+            <li><strong>Change Photo DPI Online:</strong> If your photo properties are broken or set to a default smartphone camera metric, the automated form validation containers might flag your document as invalid.</li>
         </ul>
 
-        <h2>How to Change Image DPI Online Free?</h2>
-        <p>Converting your file properties with EditSpark takes just a few clicks within your browser context:</p>
+        <h2>How to Convert JPG to 300 DPI Online?</h2>
         <ol>
-            <li>Select your target assets by clicking or dropping files into the box above. (Supports bulk uploads).</li>
-            <li>Choose a preset layout metric from the menu like 300 DPI, 200 DPI, or enter a custom integer value.</li>
-            <li>Click 'Convert Images'. Our custom bitstream pipeline patches the internal binary structure instantly.</li>
-            <li>Download files individually or extract them in a single batch as a consolidated ZIP archive.</li>
+            <li>Select your target JPG assets by clicking or dropping files into our browser interface window.</li>
+            <li>Choose a preset layout metric from the menu like 300 DPI or 200 DPI.</li>
+            <li>Click the 'Convert Images' button. Our script patches the internal binary structure instantly.</li>
         </ol>
+
+        <h2>How to Convert PNG to 300 DPI Natively?</h2>
+        <p>Unlike JPEGs, PNG structures use a standard metric known as Pixels Per Meter (pHYs chunk). EditSpark handles this complex conversion algorithm automatically. It translates your custom input value seamlessly in real-time without harming the transparent transparency mapping layer of your PNG files.</p>
+
+        <h2>Best DPI for Passport Photo & Printing Documents</h2>
+        <p>For a standard **passport photo 300 DPI** is required to guarantee that facial boundaries, bio-metrics, and background lines look crisp when printed on physical identity sheets. For digital document archival and office printing, a resolution baseline of 150 to 300 DPI provides the ultimate sweet spot between compressed file weight and textual clarity.</p>
 
         <hr style="border: 0; border-top: 1px solid var(--border); margin: 2.5rem 0;">
 
+        <!-- Expanded 10 FAQs Section (Fix #11) -->
         <h2>Frequently Asked Questions (FAQ)</h2>
+        
         <div class="faq-item">
-            <h3>Does changing DPI reduce image quality?</h3>
+            <h3>1. Does changing DPI reduce image quality?</h3>
             <p>No. True DPI adjustments only rewrite metadata header arrays within your JPEG or PNG wrappers. Pixel dimensions, color profiles, and visual quality details stay entirely untouched.</p>
-            <div class="faq-context-links">
-                Need to reduce file size instead? <a href="/compress-image.html">Compress Image →</a>
-            </div>
+            <div class="faq-context-links">Need to reduce file size instead? <a href="/compress-image.html">Compress Image →</a></div>
         </div>
         
         <div class="faq-item">
-            <h3>Why did Windows properties show 72 DPI on my original file?</h3>
+            <h3>2. Why did Windows properties show 72 DPI on my original file?</h3>
             <p>Most modern web download mechanisms and smartphones save files with temporary placeholder tags (typically 72 or 96 DPI). EditSpark patches these flags natively so systems like Windows Explorer, Photoshop, and GIMP read the target resolution accurately.</p>
-            <div class="faq-context-links">
-                Need to alter pixel dimensions? <a href="/resize-image.html">Resize Image →</a>
-            </div>
+            <div class="faq-context-links">Need to alter pixel dimensions? <a href="/resize-image.html">Resize Image →</a></div>
         </div>
 
         <div class="faq-item">
-            <h3>Is it safe to convert government application photos here?</h3>
+            <h3>3. Is it safe to convert government application photos here?</h3>
             <p>Yes. EditSpark utilizes client-side web browser JavaScript. Your official identity cards, signatures, and personal photos are processed completely locally in memory—nothing is sent to external cloud servers, giving you 100% privacy.</p>
-            <div class="faq-context-links">
-                Need a clean background for docs? <a href="/document-background-white.html">Document Background White →</a>
-            </div>
+            <div class="faq-context-links">Need a clean background for docs? <a href="/document-background-white.html">Document Background White →</a></div>
+        </div>
+
+        <div class="faq-item">
+            <h3>4. What is the standard image DPI for SSC and Railway forms?</h3>
+            <p>Most portals require candidate photos and signatures scaled between 200 DPI and 300 DPI. Always read your specific examination bulletin instructions before uploading.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>5. Will this online tool change my image's pixel dimensions?</h3>
+            <p>No. This tool only updates the DPI metadata tag. An image with 1000x1000 pixels will remain exactly 1000x1000 pixels after conversion.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>6. Can I convert multiple images to 300 DPI simultaneously?</h3>
+            <p>Yes, EditSpark supports full bulk upload processing. You can select multiple images at once and download them altogether in a zipped format.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>7. Why does Photoshop show a different resolution value?</h3>
+            <p>If you don't use a dedicated tool like EditSpark to patch the binary flags, Photoshop reads the default web-system metric (72 DPI). After using our tool, Photoshop will read your selected DPI perfectly.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>8. Does this tool support PDF document conversions?</h3>
+            <p>Currently, this tool is optimized specifically for image structures like JPG, JPEG, and PNG. For PDF layout modifications, please use our document conversion module.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>9. What is the difference between DPI and PPI?</h3>
+            <p>DPI (Dots Per Inch) refers to physical printer ink drops, while PPI (Pixels Per Inch) refers to digital monitor pixel grids. In everyday digital file metadata, both terms are used interchangeably.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>10. Is EditSpark completely free to use?</h3>
+            <p>Yes, all image optimization and conversion modules on EditSpark are 100% free with no premium caps, registrations, or watermarks.</p>
         </div>
     </article>
 
@@ -594,19 +686,18 @@ function resetUpload() {
 
 /* 
    ===================================================================
-   🔥 CRITICAL METADATA DPI CHANGING BITSTREAM PROCESSING (TESTED LAYER)
+   🔥 METADATA DPI CHANGING BITSTREAM PROCESSING
    ===================================================================
 */
 
-// Binary Injector for JPEG Metadata (JFIF APP0 segment rewrite)
 function changeJpegDpi(arrayBuffer, dpi) {
     const view = new DataView(arrayBuffer);
     let pos = 2;
     while (pos < arrayBuffer.byteLength) {
         if (view.getUint8(pos) === 0xFF && view.getUint8(pos + 1) === 0xE0) {
-            view.setUint8(pos + 11, 1); // Set units to dots per inch (1 = DPI)
-            view.setUint16(pos + 12, dpi); // X density horizontal
-            view.setUint16(pos + 14, dpi); // Y density vertical
+            view.setUint8(pos + 11, 1); 
+            view.setUint16(pos + 12, dpi); 
+            view.setUint16(pos + 14, dpi); 
             return new Blob([arrayBuffer], { type: 'image/jpeg' });
         }
         pos++;
@@ -628,26 +719,25 @@ function insertJfifHeader(arrayBuffer, dpi) {
     return cleanOutput.buffer;
 }
 
-// Binary Injector for PNG Metadata (pHYs chunk injection logic)
 function changePngDpi(arrayBuffer, dpi) {
     const rawBytes = new Uint8Array(arrayBuffer);
-    const dpm = Math.round(dpi / 0.0254); // Convert DPI to Meters unit
+    const dpm = Math.round(dpi / 0.0254); 
     
     const pHYsChunk = new Uint8Array(21);
     const view = new DataView(pHYsChunk.buffer);
     
-    view.setUint32(0, 9); // Chunk Length
-    pHYsChunk.set([0x70, 0x48, 0x59, 0x73], 4); // "pHYs" identity chunk label
-    view.setUint32(8, dpm); // X pixels per meter
-    view.setUint32(12, dpm); // Y pixels per meter
-    view.setUint8(16, 1); // Specifies Unit Specifier flag to Meters
+    view.setUint32(0, 9); 
+    pHYsChunk.set([0x70, 0x48, 0x59, 0x73], 4); 
+    view.setUint32(8, dpm); 
+    view.setUint32(12, dpm); 
+    view.setUint8(16, 1); 
     
     const crc = calcCrc(pHYsChunk.subarray(4, 17));
     view.setUint32(17, crc);
 
     const cleanOutput = new Uint8Array(rawBytes.length + pHYsChunk.length);
-    cleanOutput.set(rawBytes.subarray(0, 33), 0); // Copy standard signature + original IHDR
-    cleanOutput.set(pHYsChunk, 33); // Insert fresh pHYs density parameters tags
+    cleanOutput.set(rawBytes.subarray(0, 33), 0); 
+    cleanOutput.set(pHYsChunk, 33); 
     cleanOutput.set(rawBytes.subarray(33), 33 + pHYsChunk.length);
     
     return new Blob([cleanOutput], { type: 'image/png' });
@@ -698,9 +788,9 @@ function processImages() {
             const extensionFormat = file.type === 'image/png' ? 'png' : 'jpg';
             const cleanDownloadName = `${originalBaseName}-${targetDpi}dpi-editspark.${extensionFormat}`;
 
-            // Missing Image Alt Fixed (Fix #6)
+            // Lazy Loading & Valid Alt Attributes Fixed (Fix #6 & #13)
             card.innerHTML = `
-                <img src="${url}" alt="Converted ${targetDpi} DPI Image via EditSpark">
+                <img src="${url}" loading="lazy" alt="Converted ${targetDpi} DPI Image via EditSpark">
                 <p style="font-size:0.85rem; margin:8px 0; color: #10b981; font-weight: 600;">Success: ${targetDpi} DPI</p>
                 <a href="${url}" download="${cleanDownloadName}" class="btn" style="font-size:0.85rem; padding: 0.4rem 0.8rem; display: block; text-align:center;">Download</a>
             `;
