@@ -40,8 +40,8 @@
         .drop-zone { border: 2px dashed #cbd5e1; padding: 2.5rem; border-radius: 12px; background: #f8fafc; cursor: pointer; margin-bottom: 1.5rem; transition: border-color 0.2s, background-color 0.2s; }
         .drop-zone.dragover { border-color: #2563eb; background-color: #eff6ff; }
         
-        /* Optimized Work Area: Compact width and height to remove extra space around image */
-        .work-area { display: none; max-width: 485px; height: 320px; margin: 1.5rem auto; background-color: #f1f5f9; background-image: linear-gradient(45deg, #e2e8f0 25%, transparent 25%), linear-gradient(-45deg, #e2e8f0 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #e2e8f0 75%), linear-gradient(-45deg, transparent 75%, #e2e8f0 75%); background-size: 16px 16px; background-position: 0 0, 0 8px, 8px -8px, -8px 0; border-radius: 12px; overflow: hidden; box-shadow: inset 0 2px 6px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05); padding: 0; box-sizing: border-box; border: 2px solid #cbd5e1; position: relative; }
+        /* Updated Work Area with Premium Transparent Grid instead of Ugly Black */
+        .work-area { display: none; max-width: 550px; height: 380px; margin: 1.5rem auto; background-color: #f1f5f9; background-image: linear-gradient(45deg, #e2e8f0 25%, transparent 25%), linear-gradient(-45deg, #e2e8f0 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #e2e8f0 75%), linear-gradient(-45deg, transparent 75%, #e2e8f0 75%); background-size: 16px 16px; background-position: 0 0, 0 8px, 8px -8px, -8px 0; border-radius: 12px; overflow: hidden; box-shadow: inset 0 2px 6px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05); padding: 0; box-sizing: border-box; border: 2px solid #cbd5e1; position: relative; }
         
         #canvasContainer { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden; cursor: default; }
         canvas { box-shadow: 0 4px 10px rgba(0,0,0,0.12); touch-action: none; user-select: none; -webkit-user-select: none; border-radius: 4px; }
@@ -54,7 +54,7 @@
         .error-banner { display: none; background: #fef2f2; border: 1px solid #fca5a5; color: #991b1b; padding: 0.75rem 1rem; border-radius: 6px; margin-bottom: 1rem; font-weight: 500; font-size: 0.95rem; text-align: left; }
         .loader-overlay { display: none; position: absolute; inset: 0; background: rgba(255, 255, 255, 0.85); color: #1e293b; justify-content: center; align-items: center; font-weight: 600; font-size: 1.1rem; gap: 0.5rem; z-index: 10; }
         @keyframes spin { to { transform: rotate(360deg); } }
-        @media (max-width: 600px) { .work-area { height: 280px; max-width: 100%; } .btn { width: 100%; justify-content: center; margin: 0.2rem 0; } .toolbar-group { width: 100%; } }
+        @media (max-width: 600px) {.work-area { height: 320px; } .btn { width: 100%; justify-content: center; margin: 0.2rem 0; } .toolbar-group { width: 100%; } }
     </style>
 </head>
 <body>
@@ -158,7 +158,7 @@
         let baseRenderWidth = 0;
         let baseRenderHeight = 0;
         let rotationDegree = 0;
-        let cropState = { x: 20, y: 20, w: 140, h: 140 };
+        let cropState = { x: 30, y: 30, w: 150, h: 150 };
         let dragMode = null;
         let activeHandleIndex = -1;
         let startMousePos = { x: 0, y: 0 };
@@ -227,9 +227,9 @@
 
         function resetCropBoxToCenter() {
             const bounds = canvasContainer.getBoundingClientRect();
-            // Scaling calculations perfectly tight inside the new compact box
-            const containerW = (bounds.width || 481) * 0.92;
-            const containerH = (bounds.height || 316) * 0.92;
+            // Restricting the render maximum scaling bounds inside workspace box container
+            const containerW = (bounds.width || 546) * 0.85;
+            const containerH = (bounds.height || 376) * 0.85;
             let imgW = sourceImg.width;
             let imgH = sourceImg.height;
             if (rotationDegree % 180 !== 0) { let temp = imgW; imgW = imgH; imgH = temp; }
@@ -239,21 +239,21 @@
             editorCanvas.width = baseRenderWidth;
             editorCanvas.height = baseRenderHeight;
 
-            cropState.w = editorCanvas.width * 0.8;
-            cropState.h = editorCanvas.height * 0.8;
+            cropState.w = editorCanvas.width * 0.75;
+            cropState.h = editorCanvas.height * 0.75;
             const mode = aspectRatioSelector.value;
             if (mode === 'passport') { cropState.h = cropState.w * (4.5 / 3.5); }
             else if (mode === 'signature') { cropState.h = cropState.w * (1 / 2); }
             else if (mode === 'square') { cropState.h = cropState.w; }
 
             if (cropState.h > editorCanvas.height) {
-                cropState.h = editorCanvas.height * 0.9;
+                cropState.h = editorCanvas.height * 0.85;
                 if (mode === 'passport') cropState.w = cropState.h * (3.5 / 4.5);
                 if (mode === 'signature') cropState.w = cropState.h * 2;
                 if (mode === 'square') cropState.w = cropState.h;
             }
             if (cropState.w > editorCanvas.width) {
-                cropState.w = editorCanvas.width * 0.9;
+                cropState.w = editorCanvas.width * 0.85;
                 if (mode === 'passport') cropState.h = cropState.w * (4.5 / 3.5);
                 if (mode === 'signature') cropState.h = cropState.w * 0.5;
                 if (mode === 'square') cropState.h = cropState.w;
@@ -296,7 +296,7 @@
             ctx.setLineDash([4, 4]);
             for (let i = 1; i <= 2; i++) {
                 ctx.beginPath(); ctx.moveTo(cropState.x + (cropState.w / 3) * i, cropState.y); ctx.lineTo(cropState.x + (cropState.w / 3) * i, cropState.y + cropState.h); ctx.stroke();
-                ctx.beginPath(); ctx.moveTo(cropState.x, cropState.y + (cropState.h / 3) * i); ctx.lineTo(cropState.x + contractor = cropState.w, cropState.y + (cropState.h / 3) * i); ctx.stroke();
+                ctx.beginPath(); ctx.moveTo(cropState.x, cropState.y + (cropState.h / 3) * i); ctx.lineTo(cropState.x + cropState.w, cropState.y + (cropState.h / 3) * i); ctx.stroke();
             }
             ctx.setLineDash([]);
 
