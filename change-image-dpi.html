@@ -612,7 +612,7 @@ function processImages() {
             const cleanName = `${baseName}-${targetDpi}dpi-editspark.${ext}`;
 
             card.innerHTML = `
-                <img src="${url}" style="max-width:100%; height:100px; object-fit:contain;" alt="Converted JPG image to ${targetDpi} DPI">
+                <img src="${url}" style="max-width:100%; height:100px; object-fit:contain;" alt="Converted image to ${targetDpi} DPI">
                 <p style="font-size:0.8rem; margin:0.5rem 0; color: #10b981; font-weight:600;">Ready: ${targetDpi} DPI</p>
                 <a href="${url}" download="${cleanName}" class="btn" style="font-size:0.8rem; padding:0.4rem 0.8rem; display:block;" onclick="setTimeout(() => URL.revokeObjectURL('${url}'), 10000)">Download</a>
             `;
