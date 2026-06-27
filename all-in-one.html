@@ -29,24 +29,62 @@
     <!-- SEO Canonical Tag -->
     <link class="canonical" rel="canonical" href="https://edit-spark.vercel.app/all-in-one.html" />
 
-    <!-- Advanced Schema Injection for Google Rich Snippets -->
+    <!-- Advanced Schema Injection (WebApplication, Organization, FAQ, and Breadcrumb) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@graph": [
         {
+          "@type": "Organization",
+          "@id": "https://edit-spark.vercel.app/#organization",
+          "name": "EditSpark",
+          "url": "https://edit-spark.vercel.app",
+          "logo": "https://edit-spark.vercel.app/assets/logo.png",
+          "sameAs": []
+        },
+        {
           "@type": "WebApplication",
           "@id": "https://edit-spark.vercel.app/#webapp",
           "url": "https://edit-spark.vercel.app/all-in-one.html",
           "name": "EditSpark All-In-One Image Tool",
+          "description": "Free web-based tool to crop, resize, and compress images online to 20KB or 50KB for government exam forms like SSC, Railway, UPSC, and Banking.",
           "applicationCategory": "ImageEditorApplication",
           "operatingSystem": "All",
           "browserRequirements": "Requires HTML5 Canvas support.",
+          "isAccessibleForFree": "True",
+          "inLanguage": "en",
+          "creator": { "@id": "https://edit-spark.vercel.app/#organization" },
+          "publisher": { "@id": "https://edit-spark.vercel.app/#organization" },
+          "image": "https://edit-spark.vercel.app/assets/og-image.jpg",
+          "featureList": [
+            "Manual image cropping tool online",
+            "Resize image dimensions in pixels",
+            "Compress image to 20KB and 50KB online",
+            "Convert JPG and PNG formats locally"
+          ],
           "offers": {
             "@type": "Offer",
             "price": "0",
             "priceCurrency": "INR"
           }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://edit-spark.vercel.app/all-in-one.html#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://edit-spark.vercel.app"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Image Tools",
+              "item": "https://edit-spark.vercel.app/all-in-one.html"
+            }
+          ]
         },
         {
           "@type": "FAQPage",
@@ -94,6 +132,17 @@
     <!-- Main Content -->
     <main class="flex-grow max-w-7xl mx-auto px-4 py-6 w-full">
         
+        <!-- Breadcrumb Navigation UI -->
+        <nav class="text-xs text-slate-500 mb-4 max-w-3xl mx-auto px-4" aria-label="Breadcrumb">
+            <ol class="list-none p-0 inline-flex space-x-2">
+                <li class="flex items-center">
+                    <a href="/" class="hover:text-emerald-600 transition-colors">Home</a>
+                    <i class="fa-solid fa-chevron-right text-[9px] mx-2 text-slate-400"></i>
+                </li>
+                <li class="text-slate-700 font-medium" aria-current="page">Crop Resize Compress Image</li>
+            </ol>
+        </nav>
+        
         <!-- SEO Semantic Header Section -->
         <div class="text-center max-w-3xl mx-auto mt-4 mb-8 px-4">
             <h1 class="text-3xl font-black text-slate-900 tracking-tight sm:text-4xl mb-3">
@@ -128,7 +177,8 @@
                 
                 <!-- Fixed Mini Container for keeping the image small on mobile after crop -->
                 <div id="display-area" class="bg-slate-50 border border-slate-100 rounded-lg p-2 flex flex-row lg:flex-col items-center justify-center gap-3 min-h-[60px] lg:min-h-[250px] w-full overflow-hidden">
-                    <img id="original-preview-img" src="" class="max-h-16 lg:max-h-72 object-contain rounded shadow-sm border border-white">
+                    <!-- Point 8: Added 'alt' attribute back for the original upload preview safely -->
+                    <img id="original-preview-img" alt="Original uploaded image preview" src="" class="max-h-16 lg:max-h-72 object-contain rounded shadow-sm border border-white">
                     <div id="original-meta" class="text-left lg:text-center text-[10px] lg:text-xs font-bold text-slate-500 uppercase tracking-wide"></div>
                 </div>
             </div>
@@ -230,7 +280,8 @@
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
                 <div>
-                    <h2 class="text-xl font-bold text-slate-900 mb-3">How to Resize and Compress Images for Govt Forms?</h2>
+                    <!-- Point 2: Keyword Optimized Heading for Search Queries -->
+                    <h2 class="text-xl font-bold text-slate-900 mb-3">How to Crop, Resize and Compress Images Online</h2>
                     <ol class="text-sm text-slate-600 space-y-2 list-decimal pl-4">
                         <li><strong>Upload Photo:</strong> Click the dropzone to select your passport photo or signature image.</li>
                         <li><strong>Manual Crop:</strong> Click 'Crop Karen' to perfectly frame your face or signature block.</li>
@@ -240,7 +291,8 @@
                     </ol>
                 </div>
                 <div>
-                    <h2 class="text-xl font-bold text-slate-900 mb-3">Why Cyber Cafés & Students Choose EditSpark</h2>
+                    <!-- Point 2: Keyword Optimized Heading for Search Queries -->
+                    <h2 class="text-xl font-bold text-slate-900 mb-3">Why Use This Free Image Crop, Resize & Compress Tool?</h2>
                     <ul class="text-sm text-slate-600 space-y-2 list-disc pl-4">
                         <li><strong>100% Privacy Secure:</strong> Your photos are processed entirely inside your local browser. They are never uploaded to a cloud server.</li>
                         <li><strong>Precise KB Compressor:</strong> Smart auto-iteration ensures your file meets the exact exam portal restrictions.</li>
@@ -251,7 +303,7 @@
 
             <!-- Official Exam Image Guidelines Reference Table -->
             <h2 class="text-xl font-bold text-slate-900 mb-4">Standard Photo & Signature Specifications</h2>
-            <div class="overflow-x-auto mb-12">
+            <div class="overflow-x-auto mb-4">
                 <table class="w-full text-left border-collapse text-xs sm:text-sm">
                     <thead>
                         <tr class="bg-slate-100 text-slate-700">
@@ -283,17 +335,34 @@
                     </tbody>
                 </table>
             </div>
+            
+            <!-- Point 7: Added dynamic verification warning disclaimer for exam variations -->
+            <p class="text-[11px] text-slate-400 italic mb-12 leading-relaxed">
+                * Note: Government recruitment portals occasionally update their size limits and parameters. These metrics are compiled from general patterns (e.g., image resizer for SSC, Railway, Banking forms). Requirements may vary by ongoing recruitment cycles; users must verify with the active official notification before submission.
+            </p>
+
+            <!-- Point 3 & 10: Missing Internal Link Cluster & More Keyword Variations Naturally -->
+            <div class="bg-slate-50 border border-slate-200 rounded-xl p-6 mb-12">
+                <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider mb-4">Explore More Specialized Editing Tools</h3>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-3 text-xs">
+                    <a href="/compress-image.html" class="text-slate-600 hover:text-emerald-600 font-medium underline flex items-center gap-1.5"><i class="fa-solid fa-angle-right text-[10px]"></i> Compress Image to 20KB / 50KB</a>
+                    <a href="/resize-image.html" class="text-slate-600 hover:text-emerald-600 font-medium underline flex items-center gap-1.5"><i class="fa-solid fa-angle-right text-[10px]"></i> Resize Image Online</a>
+                    <a href="/crop-image.html" class="text-slate-600 hover:text-emerald-600 font-medium underline flex items-center gap-1.5"><i class="fa-solid fa-angle-right text-[10px]"></i> Crop Image Online</a>
+                    <a href="/300-dpi-converter.html" class="text-slate-600 hover:text-emerald-600 font-medium underline flex items-center gap-1.5"><i class="fa-solid fa-angle-right text-[10px]"></i> Convert Image to 300 DPI</a>
+                    <a href="/clear-document.html" class="text-slate-600 hover:text-emerald-600 font-medium underline flex items-center gap-1.5"><i class="fa-solid fa-angle-right text-[10px]"></i> Clear Document Background</a>
+                </div>
+            </div>
 
             <!-- Frequently Asked Questions (FAQ) Section -->
             <h2 class="text-xl font-bold text-slate-900 mb-4">Frequently Asked Questions (FAQ)</h2>
             <div class="space-y-4 mb-8">
                 <div class="bg-slate-50 p-4 rounded-lg">
-                    <h3 class="text-sm font-bold text-slate-900 mb-1">How can I compress an image below 50KB or 20KB?</h3>
-                    <p class="text-xs sm:text-sm text-slate-600">Simply upload your photo, enter '50' or '20' in the Target Max File Size block, and click process. Our algorithm loops compression parameters to hit your metric perfectly.</p>
+                    <h3 class="text-sm font-bold text-slate-900 mb-1">How can I resize image to 20KB or 50KB online?</h3>
+                    <p class="text-xs sm:text-sm text-slate-600">Simply upload your passport size photo or signature, enter '50' or '20' in the Target Max File Size block, and click process. Our built-in JPG compressor and PNG compressor loops settings locally to match constraints safely.</p>
                 </div>
                 <div class="bg-slate-50 p-4 rounded-lg">
-                    <h3 class="text-sm font-bold text-slate-900 mb-1">Is it safe to upload my passport photo and signatures to EditSpark?</h3>
-                    <p class="text-xs sm:text-sm text-slate-600">Yes, it is entirely safe. EditSpark is a client-side utility tool. The image processing occurs in your browser engine via HTML5 Canvas; your data never transfers across the internet.</p>
+                    <h3 class="text-sm font-bold text-slate-900 mb-1">Is it safe to do passport photo resize and signature resize on EditSpark?</h3>
+                    <p class="text-xs sm:text-sm text-slate-600">Yes, it is entirely safe. EditSpark is a fully client-side ecosystem utility. Your private data never transfers across the internet server pipelines, protecting you from cyber cafe data leaks.</p>
                 </div>
             </div>
         </section>
