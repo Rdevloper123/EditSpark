@@ -11,11 +11,8 @@
     <meta name="application-name" content="EditSpark">
     <meta name="theme-color" content="#4f46e5">
     
-    <!-- Dynamic Canonical Setup (Auto-switches on domain changes) -->
-    <link rel="canonical" id="dynamic-canonical" href="" />
-    <script>
-        document.getElementById('dynamic-canonical').setAttribute('href', window.location.href.split('?')[0].split('#')[0]);
-    </script>
+    <!-- Fix 1: Static Canonical Target -->
+    <link rel="canonical" href="https://edit-spark.vercel.app/convert-image-to-300-dpi.html" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
@@ -25,7 +22,7 @@
 
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
-    <!-- Consolidated Schema JSON-LD (Added ImageObject & featureList) -->
+    <!-- Consolidated Schema JSON-LD (Added BreadcrumbList & WebPage) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -43,6 +40,38 @@
             },
             "query-input": "required name=search_term_string"
           }
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://edit-spark.vercel.app/convert-image-to-300-dpi.html#webpage",
+          "url": "https://edit-spark.vercel.app/convert-image-to-300-dpi.html",
+          "name": "Convert Image to 300 DPI Online Free – JPG & PNG DPI Converter",
+          "isPartOf": { "@id": "https://edit-spark.vercel.app/#website" },
+          "description": "An online tools page to safely change image DPI configurations inside your browser for free."
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://edit-spark.vercel.app/convert-image-to-300-dpi.html#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://edit-spark.vercel.app/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Tools",
+              "item": "https://edit-spark.vercel.app/#tools"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "300 DPI Converter",
+              "item": "https://edit-spark.vercel.app/convert-image-to-300-dpi.html"
+            }
+          ]
         },
         {
           "@type": "ImageObject",
@@ -134,7 +163,6 @@
             border-radius: 1rem;
             box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
         }
-        /* CLS Prevention: Fixed Heights for Layout Stability */
         .workspace-wrapper {
             min-height: 380px; 
             margin-bottom: 1.5rem;
@@ -199,7 +227,6 @@
         </p>
     </header>
 
-    <!-- Natural Link Optimization (Reduced to 7 Links to prevent spamming) -->
     <div class="internal-links">
         <strong>⚡ Other Useful Image Tools:</strong>
         <div class="internal-links-grid">
@@ -225,7 +252,6 @@
         <input type="number" id="custom-dpi-input" style="display:none; width: 100px;" value="300" min="1" max="1200">
     </div>
 
-    <!-- CLS Wrapper to prevent viewport shifting -->
     <div class="workspace-wrapper">
         <label id="upload-label" for="file-input">
             <div id="upload-container" class="upload-box">
@@ -252,12 +278,12 @@
         <button class="btn btn-success" id="zip-download-btn" onclick="downloadAllAsZip()">Download All as ZIP 📦</button>
     </div>
 
-    <!-- Human-Like Context Content (~1150 Words) -->
+    <!-- Enhanced Keywords Coverage (Naturally Mixed In Content) -->
     <article class="seo-content">
-        <h2>What is Image DPI and Why Does It Matter for Printing?</h2>
-        <p>DPI means <strong>Dots Per Inch</strong>. When you print a digital photo on a sheet of paper, the printing machine needs to know how close together to place the tiny ink drops. A higher value like 300 DPI tells the printer to pack more pixels tightly together, making the physical picture look sharp and crisp instead of blurry or pixelated.</p>
+        <h2>What is an Image DPI Converter and Why Use It?</h2>
+        <p>A dedicated <strong>image DPI converter</strong> allows you to setup your physical print files correctly. DPI means Dots Per Inch. When you print a digital photo, the printing machine reads this internal data block to layout ink drop intensity on physical paper. Our web program helps you <strong>change image DPI</strong> layers dynamically without breaking anything.</p>
         
-        <p>Digital screens rely strictly on pixel dimensions (like width and height). However, when handling official physical forms or photography prints, setting the correct image configuration ensures that your files print with optimal clarity.</p>
+        <p>Digital setups rely mostly on total pixel resolution counts. However, official scanning portals or physical publication houses explicitly require exact print targets. Using our native toolkit, you can <strong>convert JPG to 300 DPI</strong> or <strong>convert PNG to 300 DPI</strong> profiles instantly to meet standard paper requirements.</p>
 
         <h2>Standard Guidelines for Online Submissions</h2>
         <p>Different websites and physical layout platforms look for distinct targets. Here is a helpful general baseline:</p>
@@ -312,7 +338,7 @@
 <script>
 let selectedFilesArray = [];
 let processedBlobs = [];
-let operationalUrls = []; // Track generated Object URLs to clear leaks
+let operationalUrls = []; 
 
 function toggleCustomDpi() {
     const select = document.getElementById('dpi-select');
@@ -444,23 +470,69 @@ function resetUpload() {
 
 /* 
    ===================================================================
-   🔥 METADATA PROCESSORS (Exif Override & Existing Chunk Cleanup)
+   🔥 FIX 4: IMPROVED JPEG METADATA PROCESSOR (JFIF + EXIF Fallback Override)
    ===================================================================
 */
 function changeJpegDpi(arrayBuffer, dpi) {
     const view = new DataView(arrayBuffer);
     let pos = 2;
-    // Update active JFIF APP0 headers
-    while (pos < arrayBuffer.byteLength) {
+    let jfifUpdated = false;
+
+    // 1. Update Standard JFIF APP0 segments if available
+    while (pos < arrayBuffer.byteLength - 16) {
         if (view.getUint8(pos) === 0xFF && view.getUint8(pos + 1) === 0xE0) {
-            view.setUint8(pos + 11, 1); 
-            view.setUint16(pos + 12, dpi); 
-            view.setUint16(pos + 14, dpi); 
+            view.setUint8(pos + 11, 1); // Density type units => Inches
+            view.setUint16(pos + 12, dpi); // X Density
+            view.setUint16(pos + 14, dpi); // Y Density
+            jfifUpdated = true;
             break;
         }
-        pos++; if(pos > 2000) break;
+        pos++; if(pos > 1000) break;
     }
-    // Simple verification check to patch secondary Exif APP1 markers if applicable
+
+    // 2. EXIF Override Loop (Scans for APP1 0xFFE1 marker fields to fix Windows Properties/Photoshop)
+    pos = 2;
+    while (pos < arrayBuffer.byteLength - 4) {
+        if (view.getUint8(pos) === 0xFF && view.getUint8(pos + 1) === 0xE1) {
+            let exifOffset = pos + 4;
+            // Check for valid EXIF header marker
+            if (view.getUint32(exifOffset) === 0x45786966 && view.getUint16(exifOffset + 4) === 0x0000) {
+                let tiffStart = exifOffset + 6;
+                let bigEndian = view.getUint16(tiffStart) === 0x4D4D; // "MM" vs "II"
+                
+                // Get pointer offset mapping logic
+                let ifd0Offset = bigEndian ? view.getUint32(tiffStart + 4) : view.getUint32(tiffStart + 4, true);
+                let currentIfd = tiffStart + ifd0Offset;
+                let entriesCount = bigEndian ? view.getUint16(currentIfd) : view.getUint16(currentIfd, true);
+                
+                let entryPtr = currentIfd + 2;
+                for (let i = 0; i < entriesCount; i++) {
+                    let tag = bigEndian ? view.getUint16(entryPtr) : view.getUint16(entryPtr, true);
+                    
+                    // 0x011A = XResolution, 0x011B = YResolution
+                    if (tag === 0x011A || tag === 0x011B) {
+                        let type = bigEndian ? view.getUint16(entryPtr + 2) : view.getUint16(entryPtr + 2, true);
+                        if (type === 5) { // Rational Type Pointer Allocation
+                            let valueOffset = bigEndian ? view.getUint32(entryPtr + 8) : view.getUint32(entryPtr + 8, true);
+                            let absoluteRationalPtr = tiffStart + valueOffset;
+                            
+                            // Set dynamic values into structural arrays safely
+                            if (bigEndian) {
+                                view.setUint32(absoluteRationalPtr, dpi);
+                                view.setUint32(absoluteRationalPtr + 4, 1);
+                            } else {
+                                view.setUint32(absoluteRationalPtr, dpi, true);
+                                view.setUint32(absoluteRationalPtr + 4, 1, true);
+                            }
+                        }
+                    }
+                    entryPtr += 12;
+                }
+            }
+        }
+        pos += 1; if (pos > 4000) break; // Keep operations localized within layout headers
+    }
+
     return new Blob([arrayBuffer], { type: 'image/jpeg' });
 }
 
@@ -468,7 +540,6 @@ function changePngDpi(arrayBuffer, dpi) {
     const rawBytes = new Uint8Array(arrayBuffer);
     const dpm = Math.round(dpi / 0.0254);
     
-    // Create new clean dynamic physical chunk mapping
     const pHYsChunk = new Uint8Array(21);
     const view = new DataView(pHYsChunk.buffer);
     view.setUint32(0, 9);
@@ -478,7 +549,6 @@ function changePngDpi(arrayBuffer, dpi) {
     view.setUint8(16, 1);
     view.setUint32(17, calcCrc(pHYsChunk.subarray(4, 17)));
 
-    // Extract structure components while skipping any existing legacy pHYs blocks
     let readPos = 8;
     const segments = [rawBytes.subarray(0, 33), pHYsChunk];
     
@@ -494,7 +564,6 @@ function changePngDpi(arrayBuffer, dpi) {
         readPos += 8 + length + 4;
     }
     
-    // Flatten array tracks cleanly
     let totalLen = segments.reduce((acc, curr) => acc + curr.length, 0);
     const outputBuffer = new Uint8Array(totalLen);
     let currentOffset = 0;
@@ -592,7 +661,7 @@ function downloadAllAsZip() {
         document.body.appendChild(tempLink);
         tempLink.click();
         document.body.removeChild(tempLink);
-        setTimeout(() => URL.revokeObjectURL(zipUrl), 10000); // Prevent active retention leak
+        setTimeout(() => URL.revokeObjectURL(zipUrl), 10000); 
     });
 }
 </script>
