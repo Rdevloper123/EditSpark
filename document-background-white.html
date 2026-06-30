@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Updated Title to be more natural for Indian users -->
     <title>Document Cleaner Online - Make Background White & Dark Signature | EditSpark</title>
     <meta name="description" content="Clean scanned documents online for free. Remove shadows, convert document backgrounds to pure white, and make text or signatures dark and sharp.">
-    <link rel="canonical" href="https://edit-spark.vercel.app/document-background-white.html">
+    <link rel="canonical" rel="canonical" href="https://edit-spark.vercel.app/document-background-white.html">
     <meta property="og:title" content="Document Cleaner Online - Make Background White & Dark Signature">
     <meta property="og:description" content="Clean scanned documents online for free. Remove shadows, convert document backgrounds to pure white, and make text or signatures dark and sharp.">
     <meta property="og:url" content="https://edit-spark.vercel.app/document-background-white.html">
@@ -608,17 +609,21 @@
                 reader.onload = function(event) {
                     originalImage = new Image();
                     originalImage.onload = function() {
+                        // Initialize Canvas Dimensions
                         canvas.width = originalImage.width;
                         canvas.height = originalImage.height;
                         
+                        // Show canvas area
                         placeholder.style.display = 'none';
                         canvasContainer.style.display = 'block';
                         
+                        // Enable Controls
                         whitenSlider.disabled = false;
                         contrastSlider.disabled = false;
                         resetBtn.disabled = false;
                         downloadBtn.disabled = false;
                         
+                        // Process with default values
                         processImage();
                     };
                     originalImage.src = event.target.result;
@@ -647,10 +652,11 @@
             processImage();
         });
 
-        // Core Image Processing Engine
+        // Core Image Processing Engine (Thresholding & Lightening Formula)
         function processImage() {
             if (!originalImage) return;
 
+            // Draw original image first
             ctx.drawImage(originalImage, 0, 0);
 
             const wThreshold = parseInt(whitenSlider.value);
@@ -664,29 +670,36 @@
                 const g = data[i+1];
                 const b = data[i+2];
 
+                // Calculate local luminance grayscale value
                 const grayscale = 0.299 * r + 0.587 * g + 0.114 * b;
 
+                // 1. Whitening Phase: Turn grey/shadow backgrounds into pure white
                 if (grayscale > wThreshold) {
-                    data[i] = 255;
-                    data[i+1] = 255;
-                    data[i+2] = 255;
+                    data[i] = 255;     // R
+                    data[i+1] = 255;   // G
+                    data[i+2] = 255;   // B
                 } 
+                // 2. Darkening Phase: Amplify dark colors/text strokes
                 else if (grayscale < cThreshold) {
+                    // Make text/dark elements darker
                     const factor = grayscale / cThreshold;
                     data[i] = r * factor;
                     data[i+1] = g * factor;
                     data[i+2] = b * factor;
                 }
+                // 3. Middle range adjustment for smoothing shadows
                 else {
                     const range = wThreshold - cThreshold;
                     if (range > 0) {
                         const percent = (grayscale - cThreshold) / range;
+                        // Linearly blend towards absolute white to clear soft gradient shadows
                         data[i] = r + (255 - r) * percent;
                         data[i+1] = g + (255 - g) * percent;
                         data[i+2] = b + (255 - b) * percent;
                     }
                 }
             }
+            // Put updated pixels back onto the display view
             ctx.putImageData(imgData, 0, 0);
         }
 
