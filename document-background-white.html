@@ -4,729 +4,578 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Updated Title to be more natural for Indian users -->
-    <title>Document Cleaner Online - Make Background White & Dark Signature | EditSpark</title>
-    <meta name="description" content="Clean scanned documents online for free. Remove shadows, convert document backgrounds to pure white, and make text or signatures dark and sharp.">
-    <link rel="canonical" rel="canonical" href="https://edit-spark.vercel.app/document-background-white.html">
-    <meta property="og:title" content="Document Cleaner Online - Make Background White & Dark Signature">
-    <meta property="og:description" content="Clean scanned documents online for free. Remove shadows, convert document backgrounds to pure white, and make text or signatures dark and sharp.">
-    <meta property="og:url" content="https://edit-spark.vercel.app/document-background-white.html">
+    <title>Document Cleaner Online – Make Background White & Dark Signature | EditSpark</title>
+    <meta name="description" content="Clean scanned documents online for free. Remove shadow from document images, make backgrounds pure white, and darken signature lines instantly in your browser.">
+    <link class="canonical" rel="canonical" href="https://edit-spark.vercel.app/document-background-white.html" />
+    <meta property="og:title" content="Document Cleaner Online – Make Background White & Dark Signature">
+    <meta property="og:description" content="Clean document backgrounds and make signatures dark black online. Perfect for online job application forms.">
     <meta property="og:type" content="website">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Document Cleaner Online - Make Background White & Dark Signature">
-    <meta name="twitter:description" content="Clean scanned documents online for free. Remove shadows, convert document backgrounds to pure white, and make text or signatures dark and sharp.">
+    <meta property="og:url" content="https://edit-spark.vercel.app/document-background-white.html">
     
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <!-- Optimized Native CSS -->
     <style>
-        :root {
-            --primary-color: #4f46e5;
-            --primary-hover: #4338ca;
-            --secondary-color: #0f172a;
-            --bg-color: #f8fafc;
-            --card-bg: #ffffff;
-            --text-main: #334155;
-            --text-dark: #0f172a;
-            --border-color: #e2e8f0;
-            --success-color: #10b981;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            line-height: 1.6;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        /* Header & Navigation */
-        header {
-            background-color: var(--card-bg);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo a {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-            align-items: center;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-main);
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary-color);
-        }
-
-        /* Dropdown Menu */
-        .dropdown {
-            position: relative;
-        }
-
-        .dropdown-toggle {
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-        }
-
-        .dropdown-menu {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background-color: var(--card-bg);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            border-radius: 0.5rem;
-            padding: 0.5rem 0;
-            min-width: 240px;
-            display: none;
-            border: 1px solid var(--border-color);
-        }
-
-        .dropdown-menu li a {
-            padding: 0.75rem 1.5rem;
-            display: block;
-            font-weight: 400;
-        }
-
-        .dropdown-menu li a:hover {
-            background-color: #f1f5f9;
-        }
-
-        .dropdown:hover .dropdown-menu {
-            display: block;
-        }
-
-        /* Mobile Menu Hamburger */
-        .hamburger {
-            display: none;
-            cursor: pointer;
-            font-size: 1.5rem;
-        }
-
-        /* Main Layout */
-        .main-container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 2rem;
-            flex: 1;
-            width: 100%;
-        }
-
-        .tool-header {
-            text-align: center;
-            margin-bottom: 2.5rem;
-        }
-
-        .tool-header h1 {
-            color: var(--text-dark);
-            font-size: 2.25rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .tool-header p {
-            color: #64748b;
-            font-size: 1.1rem;
-        }
-
-        .workspace {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            background: var(--card-bg);
-            padding: 2rem;
-            border-radius: 1rem;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-        }
-
-        /* Left Control Panel */
-        .control-panel {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .upload-box {
-            border: 2px dashed #cbd5e1;
-            padding: 3rem 2rem;
-            text-align: center;
-            border-radius: 0.75rem;
-            cursor: pointer;
-            background: #f8fafc;
-            transition: all 0.3s;
-        }
-
-        .upload-box:hover {
-            border-color: var(--primary-color);
-            background: #eef2ff;
-        }
-
-        .upload-box i {
-            font-size: 3rem;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-
-        .upload-box p {
-            font-weight: 500;
-            color: var(--text-dark);
-        }
-
-        .upload-box span {
-            font-size: 0.85rem;
-            color: #64748b;
-        }
-
-        #fileInput {
-            display: none;
-        }
-
-        .sliders-group {
-            display: flex;
-            flex-direction: column;
-            gap: 1.25rem;
-            background: #f8fafc;
-            padding: 1.25rem;
-            border-radius: 0.5rem;
-            border: 1px solid var(--border-color);
-        }
-
-        .slider-container {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .slider-label {
-            display: flex;
-            justify-content: space-between;
-            font-weight: 500;
-            font-size: 0.95rem;
-            color: var(--text-dark);
-        }
-
-        input[type="range"] {
-            width: 100%;
-            accent-color: var(--primary-color);
-            cursor: pointer;
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 1rem;
-        }
-
-        button {
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            font-size: 1rem;
-            flex: 1;
-        }
-
-        .btn-primary {
-            background-color: var(--primary-color);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background-color: var(--primary-hover);
-        }
-
-        .btn-secondary {
-            background-color: #e2e8f0;
-            color: var(--text-dark);
-        }
-
-        .btn-secondary:hover {
-            background-color: #cbd5e1;
-        }
-
-        button:disabled {
-            background-color: #cbd5e1;
-            color: #94a3b8;
-            cursor: not-allowed;
-        }
-
-        /* Right Preview Panel */
-        .preview-panel {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid var(--border-color);
-            border-radius: 0.75rem;
-            background: #f1f5f9;
-            position: relative;
-            min-height: 400px;
-            overflow: hidden;
-        }
-
-        .preview-placeholder {
-            text-align: center;
-            color: #94a3b8;
-        }
-
-        .preview-placeholder i {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-        }
-
-        #canvasContainer {
-            max-width: 100%;
-            max-height: 500px;
-            display: none;
-            overflow: auto;
-            padding: 1rem;
-        }
-
-        canvas {
-            max-width: 100%;
-            height: auto;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            background: white;
-        }
-
-        /* Info Section / SEO Text */
-        .info-section {
-            margin-top: 4rem;
-            background: var(--card-bg);
-            padding: 2.5rem;
-            border-radius: 1rem;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-        }
-
-        .info-section h2 {
-            color: var(--text-dark);
-            margin-bottom: 1rem;
-            font-size: 1.75rem;
-        }
-
-        .info-section h3 {
-            color: var(--text-dark);
-            margin: 1.5rem 0 0.5rem 0;
-            font-size: 1.25rem;
-        }
-
-        .info-section p, .info-section ul {
-            margin-bottom: 1rem;
-            color: var(--text-main);
-        }
-
-        .info-section ul {
-            padding-left: 1.5rem;
-        }
-
-        .info-section li {
-            margin-bottom: 0.5rem;
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--secondary-color);
-            color: #94a3b8;
-            padding: 3rem 2rem 1.5rem 2rem;
-            margin-top: auto;
-        }
-
-        .footer-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            gap: 3rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-about h3 {
-            color: white;
-            margin-bottom: 1rem;
-            font-size: 1.25rem;
-        }
-
-        .footer-links h4 {
-            color: white;
-            margin-bottom: 1rem;
-            font-size: 1rem;
-        }
-
-        .footer-links ul {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 0.75rem;
-        }
-
-        .footer-links a {
-            color: #94a3b8;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-links a:hover {
-            color: white;
-        }
-
-        .footer-bottom {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding-top: 1.5rem;
-            border-top: 1px solid #334155;
-            text-align: center;
-            font-size: 0.9rem;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 968px) {
-            .workspace {
-                grid-template-columns: 1fr;
-            }
-            .footer-container {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-        }
-
-        @media (max-width: 640px) {
-            .nav-links {
-                display: none;
-            }
-            .hamburger {
-                display: block;
-            }
-            .tool-header h1 {
-                font-size: 1.75rem;
-            }
-            .btn-group {
-                flex-direction: column;
-            }
-        }
+        body { background-color: #f3f4f6; font-family: ui-sans-serif, system-ui, sans-serif; color: #1e293b; min-height: 100vh; display: flex; flex-direction: column; margin: 0; }
+        .nav-bg { background-color: #ffffff; border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; z-index: 50; }
+        .max-w-7xl { max-width: 80rem; margin-left: auto; margin-right: auto; padding: 0 1rem; }
+        .flex-row-nav { display: flex; justify-content: space-between; height: 4rem; align-items: center; }
+        .btn-purple { background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%); cursor: pointer; }
+        .btn-purple:disabled { opacity: 0.7; cursor: not-allowed; }
+        .preview-box { border: 2px dashed #cbd5e1; transition: all 0.3s ease; background-color: #f8fafc; }
+        .preview-box:hover { border-color: #a855f7; }
+        .main-container { flex-grow: 1; max-width: 56rem; margin-left: auto; margin-right: auto; padding: 2rem 1rem; width: 100%; box-sizing: border-box; }
+        .card { background-color: #ffffff; border-radius: 0.75rem; border: 1px solid #e2e8f0; padding: 1.5rem; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); }
+        @media (min-width: 768px) { .card { padding: 2rem; } }
+        .hidden { display: none !important; }
+        .text-center { text-align: center; }
+        .uppercase { text-transform: uppercase; }
+        .font-black { font-weight: 900; }
+        .tracking-tight { letter-spacing: -0.025em; }
+        .text-slate-900 { color: #0f172a; }
+        .text-purple-500 { color: #a855f7; }
+        .prose h2 { font-size: 1.5rem; font-weight: 800; color: #0f172a; margin-top: 2rem; margin-bottom: 0.75rem; }
+        .prose h3 { font-size: 1.125rem; font-weight: 700; color: #0f172a; margin: 1.5rem 0 0.5rem 0; }
+        .prose p { color: #475569; line-height: 1.625; margin-bottom: 1rem; }
+        .prose p a { color: #a855f7; text-decoration: none; font-weight: 600; }
+        .prose p a:hover { text-decoration: underline; }
+        .prose ul { list-style-type: disc; padding-left: 1.25rem; color: #475569; margin-bottom: 1rem; }
+        .prose li { margin-bottom: 0.25rem; }
+        .animate-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
+        .animate-spin { animation: spin 1s linear infinite; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        
+        /* Layout Styled Elements */
+        .breadcrumb { display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; color: #64748b; font-weight: 500; margin-bottom: 1.5rem; }
+        .breadcrumb a { color: #a855f7; text-decoration: none; }
+        .trust-badges { display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; margin-top: 1rem; font-size: 0.85rem; font-weight: 600; color: #475569; }
+        .trust-badge-item { display: flex; align-items: center; gap: 0.25rem; background: #f1f5f9; padding: 0.25rem 0.75rem; border-radius: 9999px; }
+        .grid-links { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 0.75rem; margin-top: 1rem; }
+        .grid-links a { display: block; padding: 0.75rem; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 0.5rem; color: #7e22ce; text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: all 0.2s; }
+        .grid-links a:hover { background: #f3e8ff; border-color: #c084fc; }
+        .trust-section-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem; }
+        .trust-card { padding: 1rem; background: #fafafa; border: 1px solid #f1f5f9; border-radius: 0.5rem; text-align: center; }
+        .trust-card strong { color: #0f172a; display: block; margin-bottom: 0.25rem; font-size: 1rem; }
+        .trust-card span { font-size: 0.85rem; color: #64748b; }
+        .btn-secondary { background-color: #475569; color: white; font-weight: 700; padding: 0.75rem 1.5rem; border-radius: 0.5rem; text-decoration: none; box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05); text-transform: uppercase; letter-spacing: 0.05em; transition: background-color 0.2s; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; }
+        .btn-secondary:hover { background-color: #334155; }
     </style>
+
+    <!-- Enhanced Schema Graph (Includes WebApplication, BreadcrumbList, WebPage, and FAQPage) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "@id": "https://edit-spark.vercel.app/document-background-white.html#webapp",
+          "url": "https://edit-spark.vercel.app/document-background-white.html",
+          "name": "Document Cleaner Online & Signature Enhancer",
+          "applicationCategory": "ImageApplication",
+          "applicationSubCategory": "Document Editing",
+          "featureList": [
+            "Remove document shadow",
+            "Make background white",
+            "Darken signature",
+            "Browser-based processing"
+          ],
+          "isAccessibleForFree": true,
+          "operatingSystem": "All",
+          "browserRequirements": "Requires HTML5 Canvas support.",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "INR"
+          }
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://edit-spark.vercel.app/document-background-white.html#webpage",
+          "url": "https://edit-spark.vercel.app/document-background-white.html",
+          "name": "Document Cleaner Online – Make Background White & Dark Signature",
+          "description": "Free web utility to clean scanned documents, remove phone camera shadows, and convert background sheets to pure white setup instantly.",
+          "isPartOf": {
+            "@type": "WebSite",
+            "name": "EditSpark",
+            "url": "https://edit-spark.vercel.app/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://edit-spark.vercel.app/document-background-white.html#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://edit-spark.vercel.app/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Document Cleaner Online",
+              "item": "https://edit-spark.vercel.app/document-background-white.html"
+            }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://edit-spark.vercel.app/document-background-white.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Does this tool remove document shadows?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, it automatically scans your picture and removes dark or grey camera shadows, making the entire paper background look perfectly clean and pure white."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I make my signature dark black?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, if your signature looks light, faded, or blurry, our tool fixes the ink color channels to turn it into a clear, solid dark black shape."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Which file formats are supported?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "You can upload standard image files like JPG, JPEG, and PNG. These are the most common formats used by phones and mobile cameras."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Does it work perfectly on mobile phones?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, you can open this website inside any smartphone browser (like Chrome or Safari) on Android or iPhone to clean your files instantly."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Does it reduce image quality?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No, it changes the background color and increases text contrast while keeping the original dimensions and text clarity completely intact."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is an active internet connection required to process files?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "An internet connection is required to open this tool. After the page loads, image processing happens directly in your browser and your files are not uploaded to our server."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I use scanned PDFs here?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No, this tool only supports image files like JPG and PNG. If you have a PDF file, simply convert it into an image first and then upload it here."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I clean handwritten notebook documents?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, you can clean any handwritten notes, signatures, or drawings on lined or unlined paper sheets to remove grey background gradients instantly."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is this online tool safe for personal papers?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "It is 100% private and safe. Your files are never uploaded to any server. All processing runs locally inside your browser, meaning your data stays on your device."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I use this for SSC and Railway forms?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, this tool is perfect for official exam forms like SSC, Banking, UPSC, and Railway where clean white background files are strictly requested."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
 </head>
 <body>
-
-    <!-- Header Navigation -->
-    <header>
-        <nav class="nav-container">
-            <div class="logo">
-                <a href="index.html"><i class="fa-solid fa-bolt"></i> EditSpark</a>
-            </div>
-            <i class="fa-solid fa-bars hamburger"></i>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li class="dropdown">
-                    <span class="dropdown-toggle">Image Tools <i class="fa-solid fa-chevron-down" style="font-size: 0.75rem;"></i></span>
-                    <ul class="dropdown-menu">
-                        <li><a href="all-in-one-image-tool.html">All-in-One Tool</a></li>
-                        <li><a href="compress-image.html">Compress Image</a></li>
-                        <li><a href="convert-image-to-300-dpi.html">Convert to 300 DPI</a></li>
-                        <li><a href="crop-image.html">Crop Image</a></li>
-                        <li><a href="image-format-converter.html">Format Converter</a></li>
-                        <li><a href="increase-image-size.html">Increase Image Size</a></li>
-                        <li><a href="passport-photo-maker.html">Passport Photo Maker</a></li>
-                        <li><a href="resize-image.html">Resize Image</a></li>
-                    </ul>
-                </li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <!-- Main Tool Container -->
-    <main class="main-container">
-        <div class="tool-header">
-            <h1>Document Cleaner Online</h1>
-            <p>Make backgrounds pure white, remove shadows, and enhance text/signatures instantly.</p>
-        </div>
-
-        <div class="workspace">
-            <!-- Left Side controls -->
-            <div class="control-panel">
-                <div class="upload-box" onclick="document.getElementById('fileInput').click()">
-                    <i class="fa-solid fa-file-invoice"></i>
-                    <p>Click to Upload Document / Signature</p>
-                    <span>Supports JPG, PNG, WEBP up to 10MB</span>
-                    <input type="file" id="fileInput" accept="image/*">
-                </div>
-
-                <div class="sliders-group">
-                    <div class="slider-container">
-                        <div class="slider-label">
-                            <span>Background Whiteness (Whiten)</span>
-                            <span id="whitenVal">120</span>
-                        </div>
-                        <input type="range" id="whitenSlider" min="0" max="255" value="120" disabled>
+    <nav class="nav-bg">
+        <div class="max-w-7xl">
+            <div class="flex-row-nav">
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <div style="background-color: #a855f7; padding: 0.5rem; border-radius: 0.5rem; color: white; display: flex; align-items: center; box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);">
+                        <svg style="width: 1.25rem; height: 1.25rem;" fill="currentColor" viewBox="0 0 512 512"><path d="M4.1 38.2C1.4 34.2 0 29.4 0 24.6C0 11 11 0 24.6 0H133.9c13.1 0 25.1 7.2 31.2 18.8l48 91.4L372.9 22.4c6.1-4.9 13.8-7.6 21.8-7.6c19.5 0 35.4 15.9 35.4 35.4V168.3l82.7 62c11.6 8.7 15.6 24.3 9.4 37.4l-48 101.4c-4.9 10.4-15.3 17-26.9 17H342.3c-10.8 0-21-5.3-27.1-14.2L249.4 276.1l-65.7 78.9c-6.6 7.9-16.6 12.5-27.1 12.5H41.1c-15.7 0-29.3-10.5-33.3-25.7l-32-121.4c-3.1-11.8 .4-24.3 9.4-32.9L108 181.7 4.1 38.2zM277.2 408.3c5-4.2 11.4-6.5 18-6.5h85.1c11 0 20.8 6.4 25.1 16.5l32 75.4c4.9 11.5 .4 24.8-10.4 31c-4.9 2.8-10.4 4.3-16 4.3H320.7c-12 0-22.9-6.8-28.2-17.6l-26.6-54.6c-5.1-10.4-1.4-23 8.3-29.2l3-1.9z"/></svg>
                     </div>
-
-                    <div class="slider-container">
-                        <div class="slider-label">
-                            <span>Text / Signature Darkness (Contrast)</span>
-                            <span id="contrastVal">40</span>
-                        </div>
-                        <input type="range" id="contrastSlider" min="0" max="255" value="40" disabled>
-                    </div>
+                    <span class="text-2xl font-black tracking-tight text-slate-900" style="font-size: 1.5rem;">Edit<span class="text-purple-500">Spark</span></span>
                 </div>
-
-                <div class="btn-group">
-                    <button id="resetBtn" class="btn-secondary" disabled><i class="fa-solid fa-rotate-left"></i> Reset</button>
-                    <button id="downloadBtn" class="btn-primary" disabled><i class="fa-solid fa-download"></i> Download Cleaned PDF/Image</button>
-                </div>
-            </div>
-
-            <!-- Right Side Preview -->
-            <div class="preview-panel" id="previewPanel">
-                <div class="preview-placeholder" id="placeholder">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i>
-                    <p>Your enhanced document preview will appear here</p>
-                </div>
-                <div id="canvasContainer">
-                    <canvas id="documentCanvas"></canvas>
+                <div style="display: flex; align-items: center;">
+                    <a href="index.html" style="font-size: 0.875rem; font-weight: 700; color: #475569; text-decoration: none; display: flex; align-items: center; gap: 0.25rem;">
+                        <svg style="width: 1rem; height: 1rem; color: #a855f7;" fill="currentColor" viewBox="0 0 576 512"><path d="M575.8 255.5c0 18-15 32.1-32 32.1h-32v216.5c0 4.1-3.3 7.4-7.4 7.4H351.8c-4.1 0-7.4-3.3-7.4-7.4V343.8c0-4.1-3.3-7.4-7.4-7.4h-72.1c-4.1 0-7.4 3.3-7.4 7.4v160.3c0 4.1-3.3 7.4-7.4 7.4H71.7c-4.1 0-7.4-3.3-7.4-7.4V287.6H32.1c-17.1 0-32.1-14.1-32.1-32.1c0-9.4 4.2-18.4 11.6-24.5L257.2 15.4c17-14.2 42.5-14.2 59.5 0l247.4 215.6c7.5 6 11.7 15.1 11.7 24.5z"/></svg> HOME
+                    </a>
                 </div>
             </div>
         </div>
+    </nav>
 
-        <!-- SEO/Information Section -->
-        <section class="info-section">
-            <h2>How to Make Document Background Pure White Online?</h2>
-            <p>Have you taken a photo of a document, assignment, or signature from your mobile phone, only to find it looks dark, grey, or full of shadows? Our free online Document Cleaner tool is designed to fix exactly that problem in seconds.</p>
+    <main class="main-container" id="main-content">
+        <!-- Visible Breadcrumb Component -->
+        <div class="breadcrumb">
+            <a href="index.html">Home</a> 
+            <span>&gt;</span> 
+            <a href="index.html#image-tools">Image Tools</a> 
+            <span>&gt;</span> 
+            <span>Document Cleaner</span>
+        </div>
+
+        <div class="text-center" style="margin-bottom: 2rem;">
+            <!-- Updated H1 to be crisp and highly targeted -->
+            <h1 class="text-3xl font-black text-slate-900 tracking-tight uppercase" style="font-size: 1.875rem; margin: 0;">Document Cleaner Online – Make Background White & Dark Signature</h1>
+            <p class="mt-2 text-slate-500 font-medium max-w-2xl mx-auto" style="color: #64748b; font-weight: 500; margin-top: 0.5rem; max-width: 42rem; margin-left: auto; margin-right: auto;">
+                Perfect for <strong>SSC, Railway, Banking, UPSC, and Government forms</strong> online application processes. Clean your <strong>passport photo</strong> paper layouts and fix your official <strong>signature upload</strong> issues directly in your web browser instantly.
+            </p>
+        </div>
+
+        <div class="card">
+            <div id="enhanceDropzone" class="preview-box" style="border-radius: 0.75rem; padding: 2rem; text-center; cursor: pointer; margin-bottom: 1.5rem; text-align: center;">
+                <input type="file" id="enhanceInput" accept="image/*" class="hidden">
+                <div id="enhancePrompt">
+                    <svg style="width: 2.5rem; height: 2.5rem; color: #a855f7; margin-bottom: 0.75rem; display: inline-block;" fill="currentColor" viewBox="0 0 512 512"><path d="M4.1 38.2C1.4 34.2 0 29.4 0 24.6C0 11 11 0 24.6 0H133.9c13.1 0 25.1 7.2 31.2 18.8l48 91.4L372.9 22.4c6.1-4.9 13.8-7.6 21.8-7.6c19.5 0 35.4 15.9 35.4 35.4V168.3l82.7 62c11.6 8.7 15.6 24.3 9.4 37.4l-48 101.4c-4.9 10.4-15.3 17-26.9 17H342.3c-10.8 0-21-5.3-27.1-14.2L249.4 276.1l-65.7 78.9c-6.6 7.9-16.6 12.5-27.1 12.5H41.1c-15.7 0-29.3-10.5-33.3-25.7l-32-121.4c-3.1-11.8 .4-24.3 9.4-32.9L108 181.7 4.1 38.2zM277.2 408.3c5-4.2 11.4-6.5 18-6.5h85.1c11 0 20.8 6.4 25.1 16.5l32 75.4c4.9 11.5 .4 24.8-10.4 31c-4.9 2.8-10.4 4.3-16 4.3H320.7c-12 0-22.9-6.8-28.2-17.6l-26.6-54.6c-5.1-10.4-1.4-23 8.3-29.2l3-1.9z"/></svg>
+                    <p style="font-weight: 700; color: #334155; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.875rem; margin: 0;">Upload Signature or Document <span class="text-purple-500">browse</span></p>
+                    <p style="font-size: 0.75rem; color: #94a3b8; margin-top: 0.25rem;">Drag & drop works too. Supports JPG, JPEG, PNG</p>
+                </div>
+                <div id="enhancePreviewContainer" class="hidden" style="flex-direction: column; align-items: center; display: flex;">
+                    <img id="enhancePreview" style="max-height: 16rem; border-radius: 0.25rem; box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05); margin-bottom: 0.75rem;" alt="EditSpark Document Background White Preview Image">
+                    <p id="enhanceFileInfo" style="font-size: 0.875rem; color: #64748b; font-weight: 700; margin: 0;"></p>
+                </div>
+            </div>
             
-            <h3>Key Features:</h3>
-            <ul>
-                <li><strong>Remove Shadows Safely:</strong> Intelligently filters out uneven lighting and mobile camera shadows without erasing your original handwriting or printed text.</li>
-                <li><strong>Pure White Background:</strong> Boosts the background colors to clean 100% white (#FFFFFF), making it ready for official submissions, prints, or digital scanning records.</li>
-                <li><strong>Darken Signatures & Text:</strong> Increases the contrast of ink, stamps, and text marks so that signature transparency or black-and-white documents look sharp and readable.</li>
-                <li><strong>100% Privacy Guaranteed:</strong> All document processing happens directly within your web browser. Your sensitive receipts, forms, or IDs are never uploaded to any cloud server.</li>
-            </ul>
+            <button id="enhanceBtn" class="btn-purple" style="width: 100%; color: white; font-weight: 700; padding: 1rem; border-radius: 0.5rem; border: none; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; gap: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em; font-size: 1rem;">
+                <span id="btnIcon" class="animate-pulse" style="display: inline-flex; align-items: center;">
+                    <svg style="width: 1rem; height: 1rem;" fill="currentColor" viewBox="0 0 384 512"><path d="M0 256L28.5 218.2l198.7-23.5c10.4-1.2 19-8.7 21.7-18.9L288 32H144c-17.7 0-32 14.3-32 32V176c0 8.8-7.2 16-16 16H32c-17.7 0-32 14.3-32 32V256zm384 0l-28.5 37.8L156.8 317.3c-10.4 1.2-19 8.7-21.7 18.9L96 480H240c17.7 0/32-14.3 32-32V336c0-8.8 7.2-16 16-16h64c17.7 0 32-14.3 32-32V256z"/></svg>
+                </span>
+                <span id="btnText">Magic Auto-Clean (Pure White & Dark Sign)</span>
+            </button>
 
-            <h3>Steps to Clean Your Scanned Files:</h3>
-            <p>1. Upload your photo or scanned document using the upload box above.<br>
-            2. Adjust the <strong>Background Whiteness</strong> slider to clear away grey shades and dark shadows.<br>
-            3. Adjust the <strong>Text / Signature Darkness</strong> slider to bring back deep black contrast to your text lines.<br>
-            4. Click on 'Download' to instantly save your clean image.</p>
+            <!-- Trust Badges directly below CTA -->
+            <div class="trust-badges">
+                <div class="trust-badge-item">✓ Free Forever</div>
+                <div class="trust-badge-item">✓ Works Online</div>
+                <div class="trust-badge-item">✓ No Upload Needed</div>
+                <div class="trust-badge-item">✓ 100% Secure</div>
+            </div>
+
+            <div id="enhanceResult" class="hidden" style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #e2e8f0; text-align: center;">
+                <div style="display: inline-flex; align-items: center; gap: 0.5rem; color: #059669; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; font-size: 0.875rem;">
+                    <svg style="width: 1.25rem; height: 1.25rem;" fill="currentColor" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>
+                    <span>Background Cleaned & Signature Enhanced!</span>
+                </div>
+                <div style="display: flex; justify-content: center; margin-bottom: 1.5rem;">
+                    <canvas id="resultCanvas" style="max-height: 16rem; border-radius: 0.375rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border: 1px solid #cbd5e1; background-color: #ffffff;"></canvas>
+                </div>
+                <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+                    <a id="downloadEnhanceBtn" style="display: inline-flex; align-items: center; gap: 0.5rem; background-color: #10b981; color: white; font-weight: 700; padding: 0.75rem 2rem; border-radius: 0.5rem; text-decoration: none; box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05); text-transform: uppercase; letter-spacing: 0.05em; transition: background-color 0.2s;">
+                        <svg style="width: 1rem; height: 1rem;" fill="currentColor" viewBox="0 0 512 512"><path d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V274.7L115.3 166c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7V32zM64 416c-17.7 0-32 14.3-32 32s14.3 32 32 32H448c17.7 0 32-14.3 32-32s-14.3-32-32-32H64z"/></svg>
+                        <span>Download Cleaned Image</span>
+                    </a>
+                    <!-- Process Another Image Button -->
+                    <button id="processAnotherBtn" class="btn-secondary">
+                        <svg style="width: 1rem; height: 1rem;" fill="currentColor" viewBox="0 0 512 512"><path d="M463.5 224H472c13.3 0 24-10.7 24-24V72c0-9.7-5.8-18.5-14.8-22.2s-19.3-1.7-26.2 5.2L413.4 96.6c-4.8 4.8-11.1 7.4-17.6 7.4C311.6 104.1 240 175.7 240 260.1c0 14.4 2 28.3 5.7 41.5c3.3 11.7 15.4 18.5 27.1 15.2s18.5-15.4 15.2-27.1c-2.7-9.5-4.1-19.4-4.1-29.7c0-66.2 53.8-120 120-120c4.9 0 9.7 .3 14.5 .9c8.6 1.1 17-1.9 22.9-7.9L463.5 224zM48.5 288H40c-13.3 0-24 10.7-24 24v128c0 9.7 5.8 18.5 14.8 22.2s19.3 1.7 26.2-5.2l41.7-41.7c4.8-4.8 11.1-7.4 17.6-7.4C198.4 407.9 270 336.3 270 251.9c0-14.4-2-28.3-5.7-41.5c-3.3-11.7-15.4-18.5-27.1-15.2s-18.5 15.4-15.2 27.1c2.7 9.5 4.1 19.4 4.1 29.7c0 66.2-53.8 120-120 120c-4.9 0-9.7-.3-14.5-.9c-8.6-1.1-17 1.9-22.9 7.9L48.5 288z"/></svg>
+                        <span>Process Another Image</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <hr style="margin-top: 3rem; margin-bottom: 3rem; border: 0; border-top: 1px solid #e2e8f0;">
+
+        <section class="prose">
+            <div>
+                <h2>What is the Document Cleaner Online Tool?</h2>
+                <p>When you take a photo of an official form or signature with your mobile phone, it often looks dark and filled with grey shadows. Our smart <strong>scanned document cleaner</strong> solves this instantly. It lets you safely <a href="remove-shadow.html">remove shadow from document</a> sheets and shifts them to a pristine white setup. Need to adjust your handwriting size before submission? You can seamlessly <a href="resize-signature.html">Resize Signature for SSC Form</a> or alternative state registration portals inside our unified suite.</p>
+            </div>
+
+            <div>
+                <h2>How to Make Document Background White Online?</h2>
+                <p style="margin-bottom: 0.5rem;">Cleaning your document images on EditSpark is simple and takes just a few clicks:</p>
+                <ul>
+                    <li>Click inside the box or drag and drop your paper photo files directly.</li>
+                    <li>Press the <strong>Magic Auto-Clean</strong> button to initialize our client-side <strong>shadow remover</strong>.</li>
+                    <li>Watch as grey background colors vanish and your main handwriting lines darken.</li>
+                    <li>Click download to secure your perfectly cleaned image instantly.</li>
+                </ul>
+                <p>After using this utility to fix your files, you can quickly <a href="convert-image-300-dpi.html">Convert Image to 300 DPI</a> to match high-resolution scanning rules requested by premium government portals.</p>
+            </div>
+
+            <div>
+                <h2>Benefits of Using Document Background White Tool</h2>
+                <p>This <strong>document image cleaner</strong> is completely automated, meaning you don't need any complex software skills to fix images. It uses advanced canvas data matrix channels to intelligently separate text lines from paper backdrops. Before uploading your cleared sheet, remember you can also <a href="crop-image.html">Crop Passport Photo</a> layouts perfectly to save space and fulfill strict dimension guidelines.</p>
+            </div>
+
+            <div>
+                <h2>Features</h2>
+                <ul>
+                    <li><strong>Dynamic Shadow Eraser:</strong> Eliminates inconsistent camera lighting instantly.</li>
+                    <li><strong>Ink Stroke Darkener:</strong> Automatically identifies blue or black ink to deepen line weights.</li>
+                    <li><strong>Privacy First Layout:</strong> Processes everything directly on your screen without any server storage risk.</li>
+                    <li><strong>Completely Free Setup:</strong> No watermarks, hidden payment gates, or premium tokens needed.</li>
+                </ul>
+                <p>If your cleared document file size ends up slightly larger than requested, simply use our quick utility to <a href="compress-image-50kb.html">Compress Image to 50KB</a> without losing structural sharpness.</p>
+            </div>
+
+            <div>
+                <h2>Supported Formats</h2>
+                <p>Our utility natively recognizes standard format extensions including <strong>JPG, JPEG, and PNG</strong> images. You can use standard flat images taken with any Android or iOS device camera instantly.</p>
+            </div>
+
+            <div>
+                <h2>Who Can Use This Tool</h2>
+                <p>This utility is heavily tailored for candidates preparing application forms for <strong>SSC, Railway, Banking, UPSC, and State Government portals</strong>. It is also an ideal companion for remote professionals needing crisp digital signatures for contracts, agreements, or invoices without a heavy office scanner machine nearby.</p>
+            </div>
+
+            <div>
+                <h2>Tips for Better Results</h2>
+                <p>For pristine outcomes, try to take your original photograph under steady, bright natural light. Ensure your handwritten paper signature isn't heavily crumpled, as keeping the sheet flat lets our <strong>clean scanned document</strong> engine separate shades accurately.</p>
+            </div>
+
+            <!-- Contextually Improved Related Tools Anchor Texts -->
+            <div>
+                <h2>Related Tools</h2>
+                <p>Check out our other free image workflow helpers to prepare your application documents perfectly:</p>
+                <div class="grid-links">
+                    <a href="compress-image-50kb.html">Compress Image to 50KB</a>
+                    <a href="resize-signature.html">Resize Signature for SSC Form</a>
+                    <a href="crop-image.html">Crop Passport Photo</a>
+                    <a href="convert-image-300-dpi.html">Convert Image to 300 DPI</a>
+                    <a href="passport-photo-maker.html">Passport Photo Maker</a>
+                    <a href="image-to-jpg.html">Convert Image to JPG</a>
+                    <a href="compress-image-20kb.html">Compress Image to 20KB</a>
+                    <a href="resize-image.html">Resize Image Dimension</a>
+                </div>
+            </div>
+
+            <hr style="margin-top: 3rem; margin-bottom: 3rem; border: 0; border-top: 1px solid #e2e8f0;">
+
+            <!-- Expanded Trust Section -->
+            <div>
+                <h2>Why EditSpark?</h2>
+                <p>EditSpark is built to give you high-quality document preparation utilities without any limitations. Here is what makes us dependable:</p>
+                <div class="trust-section-grid">
+                    <div class="trust-card"><strong>100% Free</strong><span>No hidden charges or limits</span></div>
+                    <div class="trust-card"><strong>No Registration</strong><span>No email or login required</span></div>
+                    <div class="trust-card"><strong>In-Browser Tech</strong><span>Your data never uploads</span></div>
+                    <div class="trust-card"><strong>Privacy Safe</strong><span>Fully protected client-side processing</span></div>
+                    <div class="trust-card"><strong>Fast Processing</strong><span>Get results within milliseconds</span></div>
+                    <div class="trust-card"><strong>No Watermark</strong><span>Clean, professional output files</span></div>
+                </div>
+            </div>
+
+            <hr style="margin-top: 3rem; margin-bottom: 3rem; border: 0; border-top: 1px solid #e2e8f0;">
+
+            <!-- Expanded FAQs with Updated Contradiction-Free Language -->
+            <div>
+                <h2 style="text-align: center; margin-bottom: 1.5rem;">Frequently Asked Questions (FAQs)</h2>
+                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    <div>
+                        <h3>1. Does this tool remove document shadows?</h3>
+                        <p>Yes, it automatically scans your picture and removes dark or grey camera shadows, making the entire paper background look perfectly clean and pure white.</p>
+                    </div>
+                    <div>
+                        <h3>2. Can I make my signature dark black?</h3>
+                        <p>Yes, if your signature looks light, faded, or blurry, our tool fixes the ink color channels to turn it into a clear, solid dark black shape.</p>
+                    </div>
+                    <div>
+                        <h3>3. Which file formats are supported?</h3>
+                        <p>You can upload standard image files like JPG, JPEG, and PNG. These are the most common formats used by phones and mobile cameras.</p>
+                    </div>
+                    <div>
+                        <h3>4. Does it work perfectly on mobile phones?</h3>
+                        <p>Yes, you can open this website inside any smartphone browser (like Chrome or Safari) on Android or iPhone to clean your files instantly.</p>
+                    </div>
+                    <div>
+                        <h3>5. Does it reduce image quality?</h3>
+                        <p>No, it changes the background color and increases text contrast while keeping the original dimensions and text clarity completely intact.</p>
+                    </div>
+                    <div>
+                        <h3>6. Is an active internet connection required to process files?</h3>
+                        <p>An internet connection is required to open this tool. After the page loads, image processing happens directly in your browser and your files are not uploaded to our server.</p>
+                    </div>
+                    <div>
+                        <h3>7. Can I use scanned PDFs here?</h3>
+                        <p>No, this tool only supports image files like JPG and PNG. If you have a PDF file, simply convert it into an image first and then upload it here.</p>
+                    </div>
+                    <div>
+                        <h3>8. Can I clean handwritten notebook documents?</h3>
+                        <p>Yes, you can clean any handwritten notes, signatures, or drawings on lined or unlined paper sheets to remove grey background gradients instantly.</p>
+                    </div>
+                    <div>
+                        <h3>9. Is this online tool safe for personal papers?</h3>
+                        <p>It is 100% private and safe. Your files are never uploaded to any server. All processing runs locally inside your browser, meaning your data stays on your device.</p>
+                    </div>
+                    <div>
+                        <h3>10. Can I use this for SSC and Railway forms?</h3>
+                        <p>Yes, this tool is perfect for official exam forms like SSC, Banking, UPSC, and Railway where clean white background files are strictly requested.</p>
+                    </div>
+                </div>
+            </div>
         </section>
     </main>
 
-    <!-- Footer Section -->
-    <footer>
-        <div class="footer-container">
-            <div class="footer-about">
-                <h3><i class="fa-solid fa-bolt"></i> EditSpark</h3>
-                <p>Free online utility tools to handle your image compression, resizing, document cleaning, and passport photo generation safely and instantly.</p>
+    <!-- Updated Footer Paths and Links -->
+    <footer style="background-color: #ffffff; border-top: 1px solid #e2e8f0; padding: 2.5rem 0; margin-top: 3rem;">
+        <div style="max-width: 80rem; margin-left: auto; margin-right: auto; padding: 0 1rem; text-align: center;">
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin-bottom: 1.5rem; font-size: 0.875rem; font-weight: 600;">
+                <a href="compress-image.html" style="color: #a855f7; text-decoration: none;">Compress Image</a>
+                <a href="compress-image-20kb.html" style="color: #a855f7; text-decoration: none;">Compress Image to 20KB</a>
+                <a href="compress-image-50kb.html" style="color: #a855f7; text-decoration: none;">Compress Image to 50KB</a>
+                <a href="resize-image.html" style="color: #a855f7; text-decoration: none;">Resize Image</a>
+                <a href="resize-signature.html" style="color: #a855f7; text-decoration: none;">Resize Signature for SSC Form</a>
+                <a href="crop-image.html" style="color: #a855f7; text-decoration: none;">Crop Passport Photo</a>
+                <a href="passport-photo-maker.html" style="color: #a855f7; text-decoration: none;">Passport Photo Maker</a>
+                <a href="convert-image-300-dpi.html" style="color: #a855f7; text-decoration: none;">Convert Image to 300 DPI</a>
+                <a href="image-to-jpg.html" style="color: #a855f7; text-decoration: none;">Convert Image to JPG</a>
+                <a href="index.html#image-tools" style="color: #a855f7; text-decoration: none;">All Image Tools</a>
             </div>
-            <div class="footer-links">
-                <h4>Quick Tools</h4>
-                <ul>
-                    <li><a href="compress-image.html">Compress Image</a></li>
-                    <li><a href="convert-image-to-300-dpi.html">Convert to 300 DPI</a></li>
-                    <li><a href="passport-photo-maker.html">Passport Photo Maker</a></li>
-                    <li><a href="all-in-one-image-tool.html">All Image Tools</a></li>
-                </ul>
+            
+            <hr style="border: 0; border-top: 1px solid #f1f5f9; margin: 1rem 0;">
+            
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; margin-bottom: 1.5rem; font-size: 0.825rem; font-weight: 500;">
+                <a href="about.html" style="color: #64748b; text-decoration: none;">About Us</a>
+                <a href="contact.html" style="color: #64748b; text-decoration: none;">Contact Us</a>
+                <a href="privacy-policy.html" style="color: #64748b; text-decoration: none;">Privacy Policy</a>
+                <a href="terms.html" style="color: #64748b; text-decoration: none;">Terms & Conditions</a>
             </div>
-            <div class="footer-links">
-                <h4>Company</h4>
-                <ul>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="contact.html">Contact Us</a></li>
-                    <li><a href="privacy.html">Privacy Policy</a></li>
-                    <li><a href="terms.html">Terms & Conditions</a></li>
-                </ul>
+            
+            <div style="font-size: 0.875rem; color: #94a3b8; font-weight: 500;">
+                &copy; 2026 EditSpark Studio. Locally Processed (100% Private & Safe).
             </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 EditSpark. All rights reserved. Built for fast and secure browser-side processing.</p>
         </div>
     </footer>
 
-    <!-- JavaScript Processing Logic -->
+    <!-- Unaltered Javascript Functional Block -->
     <script>
-        const fileInput = document.getElementById('fileInput');
-        const whitenSlider = document.getElementById('whitenSlider');
-        const contrastSlider = document.getElementById('contrastSlider');
-        const whitenVal = document.getElementById('whitenVal');
-        const contrastVal = document.getElementById('contrastVal');
-        const resetBtn = document.getElementById('resetBtn');
-        const downloadBtn = document.getElementById('downloadBtn');
-        const canvas = document.getElementById('documentCanvas');
-        const ctx = canvas.getContext('2d');
-        const placeholder = document.getElementById('placeholder');
-        const canvasContainer = document.getElementById('canvasContainer');
+        const dropzone = document.getElementById('enhanceDropzone');
+        const fileInput = document.getElementById('enhanceInput');
+        const promptDiv = document.getElementById('enhancePrompt');
+        const previewContainer = document.getElementById('enhancePreviewContainer');
+        const previewImg = document.getElementById('enhancePreview');
+        const fileInfo = document.getElementById('enhanceFileInfo');
+        const enhanceBtn = document.getElementById('enhanceBtn');
+        const btnIcon = document.getElementById('btnIcon');
+        const btnText = document.getElementById('btnText');
+        const enhanceResult = document.getElementById('enhanceResult');
+        const canvas = document.getElementById('resultCanvas');
+        const downloadBtn = document.getElementById('downloadEnhanceBtn');
+        const processAnotherBtn = document.getElementById('processAnotherBtn');
+        let activeFile = null;
 
-        let originalImage = null;
+        dropzone.addEventListener('click', () => fileInput.click());
+        dropzone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropzone.style.borderColor = '#a855f7';
+            dropzone.style.backgroundColor = 'rgba(245, 243, 255, 0.5)';
+        });
+        dropzone.addEventListener('dragleave', () => {
+            dropzone.style.borderColor = '#cbd5e1';
+            dropzone.style.backgroundColor = '#f8fafc';
+        });
+        dropzone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropzone.style.borderColor = '#cbd5e1';
+            dropzone.style.backgroundColor = '#f8fafc';
+            if(e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+        });
+        fileInput.addEventListener('change', (e) => {
+            if(e.target.files.length) handleFile(e.target.files[0]);
+        });
 
-        // File Selection Handlers
-        fileInput.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    originalImage = new Image();
-                    originalImage.onload = function() {
-                        // Initialize Canvas Dimensions
-                        canvas.width = originalImage.width;
-                        canvas.height = originalImage.height;
-                        
-                        // Show canvas area
-                        placeholder.style.display = 'none';
-                        canvasContainer.style.display = 'block';
-                        
-                        // Enable Controls
-                        whitenSlider.disabled = false;
-                        contrastSlider.disabled = false;
-                        resetBtn.disabled = false;
-                        downloadBtn.disabled = false;
-                        
-                        // Process with default values
-                        processImage();
-                    };
-                    originalImage.src = event.target.result;
-                };
-                reader.readAsDataURL(file);
+        function handleFile(file) {
+            if(!file.type.startsWith('image/')) {
+                alert('Please select a valid image file.');
+                return;
             }
-        });
-
-        // Sliders Input Events
-        whitenSlider.addEventListener('input', function() {
-            whitenVal.textContent = this.value;
-            processImage();
-        });
-
-        contrastSlider.addEventListener('input', function() {
-            contrastVal.textContent = this.value;
-            processImage();
-        });
-
-        // Reset Action
-        resetBtn.addEventListener('click', function() {
-            whitenSlider.value = 120;
-            contrastSlider.value = 40;
-            whitenVal.textContent = '120';
-            contrastVal.textContent = '40';
-            processImage();
-        });
-
-        // Core Image Processing Engine (Thresholding & Lightening Formula)
-        function processImage() {
-            if (!originalImage) return;
-
-            // Draw original image first
-            ctx.drawImage(originalImage, 0, 0);
-
-            const wThreshold = parseInt(whitenSlider.value);
-            const cThreshold = parseInt(contrastSlider.value);
-
-            const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-            const data = imgData.data;
-
-            for (let i = 0; i < data.length; i += 4) {
-                const r = data[i];
-                const g = data[i+1];
-                const b = data[i+2];
-
-                // Calculate local luminance grayscale value
-                const grayscale = 0.299 * r + 0.587 * g + 0.114 * b;
-
-                // 1. Whitening Phase: Turn grey/shadow backgrounds into pure white
-                if (grayscale > wThreshold) {
-                    data[i] = 255;     // R
-                    data[i+1] = 255;   // G
-                    data[i+2] = 255;   // B
-                } 
-                // 2. Darkening Phase: Amplify dark colors/text strokes
-                else if (grayscale < cThreshold) {
-                    // Make text/dark elements darker
-                    const factor = grayscale / cThreshold;
-                    data[i] = r * factor;
-                    data[i+1] = g * factor;
-                    data[i+2] = b * factor;
-                }
-                // 3. Middle range adjustment for smoothing shadows
-                else {
-                    const range = wThreshold - cThreshold;
-                    if (range > 0) {
-                        const percent = (grayscale - cThreshold) / range;
-                        // Linearly blend towards absolute white to clear soft gradient shadows
-                        data[i] = r + (255 - r) * percent;
-                        data[i+1] = g + (255 - g) * percent;
-                        data[i+2] = b + (255 - b) * percent;
-                    }
-                }
-            }
-            // Put updated pixels back onto the display view
-            ctx.putImageData(imgData, 0, 0);
+            activeFile = file;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                previewImg.src = e.target.result;
+                promptDiv.classList.add('hidden');
+                previewContainer.classList.remove('hidden');
+                fileInfo.textContent = `${file.name} (${(file.size/1024).toFixed(1)} KB)`;
+                enhanceResult.classList.add('hidden');
+            };
+            reader.readAsDataURL(file);
         }
 
-        // Secure Client Download Handler
-        downloadBtn.addEventListener('click', function() {
-            const link = document.createElement('a');
-            link.download = 'cleaned-document.png';
-            link.href = canvas.toDataURL('image/png');
-            link.click();
-        });
+        if(processAnotherBtn) {
+            processAnotherBtn.addEventListener('click', () => {
+                activeFile = null;
+                fileInput.value = '';
+                previewImg.src = '';
+                promptDiv.classList.remove('hidden');
+                previewContainer.classList.add('hidden');
+                enhanceResult.classList.add('hidden');
+                window.scrollTo({ top: dropzone.offsetTop - 100, behavior: 'smooth' });
+            });
+        }
 
-        // Mobile Menu Toggle Responsive Function
-        document.querySelector('.hamburger').addEventListener('click', function() {
-            const navLinks = document.querySelector('.nav-links');
-            if(navLinks.style.display === 'flex') {
-                navLinks.style.display = 'none';
-            } else {
-                navLinks.style.display = 'flex';
-                navLinks.style.flexDirection = 'column';
-                navLinks.style.position = 'absolute';
-                navLinks.style.top = '100%';
-                navLinks.style.left = '0';
-                navLinks.style.width = '100%';
-                navLinks.style.backgroundColor = 'white';
-                navLinks.style.padding = '1rem';
-                navLinks.style.boxShadow = '0 4px 6px rgba(0,0,0,0.05)';
+        enhanceBtn.addEventListener('click', () => {
+            if(!activeFile) {
+                alert('Please upload an image first.');
+                return;
             }
+            enhanceBtn.disabled = true;
+            btnIcon.innerHTML = '<svg class="animate-spin" style="width: 1rem; height: 1rem;" fill="currentColor" viewBox="0 0 512 512"><path d="M304 48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zm0 416a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM48 304a48 48 0 1 0 0-96 48 48 0 1 0 0 96zm416 0a48 48 0 1 0 0-96 48 48 0 1 0 0 96zM122.5 122.5a48 48 0 1 0 -67.9-67.9 48 48 0 1 0 67.9 67.9zm267 267a48 48 0 1 0 -67.9-67.9 48 48 0 1 0 67.9 67.9zM122.5 389.5a48 48 0 1 0 -67.9 67.9 48 48 0 1 0 67.9-67.9z"/></svg>';
+            btnText.textContent = 'Analyzing Pixels...';
+            
+            const img = new Image();
+            img.src = previewImg.src;
+            img.onload = () => {
+                canvas.width = img.width;
+                canvas.height = img.height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0);
+                const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                const data = imgData.data;
+                let totalLuminance = 0;
+                let pixelCount = data.length / 4;
+                
+                for (let i = 0; i < data.length; i += 4) {
+                    totalLuminance += (data[i] * 0.299 + data[i+1] * 0.587 + data[i+2] * 0.114);
+                }
+                const avgLuminance = totalLuminance / pixelCount;
+                const threshold = avgLuminance * 0.85;
+                
+                for (let i = 0; i < data.length; i += 4) {
+                    let r = data[i], g = data[i+1], b = data[i+2];
+                    let v = (r * 0.299 + g * 0.587 + b * 0.114);
+                    if (v < threshold) {
+                        let scale = v / threshold;
+                        data[i] = Math.max(0, r * scale * 0.5);
+                        data[i+1] = Math.max(0, g * scale * 0.5);
+                        data[i+2] = Math.max(0, b * scale * 0.5);
+                    } else {
+                        data[i] = 255;
+                        data[i+1] = 255;
+                        data[i+2] = 255;
+                    }
+                }
+                ctx.putImageData(imgData, 0, 0);
+                downloadBtn.href = canvas.toDataURL('image/jpeg', 0.90);
+                downloadBtn.download = `editspark_magic_clean_${activeFile.name}`;
+                enhanceResult.classList.remove('hidden');
+                enhanceResult.scrollIntoView({ behavior: 'smooth' });
+                enhanceBtn.disabled = false;
+                btnIcon.innerHTML = '<svg style="width: 1rem; height: 1rem;" fill="currentColor" viewBox="0 0 384 512"><path d="M0 256L28.5 218.2l198.7-23.5c10.4-1.2 19-8.7 21.7-18.9L288 32H144c-17.7 0-32 14.3-32 32V176c0 8.8-7.2 16-16 16H32c-17.7 0-32 14.3-32 32V256zm384 0l-28.5 37.8L156.8 317.3c-10.4 1.2-19 8.7-21.7 18.9L96 480H240c17.7 0 32-14.3 32-32V336c0-8.8 7.2-16 16-16h64c17.7 0 32-14.3 32-32V256z"/></svg>';
+                btnText.textContent = 'Magic Auto-Clean (Pure White & Dark Sign)';
+            };
         });
     </script>
 </body>
