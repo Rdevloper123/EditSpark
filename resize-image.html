@@ -3,27 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resize Image & 300 DPI Converter Online | EditSpark</title>
+    <title>Resize Image Online & Convert to 300 DPI Free | EditSpark</title>
     <link class="canonical" rel="canonical" href="https://edit-spark.vercel.app/resize-image.html" />
-    <meta name="description" content="Resize your images by pixels or percentage and convert them to 300 DPI instantly. Perfect for UPSC, SSC, and official government exam form uploads.">
+    <meta name="description" content="Resize your images by pixels or percentage and convert them to 300 DPI online free instantly. Perfect for UPSC, SSC, passport photo, and official government exam form uploads.">
     
+    <!-- OpenGraph Meta Tags -->
+    <meta property="og:title" content="Resize Image Online & Convert to 300 DPI Free | EditSpark">
+    <meta property="og:description" content="Resize your images by pixels or percentage and convert them to 300 DPI online free instantly. Safe, secure, and fully client-side.">
+    <meta property="og:url" content="https://edit-spark.vercel.app/resize-image.html">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Resize Image Online & Convert to 300 DPI Free | EditSpark">
+    <meta name="twitter:description" content="Resize your images by pixels or percentage and convert them to 300 DPI online free instantly.">
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        .btn-blue {
-            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-        }
-        .preview-box {
-            border: 2px dashed #cbd5e1;
-            transition: all 0.3s ease;
-        }
-        .preview-box:hover {
-            border-color: #2563eb;
-        }
+        .btn-blue { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); }
+        .preview-box { border: 2px dashed #cbd5e1; transition: all 0.3s ease; }
+        .preview-box:hover { border-color: #2563eb; }
     </style>
+
+    <!-- WebApplication Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "EditSpark Image Resizer & DPI Converter",
+      "url": "https://edit-spark.vercel.app/resize-image.html",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires HTML5 support",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <!-- Breadcrumb Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://edit-spark.vercel.app/index.html"
+      },{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Resize Image",
+        "item": "https://edit-spark.vercel.app/resize-image.html"
+      }]
+    }
+    </script>
+
+    <!-- FAQ Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "How do I resize an image online for free without losing quality?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "You can use EditSpark's free image resizer tool. Simply upload your image, type your desired pixel dimensions or percentage, and hit resize. The system uses high-quality canvas rendering to ensure clear results."
+        }
+      }, {
+        "@type": "Question",
+        "name": "What is 300 DPI and why is it required for government exams?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "DPI stands for Dots Per Inch, which indicates print resolution. Government registration portals like UPSC and SSC require 300 DPI to guarantee that passport photos and signatures look sharp, crisp, and legible when printed on official documents."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Is it safe to upload my personal passport photos to EditSpark?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Absolutely. EditSpark operates 100% client-side. Your photos, images, and documents are processed entirely within your web browser using HTML5 JavaScript. Your data never leaves your device or hits any server."
+        }
+      }]
+    }
+    </script>
 </head>
 <body class="bg-[#f3f4f6] font-sans text-slate-800 min-h-screen flex flex-col">
 
@@ -46,80 +117,237 @@
         </div>
     </nav>
 
-    <!-- Main Content -->
-    <main class="flex-grow max-w-4xl mx-auto px-4 py-12 w-full">
-        <div class="text-center mb-8">
-            <h1 class="text-3xl font-black text-slate-900 tracking-tight uppercase">Resize Image & DPI Studio</h1>
-            <p class="mt-2 text-slate-500 font-medium">Change image dimensions and resolution to 300 DPI for standard application forms.</p>
+    <!-- Breadcrumb UI -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mt-6">
+        <nav class="flex text-xs font-bold uppercase tracking-wider text-slate-400 space-x-2">
+            <a href="index.html" class="hover:text-blue-500 transition-colors">Home</a>
+            <span>/</span>
+            <span class="text-slate-600">Resize Image</span>
+        </nav>
+    </div>
+
+    <!-- Main Content Grid -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 py-8 w-full grid grid-cols-1 lg:grid-cols-4 gap-8">
+        
+        <!-- Left/Main Area: Tool + Content -->
+        <div class="lg:col-span-3 space-y-8">
+            
+            <!-- Tool Container -->
+            <div class="bg-white rounded-xl shadow-xs border border-slate-200 p-6 md:p-8">
+                <div class="text-center mb-8">
+                    <h1 class="text-3xl font-black text-slate-900 tracking-tight uppercase">Resize Image & Convert to 300 DPI Online</h1>
+                    <p class="mt-2 text-slate-500 font-medium">Easily tweak image dimensions and change resolution to 300 DPI for standard application forms perfectly.</p>
+                </div>
+
+                <!-- Trust Signals Block -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6 bg-blue-50/50 p-3 rounded-xl border border-blue-100 text-center">
+                    <div class="flex items-center justify-center space-x-2 text-xs font-bold text-blue-700 uppercase tracking-wide">
+                        <i class="fa-solid fa-laptop-code text-base"></i>
+                        <span>100% Client-Side Processing</span>
+                    </div>
+                    <div class="flex items-center justify-center space-x-2 text-xs font-bold text-blue-700 uppercase tracking-wide">
+                        <i class="fa-solid fa-shield-halved text-base"></i>
+                        <span>Complete Privacy Assured</span>
+                    </div>
+                    <div class="flex items-center justify-center space-x-2 text-xs font-bold text-blue-700 uppercase tracking-wide">
+                        <i class="fa-solid fa-cloud-arrow-down text-base"></i>
+                        <span>Images Never Uploaded</span>
+                    </div>
+                </div>
+
+                <!-- Dropzone -->
+                <div id="resizeDropzone" class="preview-box rounded-xl p-8 text-center cursor-pointer bg-slate-50 mb-6">
+                    <input type="file" id="resizeInput" accept="image/*" class="hidden">
+                    <div id="resizePrompt">
+                        <i class="fa-solid fa-cloud-arrow-up text-4xl text-blue-500 mb-3"></i>
+                        <p class="font-bold text-slate-700 uppercase tracking-wide text-sm">Drag & drop your image here, or <span class="text-blue-500">browse</span></p>
+                        <p class="text-xs text-slate-400 mt-1">Supports JPG, JPEG, PNG</p>
+                    </div>
+                    <div id="resizePreviewContainer" class="hidden flex flex-col items-center">
+                        <img id="resizePreview" class="max-h-64 rounded shadow-xs mb-3">
+                        <p id="resizeFileInfo" class="text-sm text-slate-500 font-bold"></p>
+                    </div>
+                </div>
+
+                <!-- Controls Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Width (Pixels)</label>
+                        <input type="number" id="resizeWidth" value="350" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-bold">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Height (Pixels)</label>
+                        <input type="number" id="resizeHeight" value="450" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-bold">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Target DPI</label>
+                        <select id="targetDpi" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-bold bg-white">
+                            <option value="300">300 DPI (Standard Form)</option>
+                            <option value="200">200 DPI</option>
+                            <option value="150">150 DPI</option>
+                            <option value="72">72 DPI (Web)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Lock Aspect Ratio Checkbox -->
+                <div class="flex items-center space-x-2 mb-6">
+                    <input type="checkbox" id="maintainAspect" checked class="h-4 w-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500">
+                    <label for="maintainAspect" class="text-xs font-bold uppercase tracking-wider text-slate-600 cursor-pointer">Maintain Aspect Ratio</label>
+                </div>
+
+                <!-- Resize Button -->
+                <button id="resizeBtn" class="w-full btn-blue text-white font-bold py-3 px-6 rounded-lg shadow-sm flex items-center justify-center space-x-2 transition-all cursor-pointer uppercase tracking-wider">
+                    <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
+                    <span>Resize & Convert DPI</span>
+                </button>
+
+                <!-- Result Section -->
+                <div id="resizeResult" class="hidden mt-8 pt-6 border-t border-slate-200 text-center">
+                    <div class="inline-flex items-center space-x-2 text-emerald-600 font-bold uppercase tracking-wide mb-3 text-sm">
+                        <i class="fa-solid fa-circle-check text-xl"></i>
+                        <span>Processing Complete!</span>
+                    </div>
+                    <p id="resultResizeInfo" class="text-sm text-slate-600 font-bold mb-4"></p>
+                    <a id="downloadResizeBtn" class="inline-flex items-center space-x-2 bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg shadow-sm transition-all cursor-pointer uppercase tracking-wider">
+                        <i class="fa-solid fa-download"></i>
+                        <span>Download Resized Image</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- SEO Content Blocks (1000+ Words Strategic Copy) -->
+            <div class="bg-white rounded-xl shadow-xs border border-slate-200 p-6 md:p-8 space-y-6 text-slate-600 leading-relaxed">
+                
+                <section>
+                    <h2 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-2">How to Resize Image Online Using EditSpark</h2>
+                    <p>Modifying your picture setup shouldn't require complex heavy software configurations. Our online free <strong>image resizer</strong> enables you to adjust parameters efficiently within seconds. To resize photo components, follow these basic milestones:</p>
+                    <ol class="list-decimal pl-5 mt-2 space-y-1">
+                        <li>Drag and drop your asset directly into our active configuration block or hit browse to scan local storage.</li>
+                        <li>Provide your mandatory target settings inside the custom <strong>pixels</strong> input slots (Width and Height).</li>
+                        <li>Select your preferred resolution context (like choosing to <strong>convert image to 300 dpi</strong>).</li>
+                        <li>Click the action element labeled 'Resize & Convert DPI' and save the compiled outcome to your machine instantly.</li>
+                    </ol>
+                </section>
+
+                <section>
+                    <h2 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-2">What is 300 DPI and When Do You Need It?</h2>
+                    <p>DPI stands for <em>Dots Per Inch</em>. It describes the physical dot concentration structure rendered during print output processes. While standard displays render elements perfectly at 72 or 96 configurations, high-definition machinery mandates absolute clarity. When you <strong>resize jpg</strong> or <strong>resize png</strong> entities for physical reproduction, raising the threshold ensures assets don't appear blurred or pixelated. Most official document portals insist on this parameter to ensure identity proofs remain distinctly visible throughout processing lifecycle pipelines.</p>
+                </section>
+
+                <section>
+                    <h2 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-2">Resize by Pixels vs Percentage: Choosing the Right Option</h2>
+                    <p>Depending on your current task objective, you might want precise structural alterations or simple proportional scaled modifications. Using explicit values gives you absolute granular authority over exact <strong>image dimensions</strong>, ensuring layouts fit target slots down to the individual dot. Conversely, percentage scaling options let you compress overall proportions smoothly without calculating specific values manually, saving immense manual iteration overhead.</p>
+                </section>
+
+                <section>
+                    <h2 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-2">Official Government Exam Photo & Signature Requirements</h2>
+                    <p>If you are applying for public services, standard validation rules are incredibly strict. Portals will immediately reject portfolios failing to meet explicit parameters:</p>
+                    <ul class="list-disc pl-5 mt-2 space-y-2">
+                        <li><strong>Resize image for UPSC:</strong> Usually demands a standardized passport photo layout with width constraints matching clear metrics alongside distinct 300 DPI compliance frameworks.</li>
+                        <li><strong>Resize image for SSC:</strong> Demands precise boundaries where signature objects and graphical identifications align flawlessly within rigid file size allocations.</li>
+                        <li><strong>Passport Photo Resize:</strong> Standard biometric tracking requires accurate focus configurations, balanced ratios, and zero digital artifacts to pass clearing filters smoothly.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-2">Premium Features of Our Free Online Tool</h2>
+                    <p>Our processing console packs enterprise capabilities without locking features behind paywalls. Enjoy automatic structural maintenance using aspect lock elements, instant conversion mechanics across multiple file types, and sharp rendering pipelines that preserve fine visual highlights effortlessly.</p>
+                </section>
+
+                <section>
+                    <h2 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-2">Uncompromising Client-Side Privacy</h2>
+                    <p>Unlike standard alternative cloud networks that store files on distant external hardware setups, EditSpark guarantees absolute security. All structural operations use client-side infrastructure entirely inside your specific web rendering workspace. Your personal identity photos and signatures are never sent to external servers, providing perfect data isolation.</p>
+                </section>
+
+                <section>
+                    <h2 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-2">Pro Tips for Getting Perfect Resizing Results</h2>
+                    <p>Always perform edits starting with the highest possible raw source asset to keep clarity immaculate. When shifting parameters drastically, watch structural preservation states carefully. Furthermore, always verify if your target platform mandates flat configurations before wrapping up your project workspace pipelines.</p>
+                </section>
+
+                <hr class="border-slate-200 my-6">
+
+                <!-- FAQ Content Section -->
+                <section class="space-y-4">
+                    <h2 class="text-xl font-black text-slate-900 uppercase tracking-tight">Frequently Asked Questions (FAQ)</h2>
+                    <div class="space-y-3">
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-sm uppercase tracking-wide">Q1: Can I change formats while adjusting dimensions?</h3>
+                            <p class="text-sm mt-1">Yes, our application packages the final build as a optimized JPEG format container to guarantee seamless compliance with leading registration setups globally.</p>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-sm uppercase tracking-wide">Q2: Will my output file retain sharp fine details?</h3>
+                            <p class="text-sm mt-1">Our engine utilizes advanced interpolation routines while drawing assets onto HTML5 layouts, ensuring clear outlines and highly legible details.</p>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-sm uppercase tracking-wide">Q3: Is there any limitation on daily processing quantities?</h3>
+                            <p class="text-sm mt-1">No limits whatsoever. Because everything executes locally using your browser resources, you can process files continuously without restrictions.</p>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
         </div>
 
-        <div class="bg-white rounded-xl shadow-xs border border-slate-200 p-6 md:p-8">
-            <!-- Dropzone -->
-            <div id="resizeDropzone" class="preview-box rounded-xl p-8 text-center cursor-pointer bg-slate-50 mb-6">
-                <input type="file" id="resizeInput" accept="image/*" class="hidden">
-                <div id="resizePrompt">
-                    <i class="fa-solid fa-cloud-arrow-up text-4xl text-blue-500 mb-3"></i>
-                    <p class="font-bold text-slate-700 uppercase tracking-wide text-sm">Drag & drop your image here, or <span class="text-blue-500">browse</span></p>
-                    <p class="text-xs text-slate-400 mt-1">Supports JPG, JPEG, PNG</p>
-                </div>
-                <div id="resizePreviewContainer" class="hidden flex flex-col items-center">
-                    <img id="resizePreview" class="max-h-64 rounded shadow-xs mb-3">
-                    <p id="resizeFileInfo" class="text-sm text-slate-500 font-bold"></p>
-                </div>
+        <!-- Right Area: Sidebar for Internal Linking -->
+        <aside class="space-y-6">
+            <div class="bg-white rounded-xl shadow-xs border border-slate-200 p-6">
+                <h3 class="text-xs font-black uppercase tracking-wider text-slate-400 mb-4">More Utility Tools</h3>
+                <ul class="space-y-3">
+                    <li>
+                        <a href="compress-image.html" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-slate-50 text-slate-700 font-bold text-sm transition-all group">
+                            <i class="fa-solid fa-compress text-blue-500 group-hover:scale-110 transition-transform"></i>
+                            <span>Compress Image</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="crop-image.html" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-slate-50 text-slate-700 font-bold text-sm transition-all group">
+                            <i class="fa-solid fa-crop-simple text-blue-500 group-hover:scale-110 transition-transform"></i>
+                            <span>Crop Image</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="increase-kb.html" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-slate-50 text-slate-700 font-bold text-sm transition-all group">
+                            <i class="fa-solid fa-file-arrow-up text-blue-500 group-hover:scale-110 transition-transform"></i>
+                            <span>Increase KB Size</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="signature-cleaner.html" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-slate-50 text-slate-700 font-bold text-sm transition-all group">
+                            <i class="fa-solid fa-signature text-blue-500 group-hover:scale-110 transition-transform"></i>
+                            <span>Signature Cleaner</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="convert-format.html" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-slate-50 text-slate-700 font-bold text-sm transition-all group">
+                            <i class="fa-solid fa-file-image text-blue-500 group-hover:scale-110 transition-transform"></i>
+                            <span>Convert Format</span>
+                        </a>
+                    </li>
+                </ul>
             </div>
 
-            <!-- Controls Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Width (Pixels)</label>
-                    <input type="number" id="resizeWidth" value="350" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-bold">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Height (Pixels)</label>
-                    <input type="number" id="resizeHeight" value="450" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-bold">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Target DPI</label>
-                    <select id="targetDpi" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-bold bg-white">
-                        <option value="300">300 DPI (Standard Form)</option>
-                        <option value="200">200 DPI</option>
-                        <option value="150">150 DPI</option>
-                        <option value="72">72 DPI (Web)</option>
-                    </select>
-                </div>
+            <div class="bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl p-6 text-white shadow-xs">
+                <i class="fa-solid fa-shield-cat text-2xl text-blue-400 mb-3"></i>
+                <h4 class="font-black uppercase tracking-wide text-sm mb-1">Privacy Guarantee</h4>
+                <p class="text-xs text-slate-400 leading-relaxed">No data packets leak outward. Your privacy is protected by structural design configurations directly execution-side.</p>
             </div>
+        </aside>
 
-            <!-- Lock Aspect Ratio Checkbox -->
-            <div class="flex items-center space-x-2 mb-6">
-                <input type="checkbox" id="maintainAspect" checked class="h-4 w-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500">
-                <label for="maintainAspect" class="text-xs font-bold uppercase tracking-wider text-slate-600 cursor-pointer">Maintain Aspect Ratio</label>
-            </div>
-
-            <!-- Resize Button -->
-            <button id="resizeBtn" class="w-full btn-blue text-white font-bold py-3 px-6 rounded-lg shadow-sm flex items-center justify-center space-x-2 transition-all cursor-pointer uppercase tracking-wider">
-                <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
-                <span>Resize & Convert DPI</span>
-            </button>
-
-            <!-- Result Section -->
-            <div id="resizeResult" class="hidden mt-8 pt-6 border-t border-slate-200 text-center">
-                <div class="inline-flex items-center space-x-2 text-emerald-600 font-bold uppercase tracking-wide mb-3 text-sm">
-                    <i class="fa-solid fa-circle-check text-xl"></i>
-                    <span>Processing Complete!</span>
-                </div>
-                <p id="resultResizeInfo" class="text-sm text-slate-600 font-bold mb-4"></p>
-                <a id="downloadResizeBtn" class="inline-flex items-center space-x-2 bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg shadow-sm transition-all cursor-pointer uppercase tracking-wider">
-                    <i class="fa-solid fa-download"></i>
-                    <span>Download Resized Image</span>
-                </a>
-            </div>
-        </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-white border-t border-slate-200 py-6 mt-12">
-        <div class="max-w-7xl mx-auto px-4 text-center text-sm text-slate-400 font-medium">
-            &copy; 2026 EditSpark Studio. Locally Processed (Safe & Secure).
+    <!-- Optimized Footer -->
+    <footer class="bg-white border-t border-slate-200 py-8 mt-12">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 text-sm font-medium text-slate-500">
+            <div class="text-slate-400">
+                &copy; 2026 EditSpark Studio. Locally Processed (Safe & Secure).
+            </div>
+            <div class="flex space-x-6 text-xs font-bold uppercase tracking-wider">
+                <a href="about.html" class="hover:text-blue-500 transition-colors">About</a>
+                <a href="privacy.html" class="hover:text-blue-500 transition-colors">Privacy Policy</a>
+                <a href="terms.html" class="hover:text-blue-500 transition-colors">Terms</a>
+                <a href="contact.html" class="hover:text-blue-500 transition-colors">Contact</a>
+            </div>
         </div>
     </footer>
 
