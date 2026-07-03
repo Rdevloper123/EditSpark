@@ -98,7 +98,7 @@
         "name": "Can I convert my photo into 300 DPI for SSC and UPSC forms?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes, this tool is specially designed for government exam portals like SSC, UPSC, IBPS, and Railways. It updates the internal metadata of your image to exactly 300 DPI as required by their guidelines."
+          "text": "The tool attempts to save the output image with the selected DPI metadata. Most image viewers and printing software recognize this information, while some applications may rely primarily on the image's pixel dimensions."
         }
       }, {
         "@type": "Question",
@@ -550,69 +550,70 @@
             }
         });
 
-        // Advanced JPEG APP0/JFIF Marker Parser and Injector
+        // Advanced JPEG Segment Marker Parser and DPI Injector
         function processJfifDpi(arrayBuffer, targetDpi) {
             const view = new DataView(arrayBuffer);
             
-            // Step 1: Check standard Magic Bytes for JPEG (SOI: 0xFFD8)
-            if (view.getUint16(0) !== 0xFFD8) {
-                return arrayBuffer; // Safe fallback: Not a valid JPEG container
+            // Validate standard SOI (0xFFD8) marker
+            if (view.byteLength < 4 || view.getUint16(0) !== 0xFFD8) {
+                return arrayBuffer; 
             }
 
             let offset = 2;
             let app0Offset = -1;
 
-            // Step 2: Parser loop through metadata segments
-            while (offset < view.byteLength) {
-                if (view.getUint8(offset) !== 0xFF) break;
+            // Strict Segment loop
+            while (offset < view.byteLength - 4) {
+                const markerPrefix = view.getUint8(offset);
+                if (markerPrefix !== 0xFF) break;
                 
-                const marker = view.getUint8(offset + 1);
+                const markerType = view.getUint8(offset + 1);
                 
-                // SOS (Start of Scan) or EOI (End of Image) reached, data starts here
-                if (marker === 0xDA || marker === 0xD9) break; 
+                // Stop loop early if SOS (0xDA) or EOI (0xD9) is reached
+                if (markerType === 0xDA || markerType === 0xD9) break; 
                 
-                const length = view.getUint16(offset + 2);
+                const segmentLength = view.getUint16(offset + 2);
                 
-                // Found APP0 segment marker
-                if (marker === 0xE0) {
-                    // Double check for valid "JFIF\0" identifier string
-                    if (view.getUint32(offset + 4) === 0x4A464946 && view.getUint8(offset + 8) === 0x00) {
+                // Inspecting APP0 Segment
+                if (markerType === 0xE0) {
+                    if (offset + 9 < view.byteLength &&
+                        view.getUint32(offset + 4) === 0x4A464946 && view.getUint8(offset + 8) === 0x00) {
                         app0Offset = offset;
                         break;
                     }
                 }
-                offset += length + 2;
+                offset += segmentLength + 2;
             }
 
-            // Scenario A: JFIF APP0 layout segment already exists -> Update parameters in place
+            // Case 1: APP0 segment successfully discovered -> Rewrite block updates
             if (app0Offset !== -1) {
-                view.setUint8(app0Offset + 13, 1); // Set units to Dots Per Inch (DPI)
-                view.setUint16(app0Offset + 14, targetDpi); // X density update
-                view.setUint16(app0Offset + 16, targetDpi); // Y density update
+                view.setUint8(app0Offset + 13, 1); 
+                view.setUint16(app0Offset + 14, targetDpi); 
+                view.setUint16(app0Offset + 16, targetDpi); 
                 return arrayBuffer;
             } 
             
-            // Scenario B: No native JFIF section found -> Reconstruct segment safely right after SOI marker
+            // Case 2: APP0 absent -> Dynamically rebuild array right after SOI marker index (0x02)
             else {
-                const jfifSegment = new Uint8Array([
-                    0xFF, 0xE0,             // Marker: APP0
-                    0x00, 0x10,             // Segment Length (16 bytes)
-                    0x4A, 0x46, 0x49, 0x46, 0x00, // Magic string: "JFIF\0"
-                    0x01, 0x01,             // Major/Minor structural version 1.01
-                    0x01,                   // Density layout units: Dots Per Inch (DPI)
-                    (targetDpi >> 8) & 0xFF, targetDpi & 0xFF, // X density value conversion
-                    (targetDpi >> 8) & 0xFF, targetDpi & 0xFF, // Y density value conversion
-                    0x00, 0x00              // Thumbnail dimensional data placeholder (0x00)
+                const freshJfifSegment = new Uint8Array([
+                    0xFF, 0xE0,             
+                    0x00, 0x10,             
+                    0x4A, 0x46, 0x49, 0x46, 0x00, 
+                    0x01, 0x01,             
+                    0x01,                   
+                    (targetDpi >> 8) & 0xFF, targetDpi & 0xFF, 
+                    (targetDpi >> 8) & 0xFF, targetDpi & 0xFF, 
+                    0x00, 0x00              
                 ]);
 
-                const originalBytes = new Uint8Array(arrayBuffer);
-                const finalBuffer = new Uint8Array(originalBytes.length + jfifSegment.length);
+                const srcBytes = new Uint8Array(arrayBuffer);
+                const outBuffer = new Uint8Array(srcBytes.length + freshJfifSegment.length);
                 
-                finalBuffer.set(originalBytes.subarray(0, 2), 0); // Inject original SOI
-                finalBuffer.set(jfifSegment, 2); // Insert full valid configuration block
-                finalBuffer.set(originalBytes.subarray(2), jfifSegment.length + 2); // Merge residual arrays
+                outBuffer.set(srcBytes.subarray(0, 2), 0); 
+                outBuffer.set(freshJfifSegment, 2); 
+                outBuffer.set(srcBytes.subarray(2), freshJfifSegment.length + 2); 
                 
-                return finalBuffer.buffer;
+                return outBuffer.buffer;
             }
         }
 
