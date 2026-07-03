@@ -10,14 +10,14 @@
     
     <!-- OpenGraph Meta Tags -->
     <meta property="og:title" content="Resize Image Online & Convert to 300 DPI Free | EditSpark">
-    <meta property="og:description" content="Resize your images by pixels and convert them to 300 DPI online free instantly. Safe, secure, and fully client-side.">
+    <meta property="og:description" content="Resize your images by pixels or percentage and convert them to 300 DPI online free instantly. Safe, secure, and fully client-side.">
     <meta property="og:url" content="https://edit-spark.vercel.app/resize-image.html">
     <meta property="og:type" content="website">
     
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Resize Image Online & Convert to 300 DPI Free | EditSpark">
-    <meta name="twitter:description" content="Resize your images by pixels and convert them to 300 DPI online free instantly.">
+    <meta name="twitter:description" content="Resize your images by pixels or percentage and convert them to 300 DPI online free instantly.">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
@@ -219,19 +219,35 @@
                     </div>
                 </div>
 
+                <!-- Resize Mode Tabs -->
+                <div class="flex border-b border-slate-200 mb-6">
+                    <button id="modePixelsBtn" class="py-2 px-4 text-xs font-bold uppercase tracking-wider border-b-2 border-blue-500 text-blue-600 focus:outline-none cursor-pointer">By Pixels</button>
+                    <button id="modePercentageBtn" class="py-2 px-4 text-xs font-bold uppercase tracking-wider border-b-2 border-transparent text-slate-500 hover:text-slate-700 focus:outline-none cursor-pointer">By Percentage</button>
+                </div>
+
                 <!-- Controls Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                    <div>
+                    <!-- Dimension Group (Pixels) -->
+                    <div id="widthInputGroup">
                         <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Width (Pixels)</label>
                         <input type="number" id="resizeWidth" value="350" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-bold">
                     </div>
-                    <div>
+                    <div id="heightInputGroup">
                         <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Height (Pixels)</label>
                         <input type="number" id="resizeHeight" value="450" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-bold">
                     </div>
+                    
+                    <!-- Dimension Group (Percentage - Hidden by Default) -->
+                    <div id="percentageInputGroup" class="hidden col-span-2">
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Scale Percentage (%)</label>
+                        <input type="number" id="resizePercentage" value="100" min="1" max="500" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-bold">
+                    </div>
+
+                    <!-- DPI Dropdown -->
                     <div>
                         <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Target DPI</label>
                         <select id="targetDpi" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-bold bg-white">
+                            <option value="original" selected>Original DPI (No Change)</option>
                             <option value="300">300 DPI (Standard Form)</option>
                             <option value="200">200 DPI</option>
                             <option value="150">150 DPI</option>
@@ -241,7 +257,7 @@
                 </div>
 
                 <!-- Lock Aspect Ratio Checkbox -->
-                <div class="flex items-center space-x-2 mb-6">
+                <div id="aspectRatioGroup" class="flex items-center space-x-2 mb-6">
                     <input type="checkbox" id="maintainAspect" checked class="h-4 w-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500">
                     <label for="maintainAspect" class="text-xs font-bold uppercase tracking-wider text-slate-600 cursor-pointer">Maintain Aspect Ratio</label>
                 </div>
@@ -434,7 +450,7 @@
         </div>
     </footer>
 
-    <!-- JavaScript Logic with Hex DPI Injector -->
+    <!-- JavaScript Logic with Advanced Marker Parser & Percentage Resizing -->
     <script>
         const dropzone = document.getElementById('resizeDropzone');
         const fileInput = document.getElementById('resizeInput');
@@ -447,8 +463,40 @@
         const resultResizeInfo = document.getElementById('resultResizeInfo');
         const downloadBtn = document.getElementById('downloadResizeBtn');
 
+        // Mode Switching UI Elements
+        const modePixelsBtn = document.getElementById('modePixelsBtn');
+        const modePercentageBtn = document.getElementById('modePercentageBtn');
+        const widthInputGroup = document.getElementById('widthInputGroup');
+        const heightInputGroup = document.getElementById('heightInputGroup');
+        const percentageInputGroup = document.getElementById('percentageInputGroup');
+        const aspectRatioGroup = document.getElementById('aspectRatioGroup');
+
         let activeFile = null;
+        let originalWidth = 0;
+        let originalHeight = 0;
         let originalRatio = 1;
+        let currentMode = 'pixels'; // 'pixels' or 'percentage'
+
+        // Tab selection logic
+        modePixelsBtn.addEventListener('click', () => {
+            currentMode = 'pixels';
+            modePixelsBtn.className = "py-2 px-4 text-xs font-bold uppercase tracking-wider border-b-2 border-blue-500 text-blue-600 focus:outline-none cursor-pointer";
+            modePercentageBtn.className = "py-2 px-4 text-xs font-bold uppercase tracking-wider border-b-2 border-transparent text-slate-500 hover:text-slate-700 focus:outline-none cursor-pointer";
+            widthInputGroup.classList.remove('hidden');
+            heightInputGroup.classList.remove('hidden');
+            aspectRatioGroup.classList.remove('hidden');
+            percentageInputGroup.classList.add('hidden');
+        });
+
+        modePercentageBtn.addEventListener('click', () => {
+            currentMode = 'percentage';
+            modePercentageBtn.className = "py-2 px-4 text-xs font-bold uppercase tracking-wider border-b-2 border-blue-500 text-blue-600 focus:outline-none cursor-pointer";
+            modePixelsBtn.className = "py-2 px-4 text-xs font-bold uppercase tracking-wider border-b-2 border-transparent text-slate-500 hover:text-slate-700 focus:outline-none cursor-pointer";
+            widthInputGroup.classList.add('hidden');
+            heightInputGroup.classList.add('hidden');
+            aspectRatioGroup.classList.add('hidden');
+            percentageInputGroup.classList.remove('hidden');
+        });
 
         dropzone.addEventListener('click', () => fileInput.click());
         dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('border-blue-500', 'bg-blue-50/30'); });
@@ -470,9 +518,13 @@
                 const img = new Image();
                 img.src = e.target.result;
                 img.onload = () => {
+                    originalWidth = img.width;
+                    originalHeight = img.height;
                     originalRatio = img.width / img.height;
+                    
                     document.getElementById('resizeWidth').value = img.width;
                     document.getElementById('resizeHeight').value = img.height;
+                    document.getElementById('resizePercentage').value = 100;
                     
                     previewImg.src = e.target.result;
                     promptDiv.classList.add('hidden');
@@ -486,23 +538,99 @@
 
         // Auto Aspect Ratio Handler
         document.getElementById('resizeWidth').addEventListener('input', (e) => {
-            if(document.getElementById('maintainAspect').checked && activeFile) {
+            if(document.getElementById('maintainAspect').checked && activeFile && currentMode === 'pixels') {
                 const val = parseInt(e.target.value);
                 if(val) document.getElementById('resizeHeight').value = Math.round(val / originalRatio);
             }
         });
         document.getElementById('resizeHeight').addEventListener('input', (e) => {
-            if(document.getElementById('maintainAspect').checked && activeFile) {
+            if(document.getElementById('maintainAspect').checked && activeFile && currentMode === 'pixels') {
                 const val = parseInt(e.target.value);
                 if(val) document.getElementById('resizeWidth').value = Math.round(val * originalRatio);
             }
         });
 
+        // Advanced JPEG APP0/JFIF Marker Parser and Injector
+        function processJfifDpi(arrayBuffer, targetDpi) {
+            const view = new DataView(arrayBuffer);
+            
+            // Step 1: Check standard Magic Bytes for JPEG (SOI: 0xFFD8)
+            if (view.getUint16(0) !== 0xFFD8) {
+                return arrayBuffer; // Safe fallback: Not a valid JPEG container
+            }
+
+            let offset = 2;
+            let app0Offset = -1;
+
+            // Step 2: Parser loop through metadata segments
+            while (offset < view.byteLength) {
+                if (view.getUint8(offset) !== 0xFF) break;
+                
+                const marker = view.getUint8(offset + 1);
+                
+                // SOS (Start of Scan) or EOI (End of Image) reached, data starts here
+                if (marker === 0xDA || marker === 0xD9) break; 
+                
+                const length = view.getUint16(offset + 2);
+                
+                // Found APP0 segment marker
+                if (marker === 0xE0) {
+                    // Double check for valid "JFIF\0" identifier string
+                    if (view.getUint32(offset + 4) === 0x4A464946 && view.getUint8(offset + 8) === 0x00) {
+                        app0Offset = offset;
+                        break;
+                    }
+                }
+                offset += length + 2;
+            }
+
+            // Scenario A: JFIF APP0 layout segment already exists -> Update parameters in place
+            if (app0Offset !== -1) {
+                view.setUint8(app0Offset + 13, 1); // Set units to Dots Per Inch (DPI)
+                view.setUint16(app0Offset + 14, targetDpi); // X density update
+                view.setUint16(app0Offset + 16, targetDpi); // Y density update
+                return arrayBuffer;
+            } 
+            
+            // Scenario B: No native JFIF section found -> Reconstruct segment safely right after SOI marker
+            else {
+                const jfifSegment = new Uint8Array([
+                    0xFF, 0xE0,             // Marker: APP0
+                    0x00, 0x10,             // Segment Length (16 bytes)
+                    0x4A, 0x46, 0x49, 0x46, 0x00, // Magic string: "JFIF\0"
+                    0x01, 0x01,             // Major/Minor structural version 1.01
+                    0x01,                   // Density layout units: Dots Per Inch (DPI)
+                    (targetDpi >> 8) & 0xFF, targetDpi & 0xFF, // X density value conversion
+                    (targetDpi >> 8) & 0xFF, targetDpi & 0xFF, // Y density value conversion
+                    0x00, 0x00              // Thumbnail dimensional data placeholder (0x00)
+                ]);
+
+                const originalBytes = new Uint8Array(arrayBuffer);
+                const finalBuffer = new Uint8Array(originalBytes.length + jfifSegment.length);
+                
+                finalBuffer.set(originalBytes.subarray(0, 2), 0); // Inject original SOI
+                finalBuffer.set(jfifSegment, 2); // Insert full valid configuration block
+                finalBuffer.set(originalBytes.subarray(2), jfifSegment.length + 2); // Merge residual arrays
+                
+                return finalBuffer.buffer;
+            }
+        }
+
         resizeBtn.addEventListener('click', () => {
             if(!activeFile) { alert('Please upload an image first.'); return; }
-            const w = parseInt(document.getElementById('resizeWidth').value);
-            const h = parseInt(document.getElementById('resizeHeight').value);
-            const dpi = parseInt(document.getElementById('targetDpi').value);
+            
+            let w = 0, h = 0;
+            if (currentMode === 'pixels') {
+                w = parseInt(document.getElementById('resizeWidth').value);
+                h = parseInt(document.getElementById('resizeHeight').value);
+            } else {
+                const pct = parseFloat(document.getElementById('resizePercentage').value) / 100;
+                if (!pct || pct <= 0) { alert('Please provide a valid scale percentage.'); return; }
+                w = Math.round(originalWidth * pct);
+                h = Math.round(originalHeight * pct);
+            }
+
+            const dpiValue = document.getElementById('targetDpi').value;
 
             if(!w || !h) { alert('Valid dimensions required.'); return; }
 
@@ -518,27 +646,25 @@
                 const ctx = canvas.getContext('2d');
                 ctx.drawImage(img, 0, 0, w, h);
 
-                // Export as JPEG and Inject DPI Metadata
+                // Export as standard optimized JPEG container structure
                 canvas.toBlob((blob) => {
                     const reader = new FileReader();
                     reader.onload = function(e) {
-                        const arrayBuffer = e.target.result;
-                        const view = new DataView(arrayBuffer);
+                        let arrayBuffer = e.target.result;
                         
-                        // Inject DPI to JFIF header if applicable
-                        let finalBlob = blob;
-                        if (view.getUint16(0) === 0xFFD8 && view.getUint16(2) === 0xFFE0) {
-                            view.setUint8(13, 1); // Set density unit to dots per inch
-                            view.setUint16(14, dpi); // X density
-                            view.setUint16(16, dpi); // Y density
-                            finalBlob = new Blob([arrayBuffer], {type: 'image/jpeg'});
+                        // Execute advanced metadata segment parser if custom DPI value is actively chosen
+                        if (dpiValue !== 'original') {
+                            const dpi = parseInt(dpiValue);
+                            arrayBuffer = processJfifDpi(arrayBuffer, dpi);
                         }
 
+                        const finalBlob = new Blob([arrayBuffer], {type: 'image/jpeg'});
                         const url = URL.createObjectURL(finalBlob);
+                        
                         downloadBtn.href = url;
-                        downloadBtn.download = `editspark_${dpi}dpi_${w}x${h}.jpg`;
+                        downloadBtn.download = `editspark_${dpiValue === 'original' ? 'resized' : dpiValue + 'dpi'}_${w}x${h}.jpg`;
 
-                        resultResizeInfo.textContent = `New Dimensions: ${w}x${h} px | Output: ${dpi} DPI JPEG`;
+                        resultResizeInfo.textContent = `New Dimensions: ${w}x${h} px | Output: ${dpiValue === 'original' ? 'Original DPI' : dpiValue + ' DPI'} JPEG`;
                         resizeResult.classList.remove('hidden');
                         resizeResult.scrollIntoView({ behavior: 'smooth' });
                         
