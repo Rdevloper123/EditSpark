@@ -11,23 +11,15 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <!-- jsPDF Library for PDF Generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
     <!-- Custom Style for Glow & Smooth Transitions -->
     <style>
-        .gradient-bg {
-            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #311042 100%);
-        }
-        .glow-effect:hover {
-            box-shadow: 0 0 25px rgba(168, 85, 247, 0.6);
-            border-color: #a855f7;
-        }
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 6px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #a855f7;
-            border-radius: 10px;
-        }
+        .gradient-bg {background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #311042 100%); }
+        .glow-effect:hover {box-shadow: 0 0 25px rgba(168, 85, 247, 0.6); border-color: #a855f7; }
+        .custom-scrollbar::-webkit-scrollbar {width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb {background: #a855f7; border-radius: 10px; }
     </style>
 </head>
 <body class="gradient-bg text-gray-100 font-sans min-h-screen antialiased selection:bg-purple-500 selection:text-white">
@@ -47,7 +39,6 @@
     </header>
 
     <main class="max-w-6xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
-        
         <!-- H1 Section with Catchy Animation -->
         <div class="text-center mb-12 animate__animated animate__fadeInDown">
             <span class="px-4 py-1.5 rounded-full text-xs font-semibold bg-purple-500/10 text-purple-300 border border-purple-500/20 uppercase tracking-widest">
@@ -99,31 +90,30 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-slate-950/50 p-4 rounded-xl border border-slate-800/60">
                     <div>
                         <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Page Size</label>
-                        <select class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-purple-500">
-                            <option>A4 (Fit Image)</option>
-                            <option>Letter</option>
-                            <option>Original Image Size</option>
+                        <select id="page-size" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-purple-500 text-slate-200">
+                            <option value="a4">A4 (Fit Image)</option>
+                            <option value="letter">Letter</option>
+                            <option value="original">Original Image Size</option>
                         </select>
                     </div>
                     <div>
                         <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Orientation</label>
-                        <select class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-purple-500">
-                            <option>Portrait</option>
-                            <option>Landscape</option>
+                        <select id="orientation" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-purple-500 text-slate-200">
+                            <option value="p">Portrait</option>
+                            <option value="l">Landscape</option>
                         </select>
                     </div>
                 </div>
 
                 <!-- Action Button -->
-                <button class="w-full bg-gradient-to-r from-purple-500 via-fuchsia-500 to-pink-500 hover:opacity-90 py-4 rounded-xl font-bold tracking-wide shadow-xl shadow-purple-500/20 active:scale-[0.99] transition-all flex items-center justify-center gap-2 text-lg">
-                    <i class="fa-solid fa-file-pdf"></i> Convert & Download PDF
+                <button id="convert-btn" class="w-full bg-gradient-to-r from-purple-500 via-fuchsia-500 to-pink-500 hover:opacity-90 py-4 rounded-xl font-bold tracking-wide shadow-xl shadow-purple-500/20 active:scale-[0.99] transition-all flex items-center justify-center gap-2 text-lg disabled:opacity-50">
+                    <i class="fa-solid fa-file-pdf"></i> <span id="btn-text">Convert & Download PDF</span>
                 </button>
             </div>
         </section>
 
         <!-- SEO H2 Sections for Topical Relevance -->
         <section class="mt-24 space-y-16 border-t border-slate-800/60 pt-16">
-            
             <!-- Target Formats Grid -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="bg-slate-900/30 p-6 rounded-2xl border border-slate-800/40 hover:border-slate-700/60 transition">
@@ -195,32 +185,20 @@
             <!-- FAQ Section -->
             <div class="max-w-3xl mx-auto space-y-6">
                 <h2 class="text-3xl font-bold text-center mb-8">Frequently Asked Questions</h2>
-                
                 <div class="border border-slate-800 bg-slate-900/40 rounded-xl p-5">
-                    <h3 class="font-semibold text-base text-purple-300 flex justify-between items-center">
-                        How do I convert JPG to PDF online?
-                    </h3>
+                    <h3 class="font-semibold text-base text-purple-300 flex justify-between items-center"> How do I convert JPG to PDF online? </h3>
                     <p class="text-sm text-slate-400 mt-2">Simply drag your JPG images into our system area above, tweak page parameters as desired, and trigger the action block to extract your formatted PDF structure.</p>
                 </div>
-
                 <div class="border border-slate-800 bg-slate-900/40 rounded-xl p-5">
-                    <h3 class="font-semibold text-base text-purple-300 flex justify-between items-center">
-                        Can I merge multiple images into one PDF?
-                    </h3>
+                    <h3 class="font-semibold text-base text-purple-300 flex justify-between items-center"> Can I merge multiple images into one PDF? </h3>
                     <p class="text-sm text-slate-400 mt-2">Yes! EditSpark lets you drag a batch of separate photo variations simultaneously to cleanly create a sequential multi-page composite asset layout effortlessly.</p>
                 </div>
-
                 <div class="border border-slate-800 bg-slate-900/40 rounded-xl p-5">
-                    <h3 class="font-semibold text-base text-purple-300 flex justify-between items-center">
-                        Is this Image to PDF converter free?
-                    </h3>
+                    <h3 class="font-semibold text-base text-purple-300 flex justify-between items-center"> Is this Image to PDF converter free? </h3>
                     <p class="text-sm text-slate-400 mt-2">Absolutely. Every conversion asset tool provided on EditSpark is free to use with zero cost paywalls or sudden subscription checks.</p>
                 </div>
-
                 <div class="border border-slate-800 bg-slate-900/40 rounded-xl p-5">
-                    <h3 class="font-semibold text-base text-purple-300 flex justify-between items-center">
-                        Can I convert PNG images to PDF?
-                    </h3>
+                    <h3 class="font-semibold text-base text-purple-300 flex justify-between items-center"> Can I convert PNG images to PDF? </h3>
                     <p class="text-sm text-slate-400 mt-2">Yes, our engines natively map vector points and raster blocks across distinct PNG layers, outputting sharp document variants flawlessly.</p>
                 </div>
             </div>
@@ -238,7 +216,6 @@
                     <a href="/signature-maker.html" class="px-4 py-2 rounded-full bg-slate-900 border border-slate-800 hover:border-purple-500 text-slate-300 hover:text-white transition">Signature Maker</a>
                 </div>
             </div>
-
         </section>
     </main>
 
@@ -255,19 +232,30 @@
         const imageGrid = document.getElementById('image-grid');
         const fileCountSpan = document.getElementById('file-count');
         const clearAllBtn = document.getElementById('clear-all');
+        const convertBtn = document.getElementById('convert-btn');
+        const btnText = document.getElementById('btn-text');
+        const pageSizeSelect = document.getElementById('page-size');
+        const orientationSelect = document.getElementById('orientation');
+
+        let selectedFilesArray = []; // Uploaded files data URLs and sizes ko store karne ke liye
 
         dropZone.addEventListener('click', () => fileInput.click());
-
         fileInput.addEventListener('change', handleFiles);
-        dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('border-purple-500'); });
+
+        dropZone.addEventListener('dragover', (e) => { 
+            e.preventDefault(); 
+            dropZone.classList.add('border-purple-500'); 
+        });
+
         dropZone.addEventListener('dragleave', () => dropZone.classList.remove('border-purple-500'));
+
         dropZone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            dropZone.classList.remove('border-purple-500');
+            e.preventDefault(); 
+            dropZone.classList.remove('border-purple-500'); 
             if(e.dataTransfer.files.length) {
-                fileInput.files = e.dataTransfer.files;
-                handleFiles();
-            }
+                fileInput.files = e.dataTransfer.files; 
+                handleFiles(); 
+            } 
         });
 
         function handleFiles() {
@@ -277,10 +265,23 @@
             imageGrid.innerHTML = '';
             fileCountSpan.textContent = files.length;
             previewSection.classList.remove('hidden');
+            selectedFilesArray = []; // Array reset karein
 
             files.forEach((file, index) => {
                 const reader = new FileReader();
                 reader.onload = function(e) {
+                    // Image element create kar rhe hain original dimensions fetch karne ke liye
+                    const img = new Image();
+                    img.src = e.target.result;
+                    img.onload = function() {
+                        selectedFilesArray.push({
+                            src: e.target.result,
+                            width: img.width,
+                            height: img.height,
+                            name: file.name
+                        });
+                    };
+
                     const card = document.createElement('div');
                     card.className = "bg-slate-950 p-2 rounded-xl border border-slate-800 relative group animate__animated animate__zoomIn text-center";
                     card.innerHTML = `
@@ -298,6 +299,81 @@
             fileInput.value = '';
             imageGrid.innerHTML = '';
             previewSection.classList.add('hidden');
+            selectedFilesArray = [];
+        });
+
+        // Main Conversion Engine logic
+        convertBtn.addEventListener('click', async () => {
+            if (selectedFilesArray.length === 0) {
+                alert('Please upload some images first!');
+                return;
+            }
+
+            convertBtn.disabled = true;
+            btnText.textContent = "Processing & Downloading...";
+
+            const { jsPDF } = window.jspdf;
+            const pageSizeSetting = pageSizeSelect.value;
+            const orientationSetting = orientationSelect.value;
+
+            let pdf;
+
+            selectedFilesArray.forEach((imgData, index) => {
+                let format = pageSizeSetting;
+                let width, height;
+                let orientation = orientationSetting;
+
+                if (pageSizeSetting === 'original') {
+                    // Original dimensions use karein px se mm scale par safely render karne ke liye
+                    format = [imgData.width * 0.264583, imgData.height * 0.264583];
+                    orientation = imgData.width > imgData.height ? 'l' : 'p';
+                }
+
+                if (index === 0) {
+                    // Pehla page initialize karein custom dimensions ke sath
+                    pdf = new jsPDF({
+                        orientation: orientation,
+                        unit: 'mm',
+                        format: format
+                    });
+                } else {
+                    // Next pages add karein settings ke anusaar
+                    pdf.addPage(format, orientation);
+                }
+
+                // PDF standard single-page dimensions fetch karein safe dynamic placement ke liye
+                const pdfWidth = pdf.internal.pageSize.getWidth();
+                const pdfHeight = pdf.internal.pageSize.getHeight();
+
+                // Image margins handling aur fit settings logic
+                if (pageSizeSetting === 'a4' || pageSizeSetting === 'letter') {
+                    const imgRatio = imgData.width / imgData.height;
+                    const pdfRatio = pdfWidth / pdfHeight;
+                    
+                    if (imgRatio > pdfRatio) {
+                        width = pdfWidth;
+                        height = pdfWidth / imgRatio;
+                    } else {
+                        height = pdfHeight;
+                        width = pdfHeight * imgRatio;
+                    }
+                    
+                    // Coordinates central alignment ke liye
+                    const x = (pdfWidth - width) / 2;
+                    const y = (pdfHeight - height) / 2;
+                    pdf.addImage(imgData.src, 'JPEG', x, y, width, height);
+                } else {
+                    // Original size block mapping
+                    pdf.addImage(imgData.src, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+                }
+            });
+
+            // File secure generation trigger points
+            pdf.save('EditSpark-converted.pdf');
+
+            // Button state reset karein downoad ho jaane ke baad
+            convertBtn.disabled = false;
+            btnText.textContent = "Convert & Download PDF";
         });
     </script>
 </body>
