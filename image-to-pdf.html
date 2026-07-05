@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- SEO Meta Tags -->
+    <title>Image to PDF Converter Online Free – JPG, PNG & WEBP to PDF | EditSpark</title>
+    <meta name="description" content="Convert JPG, PNG and WEBP images to PDF online for free. Merge multiple images into one PDF, arrange pages, choose page size and download instantly. No registration required.">
+    
+    <!-- External CSS & Libraries for Animations & Icons -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom Style for Glow & Smooth Transitions -->
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #311042 100%);
+        }
+        .glow-effect:hover {
+            box-shadow: 0 0 25px rgba(168, 85, 247, 0.6);
+            border-color: #a855f7;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #a855f7;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="gradient-bg text-gray-100 font-sans min-h-screen antialiased selection:bg-purple-500 selection:text-white">
+
+    <!-- Header / Navbar -->
+    <header class="border-b border-gray-800 backdrop-blur-md sticky top-0 z-50 bg-slate-900/60">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <a href="/" class="text-2xl font-black tracking-wider bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent hover:scale-105 transition-transform">
+                EditSpark<span class="text-white">.</span>
+            </a>
+            <nav class="hidden md:flex space-x-8 text-sm font-medium text-gray-300">
+                <a href="/image-format-converter.html" class="hover:text-purple-400 transition">Image Converter</a>
+                <a href="/compress-image.html" class="hover:text-purple-400 transition">Compress</a>
+                <a href="/crop-image.html" class="hover:text-purple-400 transition">Crop</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
+        
+        <!-- H1 Section with Catchy Animation -->
+        <div class="text-center mb-12 animate__animated animate__fadeInDown">
+            <span class="px-4 py-1.5 rounded-full text-xs font-semibold bg-purple-500/10 text-purple-300 border border-purple-500/20 uppercase tracking-widest">
+                100% Free & Secure
+            </span>
+            <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight mt-4 mb-4 bg-gradient-to-r from-white via-slate-200 to-purple-400 bg-clip-text text-transparent">
+                Image to PDF Converter
+            </h1>
+            <p class="text-lg text-slate-400 max-w-2xl mx-auto">
+                Convert your JPG, PNG, and WEBP images into high-quality PDFs instantly. No limits, no watermarks.
+            </p>
+        </div>
+
+        <!-- Main Workspace (The Converter Box) -->
+        <section class="max-w-3xl mx-auto bg-slate-900/50 border border-slate-800 rounded-3xl p-6 sm:p-10 backdrop-blur-xl animate__animated animate__fadeInUp shadow-2xl relative overflow-hidden before:absolute before:top-0 before:left-0 before:w-full before:h-1 before:bg-gradient-to-r before:from-purple-500 before:to-pink-500">
+            
+            <!-- Upload Area -->
+            <div id="drop-zone" class="border-2 border-dashed border-slate-700 hover:border-purple-500 rounded-2xl p-8 sm:p-12 text-center cursor-pointer transition-all duration-300 glow-effect bg-slate-950/40 group">
+                <input type="file" id="file-input" multiple accept="image/jpeg, image/png, image/webp" class="hidden">
+                <div class="space-y-4">
+                    <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-purple-500/10 text-purple-400 group-hover:scale-110 group-hover:bg-purple-500 group-hover:text-white transition-all duration-300 animate__animated animate__pulse animate__infinite">
+                        <i class="fa-solid fa-cloud-arrow-up text-2xl"></i>
+                    </div>
+                    <div>
+                        <p class="text-lg font-semibold text-slate-200">Drag & drop your images here</p>
+                        <p class="text-sm text-slate-400 mt-1">Supports JPG, PNG, and WEBP formats</p>
+                    </div>
+                    <button class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 px-6 py-2.5 rounded-xl font-medium text-sm shadow-lg shadow-purple-600/20 active:scale-95 transition-all duration-150">
+                        Browse Files
+                    </button>
+                </div>
+            </div>
+
+            <!-- Preview & Options Area (Hidden by default, shown via JS) -->
+            <div id="preview-section" class="mt-8 space-y-6 hidden animate__animated animate__fadeIn">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                    <h3 class="font-semibold text-slate-200 flex items-center gap-2">
+                        <i class="fa-solid fa-images text-purple-400"></i> Selected Images (<span id="file-count">0</span>)
+                    </h3>
+                    <button id="clear-all" class="text-xs text-rose-400 hover:underline">Clear All</button>
+                </div>
+
+                <!-- Animated Sortable Grid -->
+                <div id="image-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-h-60 overflow-y-auto custom-scrollbar p-1">
+                    <!-- Dynamic Items Go Here -->
+                </div>
+
+                <!-- Formatting Controls -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-slate-950/50 p-4 rounded-xl border border-slate-800/60">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Page Size</label>
+                        <select class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-purple-500">
+                            <option>A4 (Fit Image)</option>
+                            <option>Letter</option>
+                            <option>Original Image Size</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Orientation</label>
+                        <select class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-purple-500">
+                            <option>Portrait</option>
+                            <option>Landscape</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Action Button -->
+                <button class="w-full bg-gradient-to-r from-purple-500 via-fuchsia-500 to-pink-500 hover:opacity-90 py-4 rounded-xl font-bold tracking-wide shadow-xl shadow-purple-500/20 active:scale-[0.99] transition-all flex items-center justify-center gap-2 text-lg">
+                    <i class="fa-solid fa-file-pdf"></i> Convert & Download PDF
+                </button>
+            </div>
+        </section>
+
+        <!-- SEO H2 Sections for Topical Relevance -->
+        <section class="mt-24 space-y-16 border-t border-slate-800/60 pt-16">
+            
+            <!-- Target Formats Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-slate-900/30 p-6 rounded-2xl border border-slate-800/40 hover:border-slate-700/60 transition">
+                    <div class="w-10 h-10 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center mb-4 font-bold text-xs">JPG</div>
+                    <h2 class="text-xl font-bold mb-2">Convert JPG to PDF</h2>
+                    <p class="text-sm text-slate-400 leading-relaxed">Turn your standard digital camera photos and JPG graphics into clean, universally readable PDF reports or documents seamlessly.</p>
+                </div>
+                <div class="bg-slate-900/30 p-6 rounded-2xl border border-slate-800/40 hover:border-slate-700/60 transition">
+                    <div class="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-4 font-bold text-xs">PNG</div>
+                    <h2 class="text-xl font-bold mb-2">Convert PNG to PDF</h2>
+                    <p class="text-sm text-slate-400 leading-relaxed">Preserve transparency and high-quality graphics when you merge your PNG screenshots and design assets into a single document.</p>
+                </div>
+                <div class="bg-slate-900/30 p-6 rounded-2xl border border-slate-800/40 hover:border-slate-700/60 transition">
+                    <div class="w-10 h-10 rounded-lg bg-orange-500/10 text-orange-400 flex items-center justify-center mb-4 font-bold text-xs">WEBP</div>
+                    <h2 class="text-xl font-bold mb-2">Convert WEBP to PDF</h2>
+                    <p class="text-sm text-slate-400 leading-relaxed">Optimized for web formats. Quickly transform modern, compressed Google WEBP files into hard-copy PDF templates directly from your browser.</p>
+                </div>
+            </div>
+
+            <!-- Core Feature Feature -->
+            <div class="bg-gradient-to-r from-purple-950/20 to-slate-900/40 p-8 rounded-3xl border border-purple-500/10 flex flex-col md:flex-row items-center gap-6">
+                <div class="p-4 bg-purple-500/10 text-purple-400 rounded-full text-3xl">
+                    <i class="fa-solid fa-layer-group"></i>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold mb-2">Merge Multiple Images into One PDF</h2>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Why download individual files? Upload a batch of receipts, book pages, or portfolio projects and compile them all smoothly into an organized multi-page PDF document in exact sequential order.
+                    </p>
+                </div>
+            </div>
+
+            <!-- How it Works Section -->
+            <div class="space-y-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold">How to Convert Images to PDF</h2>
+                    <p class="text-slate-400 text-sm mt-1">Follow three simple, fast steps to create your document.</p>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center relative">
+                    <div class="space-y-3">
+                        <div class="w-12 h-12 mx-auto rounded-xl bg-slate-800 flex items-center justify-center font-bold text-purple-400 border border-slate-700">1</div>
+                        <h3 class="font-semibold text-base">Upload Files</h3>
+                        <p class="text-xs text-slate-400">Select or drop your desired JPG, PNG, or WEBP photos into the workspace zone.</p>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="w-12 h-12 mx-auto rounded-xl bg-slate-800 flex items-center justify-center font-bold text-purple-400 border border-slate-700">2</div>
+                        <h3 class="font-semibold text-base">Customize Layout</h3>
+                        <p class="text-xs text-slate-400">Reorder pages dynamically and change page settings like orientation or layout sizes.</p>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="w-12 h-12 mx-auto rounded-xl bg-slate-800 flex items-center justify-center font-bold text-purple-400 border border-slate-700">3</div>
+                        <h3 class="font-semibold text-base">Instant Download</h3>
+                        <p class="text-xs text-slate-400">Click the generate button to process your automated file download securely.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features Bullet Points -->
+            <div class="bg-slate-900/20 border border-slate-800 p-8 rounded-3xl">
+                <h2 class="text-2xl font-bold mb-6 text-center">Premium Tool Features</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm">
+                    <div class="flex gap-3"><i class="fa-solid fa-circle-check text-purple-400 mt-1"></i> <span><strong>Zero Registration:</strong> Start converting right away without revealing private email addresses.</span></div>
+                    <div class="flex gap-3"><i class="fa-solid fa-circle-check text-purple-400 mt-1"></i> <span><strong>Privacy Focused:</strong> All handling runs purely client-side; data is never cached on a server.</span></div>
+                    <div class="flex gap-3"><i class="fa-solid fa-circle-check text-purple-400 mt-1"></i> <span><strong>High Fidelity:</strong> Retains crystal clear resolutions matching original photo specs.</span></div>
+                    <div class="flex gap-3"><i class="fa-solid fa-circle-check text-purple-400 mt-1"></i> <span><strong>Blazing Speed:</strong> Powered by modern browser logic rendering outputs locally in milliseconds.</span></div>
+                </div>
+            </div>
+
+            <!-- FAQ Section -->
+            <div class="max-w-3xl mx-auto space-y-6">
+                <h2 class="text-3xl font-bold text-center mb-8">Frequently Asked Questions</h2>
+                
+                <div class="border border-slate-800 bg-slate-900/40 rounded-xl p-5">
+                    <h3 class="font-semibold text-base text-purple-300 flex justify-between items-center">
+                        How do I convert JPG to PDF online?
+                    </h3>
+                    <p class="text-sm text-slate-400 mt-2">Simply drag your JPG images into our system area above, tweak page parameters as desired, and trigger the action block to extract your formatted PDF structure.</p>
+                </div>
+
+                <div class="border border-slate-800 bg-slate-900/40 rounded-xl p-5">
+                    <h3 class="font-semibold text-base text-purple-300 flex justify-between items-center">
+                        Can I merge multiple images into one PDF?
+                    </h3>
+                    <p class="text-sm text-slate-400 mt-2">Yes! EditSpark lets you drag a batch of separate photo variations simultaneously to cleanly create a sequential multi-page composite asset layout effortlessly.</p>
+                </div>
+
+                <div class="border border-slate-800 bg-slate-900/40 rounded-xl p-5">
+                    <h3 class="font-semibold text-base text-purple-300 flex justify-between items-center">
+                        Is this Image to PDF converter free?
+                    </h3>
+                    <p class="text-sm text-slate-400 mt-2">Absolutely. Every conversion asset tool provided on EditSpark is free to use with zero cost paywalls or sudden subscription checks.</p>
+                </div>
+
+                <div class="border border-slate-800 bg-slate-900/40 rounded-xl p-5">
+                    <h3 class="font-semibold text-base text-purple-300 flex justify-between items-center">
+                        Can I convert PNG images to PDF?
+                    </h3>
+                    <p class="text-sm text-slate-400 mt-2">Yes, our engines natively map vector points and raster blocks across distinct PNG layers, outputting sharp document variants flawlessly.</p>
+                </div>
+            </div>
+
+            <!-- Internal Linking Section (Related Tools) -->
+            <div class="border-t border-slate-800/80 pt-10 text-center">
+                <h3 class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-6">Explore Related Image Utilities</h3>
+                <div class="flex flex-wrap justify-center gap-3 text-xs">
+                    <a href="/compress-image.html" class="px-4 py-2 rounded-full bg-slate-900 border border-slate-800 hover:border-purple-500 text-slate-300 hover:text-white transition">Compress Image</a>
+                    <a href="/resize-image.html" class="px-4 py-2 rounded-full bg-slate-900 border border-slate-800 hover:border-purple-500 text-slate-300 hover:text-white transition">Resize Image</a>
+                    <a href="/crop-image.html" class="px-4 py-2 rounded-full bg-slate-900 border border-slate-800 hover:border-purple-500 text-slate-300 hover:text-white transition">Crop Image</a>
+                    <a href="/image-format-converter.html" class="px-4 py-2 rounded-full bg-slate-900 border border-slate-800 hover:border-purple-500 text-slate-300 hover:text-white transition">Image Converter</a>
+                    <a href="/passport-photo-maker.html" class="px-4 py-2 rounded-full bg-slate-900 border border-slate-800 hover:border-purple-500 text-slate-300 hover:text-white transition">Passport Photo Maker</a>
+                    <a href="/document-background-white.html" class="px-4 py-2 rounded-full bg-slate-900 border border-slate-800 hover:border-purple-500 text-slate-300 hover:text-white transition">Document Cleaner</a>
+                    <a href="/signature-maker.html" class="px-4 py-2 rounded-full bg-slate-900 border border-slate-800 hover:border-purple-500 text-slate-300 hover:text-white transition">Signature Maker</a>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-900 bg-slate-950/80 mt-24 py-6 text-center text-xs text-slate-500">
+        &copy; 2026 EditSpark. All rights reserved. Made securely for immediate local browser transformations.
+    </footer>
+
+    <!-- Interactive JavaScript Logic -->
+    <script>
+        const dropZone = document.getElementById('drop-zone');
+        const fileInput = document.getElementById('file-input');
+        const previewSection = document.getElementById('preview-section');
+        const imageGrid = document.getElementById('image-grid');
+        const fileCountSpan = document.getElementById('file-count');
+        const clearAllBtn = document.getElementById('clear-all');
+
+        dropZone.addEventListener('click', () => fileInput.click());
+
+        fileInput.addEventListener('change', handleFiles);
+        dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('border-purple-500'); });
+        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('border-purple-500'));
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('border-purple-500');
+            if(e.dataTransfer.files.length) {
+                fileInput.files = e.dataTransfer.files;
+                handleFiles();
+            }
+        });
+
+        function handleFiles() {
+            const files = Array.from(fileInput.files);
+            if(files.length === 0) return;
+
+            imageGrid.innerHTML = '';
+            fileCountSpan.textContent = files.length;
+            previewSection.classList.remove('hidden');
+
+            files.forEach((file, index) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const card = document.createElement('div');
+                    card.className = "bg-slate-950 p-2 rounded-xl border border-slate-800 relative group animate__animated animate__zoomIn text-center";
+                    card.innerHTML = `
+                        <img src="${e.target.result}" class="w-full h-24 object-cover rounded-lg mb-1">
+                        <span class="text-[10px] text-slate-500 block truncate">${file.name}</span>
+                        <div class="absolute top-1 right-1 bg-slate-900/80 rounded-full w-5 h-5 flex items-center justify-center text-[10px] text-slate-400 font-bold">${index + 1}</div>
+                    `;
+                    imageGrid.appendChild(card);
+                }
+                reader.readAsDataURL(file);
+            });
+        }
+
+        clearAllBtn.addEventListener('click', () => {
+            fileInput.value = '';
+            imageGrid.innerHTML = '';
+            previewSection.classList.add('hidden');
+        });
+    </script>
+</body>
+</html>
