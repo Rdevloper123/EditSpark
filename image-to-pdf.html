@@ -353,8 +353,8 @@
 
     clearAllBtn.addEventListener('click', () => { selectedFilesArray = []; renderGridItems(); });
 
-    // FIXED: Advanced Adaptive Dynamic Thresholding for Document Scanner B&W (Removes Edge Shadows)
-    function processImageToClearBW(item, customQuality = 0.9) {
+    // FAST & HIGH QUALITY: Optimized Adaptive Thresholding Engine (Executed Only ONCE per image)
+    function processImageToClearBW(item) {
       return new Promise((resolve) => {
         const img = new Image();
         img.src = item.src;
@@ -384,16 +384,14 @@
           const width = canvas.width;
           const height = canvas.height;
 
-          // Step 1: Grayscale layer allocation
           const grayscale = new Uint8Array(width * height);
           for (let i = 0; i < data.length; i += 4) {
             grayscale[i / 4] = 0.299 * data[i] + 0.587 * data[i+1] + 0.114 * data[i+2];
           }
 
-          // Step 2: Adaptive Thresholding (Handles local contrast to eliminate dark corners/vignette)
-          const S = Math.floor(width / 8) | 1; // Grid window size
-          const T = 0.15; // Threshold control ratio
-          const integralImage = new Double64Array ? new Float64Array(width * height) : new Array(width * height);
+          const S = Math.floor(width / 8) | 1; 
+          const T = 0.15; 
+          const integralImage = new Float64Array(width * height);
 
           for (let x = 0; x < width; x++) {
             let sum = 0;
@@ -427,12 +425,12 @@
           }
 
           ctx.putImageData(imgData, 0, 0);
-          resolve({ src: canvas.toDataURL('image/jpeg', customQuality), width: canvas.width, height: canvas.height, rotation: 0, originalCanvas: canvas });
+          resolve(canvas); // Returns raw processed canvas component to bypass double iteration lag
         }
       });
     }
 
-    function parseStandardRotation(item, customQuality = 0.92) {
+    function parseStandardRotation(item) {
       return new Promise((resolve) => {
         const img = new Image();
         img.src = item.src;
@@ -453,17 +451,17 @@
           } else {
             ctx.drawImage(img, -canvas.width / 2, -canvas.height / 2);
           }
-          resolve({ src: canvas.toDataURL('image/jpeg', customQuality), width: canvas.width, height: canvas.height, rotation: 0, originalCanvas: canvas });
+          resolve(canvas);
         }
       });
     }
 
-    // FIXED: Core Compression Framework Integration inside Loop
+    // HIGH SPEED OPTIMIZED EXECUTION SYSTEM
     async function executePDFGeneration(isClearMode) {
       if (selectedFilesArray.length === 0) return;
       
       loaderTitle.textContent = isClearMode ? "Enhancing Text & Layout" : "Compiling Document";
-      loaderStatus.textContent = "Processing local image arrays...";
+      loaderStatus.textContent = "Applying filters (Step 1/2)...";
       loadingModal.classList.remove('hidden');
 
       const { jsPDF } = window.jspdf;
@@ -471,37 +469,46 @@
       const orientationSetting = orientationSelect.value;
       const targetSizeKB = parseInt(targetSizeInput.value);
       
-      let qualityFactor = isClearMode ? 0.85 : 0.92;
+      // Step 1: Core Heavy Pixel Rendering runs ONLY ONCE
+      let baseCanvases = [];
+      for (let i = 0; i < selectedFilesArray.length; i++) {
+        loaderStatus.textContent = `Applying document filters (${i + 1}/${selectedFilesArray.length})...`;
+        if (isClearMode) {
+          const canvasElement = await processImageToClearBW(selectedFilesArray[i]);
+          baseCanvases.push(canvasElement);
+        } else {
+          const canvasElement = await parseStandardRotation(selectedFilesArray[i]);
+          baseCanvases.push(canvasElement);
+        }
+      }
+
+      let qualityFactor = 0.92;
       let pdfInstance = null;
       let finalBuffer = null;
 
-      // Iterative Compression & Quality Optimization loop
+      // Step 2: Instant Fast-Encoding Loop for Custom Compression Target matching
       for (let attempt = 0; attempt < 4; attempt++) {
-        let processedList = [];
-        
-        // Dynamic re-encoding based on active quality scale parameters
-        for (let i = 0; i < selectedFilesArray.length; i++) {
-          loaderStatus.textContent = `Optimizing compression encoder (${i + 1}/${selectedFilesArray.length})...`;
-          if (isClearMode) {
-            const output = await processImageToClearBW(selectedFilesArray[i], qualityFactor);
-            processedList.push(output);
-          } else {
-            const output = await parseStandardRotation(selectedFilesArray[i], qualityFactor);
-            processedList.push(output);
-          }
+        if (!isNaN(targetSizeKB) && targetSizeKB > 10) {
+          loaderStatus.textContent = `Testing compression ratio: ${Math.round(qualityFactor * 100)}%...`;
+        } else {
+          loaderStatus.textContent = "Generating final pages...";
         }
 
         pdfInstance = new jsPDF({ orientation: orientationSetting, unit: 'mm' });
         
-        for (let index = 0; index < processedList.length; index++) {
-          const imgData = processedList[index];
+        for (let index = 0; index < baseCanvases.length; index++) {
+          const activeCanvas = baseCanvases[index];
+          
+          // Re-encode from processed source instantly without recalculating pixels
+          const finalCompressedDataURI = activeCanvas.toDataURL('image/jpeg', qualityFactor);
+
           let format = pageSizeSetting;
           let width, height;
           let pageOrientation = orientationSetting;
 
           if (pageSizeSetting === 'original') {
-            format = [imgData.width * 0.264583, imgData.height * 0.264583];
-            pageOrientation = imgData.width > imgData.height ? 'l' : 'p';
+            format = [activeCanvas.width * 0.264583, activeCanvas.height * 0.264583];
+            pageOrientation = activeCanvas.width > activeCanvas.height ? 'l' : 'p';
           }
 
           if (index > 0) pdfInstance.addPage(format, pageOrientation);
@@ -510,7 +517,7 @@
           const pdfHeight = pdfInstance.internal.pageSize.getHeight();
 
           if (pageSizeSetting === 'a4' || pageSizeSetting === 'letter') {
-            const imgRatio = imgData.width / imgData.height;
+            const imgRatio = activeCanvas.width / activeCanvas.height;
             const pdfRatio = pdfWidth / pdfHeight;
             if (imgRatio > pdfRatio) {
               width = pdfWidth; height = pdfWidth / imgRatio;
@@ -519,9 +526,9 @@
             }
             const x = (pdfWidth - width) / 2;
             const y = (pdfHeight - height) / 2;
-            pdfInstance.addImage(imgData.src, 'JPEG', x, y, width, height, undefined, 'FAST');
+            pdfInstance.addImage(finalCompressedDataURI, 'JPEG', x, y, width, height, undefined, 'FAST');
           } else {
-            pdfInstance.addImage(imgData.src, 'JPEG', 0, 0, pdfWidth, pdfHeight, undefined, 'FAST');
+            pdfInstance.addImage(finalCompressedDataURI, 'JPEG', 0, 0, pdfWidth, pdfHeight, undefined, 'FAST');
           }
         }
 
@@ -529,16 +536,16 @@
           finalBuffer = pdfInstance.output('arraybuffer');
           const currentSizeKB = finalBuffer.byteLength / 1024;
           
-          if (currentSizeKB <= targetSizeKB || qualityFactor <= 0.25) { 
+          if (currentSizeKB <= targetSizeKB || qualityFactor <= 0.2) { 
             break; 
           }
-          qualityFactor -= 0.22; // Target scaling parameters fallback reduction steps
+          qualityFactor -= 0.25; 
         } else { 
           break; 
         }
       }
 
-      loaderStatus.textContent = "Triggering secure client download...";
+      loaderStatus.textContent = "Starting automatic download...";
       pdfInstance.save('EditSpark-converted.pdf');
       
       setTimeout(() => { loadingModal.classList.add('hidden'); }, 400);
