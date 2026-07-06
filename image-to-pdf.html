@@ -45,7 +45,6 @@
   </header>
 
   <main class="max-w-6xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
-    <!-- H1 Section with Catchy Animation -->
     <div class="text-center mb-12 animate__animated animate__fadeInDown">
       <span class="px-4 py-1.5 rounded-full text-xs font-semibold bg-purple-500/10 text-purple-300 border border-purple-500/20 uppercase tracking-widest">
         100% Free & Secure
@@ -139,7 +138,7 @@
       </div>
       <div>
         <h3 id="loader-title" class="text-lg font-bold text-slate-100">Processing Document</h3>
-        <p id="loader-status" class="text-sm text-purple-400 mt-1">Reading files...</p>
+        <p id="loader-status" class="text-sm text-purple-400 mt-1">Processing images...</p>
       </div>
     </div>
   </div>
@@ -328,31 +327,53 @@
     closeCropBtn.addEventListener('click', closeCropModal);
     clearAllBtn.addEventListener('click', () => { selectedFilesArray = []; renderGridItems(); });
 
-    // Single pass Adaptive Thresholding Filter
+    // CRITICAL FIX: Safe Canvas Pre-Downscaling for Ultra Fast Processing
+    function getOptimizedCanvas(img, rotation) {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      
+      let w = img.width;
+      let h = img.height;
+      
+      // Limit resolution to max 1400px to prevent browser lag while thresholding
+      const MAX_DIM = 1400;
+      if (w > MAX_DIM || h > MAX_DIM) {
+        if (w > h) {
+          h = Math.round((h * MAX_DIM) / w);
+          w = MAX_DIM;
+        } else {
+          w = Math.round((w * MAX_DIM) / h);
+          h = MAX_DIM;
+        }
+      }
+
+      if (rotation === 90 || rotation === 270) {
+        canvas.width = h;
+        canvas.height = w;
+      } else {
+        canvas.width = w;
+        canvas.height = h;
+      }
+      
+      ctx.translate(canvas.width / 2, canvas.height / 2);
+      ctx.rotate((rotation * Math.PI) / 180);
+      
+      if (rotation === 90 || rotation === 270) {
+        ctx.drawImage(img, -canvas.height / 2, -canvas.width / 2, canvas.height, canvas.width);
+      } else {
+        ctx.drawImage(img, -canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height);
+      }
+      return canvas;
+    }
+
+    // High Speed Single-pass Adaptive Thresholding
     function processImageToClearBW(item) {
       return new Promise((resolve) => {
         const img = new Image();
         img.src = item.src;
         img.onload = function() {
-          const canvas = document.createElement('canvas');
+          const canvas = getOptimizedCanvas(img, item.rotation);
           const ctx = canvas.getContext('2d');
-          
-          if (item.rotation === 90 || item.rotation === 270) {
-            canvas.width = img.height;
-            canvas.height = img.width;
-          } else {
-            canvas.width = img.width;
-            canvas.height = img.height;
-          }
-          
-          ctx.translate(canvas.width / 2, canvas.height / 2);
-          ctx.rotate((item.rotation * Math.PI) / 180);
-          
-          if (item.rotation === 90 || item.rotation === 270) {
-            ctx.drawImage(img, -canvas.height / 2, -canvas.width / 2);
-          } else {
-            ctx.drawImage(img, -canvas.width / 2, -canvas.height / 2);
-          }
           
           const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
           const data = imgData.data;
@@ -408,28 +429,13 @@
         const img = new Image();
         img.src = item.src;
         img.onload = function() {
-          const canvas = document.createElement('canvas');
-          const ctx = canvas.getContext('2d');
-          if (item.rotation === 90 || item.rotation === 270) {
-            canvas.width = img.height;
-            canvas.height = img.width;
-          } else {
-            canvas.width = img.width;
-            canvas.height = img.height;
-          }
-          ctx.translate(canvas.width / 2, canvas.height / 2);
-          ctx.rotate((item.rotation * Math.PI) / 180);
-          if (item.rotation === 90 || item.rotation === 270) {
-            ctx.drawImage(img, -canvas.height / 2, -canvas.width / 2);
-          } else {
-            ctx.drawImage(img, -canvas.width / 2, -canvas.height / 2);
-          }
+          const canvas = getOptimizedCanvas(img, item.rotation);
           resolve(canvas);
         }
       });
     }
 
-    // ULTRA-FAST & ACCURATE COMPRESSION SYSTEM (1-Pass)
+    // INSTANT 1-PASS CONVERSION LOGIC
     async function executePDFGeneration(isClearMode) {
       if (selectedFilesArray.length === 0) return;
       
@@ -442,27 +448,26 @@
       const orientationSetting = orientationSelect.value;
       const targetSizeKB = parseInt(targetSizeInput.value);
 
-      // Instantly map quality & dimensions scale according to desired target size input
+      // Map strict target bounds perfectly in 1 pass
       let qualityFactor = 0.90;
-      let dimensionScale = 1.0;
+      let extraDimensionScale = 1.0;
 
       if (!isNaN(targetSizeKB) && targetSizeKB > 0) {
-        // Safe bracket distribution to avoid recursive trial loops
         if (targetSizeKB <= 15) {
-          qualityFactor = 0.15;
-          dimensionScale = 0.35; // Shrink canvas size to hit strict tiny KB limits
+          qualityFactor = 0.12;
+          extraDimensionScale = 0.35;
         } else if (targetSizeKB <= 40) {
-          qualityFactor = 0.30;
-          dimensionScale = 0.50;
+          qualityFactor = 0.25;
+          extraDimensionScale = 0.50;
         } else if (targetSizeKB <= 100) {
-          qualityFactor = 0.50;
-          dimensionScale = 0.75;
+          qualityFactor = 0.45;
+          extraDimensionScale = 0.70;
         } else if (targetSizeKB <= 200) {
           qualityFactor = 0.65;
-          dimensionScale = 0.90;
+          extraDimensionScale = 0.85;
         } else {
           qualityFactor = 0.80;
-          dimensionScale = 1.0;
+          extraDimensionScale = 1.0;
         }
       }
 
@@ -472,7 +477,6 @@
         compress: true 
       });
       
-      // Strict Single Pass Processing
       for (let i = 0; i < selectedFilesArray.length; i++) {
         loaderStatus.textContent = `Rendering page ${i + 1} of ${selectedFilesArray.length}...`;
         
@@ -483,11 +487,11 @@
           canvasElement = await parseStandardRotation(selectedFilesArray[i]);
         }
 
-        // Downscale raw resolution memory directly if small target size is demanded
-        if (dimensionScale < 1.0) {
+        // Apply dynamic scale resizing to target precise low-KB limits safely
+        if (extraDimensionScale < 1.0) {
           const scaledCanvas = document.createElement('canvas');
-          scaledCanvas.width = Math.max(20, canvasElement.width * dimensionScale);
-          scaledCanvas.height = Math.max(20, canvasElement.height * dimensionScale);
+          scaledCanvas.width = Math.max(20, canvasElement.width * extraDimensionScale);
+          scaledCanvas.height = Math.max(20, canvasElement.height * extraDimensionScale);
           const sCtx = scaledCanvas.getContext('2d');
           sCtx.drawImage(canvasElement, 0, 0, scaledCanvas.width, scaledCanvas.height);
           canvasElement = scaledCanvas;
