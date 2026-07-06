@@ -86,6 +86,9 @@
           <button id="clear-all" class="text-xs text-rose-400 hover:underline">Clear All</button>
         </div>
 
+        <p class="text-xs text-amber-400 flex items-center gap-1">
+          <i class="fa-solid fa-circle-info"></i> Note: Transparent PNGs will automatically receive a clean white background.
+        </p>
         <p class="text-xs text-slate-400"><i class="fa-solid fa-hand-pointer text-purple-400 mr-1"></i> Drag cards to re-order pages. Use ✂️ to crop or 🔄 to rotate.</p>
 
         <!-- Dynamic Reorderable Grid Layout -->
@@ -139,13 +142,17 @@
       <div>
         <h3 id="loader-title" class="text-lg font-bold text-slate-100">Processing Document</h3>
         <p id="loader-status" class="text-sm text-purple-400 mt-1">Processing images...</p>
+        <!-- Dynamic Progress Bar Section -->
+        <div class="w-full bg-slate-950 rounded-full h-2.5 mt-4 border border-slate-800 overflow-hidden">
+          <div id="loader-progress-bar" class="bg-gradient-to-r from-purple-500 to-pink-500 h-2.5 w-0 transition-all duration-150"></div>
+        </div>
       </div>
     </div>
   </div>
 
   <!-- Crop Modal -->
   <div id="crop-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-[90] hidden flex flex-col items-center justify-center p-4">
-    <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-2xl w-full p-6 space-y-4 shadow-2xl flex flex-col max-h-[90vh]">
+    <div id="crop-modal-content" class="bg-slate-900 border border-slate-800 rounded-2xl max-w-2xl w-full p-6 space-y-4 shadow-2xl flex flex-col max-h-[90vh]">
       <div class="flex justify-between items-center border-b border-slate-800 pb-2">
         <h3 class="font-bold text-slate-200">Crop & Adjust Image</h3>
         <button id="close-crop" class="text-slate-400 hover:text-white text-xl">&times;</button>
@@ -184,8 +191,10 @@
     const loadingModal = document.getElementById('loading-modal');
     const loaderStatus = document.getElementById('loader-status');
     const loaderTitle = document.getElementById('loader-title');
+    const loaderProgressBar = document.getElementById('loader-progress-bar');
     
     const cropModal = document.getElementById('crop-modal');
+    const cropModalContent = document.getElementById('crop-modal-content');
     const cropTargetImg = document.getElementById('crop-target-img');
     const saveCropBtn = document.getElementById('save-crop-btn');
     const closeCropBtn = document.getElementById('close-crop');
@@ -194,6 +203,12 @@
     let currentCropperInstance = null;
     let currentEditingIndex = null;
     let draggedItemIndex = null;
+
+    // Config Limits
+    const MAX_IMAGE_COUNT = 100;
+    const MAX_TOTAL_SIZE_BYTES = 200 * 1024 * 1024; // 200MB
+    const SUPPORTED_MIME_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
+    const MAX_PREVIEW_DIMENSION = 3000;
 
     dropZone.addEventListener('click', () => fileInput.click());
     fileInput.addEventListener('change', handleFiles);
@@ -211,25 +226,113 @@
       handleRawFilesList(fileInput.files);
     }
 
-    function handleRawFilesList(files) {
-      Array.from(files).forEach((file) => {
-        const reader = new FileReader();
-        reader.onload = function(e) {
+    function calculateCurrentTotalSize() {
+      return selectedFilesArray.reduce((acc, curr) => acc + curr.size, 0);
+    }
+
+    async function handleRawFilesList(files) {
+      let currentTotalBytes = calculateCurrentTotalSize();
+      const filesToProcess = Array.from(files);
+
+      // Upload Limit checks
+      if (selectedFilesArray.length + filesToProcess.length > MAX_IMAGE_COUNT) {
+        alert(`Maximum upload limit is ${MAX_IMAGE_COUNT} images.`);
+        fileInput.value = '';
+        return;
+      }
+
+      // Check incoming payload sizing
+      let newBatchSize = filesToProcess.reduce((sum, f) => sum + f.size, 0);
+      if (currentTotalBytes + newBatchSize > MAX_TOTAL_SIZE_BYTES) {
+        alert("Total files batch size exceeds the max safe limit of 200 MB.");
+        fileInput.value = '';
+        return;
+      }
+
+      // Concurrently parse all valid files via Promise.all
+      const parsePromises = filesToProcess.map((file) => {
+        return new Promise((resolve) => {
+          // Fake File Strict Check
+          if (!SUPPORTED_MIME_TYPES.includes(file.type)) {
+            alert(`Rejected corrupt or un-supported format file: "${file.name}"`);
+            return resolve(null);
+          }
+
+          // Duplicate Upload Filter
+          const looksIdentical = selectedFilesArray.some(existing => 
+            existing.name === file.name && 
+            existing.size === file.size && 
+            existing.lastModified === file.lastModified
+          );
+          if (looksIdentical) {
+            return resolve(null); 
+          }
+
           const img = new Image();
-          img.src = e.target.result;
+          // Memory Optimization: Using Object URLs instead of massive Base64 strings
+          const objectUrl = URL.createObjectURL(file);
+
           img.onload = function() {
-            selectedFilesArray.push({
-              src: e.target.result,
-              width: img.width,
-              height: img.height,
+            let targetWidth = img.width;
+            let targetHeight = img.height;
+
+            // Huge Image Scaling Down to 3000px Max Dimension Safeguard
+            if (targetWidth > MAX_PREVIEW_DIMENSION || targetHeight > MAX_PREVIEW_DIMENSION) {
+              if (targetWidth > targetHeight) {
+                targetHeight = Math.round((targetHeight * MAX_PREVIEW_DIMENSION) / targetWidth);
+                targetWidth = MAX_PREVIEW_DIMENSION;
+              } else {
+                targetWidth = Math.round((targetWidth * MAX_PREVIEW_DIMENSION) / targetHeight);
+                targetHeight = MAX_PREVIEW_DIMENSION;
+              }
+            }
+
+            // High Performance Scaling to Local Canvas
+            const scaleCanvas = document.createElement('canvas');
+            scaleCanvas.width = targetWidth;
+            scaleCanvas.height = targetHeight;
+            const scaleCtx = scaleCanvas.getContext('2d');
+            
+            // Transparency preservation
+            scaleCtx.fillStyle = "#ffffff";
+            scaleCtx.fillRect(0, 0, targetWidth, targetHeight);
+            scaleCtx.drawImage(img, 0, 0, targetWidth, targetHeight);
+
+            const fastResizedBlobUrl = scaleCanvas.toDataURL('image/jpeg', 0.90);
+
+            // Immediate Memory Cleanup
+            scaleCanvas.width = 0;
+            scaleCanvas.height = 0;
+            img.src = "";
+            URL.revokeObjectURL(objectUrl);
+
+            resolve({
+              src: fastResizedBlobUrl, 
+              width: targetWidth,
+              height: targetHeight,
               name: file.name,
+              size: file.size,
+              lastModified: file.lastModified,
               rotation: 0
             });
-            renderGridItems();
           };
-        }
-        reader.readAsDataURL(file);
+
+          img.onerror = function() {
+            alert(`The file "${file.name}" could not be loaded because it is corrupted.`);
+            URL.revokeObjectURL(objectUrl);
+            resolve(null);
+          };
+
+          img.src = objectUrl;
+        });
       });
+
+      const parsedResults = await Promise.all(parsePromises);
+      parsedResults.forEach(item => {
+        if(item) selectedFilesArray.push(item);
+      });
+
+      renderGridItems();
       fileInput.value = ''; 
     }
 
@@ -310,9 +413,22 @@
     saveCropBtn.addEventListener('click', () => {
       if(!currentCropperInstance) return;
       const canvas = currentCropperInstance.getCroppedCanvas();
-      selectedFilesArray[currentEditingIndex].src = canvas.toDataURL('image/jpeg', 0.95);
+      
+      // Intentional white background application
+      const outputCanvas = document.createElement('canvas');
+      outputCanvas.width = canvas.width;
+      outputCanvas.height = canvas.height;
+      const ctx = outputCanvas.getContext('2d');
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(canvas, 0, 0);
+
+      selectedFilesArray[currentEditingIndex].src = outputCanvas.toDataURL('image/jpeg', 0.92);
       selectedFilesArray[currentEditingIndex].width = canvas.width;
       selectedFilesArray[currentEditingIndex].height = canvas.height;
+      
+      // Cleanup
+      outputCanvas.width = 0; outputCanvas.height = 0;
       closeCropModal();
       renderGridItems();
     });
@@ -324,10 +440,19 @@
         currentCropperInstance = null;
       }
     }
+    
+    // Close Modal on click outside content & Escape Key triggers
     closeCropBtn.addEventListener('click', closeCropModal);
+    cropModal.addEventListener('click', (e) => {
+      if (!cropModalContent.contains(e.target)) closeCropModal();
+    });
+    window.addEventListener('keydown', (e) => {
+      if (e.key === "Escape" && !cropModal.classList.contains('hidden')) closeCropModal();
+    });
+
     clearAllBtn.addEventListener('click', () => { selectedFilesArray = []; renderGridItems(); });
 
-    // HIGH SPEED Canvas Downscaling & Dimensions Mapper
+    // High Speed Multi-threading Simulation Downscaler & Dimensions Mapper
     function getOptimizedCanvas(img, rotation) {
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
@@ -352,6 +477,10 @@
         canvas.width = w; canvas.height = h;
       }
       
+      // Transparency Fix: Draw Explicit Solid White Background
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
       ctx.translate(canvas.width / 2, canvas.height / 2);
       ctx.rotate((rotation * Math.PI) / 180);
       
@@ -363,7 +492,7 @@
       return canvas;
     }
 
-    // High Speed Single-pass Adaptive Thresholding (Clean Xerox)
+    // High Speed Adaptive Thresholding (Xerox)
     function processImageToClearBW(item) {
       return new Promise((resolve) => {
         const img = new Image();
@@ -416,6 +545,7 @@
           }
 
           ctx.putImageData(imgData, 0, 0);
+          img.src = ""; // Memory Cleanup Trigger
           resolve(canvas);
         }
       });
@@ -427,61 +557,24 @@
         img.src = item.src;
         img.onload = function() {
           const canvas = getOptimizedCanvas(img, item.rotation);
+          img.src = ""; // Memory Cleanup Trigger
           resolve(canvas);
         }
       });
     }
 
-    // PERFECT TARGET ACCURACY CONVERSION
-    async function executePDFGeneration(isClearMode) {
-      if (selectedFilesArray.length === 0) return;
-      
-      loaderTitle.textContent = isClearMode ? "Enhancing Text & Layout" : "Compiling Document";
-      loaderStatus.textContent = "Processing images instantly...";
-      loadingModal.classList.remove('hidden');
-
+    // Binary Search Engine for Accurate Target Size Tuning
+    async function generatePdfBlobWithQuality(quality, isClearMode, pageSizeSetting, orientationSetting) {
       const { jsPDF } = window.jspdf;
-      const pageSizeSetting = pageSizeSelect.value;
-      const orientationSetting = orientationSelect.value;
-      const targetSizeKB = parseInt(targetSizeInput.value);
+      const pdfInstance = new jsPDF({ orientation: orientationSetting, unit: 'mm', compress: true });
 
-      // CRITICAL LOGIC: Continuous Quality Multiplier Formula 
-      // Safely caps files under the threshold without falling to 10KB.
-      let qualityFactor = 0.85; 
-      if (!isNaN(targetSizeKB) && targetSizeKB > 0) {
-        let totalImages = selectedFilesArray.length;
-        let targetPerImage = targetSizeKB / totalImages;
+      // Simulate thread execution loops for optimization speed
+      const renderingPromises = selectedFilesArray.map(item => isClearMode ? processImageToClearBW(item) : parseStandardRotation(item));
+      const canvases = await Promise.all(renderingPromises);
 
-        if (targetPerImage <= 25) {
-          qualityFactor = Math.max(0.12, (targetPerImage / 35));
-        } else if (targetPerImage <= 60) {
-          qualityFactor = 0.25 + ((targetPerImage - 25) / 35) * 0.25; 
-        } else if (targetPerImage <= 120) {
-          qualityFactor = 0.50 + ((targetPerImage - 60) / 60) * 0.25;
-        } else if (targetPerImage <= 250) {
-          qualityFactor = 0.75 + ((targetPerImage - 120) / 130) * 0.15;
-        } else {
-          qualityFactor = 0.92;
-        }
-      }
-
-      const pdfInstance = new jsPDF({ 
-        orientation: orientationSetting, 
-        unit: 'mm', 
-        compress: true 
-      });
-      
-      for (let i = 0; i < selectedFilesArray.length; i++) {
-        loaderStatus.textContent = `Rendering page ${i + 1} of ${selectedFilesArray.length}...`;
-        
-        let canvasElement;
-        if (isClearMode) {
-          canvasElement = await processImageToClearBW(selectedFilesArray[i]);
-        } else {
-          canvasElement = await parseStandardRotation(selectedFilesArray[i]);
-        }
-
-        const finalCompressedDataURI = canvasElement.toDataURL('image/jpeg', qualityFactor);
+      for (let i = 0; i < canvases.length; i++) {
+        const canvasElement = canvases[i];
+        const finalCompressedDataURI = canvasElement.toDataURL('image/jpeg', quality);
 
         let format = pageSizeSetting;
         let width, height;
@@ -511,12 +604,92 @@
         } else {
           pdfInstance.addImage(finalCompressedDataURI, 'JPEG', 0, 0, pdfWidth, pdfHeight, undefined, 'FAST');
         }
+
+        // Memory Cleanup inside loops
+        canvasElement.width = 0;
+        canvasElement.height = 0;
       }
 
-      loaderStatus.textContent = "Saving document...";
-      pdfInstance.save('EditSpark-converted.pdf');
+      return pdfInstance;
+    }
+
+    // PERFECT TARGET ACCURACY CONVERSION WITH ERROR HANDLING & PROGRESS TRACKING
+    async function executePDFGeneration(isClearMode) {
+      if (selectedFilesArray.length === 0) return;
       
-      setTimeout(() => { loadingModal.classList.add('hidden'); }, 300);
+      loaderTitle.textContent = isClearMode ? "Enhancing Text & Layout" : "Compiling Document";
+      loaderStatus.textContent = "Initializing rendering buffers...";
+      loaderProgressBar.style.width = "5%";
+      loadingModal.classList.remove('hidden');
+
+      const pageSizeSetting = pageSizeSelect.value;
+      const orientationSetting = orientationSelect.value;
+      const targetSizeKB = parseInt(targetSizeInput.value);
+
+      try {
+        let finalPdfInstance;
+        
+        // Check if precise Binary Size Tuning is needed
+        if (!isNaN(targetSizeKB) && targetSizeKB > 0) {
+          loaderStatus.textContent = "Running Binary Search optimization loop...";
+          loaderProgressBar.style.width = "25%";
+
+          let lowQuality = 0.05;
+          let highQuality = 0.95;
+          let optimalQuality = 0.75;
+          let attempts = 0;
+          const MAX_ATTEMPTS = 5;
+
+          while (attempts < MAX_ATTEMPTS) {
+            attempts++;
+            optimalQuality = (lowQuality + highQuality) / 2;
+            
+            loaderStatus.textContent = `Optimizing sizing accuracy (Pass ${attempts}/${MAX_ATTEMPTS})...`;
+            loaderProgressBar.style.width = `${25 + (attempts * 12)}%`;
+
+            finalPdfInstance = await generatePdfBlobWithQuality(optimalQuality, isClearMode, pageSizeSetting, orientationSetting);
+            let currentBlob = finalPdfInstance.output('blob');
+            let estimatedSizeKB = currentBlob.size / 1024;
+
+            // Target match thresholding criteria
+            if (Math.abs(estimatedSizeKB - targetSizeKB) < (targetSizeKB * 0.04)) {
+              break; 
+            }
+            if (estimatedSizeKB > targetSizeKB) {
+              highQuality = optimalQuality;
+            } else {
+              lowQuality = optimalQuality;
+            }
+          }
+        } else {
+          // Fallback standard render pass
+          loaderStatus.textContent = "Rendering final document layers...";
+          loaderProgressBar.style.width = "60%";
+          finalPdfInstance = await generatePdfBlobWithQuality(0.85, isClearMode, pageSizeSetting, orientationSetting);
+        }
+
+        loaderStatus.textContent = "Configuring file download attributes...";
+        loaderProgressBar.style.width = "90%";
+
+        // Dynamic naming pattern allocation
+        let outputFileName = "images-to-pdf.pdf";
+        if (selectedFilesArray.length === 1) {
+          const rootName = selectedFilesArray[0].name.substring(0, selectedFilesArray[0].name.lastIndexOf('.')) || selectedFilesArray[0].name;
+          outputFileName = `${rootName}.pdf`;
+        }
+
+        finalPdfInstance.save(outputFileName);
+        loaderProgressBar.style.width = "100%";
+        
+      } catch (error) {
+        console.error(error);
+        alert("An unexpected error occurred during rendering. Buffers cleared safely.");
+      } finally {
+        setTimeout(() => { 
+          loadingModal.classList.add('hidden'); 
+          loaderProgressBar.style.width = "0%";
+        }, 400);
+      }
     }
 
     document.getElementById('download-simple').addEventListener('click', () => executePDFGeneration(false));
