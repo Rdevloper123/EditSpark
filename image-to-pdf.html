@@ -268,29 +268,31 @@
           }
 
           const img = new Image();
+          // Memory Optimization: Using clean, live Object URLs instead of forced premature Canvas conversions
           const objectUrl = URL.createObjectURL(file);
+          let loaded = false;
 
-          img.onload = () => {
+          img.onload = function() {
+            loaded = true;
             resolve({
-              src: objectUrl, // Direct live Object URL preserves full quality & original transparency
+              src: objectUrl, // Direct Object URL to preserve full quality and transparency in previews
               originalFile: file,
-              width: img.naturalWidth,
-              height: img.naturalHeight,
+              width: img.width,
+              height: img.height,
               name: file.name,
               size: file.size,
               lastModified: file.lastModified,
               rotation: 0
             });
-            img.onload = null;
-            img.onerror = null;
+            // Cleanup references without breaking the ObjectURL yet
+            img.src = "";
           };
 
-          img.onerror = () => {
+          img.onerror = function() {
+            if (loaded) return;
+            alert(`The file "${file.name}" could not be loaded because it is corrupted.`);
             URL.revokeObjectURL(objectUrl);
-            alert(`"${file.name}" is not a valid image or is corrupted.`);
             resolve(null);
-            img.onload = null;
-            img.onerror = null;
           };
 
           img.src = objectUrl;
@@ -387,23 +389,23 @@
       if(!currentCropperInstance) return;
       const canvas = currentCropperInstance.getCroppedCanvas();
       
-      // Revoke older object URL of this specific slot to free memory
+      // Revoke older object URL of this specific slot if it was locally updated before to free memory
       if(selectedFilesArray[currentEditingIndex].src.startsWith('blob:')) {
         URL.revokeObjectURL(selectedFilesArray[currentEditingIndex].src);
       }
 
-      // Convert cropped canvas into blob to generate the true pipeline sync point
+      // Convert cropped data into blob to build a new ObjectURL (Preserving pure pipeline workflow)
       canvas.toBlob((blob) => {
         const croppedObjectUrl = URL.createObjectURL(blob);
         selectedFilesArray[currentEditingIndex].src = croppedObjectUrl;
-        selectedFilesArray[currentEditingIndex].originalFile = blob; // STATE SYNC RE-CROP FIX
         selectedFilesArray[currentEditingIndex].width = canvas.width;
         selectedFilesArray[currentEditingIndex].height = canvas.height;
         
+        // Immediate Cleanup of standard DOM canvas elements
         canvas.width = 0; canvas.height = 0;
         closeCropModal();
         renderGridItems();
-      }, 'image/png'); // Keeps transparency intact inside workspace preview boundaries
+      }, 'image/png'); // Keeps transparency intact inside the workspace crop triggers!
     });
 
     function closeCropModal() {
@@ -438,7 +440,8 @@
       let w = img.width;
       let h = img.height;
       
-      const MAX_DIM = 3000; // Safeguard huge images downscale ceiling
+      // Resizing to max safe limits to balance file sizes and memory spikes
+      const MAX_DIM = 3000;
       if (w > MAX_DIM || h > MAX_DIM) {
         if (w > h) {
           h = Math.round((h * MAX_DIM) / w);
@@ -455,7 +458,7 @@
         canvas.width = w; canvas.height = h;
       }
       
-      // STRICT TRANSPARENCY FIX: Draw Intentional White Background dynamically at compile time
+      // STRICT TRANSPARENCY FIX: Draw Intentional White Background dynamically at PDF Compile point only
       ctx.fillStyle = "#ffffff";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -470,7 +473,7 @@
       return canvas;
     }
 
-    // Xerox Filter Engine Loop
+    // Xerox Filters Processing Loop
     function processImageToClearBW(item) {
       return new Promise((resolve) => {
         const img = new Image();
@@ -523,11 +526,9 @@
           }
 
           ctx.putImageData(imgData, 0, 0);
+          img.src = ""; 
           resolve(canvas);
-        };
-        img.onerror = () => {
-          resolve(null); // CRITICAL REVOKED EXCEPTION CAUGHT
-        };
+        }
       });
     }
 
@@ -537,15 +538,13 @@
         img.src = item.src;
         img.onload = function() {
           const canvas = getOptimizedCanvas(img, item.rotation);
+          img.src = ""; 
           resolve(canvas);
-        };
-        img.onerror = () => {
-          resolve(null); // CRITICAL REVOKED EXCEPTION CAUGHT
-        };
+        }
       });
     }
 
-    // Main Renderer Loop supporting dynamic binary compression metrics
+    // PDF Compile Core supporting runtime compression matching parameters
     async function generatePdfBlobWithQuality(quality, isClearMode, pageSizeSetting, orientationSetting) {
       const { jsPDF } = window.jspdf;
       const pdfInstance = new jsPDF({ orientation: orientationSetting, unit: 'mm', compress: true });
@@ -553,12 +552,9 @@
       const renderingPromises = selectedFilesArray.map(item => isClearMode ? processImageToClearBW(item) : parseStandardRotation(item));
       const canvases = await Promise.all(renderingPromises);
 
-      let workingPageCount = 0;
       for (let i = 0; i < canvases.length; i++) {
         const canvasElement = canvases[i];
-        if (!canvasElement) continue; // SKIP HOLE FROM BROKEN BLOB HANDLERS
-
-        // Conversion to JPEG and compression occurs ONLY here during download compile execution
+        // JPEG conversion and compression values are applied ONLY right here during compile loops
         const finalCompressedDataURI = canvasElement.toDataURL('image/jpeg', quality);
 
         let format = pageSizeSetting;
@@ -570,8 +566,7 @@
           pageOrientation = canvasElement.width > canvasElement.height ? 'l' : 'p';
         }
 
-        if (workingPageCount > 0) pdfInstance.addPage(format, pageOrientation);
-        workingPageCount++;
+        if (i > 0) pdfInstance.addPage(format, pageOrientation);
 
         const pdfWidth = pdfInstance.internal.pageSize.getWidth();
         const pdfHeight = pdfInstance.internal.pageSize.getHeight();
@@ -591,6 +586,7 @@
           pdfInstance.addImage(finalCompressedDataURI, 'JPEG', 0, 0, pdfWidth, pdfHeight, undefined, 'FAST');
         }
 
+        // Garbage collection memory drops
         canvasElement.width = 0;
         canvasElement.height = 0;
       }
@@ -613,7 +609,7 @@
       try {
         let finalPdfInstance;
         
-        // Binary Search tuning for targeted output weight matching
+        // Binary Search Engine for custom file target validation
         if (!isNaN(targetSizeKB) && targetSizeKB > 0) {
           loaderStatus.textContent = "Running Binary Search optimization loop...";
           loaderProgressBar.style.width = "25%";
@@ -662,7 +658,7 @@
         finalPdfInstance.save(outputFileName);
         loaderProgressBar.style.width = "100%";
         
-        // Release live local object URIs safely to fully garbage collect RAM allocation
+        // Revoke all ObjectURLs after successful download to purge memory completely
         selectedFilesArray.forEach(item => {
           if(item.src.startsWith('blob:')) URL.revokeObjectURL(item.src);
         });
@@ -672,7 +668,7 @@
       } catch (error) {
         console.error(error);
         alert("An unexpected error occurred during rendering. Handlers reset successfully.");
-      } finaly {
+      } finally {
         setTimeout(() => { 
           loadingModal.classList.add('hidden'); 
           loaderProgressBar.style.width = "0%";
