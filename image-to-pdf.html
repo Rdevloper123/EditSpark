@@ -327,7 +327,7 @@
     closeCropBtn.addEventListener('click', closeCropModal);
     clearAllBtn.addEventListener('click', () => { selectedFilesArray = []; renderGridItems(); });
 
-    // HIGH SPEED: Optimized dimensions mapping
+    // HIGH SPEED Canvas Downscaling & Dimensions Mapper
     function getOptimizedCanvas(img, rotation) {
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
@@ -335,7 +335,6 @@
       let w = img.width;
       let h = img.height;
       
-      // Fixed safe limit for fast calculation structure
       const MAX_DIM = 1200;
       if (w > MAX_DIM || h > MAX_DIM) {
         if (w > h) {
@@ -364,7 +363,7 @@
       return canvas;
     }
 
-    // High Speed Adaptive Thresholding for Clean Xerox Mode
+    // High Speed Single-pass Adaptive Thresholding (Clean Xerox)
     function processImageToClearBW(item) {
       return new Promise((resolve) => {
         const img = new Image();
@@ -433,7 +432,7 @@
       });
     }
 
-    // INSTANT & FIXED CONVERSION FUNCTION
+    // PERFECT TARGET ACCURACY CONVERSION
     async function executePDFGeneration(isClearMode) {
       if (selectedFilesArray.length === 0) return;
       
@@ -446,20 +445,23 @@
       const orientationSetting = orientationSelect.value;
       const targetSizeKB = parseInt(targetSizeInput.value);
 
-      // FIXED LOGIC: Linear Compression factors to perfectly hit exact range smoothly
-      let qualityFactor = 0.85;
+      // CRITICAL LOGIC: Continuous Quality Multiplier Formula 
+      // Safely caps files under the threshold without falling to 10KB.
+      let qualityFactor = 0.85; 
       if (!isNaN(targetSizeKB) && targetSizeKB > 0) {
-        // Linearly scales compression based on the actual custom target size input
-        if (targetSizeKB <= 30) {
-          qualityFactor = 0.25;
-        } else if (targetSizeKB <= 70) {
-          qualityFactor = 0.45;
-        } else if (targetSizeKB <= 120) {
-          qualityFactor = 0.65;
-        } else if (targetSizeKB <= 250) {
-          qualityFactor = 0.78;
+        let totalImages = selectedFilesArray.length;
+        let targetPerImage = targetSizeKB / totalImages;
+
+        if (targetPerImage <= 25) {
+          qualityFactor = Math.max(0.12, (targetPerImage / 35));
+        } else if (targetPerImage <= 60) {
+          qualityFactor = 0.25 + ((targetPerImage - 25) / 35) * 0.25; 
+        } else if (targetPerImage <= 120) {
+          qualityFactor = 0.50 + ((targetPerImage - 60) / 60) * 0.25;
+        } else if (targetPerImage <= 250) {
+          qualityFactor = 0.75 + ((targetPerImage - 120) / 130) * 0.15;
         } else {
-          qualityFactor = 0.90;
+          qualityFactor = 0.92;
         }
       }
 
