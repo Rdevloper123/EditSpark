@@ -327,7 +327,7 @@
     closeCropBtn.addEventListener('click', closeCropModal);
     clearAllBtn.addEventListener('click', () => { selectedFilesArray = []; renderGridItems(); });
 
-    // CRITICAL FIX: Safe Canvas Pre-Downscaling for Ultra Fast Processing
+    // HIGH SPEED: Optimized dimensions mapping
     function getOptimizedCanvas(img, rotation) {
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
@@ -335,8 +335,8 @@
       let w = img.width;
       let h = img.height;
       
-      // Limit resolution to max 1400px to prevent browser lag while thresholding
-      const MAX_DIM = 1400;
+      // Fixed safe limit for fast calculation structure
+      const MAX_DIM = 1200;
       if (w > MAX_DIM || h > MAX_DIM) {
         if (w > h) {
           h = Math.round((h * MAX_DIM) / w);
@@ -348,11 +348,9 @@
       }
 
       if (rotation === 90 || rotation === 270) {
-        canvas.width = h;
-        canvas.height = w;
+        canvas.width = h; canvas.height = w;
       } else {
-        canvas.width = w;
-        canvas.height = h;
+        canvas.width = w; canvas.height = h;
       }
       
       ctx.translate(canvas.width / 2, canvas.height / 2);
@@ -366,7 +364,7 @@
       return canvas;
     }
 
-    // High Speed Single-pass Adaptive Thresholding
+    // High Speed Adaptive Thresholding for Clean Xerox Mode
     function processImageToClearBW(item) {
       return new Promise((resolve) => {
         const img = new Image();
@@ -435,7 +433,7 @@
       });
     }
 
-    // INSTANT 1-PASS CONVERSION LOGIC
+    // INSTANT & FIXED CONVERSION FUNCTION
     async function executePDFGeneration(isClearMode) {
       if (selectedFilesArray.length === 0) return;
       
@@ -448,26 +446,20 @@
       const orientationSetting = orientationSelect.value;
       const targetSizeKB = parseInt(targetSizeInput.value);
 
-      // Map strict target bounds perfectly in 1 pass
-      let qualityFactor = 0.90;
-      let extraDimensionScale = 1.0;
-
+      // FIXED LOGIC: Linear Compression factors to perfectly hit exact range smoothly
+      let qualityFactor = 0.85;
       if (!isNaN(targetSizeKB) && targetSizeKB > 0) {
-        if (targetSizeKB <= 15) {
-          qualityFactor = 0.12;
-          extraDimensionScale = 0.35;
-        } else if (targetSizeKB <= 40) {
+        // Linearly scales compression based on the actual custom target size input
+        if (targetSizeKB <= 30) {
           qualityFactor = 0.25;
-          extraDimensionScale = 0.50;
-        } else if (targetSizeKB <= 100) {
+        } else if (targetSizeKB <= 70) {
           qualityFactor = 0.45;
-          extraDimensionScale = 0.70;
-        } else if (targetSizeKB <= 200) {
+        } else if (targetSizeKB <= 120) {
           qualityFactor = 0.65;
-          extraDimensionScale = 0.85;
+        } else if (targetSizeKB <= 250) {
+          qualityFactor = 0.78;
         } else {
-          qualityFactor = 0.80;
-          extraDimensionScale = 1.0;
+          qualityFactor = 0.90;
         }
       }
 
@@ -485,16 +477,6 @@
           canvasElement = await processImageToClearBW(selectedFilesArray[i]);
         } else {
           canvasElement = await parseStandardRotation(selectedFilesArray[i]);
-        }
-
-        // Apply dynamic scale resizing to target precise low-KB limits safely
-        if (extraDimensionScale < 1.0) {
-          const scaledCanvas = document.createElement('canvas');
-          scaledCanvas.width = Math.max(20, canvasElement.width * extraDimensionScale);
-          scaledCanvas.height = Math.max(20, canvasElement.height * extraDimensionScale);
-          const sCtx = scaledCanvas.getContext('2d');
-          sCtx.drawImage(canvasElement, 0, 0, scaledCanvas.width, scaledCanvas.height);
-          canvasElement = scaledCanvas;
         }
 
         const finalCompressedDataURI = canvasElement.toDataURL('image/jpeg', qualityFactor);
