@@ -258,7 +258,6 @@
       fileInput.value = ''; 
     }
 
-    // Dynamic Render Engine With Re-ordering Drag Events Mapping
     function renderGridItems() {
       imageGrid.innerHTML = '';
       if(selectedFilesArray.length === 0) {
@@ -274,7 +273,6 @@
         card.setAttribute('draggable', 'true');
         card.setAttribute('data-index', index);
 
-        // Styling Custom Transform
         card.innerHTML = `
           <div class="relative w-full h-24 mb-2 overflow-hidden rounded-lg bg-black/30 flex items-center justify-center">
             <img src="${item.src}" class="w-full h-full object-cover transition-transform duration-200" style="transform: rotate(${item.rotation}deg)">
@@ -288,7 +286,6 @@
           </div>
         `;
 
-        // Native Drag-and-Drop Event Listeners (Mouse & Touch-supported fallback architecture)
         card.addEventListener('dragstart', (e) => {
           draggedItemIndex = index;
           card.classList.add('sortable-ghost');
@@ -320,7 +317,6 @@
       renderGridItems();
     }
 
-    // Modal Cropper Engine Activation
     window.triggerCropModal = function(index) {
       currentEditingIndex = index;
       cropTargetImg.src = selectedFilesArray[index].src;
@@ -357,8 +353,8 @@
 
     clearAllBtn.addEventListener('click', () => { selectedFilesArray = []; renderGridItems(); });
 
-    // Core Canvas Image Pre-processor Algorithms (Xerox Style High Contrast B&W)
-    function processImageToClearBW(item) {
+    // FIXED: Advanced Adaptive Dynamic Thresholding for Document Scanner B&W (Removes Edge Shadows)
+    function processImageToClearBW(item, customQuality = 0.9) {
       return new Promise((resolve) => {
         const img = new Image();
         img.src = item.src;
@@ -366,7 +362,6 @@
           const canvas = document.createElement('canvas');
           const ctx = canvas.getContext('2d');
           
-          // Handling active dynamic rotational dimensions safely
           if (item.rotation === 90 || item.rotation === 270) {
             canvas.width = img.height;
             canvas.height = img.width;
@@ -386,28 +381,59 @@
           
           const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
           const data = imgData.data;
-          
-          // Applying thresholding algorithm across pixel blocks
+          const width = canvas.width;
+          const height = canvas.height;
+
+          // Step 1: Grayscale layer allocation
+          const grayscale = new Uint8Array(width * height);
           for (let i = 0; i < data.length; i += 4) {
-            const r = data[i];
-            const g = data[i+1];
-            const b = data[i+2];
-            const grayscale = 0.299 * r + 0.587 * g + 0.114 * b;
-            const v = (grayscale > 128) ? 255 : 0; // Fixed structural binary output parameters
-            data[i] = v;
-            data[i+1] = v;
-            data[i+2] = v;
+            grayscale[i / 4] = 0.299 * data[i] + 0.587 * data[i+1] + 0.114 * data[i+2];
           }
+
+          // Step 2: Adaptive Thresholding (Handles local contrast to eliminate dark corners/vignette)
+          const S = Math.floor(width / 8) | 1; // Grid window size
+          const T = 0.15; // Threshold control ratio
+          const integralImage = new Double64Array ? new Float64Array(width * height) : new Array(width * height);
+
+          for (let x = 0; x < width; x++) {
+            let sum = 0;
+            for (let y = 0; y < height; y++) {
+              const idx = y * width + x;
+              sum += grayscale[idx];
+              integralImage[idx] = (x === 0) ? sum : integralImage[idx - 1] + sum;
+            }
+          }
+
+          for (let x = 0; x < width; x++) {
+            for (let y = 0; y < height; y++) {
+              const idx = y * width + x;
+              let x1 = Math.max(0, x - S / 2);
+              let x2 = Math.min(width - 1, x + S / 2);
+              let y1 = Math.max(0, y - S / 2);
+              let y2 = Math.min(height - 1, y + S / 2);
+
+              x1 = Math.floor(x1); x2 = Math.floor(x2); y1 = Math.floor(y1); y2 = Math.floor(y2);
+
+              const count = (x2 - x1) * (y2 - y1);
+              const sum = integralImage[y2 * width + x2] - integralImage[y1 * width + x2] - integralImage[y2 * width + x1] + integralImage[y1 * width + x1];
+
+              const dataIdx = idx * 4;
+              if (grayscale[idx] * count < sum * (1.0 - T)) {
+                data[dataIdx] = 0; data[dataIdx+1] = 0; data[dataIdx+2] = 0;
+              } else {
+                data[dataIdx] = 255; data[dataIdx+1] = 255; data[dataIdx+2] = 255;
+              }
+            }
+          }
+
           ctx.putImageData(imgData, 0, 0);
-          resolve({ src: canvas.toDataURL('image/jpeg', 0.85), width: canvas.width, height: canvas.height, rotation: 0 });
+          resolve({ src: canvas.toDataURL('image/jpeg', customQuality), width: canvas.width, height: canvas.height, rotation: 0, originalCanvas: canvas });
         }
       });
     }
 
-    // Rotational canvas parser for normal simple downloads
-    function parseStandardRotation(item) {
+    function parseStandardRotation(item, customQuality = 0.92) {
       return new Promise((resolve) => {
-        if (item.rotation === 0) { resolve(item); return; }
         const img = new Image();
         img.src = item.src;
         img.onload = function() {
@@ -427,44 +453,44 @@
           } else {
             ctx.drawImage(img, -canvas.width / 2, -canvas.height / 2);
           }
-          resolve({ src: canvas.toDataURL('image/jpeg', 0.92), width: canvas.width, height: canvas.height, rotation: 0 });
+          resolve({ src: canvas.toDataURL('image/jpeg', customQuality), width: canvas.width, height: canvas.height, rotation: 0, originalCanvas: canvas });
         }
       });
     }
 
-    // Main Master Multi-mode Assembly Execution Engine
+    // FIXED: Core Compression Framework Integration inside Loop
     async function executePDFGeneration(isClearMode) {
       if (selectedFilesArray.length === 0) return;
       
-      // Activating full-screen loader animation
       loaderTitle.textContent = isClearMode ? "Enhancing Text & Layout" : "Compiling Document";
       loaderStatus.textContent = "Processing local image arrays...";
       loadingModal.classList.remove('hidden');
 
-      let processedList = [];
-      for (let i = 0; i < selectedFilesArray.length; i++) {
-        loaderStatus.textContent = `Processing image ${i + 1} of ${selectedFilesArray.length}...`;
-        if (isClearMode) {
-          const output = await processImageToClearBW(selectedFilesArray[i]);
-          processedList.push(output);
-        } else {
-          const output = await parseStandardRotation(selectedFilesArray[i]);
-          processedList.push(output);
-        }
-      }
-
-      loaderStatus.textContent = "Assembling raw PDF pages...";
       const { jsPDF } = window.jspdf;
       const pageSizeSetting = pageSizeSelect.value;
       const orientationSetting = orientationSelect.value;
       const targetSizeKB = parseInt(targetSizeInput.value);
       
-      // Dynamic internal trial quality tracking loop for custom target file compression sizes
-      let qualityFactor = isClearMode ? 0.75 : 0.92;
-      let pdfBinaryOutput = null;
+      let qualityFactor = isClearMode ? 0.85 : 0.92;
       let pdfInstance = null;
+      let finalBuffer = null;
 
+      // Iterative Compression & Quality Optimization loop
       for (let attempt = 0; attempt < 4; attempt++) {
+        let processedList = [];
+        
+        // Dynamic re-encoding based on active quality scale parameters
+        for (let i = 0; i < selectedFilesArray.length; i++) {
+          loaderStatus.textContent = `Optimizing compression encoder (${i + 1}/${selectedFilesArray.length})...`;
+          if (isClearMode) {
+            const output = await processImageToClearBW(selectedFilesArray[i], qualityFactor);
+            processedList.push(output);
+          } else {
+            const output = await parseStandardRotation(selectedFilesArray[i], qualityFactor);
+            processedList.push(output);
+          }
+        }
+
         pdfInstance = new jsPDF({ orientation: orientationSetting, unit: 'mm' });
         
         for (let index = 0; index < processedList.length; index++) {
@@ -500,18 +526,21 @@
         }
 
         if (!isNaN(targetSizeKB) && targetSizeKB > 10) {
-          loaderStatus.textContent = `Optimizing compression layers (Attempt ${attempt + 1})...`;
-          pdfBinaryOutput = pdfInstance.output('arraybuffer');
-          const currentSizeKB = pdfBinaryOutput.byteLength / 1024;
-          if (currentSizeKB <= targetSizeKB || qualityFactor < 0.3) { break; }
-          qualityFactor -= 0.18; // Drop layer definitions resolution
-        } else { break; }
+          finalBuffer = pdfInstance.output('arraybuffer');
+          const currentSizeKB = finalBuffer.byteLength / 1024;
+          
+          if (currentSizeKB <= targetSizeKB || qualityFactor <= 0.25) { 
+            break; 
+          }
+          qualityFactor -= 0.22; // Target scaling parameters fallback reduction steps
+        } else { 
+          break; 
+        }
       }
 
       loaderStatus.textContent = "Triggering secure client download...";
       pdfInstance.save('EditSpark-converted.pdf');
       
-      // Closing Full-screen modal smoothly
       setTimeout(() => { loadingModal.classList.add('hidden'); }, 400);
     }
 
