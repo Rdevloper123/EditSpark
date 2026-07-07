@@ -441,7 +441,7 @@
       let h = img.height;
       
       // Resizing to max safe limits to balance file sizes and memory spikes
-      const MAX_DIM = 3000;
+      const MAX_DIM = 4000;
       if (w > MAX_DIM || h > MAX_DIM) {
         if (w > h) {
           h = Math.round((h * MAX_DIM) / w);
