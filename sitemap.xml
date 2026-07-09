@@ -1,79 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
   <url>
-    <loc>https://edit-spark.vercel.app/</loc>
+    <loc>https://editsparks.in/</loc>
     <lastmod>2026-07-06</lastmod>
   </url>
-
   <url>
-    <loc>https://edit-spark.vercel.app/all-in-one-image-tool.html</loc>
+    <loc>https://editsparks.in/all-in-one-image-tool.html</loc>
     <lastmod>2026-07-04</lastmod>
   </url>
-  
   <url>
-    <loc>https://edit-spark.vercel.app/compress-image.html</loc>
+    <loc>https://editsparks.in/compress-image.html</loc>
     <lastmod>2026-07-04</lastmod>
   </url>
-  
   <url>
-    <loc>https://edit-spark.vercel.app/convert-image-to-300-dpi.html</loc>
+    <loc>https://editsparks.in/convert-image-to-300-dpi.html</loc>
     <lastmod>2026-07-04</lastmod>
   </url>
-  
   <url>
-    <loc>https://edit-spark.vercel.app/crop-image.html</loc>
+    <loc>https://editsparks.in/crop-image.html</loc>
     <lastmod>2026-07-04</lastmod>
   </url>
-  
   <url>
-    <loc>https://edit-spark.vercel.app/document-background-white.html</loc>
+    <loc>https://editsparks.in/document-background-white.html</loc>
     <lastmod>2026-06-30</lastmod>
   </url>
-  
   <url>
-    <loc>https://edit-spark.vercel.app/image-format-converter.html</loc>
+    <loc>https://editsparks.in/image-format-converter.html</loc>
     <lastmod>2026-07-04</lastmod>
   </url>
-  
   <url>
-    <loc>https://edit-spark.vercel.app/increase-image-size.html</loc>
+    <loc>https://editsparks.in/increase-image-size.html</loc>
     <lastmod>2026-06-27</lastmod>
   </url>
-  
   <url>
-    <loc>https://edit-spark.vercel.app/passport-photo-maker.html</loc>
+    <loc>https://editsparks.in/passport-photo-maker.html</loc>
     <lastmod>2026-07-04</lastmod>
   </url>
-  
   <url>
-    <loc>https://edit-spark.vercel.app/resize-image.html</loc>
+    <loc>https://editsparks.in/resize-image.html</loc>
     <lastmod>2026-07-04</lastmod>
   </url>
-
   <url>
-    <loc>https://edit-spark.vercel.app/about.html</loc>
+    <loc>https://editsparks.in/about.html</loc>
     <lastmod>2026-06-20</lastmod>
   </url>
-  
   <url>
-    <loc>https://edit-spark.vercel.app/contact.html</loc>
+    <loc>https://editsparks.in/contact.html</loc>
     <lastmod>2026-06-20</lastmod>
   </url>
-  
   <url>
-    <loc>https://edit-spark.vercel.app/privacy.html</loc>
+    <loc>https://editsparks.in/privacy.html</loc>
     <lastmod>2026-06-20</lastmod>
   </url>
-  
   <url>
-    <loc>https://edit-spark.vercel.app/terms.html</loc>
+    <loc>https://editsparks.in/terms.html</loc>
     <lastmod>2026-06-20</lastmod>
   </url>
-  
-   <url>
-    <loc>https://https://edit-spark.vercel.app/image-to-pdf.html</loc>
+  <url>
+    <loc>https://editsparks.in/image-to-pdf.html</loc>
     <lastmod>2026-07-06</lastmod>
   </url>
-
 </urlset>
