@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://edit-spark.vercel.app/sitemap.xml
+Sitemap: https://editsparks.in/sitemap.xml
