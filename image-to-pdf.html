@@ -6,7 +6,6 @@
     <!-- SEO Meta Tags -->
     <title>Image to PDF Converter Online Free – JPG, PNG & WEBP to PDF | EditSparks</title>
     <meta name="description" content="Convert JPG, PNG and WEBP images to PDF online for free. Merge multiple images into one PDF, arrange pages, choose page size and download instantly. No registration required.">
-    <link rel="canonical" href="https://editsparks.in/image-to-pdf.html" />
     <!-- External CSS & Libraries for Animations & Icons -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
@@ -533,6 +532,7 @@
             });
         }
 
+        // फिक्स: नया 'userScaleFactor' पैरामीटर जोड़ा गया जो रेजोल्यूशन घटाने/बढ़ाने का काम करेगा
         async function generatePdfBlobWithQuality(quality, isClearMode, pageSizeSetting, orientationSetting, userScaleFactor = 1.0) {
             const { jsPDF } = window.jspdf;
             const pdfInstance = new jsPDF({ orientation: orientationSetting, unit: 'mm', compress: true });
@@ -543,6 +543,7 @@
             for (let i = 0; i < canvases.length; i++) {
                 let canvasElement = canvases[i];
 
+                // डायनेमिक इमेज स्केल रिसाइजिंग मैट्रिक (25% से 200%)
                 if (userScaleFactor !== 1.0) {
                     const scaledCanvas = document.createElement('canvas');
                     const sCtx = scaledCanvas.getContext('2d');
@@ -601,6 +602,7 @@
             return pdfInstance.output('blob');
         }
 
+        // फिक्स: ड्रॉपडाउन स्केल वैल्यू को रीड करने और बाइनरी कंप्रेशन के साथ सिंक करने के लिए मॉडिफाई किया गया
         async function handlePdfGenerationFlow(isClearMode) {
             if (selectedFilesArray.length === 0) return alert("Please upload at least one image.");
 
@@ -608,6 +610,7 @@
             const orientationSetting = orientationSelect.value;
             const targetSizeKb = parseFloat(targetSizeInput.value);
             
+            // यूजर द्वारा चुनी हुई बेस स्केल वैल्यू (जैसे 0.50 या 1.50)
             let baseScaleFactor = imageScaleSelect ? parseFloat(imageScaleSelect.value) : 1.0;
 
             loadingModal.classList.remove('hidden');
@@ -617,10 +620,12 @@
 
             try {
                 if (isNaN(targetSizeKb) || targetSizeKb <= 0) {
+                    // केस 1: कोई KB लिमिट सेट नहीं है - सीधे USER के चुने स्केल पर हाई क्वालिटी में जनरेट करें
                     const blob = await generatePdfBlobWithQuality(0.92, isClearMode, pageSizeSetting, orientationSetting, baseScaleFactor);
                     loaderProgressBar.style.width = "100%";
                     triggerBlobDownload(blob);
                 } else {
+                    // केस 2: KB लिमिट सेट है - बाइनरी सर्च के साथ कंप्रेस करें
                     let low = 0.10, high = 0.95, bestQuality = 0.50, finalBlob = null;
                     let iterations = 0;
                     let currentSizeKb = 0;
@@ -643,6 +648,7 @@
                         }
                     }
 
+                    // सेफ्टी गार्ड: अगर हाई रेजोल्यूशन (जैसे 200%) होने की वजह से फाइल साइज अभी भी टारगेट से बड़ा है, तो रेजोल्यूशन कम करें
                     let fallbackAttempts = 0;
                     while (currentSizeKb > targetSizeKb && fallbackAttempts < 3) {
                         fallbackAttempts++;
