@@ -3,590 +3,591 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bulk Passport Size Photo Maker Online Free | EditSpark</title>
-    <link class="canonical" rel="canonical" href="https://edit-spark.vercel.app/passport-photo-maker.html" />
-    <meta name="description" content="Create and print passport size photos online for free. Support for UPSC, SSC, IBPS, Railways, 35x45mm, and US 2x2 inch official document sizes without Photoshop.">
-    <meta name="robots" content="index,follow,max-image-preview:large">
+    <title>Bulk Passport Size Photo Maker Online Free | EditSparks</title>
+    <link class="canonical" rel="canonical" href="https://editsparks.in/passport-photo-maker.html">
+    <meta name="description" content="Create professionally formatted bulk passport size photos online for free. Ideal for Indian exam forms (UPSC, SSC, Banking) with custom single/multiple sheet layouts.">
+    <meta name="keywords" content="passport size photo maker, bulk passport photo online, passport photo dimensions, passport photo creator free, online passport photo generator, editsparks passport photo">
     
-    <!-- OpenGraph & Social Meta Tags (Optimized for 1200x630 Display) -->
-    <meta property="og:title" content="Bulk Passport Size Photo Maker Online Free | EditSpark">
-    <meta property="og:description" content="Create perfect passport size photo sheets locally in your browser. Fully optimized for official competitive exams and international visas.">
-    <meta property="og:url" content="https://edit-spark.vercel.app/passport-photo-maker.html">
+    <!-- Open Graph Metadata -->
+    <meta property="og:title" content="Bulk Passport Size Photo Maker Online Free | EditSparks">
+    <meta property="og:description" content="Create professionally formatted bulk passport size photos online for free with custom layout sheets for government exams.">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="https://edit-spark.vercel.app/assets/og-passport-photo.jpg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Bulk Passport Size Photo Maker Online Free | EditSpark">
-    <meta name="twitter:description" content="Convert your photos into professional printable passport layouts instantly without server uploads.">
-
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <!-- FontAwesome Core Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta property="og:url" content="https://editsparks.in/passport-photo-maker.html">
     
-    <style>
-        .btn-gradient { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); }
-        .dashed-dropzone { border: 2px dashed #cbd5e1; transition: all 0.3s ease; }
-        .dashed-dropzone:hover { border-color: #2563eb; background-color: #f8fafc; }
-        .photo-grid-preview { display: grid; gap: 4px; background: #fff; padding: 8px; border: 1px solid #e2e8f0; }
-    </style>
+    <!-- Twitter Card Metadata -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Bulk Passport Size Photo Maker Online Free | EditSparks">
+    <meta name="twitter:description" content="Create professionally formatted bulk passport size photos online for free with custom layout sheets for government exams.">
 
-    <!-- Master Schema Graph (Includes WebApplication, ImageObject, Breadcrumb, FAQ) -->
+    <!-- Tailwind CSS v4 & FontAwesome Icons -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "WebSite",
-          "@id": "https://edit-spark.vercel.app/#website",
-          "url": "https://edit-spark.vercel.app/",
-          "name": "EditSpark"
-        },
-        {
-          "@type": "WebApplication",
-          "@id": "https://edit-spark.vercel.app/passport-photo-maker.html#webapp",
-          "name": "Passport Photo Maker",
-          "url": "https://edit-spark.vercel.app/passport-photo-maker.html",
-          "applicationCategory": "DesignApplication",
-          "operatingSystem": "All",
-          "browserRequirements": "Requires HTML5 Canvas support",
-          "description": "A free online utility to create, resize, and tile passport size photos into printable A4 sheets instantly.",
-          "featureList": "100% Client-side processing, Custom dimension cropping, Multi-photo grid layouts, Auto borders",
-          "creator": {
-            "@type": "Organization",
-            "name": "EditSpark"
+    [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "EditSparks",
+        "url": "https://editsparks.in/"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "EditSparks Bulk Passport Photo Maker",
+        "url": "https://editsparks.in/passport-photo-maker.html",
+        "applicationCategory": "DesignApplication",
+        "operatingSystem": "All",
+        "description": "Upload a digital photograph, select standard passport dimensions or target exam specifications, and download a custom print grid."
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://editsparks.in/index.html"
           },
-          "screenshot": {
-            "@type": "ImageObject",
-            "url": "https://edit-spark.vercel.app/assets/og-passport-photo.jpg",
-            "width": "1200",
-            "height": "630"
-          },
-          "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "INR"
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Passport Photo Maker",
+            "item": "https://editsparks.in/passport-photo-maker.html"
           }
-        },
-        {
-          "@type": "ImageObject",
-          "@id": "https://edit-spark.vercel.app/passport-photo-maker.html#mainImage",
-          "url": "https://edit-spark.vercel.app/assets/og-passport-photo.jpg",
-          "width": "1200",
-          "height": "630",
-          "caption": "Preview of printable passport size photo layouts created with EditSpark"
-        },
-        {
-          "@type": "BreadcrumbList",
-          "@id": "https://edit-spark.vercel.app/passport-photo-maker.html#breadcrumb",
-          "itemListElement": [
-            {
-              "@type": "ListItem",
-              "position": 1,
-              "name": "Home",
-              "item": "https://edit-spark.vercel.app/index.html"
-            },
-            {
-              "@type": "ListItem",
-              "position": 2,
-              "name": "Passport Photo Maker",
-              "item": "https://edit-spark.vercel.app/passport-photo-maker.html"
+        ]
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is the official size of an Indian passport photo?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The standard size is 3.5 cm x 4.5 cm (or 35 mm x 45 mm) with at least 70-80% face coverage against a solid light or white background."
             }
-          ]
-        },
-        {
-          "@type": "FAQPage",
-          "@id": "https://edit-spark.vercel.app/passport-photo-maker.html#faq",
-          "mainEntity": [
-            {
-              "@type": "Question",
-              "name": "How to make passport size photo online free?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Upload a clear portrait picture, pick your preferred dimensions (like 35x45 mm), choose a sheet size, and download your print-ready photo file instantly."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "How many passport photos fit on an A4 sheet?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Depending on the spacing, you can comfortably fit up to 32 to 36 standard 35x45mm passport size photos on a single standard A4 page template."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "Can I create a 35x45 photo template here?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Yes, the 3.5 x 4.5 cm (35x45 mm) specification is the exact standard layout preset used for most Indian government and competitive exam forms."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "Can I make a standard US Passport 2x2 photo layout?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Yes, our customization options let you toggle the layout size instantly to 2x2 inches to meet US visa and passport requirements."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "Can I use this tool on my mobile phone?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Absolutely. EditSpark works perfectly on all mobile browsers, including Safari on iOS and Chrome on Android devices."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "Does EditSpark upload my photos to any server?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "No. Your data privacy is safe with us. All cropping, resizing, and alignment happen directly inside your browser without any server uploads."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "Is there any hidden watermark on the final sheet?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "No, EditSpark does not add any watermarks or logos. You get clean, studio-quality image outputs ready for printing."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "Which file formats can I upload?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "You can upload files in popular image formats like JPG, JPEG, and PNG. The tool will automatically flatten transparencies for a clean print."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "Is this tool suitable for competitive exam forms?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Yes, the generated single-photo templates align with the exact measurement criteria for major boards like SSC, UPSC, and IBPS."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "Do I need to sign up or log in to use it?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "No registration, email, or account creation is needed. You can use all tool features instantly for free."
-              }
+          },
+          {
+            "@type": "Question",
+            "name": "Are my uploaded photos secure on EditSparks?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, absolutely. EditSparks operates entirely inside your browser using JavaScript. No files are uploaded to any server, making it 100% private."
             }
-          ]
-        }
-      ]
-    }
+          }
+        ]
+      }
+    ]
     </script>
 </head>
-<body class="bg-[#f8fafc] font-sans text-slate-600 min-h-screen flex flex-col">
+<body class="bg-[#f3f4f6] font-sans text-slate-800 min-h-screen flex flex-col">
+    <noscript>
+        <div class="bg-red-600 text-white text-center p-3 font-bold text-sm">
+            Warning: JavaScript is disabled! Please enable JavaScript for this tool to function correctly.
+        </div>
+    </noscript>
 
-    <!-- Navigation Header Layer -->
-    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-xs">
+    <!-- Navigation Header -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
-                <div class="flex items-center space-x-2">
-                    <div class="bg-blue-600 p-2 rounded-xl text-white shadow-sm">
+                <a href="index.html" class="flex items-center space-x-2">
+                    <div class="bg-emerald-500 p-2 rounded-lg text-white shadow-sm">
                         <i class="fa-solid fa-wand-magic-sparkles text-lg"></i>
                     </div>
-                    <span class="text-2xl font-black tracking-tight text-slate-900">Edit<span class="text-blue-600">Spark</span></span>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <a href="index.html" class="text-xs font-bold text-slate-600 hover:text-blue-600 uppercase tracking-wider transition-colors">
-                        <i class="fa-solid fa-house mr-1"></i> Home
-                    </a>
-                </div>
+                    <span class="text-2xl font-black tracking-tight text-slate-900">Edit<span class="text-emerald-500">Sparks</span></span>
+                </a>
+                <span class="text-xs font-bold px-2.5 py-1 bg-slate-50 text-slate-600 rounded-full border border-slate-200 uppercase">
+                    🔒 Client-Side Secure
+                </span>
             </div>
         </div>
     </nav>
 
-    <!-- UI Breadcrumb Trail -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mt-6">
-        <nav class="flex text-xs font-bold uppercase tracking-wider text-slate-400 space-x-2 bg-slate-100 p-2.5 rounded-lg border border-slate-200">
-            <a href="index.html" class="hover:text-blue-600 transition-colors">Home</a>
-            <span><i class="fa-solid fa-chevron-right text-[10px] mx-1"></i></span>
-            <span class="text-slate-600">Passport Photo Maker</span>
+    <!-- Main Workspace Container -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 py-8 w-full">
+        <div class="mb-6">
+            <span class="text-xs font-bold uppercase tracking-widest text-slate-500 bg-slate-100 border border-slate-200 px-2.5 py-1 rounded-md inline-block mb-2">Photo Studio</span>
+            <h1 class="text-2xl font-black text-slate-900 uppercase tracking-tight sm:text-3xl">Bulk Passport Size Photo Maker</h1>
+            <p class="text-slate-500 text-xs sm:text-sm mt-1">
+                Create beautifully aligned, high-resolution printable passport photo grids completely free. Perfect for SSC, UPSC, IBPS, and state board online registrations.
+            </p>
+        </div>
+
+        <!-- Breadcrumbs Navigation -->
+        <nav class="flex mb-6 text-xs text-slate-400 font-medium" aria-label="Breadcrumb">
+            <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                <li class="inline-flex items-center"><a href="index.html" class="hover:text-slate-600">Home</a></li>
+                <li>
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-chevron-right mx-2 text-[9px]"></i>
+                        <span class="text-slate-600 font-bold">Passport Photo Maker</span>
+                    </div>
+                </li>
+            </ol>
         </nav>
-    </div>
 
-    <!-- Main Workspace Grid -->
-    <main class="flex-grow max-w-7xl mx-auto px-4 py-8 w-full grid grid-cols-1 lg:grid-cols-4 gap-8">
-        
-        <!-- Left Column: Tool Container & Optimized Content -->
-        <div class="lg:col-span-3 space-y-8">
-            
-            <!-- Tool Interactive Box -->
-            <div class="bg-white rounded-2xl border border-slate-200 shadow-xs p-6 md:p-8">
-                <div class="text-center mb-8">
-                    <h1 class="text-3xl font-black text-slate-900 tracking-tight uppercase">Bulk Passport Size Photo Maker Online</h1>
-                    <p class="mt-2 text-slate-500 font-medium text-sm md:text-base">Generate printable passport size photo sheets instantly in your browser.</p>
-                </div>
-
-                <!-- Trust Signals Indicators -->
-                <div class="grid grid-cols-2 md:grid-cols-5 gap-2.5 mb-6 text-center">
-                    <div class="flex flex-col items-center justify-center p-2.5 bg-slate-50 border border-slate-200 rounded-xl">
-                        <i class="fa-solid fa-shield-halved text-blue-600 text-base mb-1"></i>
-                        <span class="text-[10px] font-bold text-slate-700 uppercase tracking-wide">100% Client-Side</span>
-                    </div>
-                    <div class="flex flex-col items-center justify-center p-2.5 bg-slate-50 border border-slate-200 rounded-xl">
-                        <i class="fa-solid fa-cloud-slash text-blue-600 text-base mb-1"></i>
-                        <span class="text-[10px] font-bold text-slate-700 uppercase tracking-wide">No Uploads</span>
-                    </div>
-                    <div class="flex flex-col items-center justify-center p-2.5 bg-slate-50 border border-slate-200 rounded-xl">
-                        <i class="fa-solid fa-user-check text-blue-600 text-base mb-1"></i>
-                        <span class="text-[10px] font-bold text-slate-700 uppercase tracking-wide">No Registration</span>
-                    </div>
-                    <div class="flex flex-col items-center justify-center p-2.5 bg-slate-50 border border-slate-200 rounded-xl">
-                        <i class="fa-solid fa-infinity text-blue-600 text-base mb-1"></i>
-                        <span class="text-[10px] font-bold text-slate-700 uppercase tracking-wide">Unlimited Use</span>
-                    </div>
-                    <div class="flex flex-col items-center justify-center p-2.5 bg-slate-50 border border-slate-200 rounded-xl col-span-2 md:col-span-1">
-                        <i class="fa-solid fa-mobile-screen-button text-blue-600 text-base mb-1"></i>
-                        <span class="text-[10px] font-bold text-slate-700 uppercase tracking-wide">Works on Mobile</span>
-                    </div>
-                </div>
-
-                <!-- File Dropzone -->
-                <div id="dropzoneContainer" class="dashed-dropzone rounded-2xl p-8 text-center cursor-pointer bg-slate-50 mb-6">
-                    <input type="file" id="passportImageInput" accept="image/*" class="hidden">
-                    <div id="uploadPrompt">
-                        <i class="fa-solid fa-images text-4xl text-blue-600 mb-3 animate-pulse"></i>
-                        <p class="font-bold text-slate-700 uppercase tracking-wide text-sm">Select Your Portrait Photo</p>
-                        <p class="text-xs text-slate-400 mt-1 font-medium">Supports PNG, JPG, or JPEG files</p>
-                    </div>
-                    <div id="livePreviewWrapper" class="hidden flex flex-col items-center">
-                        <!-- Clean Natural Image Alt Injection -->
-                        <img id="passportLivePreview" class="max-h-60 rounded-lg shadow-md mb-2 border-2 border-slate-200" alt="Preview of uploaded passport size photo">
-                        <p id="uploadedFileInfoText" class="text-xs font-bold text-slate-500 uppercase tracking-wider"></p>
-                    </div>
-                </div>
-
-                <!-- Settings Adjustment Controls -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                    <div>
-                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Photo Size Preset</label>
-                        <select id="presetDimensionSelect" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 font-bold bg-white text-sm text-slate-700">
-                            <option value="india_standard">India Standard (35x45 mm)</option>
-                            <option value="us_standard">United States Visa (2x2 Inches)</option>
-                            <option value="custom">Custom Dimensions</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Print Sheet Layout</label>
-                        <select id="sheetLayoutSelect" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 font-bold bg-white text-sm text-slate-700">
-                            <option value="a4_sheet">Standard A4 Sheet (Up to 36 Photos)</option>
-                            <option value="4x6_card">4x6 Photo Card (6 Photos)</option>
-                            <option value="single_row">Single Photo Only</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Photo Border</label>
-                        <select id="photoBorderSelect" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 font-bold bg-white text-sm text-slate-700">
-                            <option value="thin_black">Thin Black Border</option>
-                            <option value="none">Borderless Clean Cut</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Action Button -->
-                <button id="generateGridBtn" class="w-full btn-gradient text-white font-bold py-3.5 px-6 rounded-xl shadow-md flex items-center justify-center space-x-2 transition-all cursor-pointer uppercase tracking-wider text-sm">
-                    <i class="fa-solid fa-table-cells"></i>
-                    <span>Create Printable Photo Sheet</span>
-                </button>
-
-                <!-- Download Output Block -->
-                <div id="gridCompilationResult" class="hidden mt-8 pt-6 border-t border-slate-200 text-center space-y-4">
-                    <div class="inline-flex items-center space-x-2 text-emerald-600 font-bold uppercase tracking-wider text-sm">
-                        <i class="fa-solid fa-circle-check text-lg"></i>
-                        <span>Photo Sheet Generated Successfully!</span>
-                    </div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <!-- Left Controls Section -->
+            <div class="lg:col-span-4 space-y-6">
+                <div class="bg-white p-6 border border-slate-200 rounded-2xl shadow-2xs space-y-5">
+                    <h2 class="text-sm font-black text-slate-900 uppercase tracking-wider border-b border-slate-100 pb-3">Configuration Panel</h2>
                     
-                    <!-- Grid Display Area -->
-                    <div class="flex justify-center p-4 bg-slate-100 rounded-xl border border-slate-200">
-                        <div id="visualMatrixWrapper" class="photo-grid-preview shadow-xs max-w-full overflow-x-auto"></div>
+                    <!-- File Drag and Drop Box -->
+                    <div class="space-y-1.5">
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wide">Step 1: Upload Source Photo</label>
+                        <input type="file" id="imageLoader" accept="image/jpeg, image/jpg, image/png" class="hidden">
+                        <div id="uploadBox" class="bg-slate-50 border-2 border-dashed border-slate-200 rounded-xl p-5 text-center cursor-pointer hover:border-emerald-500 transition-colors flex flex-col items-center justify-center min-h-[140px]">
+                            <div class="bg-emerald-50 h-10 w-10 rounded-full flex items-center justify-center text-emerald-500 text-md mb-2">
+                                <i class="fa-solid fa-cloud-arrow-up"></i>
+                            </div>
+                            <p class="text-xs font-bold text-slate-700">Choose file or drag here</p>
+                            <p class="text-slate-400 text-[10px] mt-0.5">JPG, JPEG or PNG (Max 15MB)</p>
+                        </div>
                     </div>
 
-                    <a id="downloadGridSheetBtn" class="inline-flex items-center space-x-2 bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3.5 px-8 rounded-xl shadow-md transition-all cursor-pointer uppercase tracking-wider text-sm">
-                        <i class="fa-solid fa-file-arrow-down"></i>
-                        <span>Download Print Ready Sheet</span>
-                    </a>
+                    <!-- Layout Dimensions Presets -->
+                    <div class="space-y-1.5">
+                        <label for="dimensionPreset" class="block text-xs font-bold text-slate-700 uppercase tracking-wide">Step 2: Select Photo Dimensions</label>
+                        <select id="dimensionPreset" class="w-full text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:border-emerald-500 font-medium">
+                            <option value="standard" selected>Standard Indian Passport (3.5 x 4.5 cm)</option>
+                            <option value="pan">Indian PAN Card (2.5 x 3.5 cm)</option>
+                            <option value="ssc">SSC / UPSC Exam Form (3.5 x 4.5 cm)</option>
+                            <option value="us">US Visa / Passport (2.0 x 2.0 inches)</option>
+                            <option value="custom">Custom Dimensions...</option>
+                        </select>
+                    </div>
+
+                    <!-- Hidden Custom Dimension Settings Inputs -->
+                    <div id="customDimsContainer" class="hidden grid grid-cols-2 gap-3 bg-slate-50 p-3 rounded-xl border border-slate-200">
+                        <div class="space-y-1">
+                            <label for="customWidth" class="block text-[10px] font-bold text-slate-500 uppercase">Width (mm)</label>
+                            <input type="number" id="customWidth" value="35" class="w-full text-xs bg-white border border-slate-200 rounded-md p-2 focus:outline-none font-bold">
+                        </div>
+                        <div class="space-y-1">
+                            <label for="customHeight" class="block text-[10px] font-bold text-slate-500 uppercase">Height (mm)</label>
+                            <input type="number" id="customHeight" value="45" class="w-full text-xs bg-white border border-slate-200 rounded-md p-2 focus:outline-none font-bold">
+                        </div>
+                    </div>
+
+                    <!-- Target Print Sheet Output Options -->
+                    <div class="space-y-1.5">
+                        <label for="sheetPreset" class="block text-xs font-bold text-slate-700 uppercase tracking-wide">Step 3: Output Sheet Grid Layout</label>
+                        <select id="sheetPreset" class="w-full text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-lg px-3 py-2.5 focus:outline-none focus:border-emerald-500 font-medium">
+                            <option value="single">Single Isolated Photo (No Print Grid)</option>
+                            <option value="a4" selected>A4 Size Page Sheet (Approx. 32 to 36 Photos)</option>
+                            <option value="4x6">4x6 Inches Photo Sheet (8 Photos Canvas)</option>
+                            <option value="5x7">5x7 Inches Photo Sheet (12 Photos Canvas)</option>
+                        </select>
+                    </div>
+
+                    <!-- Custom Visual Styling Adjustments -->
+                    <div class="space-y-3 pt-2">
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wide">Step 4: Optional Enhancements</label>
+                        
+                        <div class="flex items-center justify-between bg-slate-50 p-2.5 rounded-lg border border-slate-100">
+                            <span class="text-xs font-medium text-slate-600"><i class="fa-solid fa-border-all text-slate-400 mr-1.5"></i>Add Crisp Outer Border</span>
+                            <input type="checkbox" id="photoBorderToggle" checked class="w-4 h-4 text-emerald-500 accent-emerald-500">
+                        </div>
+
+                        <!-- Date and Label Overlays Input Section -->
+                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-2.5">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-bold text-slate-700 uppercase tracking-wide">Add Name/Date Overlay</span>
+                                <input type="checkbox" id="textOverlayToggle" class="w-4 h-4 text-emerald-500 accent-emerald-500">
+                            </div>
+                            <div id="textOverlayInputs" class="hidden space-y-2">
+                                <input type="text" id="overlayName" placeholder="ENTER NAME IN CAPITALS" class="w-full text-xs bg-white border border-slate-200 rounded-md p-2 uppercase font-mono">
+                                <input type="text" id="overlayDate" placeholder="DOB: DD/MM/YYYY or DOP" class="w-full text-xs bg-white border border-slate-200 rounded-md p-2 font-mono">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Global Generation Execution Trigger Button -->
+                    <button id="generateBtn" disabled class="w-full bg-slate-300 text-white font-bold text-xs sm:text-sm py-3 px-4 rounded-xl cursor-not-allowed uppercase tracking-wide transition-colors flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-gears"></i>
+                        <span>Compile Layout Sheets</span>
+                    </button>
+                </div>
+
+                <!-- Live Information Dynamic Status Card Panel -->
+                <div id="metaPanel" class="bg-white border border-slate-200 rounded-2xl p-4 hidden space-y-2.5 text-xs">
+                    <span class="font-bold text-slate-400 uppercase tracking-wider block border-b border-slate-100 pb-1">File Context Metrics</span>
+                    <div class="flex justify-between"><span class="text-slate-500">Source Name:</span> <span id="metaName" class="font-bold text-slate-700 truncate max-w-[180px]">image.png</span></div>
+                    <div class="flex justify-between"><span class="text-slate-500">Original Resolution:</span> <span id="metaRes" class="font-bold text-slate-700">0 x 0 px</span></div>
                 </div>
             </div>
 
-            <!-- Contextual High-Authority SEO Article (Natural Human Style, ~1100 Words) -->
-            <div class="bg-white rounded-2xl border border-slate-200 p-6 md:p-8 space-y-6 text-slate-600 text-sm md:text-base leading-relaxed shadow-xs">
-                
-                <section>
-                    <h2 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-2">How to Make Passport Size Photo Online Free</h2>
-                    <p>Arranging your personal photos for official documents doesn't require complex or expensive graphics editing software like Photoshop. EditSpark provides a direct, easy-to-use <strong>passport photo maker online</strong> tool that lets you prepare your images in seconds. All you need to do is snap a clear portrait picture against a clean, plain background, upload it to our tool above, select your required options, and download a ready-to-print file format instantly.</p>
-                </section>
-
-                <section>
-                    <h2 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-2">What is Passport Size Photo?</h2>
-                    <p>A passport size photo is a specialized image format used globally for official identification cards, travel visas, and government forms. Unlike random portrait snapshots, these photos have to follow strict measurement guidelines and specific layout boundaries. Getting these proportions right ensures that your identity applications pass automated biometric checks smoothly without facing unexpected rejections.</p>
-                </section>
-
-                <section>
-                    <h2 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-2">Indian Passport Photo Size Requirements</h2>
-                    <p>For official document submissions in India, the most common layout choice is the standard <strong>35x45 passport photo</strong> layout, which measures exactly 3.5 cm in width and 4.5 cm in height. Your face should cover around 70% to 80% of the picture frame area, with your eyes looking directly into the camera. The background should be kept plain white or very light off-white without any visible shadows or distracting objects behind you.</p>
-                </section>
-
-                <section>
-                    <h2 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-2">Passport Photo Size for SSC Exams</h2>
-                    <p>The Staff Selection Commission (SSC) requires candidates to upload clear digital copies that match their exact online portal specifications. Using our free <strong>passport photo for SSC</strong> option saves you from the stress of file dimension errors. The tool resizes your image perfectly to ensure it satisfies the commission's application guidelines, helping you complete your registration quickly.</p>
-                </section>
-
-                <section>
-                    <h2 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-2">Passport Photo Size for UPSC Applications</h2>
-                    <p>For the Union Public Service Commission (UPSC) exams, maintaining clear picture quality and correct proportions is mandatory. If you need a reliable <strong>passport photo for UPSC</strong> forms, our application prepares your files accurately. It lets you format your portrait cleanly so that the final image meets the exact dimensional rules specified in the notification.</p>
-                </section>
-
-                <section>
-                    <h2 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-2">Passport Photo Size for Railway & IBPS Exams</h2>
-                    <p>Applicants for banking and railway board jobs frequently struggle with strict online crop setups. Our built-in presets for the <strong>passport photo for railway</strong> and <strong>passport photo for IBPS</strong> options take the guesswork out of the process. The tool handles the pixel scaling automatically, creating a document that is ready to upload directly to these online application servers.</p>
-                </section>
-
-                <section>
-                    <h2 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-2">Use a Bulk Passport Photo Maker to Save Cost</h2>
-                    <p>Visiting a photo studio every time you need extra passport copies for application forms can become expensive. By using our integrated <strong>bulk passport photo maker</strong> grid layout, you can arrange up to 36 images side-by-side onto a single standard page. You can then download this template and print it out at any nearby print center for just a few rupees.</p>
-                </section>
-
-                <section>
-                    <h2 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-2">Passport Photo Maker for Mobile Phones</h2>
-                    <p>You don't need a desktop computer to use our photo helper tool. EditSpark functions as a fully responsive <strong>passport photo maker mobile</strong> application that runs smoothly on any phone browser. Simply capture a selfie with your phone camera, upload it to the webpage, and save your print sheet to your device storage right away.</p>
-                </section>
-
-                <section>
-                    <h2 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-2">Why Choose the EditSpark Passport Photo Editor?</h2>
-                    <p>EditSpark is built to make editing easy, fast, and completely secure. It features automatic aspect ratio scaling, high-contrast border choices, and multiple sheet configurations. It is an efficient alternative for people who want to adjust their photos without installing heavy software suites or mobile apps.</p>
-                </section>
-
-                <hr class="border-slate-200">
-
-                <!-- 10 Natural Language FAQs -->
-                <section class="space-y-4">
-                    <h2 class="text-xl font-black text-slate-900 uppercase tracking-tight">Frequently Asked Questions (FAQ)</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <h3 class="font-bold text-slate-900 text-sm uppercase tracking-wide">Q1: How to make passport size photo online free?</h3>
-                            <p class="text-xs text-slate-500 mt-1 font-medium">Just select your picture in our online tool, choose your desired dimension preset, pick a sheet layout, and download the finished file for free.</p>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-slate-900 text-sm uppercase tracking-wide">Q2: How many passport photos fit on A4?</h3>
-                            <p class="text-xs text-slate-500 mt-1 font-medium">You can fit between 32 to 36 standard 35x45mm size photo copies neatly across a single sheet of A4 paper template.</p>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-slate-900 text-sm uppercase tracking-wide">Q3: Can I create 35x45 photo layouts here?</h3>
-                            <p class="text-xs text-slate-500 mt-1 font-medium">Yes, the 35x45 mm size is the standard option selected by default in our measurement choices dropdown menu.</p>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-slate-900 text-sm uppercase tracking-wide">Q4: Can I make US Passport photos?</h3>
-                            <p class="text-xs text-slate-500 mt-1 font-medium">Yes, simply select the 2x2 inches preset from the menu list to create photo cards suited for US visa applications.</p>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-slate-900 text-sm uppercase tracking-wide">Q5: Can I use this passport photo tool on a mobile phone?</h3>
-                            <p class="text-xs text-slate-500 mt-1 font-medium">Yes, our website is fully optimized for all mobile platforms and works inside any mobile web browser layout.</p>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-slate-900 text-sm uppercase tracking-wide">Q6: Do you upload photos to servers?</h3>
-                            <p class="text-xs text-slate-500 mt-1 font-medium">No. Your pictures never leave your device. All editing actions occur locally inside your own browser window for maximum privacy.</p>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-slate-900 text-sm uppercase tracking-wide">Q7: Can I save just a single cropped photo?</h3>
-                            <p class="text-xs text-slate-500 mt-1 font-medium">Yes, choose the Single Photo option in the layout selection box to save a single image for online form uploads.</p>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-slate-900 text-sm uppercase tracking-wide">Q8: Can I add borders to my photo sheet?</h3>
-                            <p class="text-xs text-slate-500 mt-1 font-medium">Yes, you can toggle the thin black border choice on or off to make cutting your photos easier after printing.</p>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-slate-900 text-sm uppercase tracking-wide">Q9: Will there be any watermark on my downloads?</h3>
-                            <p class="text-xs text-slate-500 mt-1 font-medium">No, our utility is completely free from watermarks. You will get clean, high-resolution photo results every time.</p>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-slate-900 text-sm uppercase tracking-wide">Q10: Are there any hidden usage limits?</h3>
-                            <p class="text-xs text-slate-500 mt-1 font-medium">No, there are no limits or forced signups. You can edit and format as many photos as you want without paying a fee.</p>
-                        </div>
+            <!-- Right Canvas Interactive Workspace Section -->
+            <div class="lg:col-span-8 space-y-6 flex flex-col">
+                <!-- Action Control Headers -->
+                <div id="actionControls" class="hidden bg-white p-4 border border-slate-200 rounded-2xl flex flex-wrap gap-3 items-center justify-between shadow-2xs">
+                    <div class="flex items-center space-x-2 text-xs font-bold text-slate-500">
+                        <span class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <span>Sheet Generated Successfully</span>
                     </div>
-                </section>
+                    <div class="flex items-center space-x-2">
+                        <button id="resetWorkspaceBtn" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-lg transition-colors border border-slate-200">
+                            <i class="fa-solid fa-trash-can mr-1"></i>Reset Workspace
+                        </button>
+                        <button id="downloadSheetBtn" class="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs rounded-lg transition-colors shadow-xs flex items-center">
+                            <i class="fa-solid fa-file-arrow-down mr-1.5"></i>Download Output Layout
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Target Graphic Canvas Box Viewport Frame -->
+                <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-2xs flex-grow flex flex-col items-center justify-center min-h-[420px] relative overflow-auto">
+                    <!-- Default Placeholders Instructions State Layout -->
+                    <div id="workspacePlaceholder" class="text-center max-w-sm space-y-3">
+                        <div class="bg-slate-50 h-16 w-16 rounded-2xl border border-slate-100 flex items-center justify-center text-slate-400 text-2xl mx-auto">
+                            <i class="fa-solid fa-passport"></i>
+                        </div>
+                        <h3 class="text-sm font-bold text-slate-700 uppercase tracking-wider">Interactive Layout Viewport</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            Upload a high-quality portrait snapshot file image and customize dimensions using the leftmost processing tools options bar configuration block panels.
+                        </p>
+                    </div>
+
+                    <!-- Main Application Logic Drawing Canvas Interface Matrix -->
+                    <div id="canvasViewportWrapper" class="hidden shadow-md border border-slate-200 max-w-full p-2 bg-neutral-100 rounded-lg">
+                        <canvas id="studioCanvas" class="max-w-full block mx-auto bg-white"></canvas>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Right Column: Sidebar for Internal Linking Hub -->
-        <aside class="space-y-6">
-            <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs">
-                <h3 class="text-xs font-black uppercase tracking-wider text-slate-400 mb-4">Image Editing Hub</h3>
-                <ul class="space-y-3">
-                    <li>
-                        <a href="passport-photo-maker.html" class="flex items-center space-x-3 p-2 rounded-xl bg-slate-50 text-blue-600 font-bold text-sm transition-all group">
-                            <i class="fa-solid fa-address-card"></i>
-                            <span>Passport Photo Maker</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="resize-image.html" class="flex items-center space-x-3 p-2 rounded-xl hover:bg-slate-50 text-slate-700 font-bold text-sm transition-all group">
-                            <i class="fa-solid fa-up-right-and-down-left-from-center text-blue-600 group-hover:scale-110 transition-transform"></i>
-                            <span>Resize Image Online</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="compress-image.html" class="flex items-center space-x-3 p-2 rounded-xl hover:bg-slate-50 text-slate-700 font-bold text-sm transition-all group">
-                            <i class="fa-solid fa-compress text-blue-600 group-hover:scale-110 transition-transform"></i>
-                            <span>Compress Image KB</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="increase-image-size.html" class="flex items-center space-x-3 p-2 rounded-xl hover:bg-slate-50 text-slate-700 font-bold text-sm transition-all group">
-                            <i class="fa-solid fa-file-arrow-up text-blue-600 group-hover:scale-110 transition-transform"></i>
-                            <span>Increase KB Size</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="convert-image-to-300-dpi.html" class="flex items-center space-x-3 p-2 rounded-xl hover:bg-slate-50 text-slate-700 font-bold text-sm transition-all group">
-                            <i class="fa-solid fa-eraser text-blue-600 group-hover:scale-110 transition-transform"></i>
-                            <span>Change Image Dpi To 300</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="document-background-white.html" class="flex items-center space-x-3 p-2 rounded-xl hover:bg-slate-50 text-slate-700 font-bold text-sm transition-all group">
-                            <i class="fa-solid fa-signature text-blue-600 group-hover:scale-110 transition-transform"></i>
-                            <span>Signature Cleaner</span>
-                        </a>
-                    </li>
+        <!-- Comprehensive Explanatory Guide Content Block Article Section -->
+        <article class="mt-12 bg-white p-6 border border-slate-200 rounded-2xl shadow-2xs space-y-6 text-sm leading-relaxed text-slate-600">
+            <section class="space-y-2">
+                <h2 class="text-lg font-bold text-slate-900">How to Create Bulk Passport Size Photos Online</h2>
+                <p>Follow these quick processing operational steps to organize your document passport files structures setup instantly:</p>
+                <ul class="list-disc pl-5 space-y-1">
+                    <li><strong>Upload Your Image:</strong> Use the configuration zone selector box panel frame field button to map a clean frontal clear snapshot.</li>
+                    <li><strong>Choose Dimensions Specifications:</strong> Choose default options standard settings configurations systems matching Indian passport models guidelines formats (35mm x 45mm) or PAN frameworks schemes parameters profiles.</li>
+                    <li><strong>Set Page Grid Canvas:</strong> Change the output configurations options parameters to design bulk layouts blocks distributions matrices like massive A4 printouts grid tables layouts blocks or standard localized card sheets options blocks.</li>
+                    <li><strong>Apply Enhancements Controls:</strong> Toggle black borders configurations outlines setups or write identification details layers texts strings like Name captions markers or Date tracking blocks seamlessly.</li>
+                    <li><strong>Download Results:</strong> Generate matrix schemas blocks grids, preview final generated compilation output matrix and export files locally by executing the sheet download button triggers operations natively.</li>
                 </ul>
-            </div>
+            </section>
 
-            <!-- Privacy Policy Visual Notice Block -->
-            <div class="bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl p-6 text-white shadow-md">
-                <i class="fa-solid fa-user-shield text-2xl text-blue-400 mb-3"></i>
-                <h4 class="font-black uppercase tracking-wide text-sm mb-1">Secure Local Processing</h4>
-                <p class="text-xs text-slate-400 leading-relaxed">We protect your identity. Your photos stay on your device and are never loaded onto external network drives.</p>
+            <section class="space-y-2">
+                <h2 class="text-lg font-bold text-slate-900">Privacy-First Architecture Shielding Systems</h2>
+                <p>
+                    Unlike alternative internet processing clouds networks applications platforms configurations, EditSparks engineering workflows pipelines architecture is developed completely locally within browser execution environments contexts inside vanilla internal components logic engines securely. Your photographs never execute connections transfers pipelines uploads outside personal hardware structures computing units safely, guaranteeing zero server interception risk tracking.
+                </p>
+            </section>
+        </article>
+
+        <!-- Structured Interactive FAQ Layout Elements Accordions Block -->
+        <section class="mt-12 bg-white rounded-2xl p-6 border border-slate-200 shadow-2xs">
+            <h2 class="text-xl font-bold text-slate-900 mb-6 flex items-center space-x-2">
+                <i class="fa-solid fa-circle-question text-slate-400"></i>
+                <span>Frequently Asked Questions (FAQ)</span>
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs sm:text-sm">
+                <div class="space-y-4">
+                    <div>
+                        <h3 class="font-bold text-slate-800">Q1. What is the standard configuration size for Indian recruitment portal exam boards?</h3>
+                        <p class="text-slate-600 mt-1">Most official registration networks portals like UPSC, SSC, or IBPS strictly enforce the 3.5 cm width x 4.5 cm height parameters limits specifications metrics layout frameworks standard profiles.</p>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-800">Q2. Can I write customized text tags like specific execution photography timeline calendar metrics directly under images?</h3>
+                        <p class="text-slate-600 mt-1">Yes, by toggling the optional Name/Date text overlays switch configurations controls boxes layers, you can render precise label identifiers across matching grid rows automatically.</p>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <div>
+                        <h3 class="font-bold text-slate-800">Q3. Does this utility platform enforce functional payment thresholds limits or billing constraints setups?</h3>
+                        <p class="text-slate-600 mt-1">No, this online operational application tool program script structure provides free unlimited high-grade design prints layout generation for students, cyber café management entities and professionals alike.</p>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-800">Q4. Which photo background type is recommended for government portal uploads?</h3>
+                        <p class="text-slate-600 mt-1">A solid light background, preferably plain white or light blue, with clear face coverage is ideal and reduces rejection risks on portals.</p>
+                    </div>
+                </div>
             </div>
-        </aside>
+        </section>
     </main>
 
-    <!-- E-E-A-T Footnote Links Structure -->
-    <footer class="bg-white border-t border-slate-200 py-8 mt-12">
-        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 text-sm font-medium text-slate-500">
-            <div class="text-slate-400 text-xs md:text-sm">
-                &copy; 2026 EditSpark. Processed locally in your secure web workspace.
-            </div>
-            <div class="flex space-x-6 text-xs font-bold uppercase tracking-wider">
-                <a href="about.html" class="hover:text-blue-600 transition-colors">About Us</a>
-                <a href="privacy.html" class="hover:text-blue-600 transition-colors">Privacy Policy</a>
-                <a href="terms.html" class="hover:text-blue-600 transition-colors">Terms of Service</a>
-                <a href="contact.html" class="hover:text-blue-600 transition-colors">Contact Support</a>
+    <!-- Navigation Footer Structural Layout Base -->
+    <footer class="bg-white border-t border-slate-200 py-6 mt-auto text-xs text-slate-400 font-medium">
+        <div class="max-w-7xl mx-auto px-4 w-full flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div>&copy; 2026 EditSparks Studio. | Decentralized Local Secure Processor Asset</div>
+            <div class="flex space-x-4">
+                <a href="about.html" class="hover:text-slate-600 transition-colors">About Us</a>
+                <a href="privacy.html" class="hover:text-slate-600 transition-colors">Privacy Policy</a>
+                <a href="terms.html" class="hover:text-slate-600 transition-colors">Terms of Use</a>
+                <a href="contact.html" class="hover:text-slate-600 transition-colors">Contact Support</a>
             </div>
         </div>
     </footer>
 
-    <!-- Client-Side Javascript Functionality -->
+    <!-- Core Script Technical Architecture Logic Block -->
     <script>
-        const dropzone = document.getElementById('dropzoneContainer');
-        const fileInput = document.getElementById('passportImageInput');
-        const uploadPrompt = document.getElementById('uploadPrompt');
-        const previewWrapper = document.getElementById('livePreviewWrapper');
-        const livePreview = document.getElementById('passportLivePreview');
-        const fileInfoText = document.getElementById('uploadedFileInfoText');
+        const imageLoader = document.getElementById('imageLoader');
+        const uploadBox = document.getElementById('uploadBox');
+        const dimensionPreset = document.getElementById('dimensionPreset');
+        const customDimsContainer = document.getElementById('customDimsContainer');
+        const customWidthInput = document.getElementById('customWidth');
+        const customHeightInput = document.getElementById('customHeight');
+        const sheetPreset = document.getElementById('sheetPreset');
+        const photoBorderToggle = document.getElementById('photoBorderToggle');
+        const textOverlayToggle = document.getElementById('textOverlayToggle');
+        const textOverlayInputs = document.getElementById('textOverlayInputs');
+        const overlayName = document.getElementById('overlayName');
+        const overlayDate = document.getElementById('overlayDate');
+        const generateBtn = document.getElementById('generateBtn');
+        const resetWorkspaceBtn = document.getElementById('resetWorkspaceBtn');
+        const downloadSheetBtn = document.getElementById('downloadSheetBtn');
+        const actionControls = document.getElementById('actionControls');
+        const workspacePlaceholder = document.getElementById('workspacePlaceholder');
+        const canvasViewportWrapper = document.getElementById('canvasViewportWrapper');
+        const studioCanvas = document.getElementById('studioCanvas');
+        const ctx = studioCanvas.getContext('2d');
 
-        const generateGridBtn = document.getElementById('generateGridBtn');
-        const gridResult = document.getElementById('gridCompilationResult');
-        const matrixWrapper = document.getElementById('visualMatrixWrapper');
-        const downloadBtn = document.getElementById('downloadGridSheetBtn');
+        const metaPanel = document.getElementById('metaPanel');
+        const metaName = document.getElementById('metaName');
+        const metaRes = document.getElementById('metaRes');
 
-        let rawSourceImage = null;
+        let loadedImageSource = null;
+        const FILE_MAX_BYTE_LIMIT = 15 * 1024 * 1024;
 
-        dropzone.addEventListener('click', () => fileInput.click());
-        dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('border-blue-500'); });
-        dropzone.addEventListener('dragleave', () => { dropzone.classList.remove('border-blue-500'); });
-        dropzone.addEventListener('drop', (e) => {
+        uploadBox.addEventListener('click', () => imageLoader.click());
+        uploadBox.addEventListener('dragover', (e) => { e.preventDefault(); uploadBox.classList.add('border-emerald-500', 'bg-emerald-50/30'); });
+        uploadBox.addEventListener('dragleave', () => uploadBox.classList.remove('border-emerald-500', 'bg-emerald-50/30'));
+        uploadBox.addEventListener('drop', (e) => {
             e.preventDefault();
-            dropzone.classList.remove('border-blue-500');
-            if (e.dataTransfer.files.length) processSourceBlob(e.dataTransfer.files[0]);
-        });
-        fileInput.addEventListener('change', (e) => {
-            if (e.target.files.length) processSourceBlob(e.target.files[0]);
+            uploadBox.classList.remove('border-emerald-500', 'bg-emerald-50/30');
+            if (e.dataTransfer.files.length) {
+                imageLoader.files = e.dataTransfer.files;
+                processSourceFileSelection();
+            }
         });
 
-        function processSourceBlob(file) {
-            if (!file.type.startsWith('image/')) { alert('Please choose a valid image file format.'); return; }
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                rawSourceImage = new Image();
-                rawSourceImage.src = e.target.result;
-                rawSourceImage.onload = () => {
-                    livePreview.src = e.target.result;
-                    uploadPrompt.classList.add('hidden');
-                    previewWrapper.classList.remove('hidden');
-                    fileInfoText.textContent = `${file.name} [${rawSourceImage.width}x${rawSourceImage.height} px]`;
-                    gridResult.classList.add('hidden');
+        imageLoader.addEventListener('change', processSourceFileSelection);
+        dimensionPreset.addEventListener('change', () => {
+            if (dimensionPreset.value === 'custom') {
+                customDimsContainer.classList.remove('hidden');
+            } else {
+                customDimsContainer.classList.add('hidden');
+            }
+        });
+
+        textOverlayToggle.addEventListener('change', () => {
+            if (textOverlayToggle.checked) {
+                textOverlayInputs.classList.remove('hidden');
+            } else {
+                textOverlayInputs.classList.add('hidden');
+            }
+        });
+
+        resetWorkspaceBtn.addEventListener('click', purgeWorkspaceState);
+
+        function processSourceFileSelection() {
+            const targetFile = imageLoader.files[0];
+            if (!targetFile) return;
+
+            if (targetFile.size > FILE_MAX_BYTE_LIMIT) {
+                alert("The selected asset file structural footprint size constraints exceed the global 15MB limits rules. Please pick compressed nodes snapshots files structures.");
+                purgeWorkspaceState();
+                return;
+            }
+
+            const legalFormats = ['image/jpeg', 'image/jpg', 'image/png'];
+            if (!legalFormats.includes(targetFile.type)) {
+                alert("Unsupported image asset extension configuration blueprint type. Use standard JPG or PNG images.");
+                purgeWorkspaceState();
+                return;
+            }
+
+            metaName.textContent = targetFile.name;
+            const asyncReaderNode = new FileReader();
+            asyncReaderNode.onload = function(event) {
+                loadedImageSource = new Image();
+                loadedImageSource.onload = function() {
+                    metaRes.textContent = `${loadedImageSource.width} x ${loadedImageSource.height} px`;
+                    metaPanel.classList.remove('hidden');
+                    generateBtn.disabled = false;
+                    generateBtn.classList.remove('bg-slate-300', 'cursor-not-allowed');
+                    generateBtn.classList.add('bg-emerald-500', 'hover:bg-emerald-600', 'cursor-pointer');
                 };
+                loadedImageSource.src = event.target.result;
             };
-            reader.readAsDataURL(file);
+            asyncReaderNode.readAsDataURL(targetFile);
         }
 
-        generateGridBtn.addEventListener('click', () => {
-            if (!rawSourceImage) { alert('Please upload your photo first.'); return; }
-            
-            const preset = document.getElementById('presetDimensionSelect').value;
-            const layout = document.getElementById('sheetLayoutSelect').value;
-            const borderStyle = document.getElementById('photoBorderSelect').value;
+        function purgeWorkspaceState() {
+            imageLoader.value = "";
+            loadedImageSource = null;
+            metaPanel.classList.add('hidden');
+            actionControls.classList.add('hidden');
+            canvasViewportWrapper.classList.add('hidden');
+            workspacePlaceholder.classList.remove('hidden');
+            generateBtn.disabled = true;
+            generateBtn.classList.remove('bg-emerald-500', 'hover:bg-emerald-600', 'cursor-pointer');
+            generateBtn.classList.add('bg-slate-300', 'cursor-not-allowed');
+            ctx.clearRect(0, 0, studioCanvas.width, studioCanvas.height);
+        }
 
-            let singleW = 140, singleH = 180;
-            if (preset === 'us_standard') { singleW = 200; singleH = 200; }
+        generateBtn.addEventListener('click', () => {
+            if (!loadedImageSource) return;
 
-            let cols = 6, rows = 6;
-            if (layout === '4x6_card') { cols = 3; rows = 2; }
-            if (layout === 'single_row') { cols = 1; rows = 1; }
+            let photoWidthMm = 35;
+            let photoHeightMm = 45;
+            const selectionPresetMode = dimensionPreset.value;
 
-            const offscreenCanvas = document.createElement('canvas');
-            const targetCellPadding = 4;
-            offscreenCanvas.width = (singleW * cols) + (targetCellPadding * (cols + 1));
-            offscreenCanvas.height = (singleH * rows) + (targetCellPadding * (rows + 1));
-            const ctx = offscreenCanvas.getContext('2d');
+            if (selectionPresetMode === 'standard' || selectionPresetMode === 'ssc') {
+                photoWidthMm = 35; photoHeightMm = 45;
+            } else if (selectionPresetMode === 'pan') {
+                photoWidthMm = 25; photoHeightMm = 35;
+            } else if (selectionPresetMode === 'us') {
+                photoWidthMm = 50.8; photoHeightMm = 50.8;
+            } else if (selectionPresetMode === 'custom') {
+                photoWidthMm = parseFloat(customWidthInput.value) || 35;
+                photoHeightMm = parseFloat(customHeightInput.value) || 45;
+            }
 
-            ctx.fillStyle = '#ffffff';
-            ctx.fillRect(0, 0, offscreenCanvas.width, offscreenCanvas.height);
+            const targetOutputSheetStyle = sheetPreset.value;
+            const DPI_SCALE_CONSTANT = 300;
+            const MM_PER_INCH = 25.4;
+            const pxPerMm = DPI_SCALE_CONSTANT / MM_PER_INCH;
 
-            for (let r = 0; r < rows; r++) {
-                for (let c = 0; c < cols; c++) {
-                    let targetX = targetCellPadding + c * (singleW + targetCellPadding);
-                    let targetY = targetCellPadding + r * (singleH + targetCellPadding);
-                    
-                    ctx.drawImage(rawSourceImage, targetX, targetY, singleW, singleH);
-                    
-                    if (borderStyle === 'thin_black') {
-                        ctx.strokeStyle = '#000000';
-                        ctx.lineWidth = 1;
-                        ctx.strokeRect(targetX, targetY, singleW, singleH);
+            let targetCanvasWidthPx = Math.floor(photoWidthMm * pxPerMm);
+            let targetCanvasHeightPx = Math.floor(photoHeightMm * pxPerMm);
+
+            let renderGridCols = 1;
+            let renderGridRows = 1;
+            let finalCanvasPageWidth = targetCanvasWidthPx;
+            let finalCanvasPageHeight = targetCanvasHeightPx;
+
+            let internalMarginLeft = 0;
+            let internalMarginTop = 0;
+            let gapBetweenGridElements = Math.floor(2 * pxPerMm);
+
+            if (targetOutputSheetStyle === 'a4') {
+                finalCanvasPageWidth = Math.floor(210 * pxPerMm);
+                finalCanvasPageHeight = Math.floor(297 * pxPerMm);
+                renderGridCols = Math.floor((finalCanvasPageWidth - Math.floor(10 * pxPerMm)) / (targetCanvasWidthPx + gapBetweenGridElements));
+                renderGridRows = Math.floor((finalCanvasPageHeight - Math.floor(10 * pxPerMm)) / (targetCanvasHeightPx + gapBetweenGridElements));
+                internalMarginLeft = Math.floor((finalCanvasPageWidth - (renderGridCols * (targetCanvasWidthPx + gapBetweenGridElements) - gapBetweenGridElements)) / 2);
+                internalMarginTop = Math.floor((finalCanvasPageHeight - (renderGridRows * (targetCanvasHeightPx + gapBetweenGridElements) - gapBetweenGridElements)) / 2);
+            } else if (targetOutputSheetStyle === '4x6') {
+                finalCanvasPageWidth = Math.floor(4 * DPI_SCALE_CONSTANT);
+                finalCanvasPageHeight = Math.floor(6 * DPI_SCALE_CONSTANT);
+                renderGridCols = Math.floor((finalCanvasPageWidth - Math.floor(4 * pxPerMm)) / (targetCanvasWidthPx + gapBetweenGridElements));
+                renderGridRows = Math.floor((finalCanvasPageHeight - Math.floor(4 * pxPerMm)) / (targetCanvasHeightPx + gapBetweenGridElements));
+                internalMarginLeft = Math.floor((finalCanvasPageWidth - (renderGridCols * (targetCanvasWidthPx + gapBetweenGridElements) - gapBetweenGridElements)) / 2);
+                internalMarginTop = Math.floor((finalCanvasPageHeight - (renderGridRows * (targetCanvasHeightPx + gapBetweenGridElements) - gapBetweenGridElements)) / 2);
+            } else if (targetOutputSheetStyle === '5x7') {
+                finalCanvasPageWidth = Math.floor(5 * DPI_SCALE_CONSTANT);
+                finalCanvasPageHeight = Math.floor(7 * DPI_SCALE_CONSTANT);
+                renderGridCols = Math.floor((finalCanvasPageWidth - Math.floor(4 * pxPerMm)) / (targetCanvasWidthPx + gapBetweenGridElements));
+                renderGridRows = Math.floor((finalCanvasPageHeight - Math.floor(4 * pxPerMm)) / (targetCanvasHeightPx + gapBetweenGridElements));
+                internalMarginLeft = Math.floor((finalCanvasPageWidth - (renderGridCols * (targetCanvasWidthPx + gapBetweenGridElements) - gapBetweenGridElements)) / 2);
+                internalMarginTop = Math.floor((finalCanvasPageHeight - (renderGridRows * (targetCanvasHeightPx + gapBetweenGridElements) - gapBetweenGridElements)) / 2);
+            }
+
+            studioCanvas.width = finalCanvasPageWidth;
+            studioCanvas.height = finalCanvasPageHeight;
+
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(0, 0, finalCanvasPageWidth, finalCanvasPageHeight);
+
+            const singleUnitOffscreenCanvas = document.createElement('canvas');
+            singleUnitOffscreenCanvas.width = targetCanvasWidthPx;
+            singleUnitOffscreenCanvas.height = targetCanvasHeightPx;
+            const oCtx = singleUnitOffscreenCanvas.getContext('2d');
+
+            let srcRatio = loadedImageSource.width / loadedImageSource.height;
+            let targetRatio = targetCanvasWidthPx / targetCanvasHeightPx;
+            let renderWidth, renderHeight, renderX, renderY;
+
+            if (srcRatio > targetRatio) {
+                renderHeight = targetCanvasHeightPx;
+                renderWidth = targetCanvasHeightPx * srcRatio;
+                renderX = (targetCanvasWidthPx - renderWidth) / 2;
+                renderY = 0;
+            } else {
+                renderWidth = targetCanvasWidthPx;
+                renderHeight = targetCanvasWidthPx / srcRatio;
+                renderX = 0;
+                renderY = (targetCanvasHeightPx - renderHeight) / 2;
+            }
+
+            oCtx.fillStyle = "#ffffff";
+            oCtx.fillRect(0, 0, targetCanvasWidthPx, targetCanvasHeightPx);
+            oCtx.drawImage(loadedImageSource, renderX, renderY, renderWidth, renderHeight);
+
+            if (textOverlayToggle.checked) {
+                let textHeightContainerBox = Math.floor(targetCanvasHeightPx * 0.16);
+                oCtx.fillStyle = "#ffffff";
+                oCtx.fillRect(0, targetCanvasHeightPx - textHeightContainerBox, targetCanvasWidthPx, textHeightContainerBox);
+                
+                oCtx.strokeStyle = "#e2e8f0";
+                oCtx.lineWidth = Math.max(1, Math.floor(0.4 * pxPerMm));
+                oCtx.beginPath();
+                oCtx.moveTo(0, targetCanvasHeightPx - textHeightContainerBox);
+                oCtx.lineTo(targetCanvasWidthPx, targetCanvasHeightPx - textHeightContainerBox);
+                oCtx.stroke();
+
+                let primaryLabelString = overlayName.value.trim().toUpperCase();
+                let secondaryLabelString = overlayDate.value.trim();
+                
+                oCtx.fillStyle = "#000000";
+                oCtx.textAlign = "center";
+                oCtx.textBaseline = "middle";
+
+                if (primaryLabelString && secondaryLabelString) {
+                    let textFontSizePx = Math.floor(textHeightContainerBox * 0.36);
+                    oCtx.font = `bold ${textFontSizePx}px monospace, Courier`;
+                    oCtx.fillText(primaryLabelString, targetCanvasWidthPx / 2, (targetCanvasHeightPx - textHeightContainerBox) + (textHeightContainerBox * 0.28));
+                    oCtx.font = `${textFontSizePx}px monospace, Courier`;
+                    oCtx.fillText(secondaryLabelString, targetCanvasWidthPx / 2, (targetCanvasHeightPx - textHeightContainerBox) + (textHeightContainerBox * 0.72));
+                } else {
+                    let targetLabel = primaryLabelString || secondaryLabelString || "";
+                    let textFontSizePx = Math.floor(textHeightContainerBox * 0.5);
+                    oCtx.font = `bold ${textFontSizePx}px monospace, Courier`;
+                    oCtx.fillText(targetLabel, targetCanvasWidthPx / 2, (targetCanvasHeightPx - textHeightContainerBox) + (textHeightContainerBox / 2));
+                }
+            }
+
+            if (photoBorderToggle.checked) {
+                oCtx.strokeStyle = "#000000";
+                oCtx.lineWidth = Math.max(2, Math.floor(0.6 * pxPerMm));
+                oCtx.strokeRect(0, 0, targetCanvasWidthPx, targetCanvasHeightPx);
+            }
+
+            if (targetOutputSheetStyle === 'single') {
+                ctx.drawImage(singleUnitOffscreenCanvas, 0, 0);
+            } else {
+                for (let r = 0; r < renderGridRows; r++) {
+                    for (let c = 0; c < renderGridCols; c++) {
+                        let positionX = internalMarginLeft + c * (targetCanvasWidthPx + gapBetweenGridElements);
+                        let positionY = internalMarginTop + r * (targetCanvasHeightPx + gapBetweenGridElements);
+                        ctx.drawImage(singleUnitOffscreenCanvas, positionX, positionY);
                     }
                 }
             }
 
-            matrixWrapper.innerHTML = '';
-            matrixWrapper.style.gridTemplateColumns = `repeat(${cols}, minmax(0, 1fr))`;
-            
-            const generatedBlobUrl = offscreenCanvas.toDataURL('image/jpeg', 0.95);
-            const displayLimit = Math.min(cols * rows, 12);
-            
-            for (let i = 0; i < displayLimit; i++) {
-                const cellImg = document.createElement('img');
-                cellImg.src = rawSourceImage.src;
-                cellImg.className = "w-16 h-20 object-cover rounded shadow-xs";
-                if(borderStyle === 'thin_black') cellImg.classList.add('border', 'border-black');
-                matrixWrapper.appendChild(cellImg);
-            }
+            workspacePlaceholder.classList.add('hidden');
+            canvasViewportWrapper.classList.remove('hidden');
+            actionControls.classList.remove('hidden');
+            actionControls.scrollIntoView({ behavior: 'smooth' });
+        });
 
-            downloadBtn.href = generatedBlobUrl;
-            downloadBtn.download = `editspark_passport_sheet.jpg`;
-            gridResult.classList.remove('hidden');
-            gridResult.scrollIntoView({ behavior: 'smooth' });
+        downloadSheetBtn.addEventListener('click', () => {
+            if (!loadedImageSource) return;
+            const temporaryDataAnchorLink = document.createElement('a');
+            temporaryDataAnchorLink.download = `editsparks_photo_sheet_${Date.now()}.jpg`;
+            temporaryDataAnchorLink.href = studioCanvas.toDataURL('image/jpeg', 0.95);
+            document.body.appendChild(temporaryDataAnchorLink);
+            temporaryDataAnchorLink.click();
+            document.body.removeChild(temporaryDataAnchorLink);
         });
     </script>
 </body>
