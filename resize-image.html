@@ -439,7 +439,7 @@
     <footer class="bg-white border-t border-slate-200 py-8 mt-12">
         <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 text-sm font-medium text-slate-500">
             <div class="text-slate-400">
-                &copy; 2026 EditSparks Studio. Locally Processed (Safe & Secure).
+                &copy; 2026 EditSparks. Locally Processed (Safe & Secure).
             </div>
             <div class="flex space-x-6 text-xs font-bold uppercase tracking-wider">
                 <a href="about.html" class="hover:text-blue-500 transition-colors">About</a>
@@ -663,7 +663,7 @@
                         const url = URL.createObjectURL(finalBlob);
                         
                         downloadBtn.href = url;
-                        downloadBtn.download = `editspark_${dpiValue === 'original' ? 'resized' : dpiValue + 'dpi'}_${w}x${h}.jpg`;
+                        downloadBtn.download = `editsparks_${dpiValue === 'original' ? 'resized' : dpiValue + 'dpi'}_${w}x${h}.jpg`;
 
                         resultResizeInfo.textContent = `New Dimensions: ${w}x${h} px | Output: ${dpiValue === 'original' ? 'Original DPI' : dpiValue + ' DPI'} JPEG`;
                         resizeResult.classList.remove('hidden');
