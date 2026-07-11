@@ -579,7 +579,41 @@ if (bestDataUrl === "") {
 const dataUrl = bestDataUrl;
 const currentSize = bestSize;
 
-                        statusBox.innerHTML = `<span class="text-emerald-600 font-extrabold"><i class="fa-solid fa-circle-check"></i> Finished: ${currentSize.toFixed(1)} KB</span>`;
+                       const originalSize = file.size / 1024;
+const reduction = ((originalSize - currentSize) / originalSize) * 100;
+
+let targetStatus = "";
+
+if (currentSize <= targetKb) {
+
+    targetStatus = `<span class="text-emerald-600 font-bold">✅ Target Achieved</span>`;
+
+} else {
+
+    targetStatus = `<span class="text-red-600 font-bold">❌ Target Missed</span>`;
+
+}
+
+statusBox.innerHTML = `
+<div class="text-left text-xs leading-5">
+
+<div class="font-bold text-emerald-700 mb-1">
+<i class="fa-solid fa-circle-check"></i>
+Compression Complete
+</div>
+
+<div>Original : <b>${originalSize.toFixed(1)} KB</b></div>
+
+<div>Compressed : <b>${currentSize.toFixed(1)} KB</b></div>
+
+<div>Reduced : <b>${reduction.toFixed(1)}%</b></div>
+
+<div>Resolution : <b>${width} × ${height}</b></div>
+
+<div>${targetStatus}</div>
+
+</div>
+`;
                         actionBox.classList.remove('hidden');
                         
                         let cleanName = file.name.substring(0, file.name.lastIndexOf('.')) || "editsparks_compressed";
