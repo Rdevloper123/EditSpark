@@ -439,6 +439,83 @@
     <!-- CORE ENGINE JAVASCRIPT LOGIC (0% Changes - Intact Code) -->
     <script>
         let selectedFilesQueue = [];
+        async function compressToTarget(canvas, mime, targetKb) {
+
+    let scale = 1;
+
+    while (scale >= 0.4) {
+
+        const workCanvas = document.createElement("canvas");
+
+        workCanvas.width = Math.round(canvas.width * scale);
+        workCanvas.height = Math.round(canvas.height * scale);
+
+        const ctx = workCanvas.getContext("2d");
+
+        ctx.drawImage(
+            canvas,
+            0,
+            0,
+            workCanvas.width,
+            workCanvas.height
+        );
+
+        let low = 0.02;
+        let high = 1.0;
+
+        let best = null;
+        let bestSize = Infinity;
+
+        for (let i = 0; i < 15; i++) {
+
+            const q = (low + high) / 2;
+
+            const url = workCanvas.toDataURL(mime, q);
+
+            const size = atob(url.split(",")[1]).length / 1024;
+
+            if (size <= targetKb) {
+
+                if ((targetKb - size) < (targetKb - bestSize)) {
+
+                    best = url;
+                    bestSize = size;
+
+                }
+
+                low = q;
+
+            } else {
+
+                high = q;
+
+            }
+
+        }
+
+        if (best) {
+
+            return {
+
+                dataUrl: best,
+
+                size: bestSize,
+
+                width: workCanvas.width,
+
+                height: workCanvas.height
+
+            };
+
+        }
+
+        scale -= 0.1;
+
+    }
+
+    return null;
+
+}
         const fileSelector = document.getElementById('fileSelector');
         const dropzone = document.getElementById('dropzone');
         const previewQueueContainer = document.getElementById('previewQueueContainer');
