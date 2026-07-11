@@ -653,8 +653,24 @@ if (bestDataUrl === "") {
     bestSize = atob(bestDataUrl.split(',')[1]).length / 1024;
 }
 
-const dataUrl = bestDataUrl;
-const currentSize = bestSize;
+const result = await compressToTarget(canvas, mime, targetKb);
+
+if(!result){
+
+    statusBox.innerHTML =
+    "<span class='text-red-600 font-bold'>Unable to reach target size.</span>";
+
+    return;
+
+}
+
+const dataUrl = result.dataUrl;
+
+const currentSize = result.size;
+
+width = result.width;
+
+height = result.height;
 
                        const originalSize = file.size / 1024;
 const reduction = ((originalSize - currentSize) / originalSize) * 100;
