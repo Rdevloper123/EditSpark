@@ -694,7 +694,15 @@ Compression Complete
                         actionBox.classList.remove('hidden');
                         
                         let cleanName = file.name.substring(0, file.name.lastIndexOf('.')) || "editsparks_compressed";
-                        let ext = mime === "image/png" ? "png" : "jpg";
+                       let ext;
+
+if (mime === "image/png") {
+    ext = "png";
+} else if (mime === "image/webp") {
+    ext = "webp";
+} else {
+    ext = "jpg";
+}
 
                     actionBox.innerHTML = `
 <div class="border-t border-slate-200 pt-4 mt-3">
