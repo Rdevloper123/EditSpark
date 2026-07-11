@@ -505,18 +505,63 @@
                         const ctx = canvas.getContext('2d');
                         ctx.drawImage(img, 0, 0, img.width, img.height);
 
-                        let mime = file.type === "image/png" ? "image/jpeg" : file.type; 
-                        let quality = 0.90;
-                        let dataUrl = canvas.toDataURL(mime, quality);
-                        let currentSize = atob(dataUrl.split(',')[1]).length / 1024;
+                       // Smart Output Format
+let mime;
 
-                        if(currentSize > targetKb) {
-                            for(let q = 0.85; q >= 0.02; q -= 0.03) {
-                                dataUrl = canvas.toDataURL(mime, q);
-                                currentSize = atob(dataUrl.split(',')[1]).length / 1024;
-                                if(currentSize <= targetKb) { break; }
-                            }
-                        }
+if (file.type === "image/jpeg" || file.type === "image/jpg") {
+
+    mime = "image/jpeg";
+
+} else if (file.type === "image/webp") {
+
+    mime = "image/webp";
+
+} else {
+
+    // PNG ko default PNG hi rakhenge
+    mime = "image/png";
+
+}
+                       // Binary Search Compression Engine
+let minQuality = 0.02;
+let maxQuality = 1.00;
+
+let bestDataUrl = "";
+let bestSize = Infinity;
+let bestQuality = 1.00;
+
+for (let i = 0; i < 12; i++) {
+
+    const quality = (minQuality + maxQuality) / 2;
+
+    const testDataUrl = canvas.toDataURL(mime, quality);
+    const testSize = atob(testDataUrl.split(',')[1]).length / 1024;
+
+    if (testSize <= targetKb) {
+
+        if ((targetKb - testSize) < (targetKb - bestSize)) {
+            bestDataUrl = testDataUrl;
+            bestSize = testSize;
+            bestQuality = quality;
+        }
+
+        minQuality = quality;
+
+    } else {
+
+        maxQuality = quality;
+
+    }
+
+}
+
+if (bestDataUrl === "") {
+    bestDataUrl = canvas.toDataURL(mime, minQuality);
+    bestSize = atob(bestDataUrl.split(',')[1]).length / 1024;
+}
+
+const dataUrl = bestDataUrl;
+const currentSize = bestSize;
 
                         statusBox.innerHTML = `<span class="text-emerald-600 font-extrabold"><i class="fa-solid fa-circle-check"></i> Finished: ${currentSize.toFixed(1)} KB</span>`;
                         actionBox.classList.remove('hidden');
