@@ -439,11 +439,13 @@
     <!-- CORE ENGINE JAVASCRIPT LOGIC (0% Changes - Intact Code) -->
     <script>
         let selectedFilesQueue = [];
-        async function compressToTarget(canvas, mime, targetKb) {
+    async function compressToTarget(canvas, mime, targetKb) {
 
     let scale = 1;
 
-    while (scale >= 0.4) {
+    let bestResult = null;
+
+    while (scale >= 0.10) {
 
         const workCanvas = document.createElement("canvas");
 
@@ -452,68 +454,55 @@
 
         const ctx = workCanvas.getContext("2d");
 
-        ctx.drawImage(
-            canvas,
-            0,
-            0,
-            workCanvas.width,
-            workCanvas.height
-        );
+        ctx.drawImage(canvas, 0, 0, workCanvas.width, workCanvas.height);
 
-        let low = 0.02;
-        let high = 1.0;
+        // PNG quality ignore hoti hai, isliye JPEG use karenge agar target chhota chahiye
+        let outputMime = mime;
 
-        let best = null;
-        let bestSize = Infinity;
+        if (mime === "image/png" && targetKb < (canvas.width * canvas.height) / 20) {
+            outputMime = "image/jpeg";
+        }
 
-        for (let i = 0; i < 15; i++) {
+        let low = 0.01;
+        let high = 1.00;
 
-            const q = (low + high) / 2;
+        for (let i = 0; i < 30; i++) {
 
-            const url = workCanvas.toDataURL(mime, q);
+            const quality = (low + high) / 2;
 
-            const size = atob(url.split(",")[1]).length / 1024;
+            const dataUrl = workCanvas.toDataURL(outputMime, quality);
 
-            if (size <= targetKb) {
+            const size = atob(dataUrl.split(",")[1]).length / 1024;
 
-                if ((targetKb - size) < (targetKb - bestSize)) {
+            if (!bestResult || Math.abs(targetKb - size) < Math.abs(targetKb - bestResult.size)) {
 
-                    best = url;
-                    bestSize = size;
+                bestResult = {
+                    dataUrl,
+                    size,
+                    width: workCanvas.width,
+                    height: workCanvas.height,
+                    mime: outputMime
+                };
 
-                }
+            }
 
-                low = q;
-
+            if (size > targetKb) {
+                high = quality;
             } else {
-
-                high = q;
-
+                low = quality;
             }
 
         }
 
-        if (best) {
-
-            return {
-
-                dataUrl: best,
-
-                size: bestSize,
-
-                width: workCanvas.width,
-
-                height: workCanvas.height
-
-            };
-
+        if (bestResult && bestResult.size <= targetKb + 1) {
+            return bestResult;
         }
 
-        scale -= 0.1;
+        scale -= 0.05;
 
     }
 
-    return null;
+    return bestResult;
 
 }
         const fileSelector = document.getElementById('fileSelector');
