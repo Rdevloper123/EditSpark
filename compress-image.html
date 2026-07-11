@@ -619,11 +619,49 @@ Compression Complete
                         let cleanName = file.name.substring(0, file.name.lastIndexOf('.')) || "editsparks_compressed";
                         let ext = mime === "image/png" ? "png" : "jpg";
 
-                        actionBox.innerHTML = `
-                            <a href="${dataUrl}" download="${cleanName}_editsparks.${ext}" class="bg-emerald-50 text-emerald-600 border border-emerald-200 font-black text-[11px] px-3 py-2 rounded-lg hover:bg-emerald-100 transition-colors block text-center cursor-pointer">
-                                <i class="fa-solid fa-download"></i> Download
-                            </a>
-                        `;
+                    actionBox.innerHTML = `
+<div class="border-t border-slate-200 pt-4 mt-3">
+
+<div class="grid grid-cols-2 gap-4 mb-4">
+
+<div class="text-center">
+<div class="text-xs font-bold mb-2 text-slate-700">Original</div>
+<img src="${e.target.result}"
+class="w-full h-32 object-contain rounded-lg border bg-slate-50">
+<div class="text-[11px] mt-2 font-semibold">
+${(file.size/1024).toFixed(1)} KB
+</div>
+</div>
+
+<div class="text-center">
+<div class="text-xs font-bold mb-2 text-emerald-700">
+Compressed
+</div>
+
+<img src="${dataUrl}"
+class="w-full h-32 object-contain rounded-lg border bg-slate-50">
+
+<div class="text-[11px] mt-2 font-semibold text-emerald-600">
+${currentSize.toFixed(1)} KB
+</div>
+
+</div>
+
+</div>
+
+<a
+href="${dataUrl}"
+download="${cleanName}_editsparks.${ext}"
+class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-sm py-3 rounded-xl w-full flex justify-center items-center gap-2 transition">
+
+<i class="fa-solid fa-download"></i>
+
+Download Compressed Image
+
+</a>
+
+</div>
+`;
                     };
                     img.src = e.target.result;
                 };
