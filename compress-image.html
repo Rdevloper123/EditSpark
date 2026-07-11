@@ -637,11 +637,6 @@ for (let i = 0; i < 12; i++) {
 
 }
 
-if (bestDataUrl === "") {
-    bestDataUrl = canvas.toDataURL(mime, minQuality);
-    bestSize = atob(bestDataUrl.split(',')[1]).length / 1024;
-}
-
 const result = await compressToTarget(canvas, mime, targetKb);
 
 if(!result){
