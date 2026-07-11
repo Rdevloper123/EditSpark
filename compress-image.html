@@ -527,7 +527,12 @@
             selectedFilesQueue = Array.from(filesList);
             bulkItemsContainer.innerHTML = '';
             previewQueueContainer.classList.remove('hidden');
-            
+            setTimeout(() => {
+    previewQueueContainer.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+}, 150);
             selectedFilesQueue.forEach((file, index) => {
                 const row = document.createElement('div');
                 row.className = "bg-white border border-slate-200 rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-2xs";
