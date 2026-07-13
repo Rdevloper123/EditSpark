@@ -582,7 +582,7 @@ async function compressToTarget(canvas, mime, targetKb) {
                 reader.readAsDataURL(file);
             });
         }
-        function triggerBulkCompressionPipeline() {
+ function triggerBulkCompressionPipeline() {
             if(!selectedFilesQueue.length) return;
             const targetKb = parseFloat(document.getElementById('kbTargetInput').value);
 
@@ -596,173 +596,99 @@ async function compressToTarget(canvas, mime, targetKb) {
                     const img = new Image();
                     img.onload = async function() {
                         const canvas = document.createElement('canvas');
-                       // Smart Resize Engine
-let width = img.width;
-let height = img.height;
+                        let width = img.width;
+                        let height = img.height;
 
-// Very large images are automatically scaled
-const MAX_DIMENSION = 3000;
+                        const MAX_DIMENSION = 3000;
+                        if (width > MAX_DIMENSION || height > MAX_DIMENSION) {
+                            const ratio = Math.min(MAX_DIMENSION / width, MAX_DIMENSION / height);
+                            width = Math.round(width * ratio);
+                            height = Math.round(height * ratio);
+                        }
 
-if (width > MAX_DIMENSION || height > MAX_DIMENSION) {
-
-    const ratio = Math.min(MAX_DIMENSION / width, MAX_DIMENSION / height);
-
-    width = Math.round(width * ratio);
-    height = Math.round(height * ratio);
-
-}
-
-canvas.width = width;
-canvas.height = height;
+                        canvas.width = width;
+                        canvas.height = height;
                         const ctx = canvas.getContext('2d');
                         ctx.drawImage(img, 0, 0, width, height);
 
-                       // Smart Output Format
-let mime;
+                        let mime;
+                        if (file.type === "image/jpeg" || file.type === "image/jpg") {
+                            mime = "image/jpeg";
+                        } else if (file.type === "image/webp") {
+                            mime = "image/webp";
+                        } else {
+                            mime = "image/png";
+                        }
 
-if (file.type === "image/jpeg" || file.type === "image/jpg") {
+                        // सीधे नए सुपर-फास्ट इंजन को कॉल कर रहे हैं
+                        const result = await compressToTarget(canvas, mime, targetKb);
 
-    mime = "image/jpeg";
+                        if(!result){
+                            statusBox.innerHTML = "<span class='text-red-600 font-bold'>Unable to reach target size.</span>";
+                            return;
+                        }
 
-} else if (file.type === "image/webp") {
+                        const dataUrl = result.dataUrl;
+                        mime = result.mime;
+                        const currentSize = result.size;
+                        width = result.width;
+                        height = result.height;
 
-    mime = "image/webp";
+                        const originalSize = file.size / 1024;
+                        const reduction = ((originalSize - currentSize) / originalSize) * 100;
 
-} else {
+                        let targetStatus = "";
+                        if (currentSize <= targetKb) {
+                            targetStatus = `<span class="text-emerald-600 font-bold">✅ Target Achieved</span>`;
+                        } else {
+                            targetStatus = `<span class="text-red-600 font-bold">❌ Target Missed</span>`;
+                        }
 
-    // PNG ko default PNG hi rakhenge
-    mime = "image/png";
-
-}
-const result = await compressToTarget(canvas, mime, targetKb);
-
-if(!result){
-    statusBox.innerHTML = "<span class='text-red-600 font-bold'>Unable to reach target size.</span>";
-    return;
-}
-
-const dataUrl = result.dataUrl;
-mime = result.mime;
-const currentSize = result.size;
-width = result.width;
-height = result.height;
-
-const result = await compressToTarget(canvas, mime, targetKb);
-
-if(!result){
-
-    statusBox.innerHTML =
-    "<span class='text-red-600 font-bold'>Unable to reach target size.</span>";
-
-    return;
-
-}
-
-const dataUrl = result.dataUrl;
-mime = result.mime;
-const currentSize = result.size;
-
-width = result.width;
-
-height = result.height;
-
-                       const originalSize = file.size / 1024;
-const reduction = ((originalSize - currentSize) / originalSize) * 100;
-
-let targetStatus = "";
-
-if (currentSize <= targetKb) {
-
-    targetStatus = `<span class="text-emerald-600 font-bold">✅ Target Achieved</span>`;
-
-} else {
-
-    targetStatus = `<span class="text-red-600 font-bold">❌ Target Missed</span>`;
-
-}
-
-statusBox.innerHTML = `
-<div class="text-left text-xs leading-5">
-
-<div class="font-bold text-emerald-700 mb-1">
-<i class="fa-solid fa-circle-check"></i>
-Compression Complete
-</div>
-
-<div>Original : <b>${originalSize.toFixed(1)} KB</b></div>
-
-<div>Compressed : <b>${currentSize.toFixed(1)} KB</b></div>
-
-<div>Reduced : <b>${reduction.toFixed(1)}%</b></div>
-
-<div>Resolution : <b>${width} × ${height}</b></div>
-
-<div>${targetStatus}</div>
-
-</div>
-`;
+                        statusBox.innerHTML = `
+                            <div class="text-left text-xs leading-5">
+                                <div class="font-bold text-emerald-700 mb-1">
+                                    <i class="fa-solid fa-circle-check"></i> Compression Complete
+                                </div>
+                                <div>Original : <b>${originalSize.toFixed(1)} KB</b></div>
+                                <div>Compressed : <b>${currentSize.toFixed(1)} KB</b></div>
+                                <div>Reduced : <b>${reduction.toFixed(1)}%</b></div>
+                                <div>Resolution : <b>${width} × ${height}</b></div>
+                                <div>${targetStatus}</div>
+                            </div>
+                        `;
                         actionBox.classList.remove('hidden');
                         
                         let cleanName = file.name.substring(0, file.name.lastIndexOf('.')) || "editsparks_compressed";
-                       let ext;
+                        let ext = (mime === "image/png") ? "png" : (mime === "image/webp") ? "webp" : "jpg";
 
-if (mime === "image/png") {
-    ext = "png";
-} else if (mime === "image/webp") {
-    ext = "webp";
-} else {
-    ext = "jpg";
-}
-
-                    actionBox.innerHTML = `
-<div class="border-t border-slate-200 pt-4 mt-3">
-
-<div class="grid grid-cols-2 gap-4 mb-4">
-
-<div class="text-center">
-<div class="text-xs font-bold mb-2 text-slate-700">Original</div>
-<img src="${e.target.result}"
-class="w-full h-32 object-contain rounded-lg border bg-slate-50">
-<div class="text-[11px] mt-2 font-semibold">
-${(file.size/1024).toFixed(1)} KB
-</div>
-</div>
-
-<div class="text-center">
-<div class="text-xs font-bold mb-2 text-emerald-700">
-Compressed
-</div>
-
-<img src="${dataUrl}"
-class="w-full h-32 object-contain rounded-lg border bg-slate-50">
-
-<div class="text-[11px] mt-2 font-semibold text-emerald-600">
-${currentSize.toFixed(1)} KB
-</div>
-
-</div>
-
-</div>
-
-<a
-href="${dataUrl}"
-download="${cleanName}_editsparks.${ext}"
-class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-sm py-3 rounded-xl w-full flex justify-center items-center gap-2 transition">
-
-<i class="fa-solid fa-download"></i>
-
-Download Compressed Image
-
-</a>
-
-</div>
-`;
+                        actionBox.innerHTML = `
+                            <div class="border-t border-slate-200 pt-4 mt-3">
+                                <div class="grid grid-cols-2 gap-4 mb-4">
+                                    <div class="text-center">
+                                        <div class="text-xs font-bold mb-2 text-slate-700">Original</div>
+                                        <img src="${e.target.result}" class="w-full h-32 object-contain rounded-lg border bg-slate-50">
+                                        <div class="text-[11px] mt-2 font-semibold">${(file.size/1024).toFixed(1)} KB</div>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="text-xs font-bold mb-2 text-emerald-700">Compressed</div>
+                                        <img src="${dataUrl}" class="w-full h-32 object-contain rounded-lg border bg-slate-50">
+                                        <div class="text-[11px] mt-2 font-semibold text-emerald-600">
+                                            ${currentSize.toFixed(1)} KB
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="${dataUrl}" download="${cleanName}_editsparks.${ext}" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-sm py-3 rounded-xl w-full flex justify-center items-center gap-2 transition">
+                                    <i class="fa-solid fa-download"></i> Download Compressed Image
+                                </a>
+                            </div>
+                        `;
                     };
                     img.src = e.target.result;
                 };
                 reader.readAsDataURL(file);
             });
-        }
+        }      
+        
     </script>
 </body>
 </html>
