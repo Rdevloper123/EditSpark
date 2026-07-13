@@ -462,43 +462,52 @@
             });
         }
 
-    async function compressToTarget(canvas, mime, targetKb) {
 
-    let scale = 1;
+ async function compressToTarget(canvas, mime, targetKb) {
+    let outputMime = mime;
+    const originalWidth = canvas.width;
+    const originalHeight = canvas.height;
+
+    // 1. अगर PNG है और छोटा टारगेट है, तो उसे JPEG में बदलें
+    if (mime === "image/png" && targetKb < (originalWidth * originalHeight) / 20) {
+        outputMime = "image/jpeg";
+    }
+
+    // 2. पहली बार में एक अंदाज़ा लगाएँ कि इमेज को कितना छोटा करना पड़ सकता है
+    let scale = 1.0;
+    let testCanvas = document.createElement("canvas");
+    testCanvas.width = originalWidth;
+    testCanvas.height = originalHeight;
+    testCanvas.getContext("2d").drawImage(canvas, 0, 0);
+    
+    let initialData = testCanvas.toDataURL(outputMime, 0.90);
+    let initialSize = atob(initialData.split(",")[1]).length / 1024;
+
+    // अगर फाइल टारगेट से बहुत बड़ी है, तो रेजोल्यूशन को सीधे मैथेमैटिकली कम करें
+    if (initialSize > targetKb) {
+        scale = Math.sqrt(targetKb / initialSize);
+        if (scale < 0.20) scale = 0.20; // बहुत ज़्यादा धुंधला होने से बचाएं
+    }
+
+    // नया कैनवास सही स्केल पर बनाएं
+    const workCanvas = document.createElement("canvas");
+    workCanvas.width = Math.round(originalWidth * scale);
+    workCanvas.height = Math.round(originalHeight * scale);
+    const ctx = workCanvas.getContext("2d");
+    ctx.drawImage(canvas, 0, 0, workCanvas.width, workCanvas.height);
 
     let bestResult = null;
+    let low = 0.01;
+    let high = 1.00;
 
-    while (scale >= 0.10) {
+    // 3. सिर्फ 14 परफेक्ट बाइनरी स्टेप्स - यह मिलिसेकंड में सटीक (accurate) केबी ढूंढ लेता है
+    for (let i = 0; i < 14; i++) {
+        const quality = (low + high) / 2;
+        const dataUrl = workCanvas.toDataURL(outputMime, quality);
+        const size = atob(dataUrl.split(",")[1]).length / 1024;
 
-        const workCanvas = document.createElement("canvas");
-
-        workCanvas.width = Math.round(canvas.width * scale);
-        workCanvas.height = Math.round(canvas.height * scale);
-
-        const ctx = workCanvas.getContext("2d");
-
-        ctx.drawImage(canvas, 0, 0, workCanvas.width, workCanvas.height);
-
-        // PNG quality ignore hoti hai, isliye JPEG use karenge agar target chhota chahiye
-        let outputMime = mime;
-
-        if (mime === "image/png" && targetKb < (canvas.width * canvas.height) / 20) {
-            outputMime = "image/jpeg";
-        }
-
-        let low = 0.01;
-        let high = 1.00;
-
-        for (let i = 0; i < 30; i++) {
-
-            const quality = (low + high) / 2;
-
-            const dataUrl = workCanvas.toDataURL(outputMime, quality);
-
-            const size = atob(dataUrl.split(",")[1]).length / 1024;
-
-            if (!bestResult || Math.abs(targetKb - size) < Math.abs(targetKb - bestResult.size)) {
-
+        if (size <= targetKb) {
+            if (!bestResult || size > bestResult.size) {
                 bestResult = {
                     dataUrl,
                     size,
@@ -506,27 +515,27 @@
                     height: workCanvas.height,
                     mime: outputMime
                 };
-
             }
-
-            if (size > targetKb) {
-                high = quality;
-            } else {
-                low = quality;
-            }
-
+            low = quality; // क्वालिटी बढ़ाने की कोशिश करें
+        } else {
+            high = quality; // फाइल बड़ी है, क्वालिटी घटाएं
         }
+    }
 
-        if (bestResult && bestResult.size <= targetKb + 1) {
-            return bestResult;
-        }
-
-        scale -= 0.05;
-
+    // अगर इमेज अभी भी बड़ी रह गई, तो एक आख़िरी सेफ फॉलबैक रन
+    if (!bestResult) {
+        const fallbackData = workCanvas.toDataURL(outputMime, 0.02);
+        const fallbackSize = atob(fallbackData.split(",")[1]).length / 1024;
+        bestResult = {
+            dataUrl: fallbackData,
+            size: fallbackSize,
+            width: workCanvas.width,
+            height: workCanvas.height,
+            mime: outputMime
+        };
     }
 
     return bestResult;
-
 }
         const fileSelector = document.getElementById('fileSelector');
         const dropzone = document.getElementById('dropzone');
