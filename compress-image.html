@@ -111,13 +111,10 @@
                     </div>
                 </div>
             </div>
-<button onclick="applyGlobalKBToAll()" class="w-full bg-slate-800 text-white font-black uppercase text-xs tracking-widest py-4 rounded-xl shadow-md hover:bg-slate-900 transition-colors cursor-pointer flex items-center justify-center gap-2">
-    <i class="fa-solid fa-check-double"></i> Apply Target KB to All Images
-</button>
-<p class="text-center text-[11px] text-slate-500 mt-3 font-medium">
-    💡 Tip: "Apply" "After doing this, you can also change the KB of each image individually below and then click on 'Compress'."
-</p>
-           
+
+            <button onclick="triggerBulkCompressionPipeline()" class="w-full bg-emerald-500 text-white font-black uppercase text-xs tracking-widest py-4 rounded-xl shadow-md hover:bg-emerald-600 transition-colors cursor-pointer flex items-center justify-center gap-2">
+                <i class="fa-solid fa-bolt-lightning"></i> Compress Images Now
+            </button>
         </div>
 
         <!-- Live Preview Queue Zone -->
@@ -450,64 +447,45 @@
     </footer>
 
     <!-- CORE ENGINE JAVASCRIPT LOGIC (0% Changes - Intact Code) -->
-   <script>
+    <script>
         let selectedFilesQueue = [];
-        const kbTargetInput = document.getElementById('kbTargetInput');
+    async function compressToTarget(canvas, mime, targetKb) {
 
-        // ऊपर वाले बटन पर क्लिक करते ही नीचे की सभी इमेजेस का KB बदल जाएगा
-        function applyGlobalKBToAll() {
-            const globalValue = kbTargetInput.value || 50;
-            document.querySelectorAll('.individual-kb-input').forEach(input => {
-                input.value = globalValue;
-            });
-        }
-
-
- async function compressToTarget(canvas, mime, targetKb) {
-    let outputMime = mime;
-    const originalWidth = canvas.width;
-    const originalHeight = canvas.height;
-
-    // 1. अगर PNG है और छोटा टारगेट है, तो उसे JPEG में बदलें
-    if (mime === "image/png" && targetKb < (originalWidth * originalHeight) / 20) {
-        outputMime = "image/jpeg";
-    }
-
-    // 2. पहली बार में एक अंदाज़ा लगाएँ कि इमेज को कितना छोटा करना पड़ सकता है
-    let scale = 1.0;
-    let testCanvas = document.createElement("canvas");
-    testCanvas.width = originalWidth;
-    testCanvas.height = originalHeight;
-    testCanvas.getContext("2d").drawImage(canvas, 0, 0);
-    
-    let initialData = testCanvas.toDataURL(outputMime, 0.90);
-    let initialSize = atob(initialData.split(",")[1]).length / 1024;
-
-    // अगर फाइल टारगेट से बहुत बड़ी है, तो रेजोल्यूशन को सीधे मैथेमैटिकली कम करें
-    if (initialSize > targetKb) {
-        scale = Math.sqrt(targetKb / initialSize);
-        if (scale < 0.20) scale = 0.20; // बहुत ज़्यादा धुंधला होने से बचाएं
-    }
-
-    // नया कैनवास सही स्केल पर बनाएं
-    const workCanvas = document.createElement("canvas");
-    workCanvas.width = Math.round(originalWidth * scale);
-    workCanvas.height = Math.round(originalHeight * scale);
-    const ctx = workCanvas.getContext("2d");
-    ctx.drawImage(canvas, 0, 0, workCanvas.width, workCanvas.height);
+    let scale = 1;
 
     let bestResult = null;
-    let low = 0.01;
-    let high = 1.00;
 
-    // 3. सिर्फ 14 परफेक्ट बाइनरी स्टेप्स - यह मिलिसेकंड में सटीक (accurate) केबी ढूंढ लेता है
-    for (let i = 0; i < 14; i++) {
-        const quality = (low + high) / 2;
-        const dataUrl = workCanvas.toDataURL(outputMime, quality);
-        const size = atob(dataUrl.split(",")[1]).length / 1024;
+    while (scale >= 0.10) {
 
-        if (size <= targetKb) {
-            if (!bestResult || size > bestResult.size) {
+        const workCanvas = document.createElement("canvas");
+
+        workCanvas.width = Math.round(canvas.width * scale);
+        workCanvas.height = Math.round(canvas.height * scale);
+
+        const ctx = workCanvas.getContext("2d");
+
+        ctx.drawImage(canvas, 0, 0, workCanvas.width, workCanvas.height);
+
+        // PNG quality ignore hoti hai, isliye JPEG use karenge agar target chhota chahiye
+        let outputMime = mime;
+
+        if (mime === "image/png" && targetKb < (canvas.width * canvas.height) / 20) {
+            outputMime = "image/jpeg";
+        }
+
+        let low = 0.01;
+        let high = 1.00;
+
+        for (let i = 0; i < 30; i++) {
+
+            const quality = (low + high) / 2;
+
+            const dataUrl = workCanvas.toDataURL(outputMime, quality);
+
+            const size = atob(dataUrl.split(",")[1]).length / 1024;
+
+            if (!bestResult || Math.abs(targetKb - size) < Math.abs(targetKb - bestResult.size)) {
+
                 bestResult = {
                     dataUrl,
                     size,
@@ -515,27 +493,27 @@
                     height: workCanvas.height,
                     mime: outputMime
                 };
-            }
-            low = quality; // क्वालिटी बढ़ाने की कोशिश करें
-        } else {
-            high = quality; // फाइल बड़ी है, क्वालिटी घटाएं
-        }
-    }
 
-    // अगर इमेज अभी भी बड़ी रह गई, तो एक आख़िरी सेफ फॉलबैक रन
-    if (!bestResult) {
-        const fallbackData = workCanvas.toDataURL(outputMime, 0.02);
-        const fallbackSize = atob(fallbackData.split(",")[1]).length / 1024;
-        bestResult = {
-            dataUrl: fallbackData,
-            size: fallbackSize,
-            width: workCanvas.width,
-            height: workCanvas.height,
-            mime: outputMime
-        };
+            }
+
+            if (size > targetKb) {
+                high = quality;
+            } else {
+                low = quality;
+            }
+
+        }
+
+        if (bestResult && bestResult.size <= targetKb + 1) {
+            return bestResult;
+        }
+
+        scale -= 0.05;
+
     }
 
     return bestResult;
+
 }
         const fileSelector = document.getElementById('fileSelector');
         const dropzone = document.getElementById('dropzone');
@@ -555,46 +533,29 @@
             if(e.target.files.length) handleIncomingFiles(e.target.files);
         });
 
-       function handleIncomingFiles(filesList) {
+        function handleIncomingFiles(filesList) {
             selectedFilesQueue = Array.from(filesList);
             bulkItemsContainer.innerHTML = '';
             previewQueueContainer.classList.remove('hidden');
-            
-            const currentGlobalKB = kbTargetInput.value || 50;
-
             setTimeout(() => {
-                previewQueueContainer.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start"
-                });
-            }, 150);
-
+    previewQueueContainer.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+}, 150);
             selectedFilesQueue.forEach((file, index) => {
                 const row = document.createElement('div');
-                row.className = "bg-white border border-slate-200 rounded-xl p-4 flex flex-col gap-4 shadow-2xs mb-4";
+                row.className = "bg-white border border-slate-200 rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-2xs";
                 row.innerHTML = `
-                    <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
-                        <div class="flex items-center gap-3 w-full sm:w-auto">
-                            <div class="h-12 w-12 bg-slate-50 rounded-lg overflow-hidden flex items-center justify-center border border-slate-100 shrink-0">
-                                <img id="raw-img-preview-${index}" alt="Original" class="object-contain max-h-full max-w-full">
-                            </div>
-                            <div class="min-w-0 flex-1">
-                                <span class="text-xs font-bold text-slate-800 block truncate">${file.name}</span>
-                                <span class="text-[10px] text-slate-400 block font-medium uppercase">${(file.size/1024).toFixed(1)} KB</span>
-                            </div>
+                    <div class="flex items-center gap-3 w-full sm:w-auto">
+                        <div class="h-12 w-12 bg-slate-50 rounded-lg overflow-hidden flex items-center justify-center border border-slate-100 shrink-0">
+                            <img id="raw-img-preview-${index}" alt="Original uploaded image before compression" class="object-contain max-h-full max-w-full">
                         </div>
-                        
-                        <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
-                            <div class="relative w-24">
-                                <input type="number" id="individual-kb-${index}" value="${currentGlobalKB}" min="5" max="5000" class="individual-kb-input w-full bg-slate-50 border border-slate-200 rounded-lg px-2 py-1.5 text-xs font-bold focus:outline-emerald-500">
-                                <span class="absolute right-2 top-2 text-[10px] font-bold text-slate-400">KB</span>
-                            </div>
-                            <button onclick="compressSingleImage(${index})" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs px-3 py-2 rounded-lg transition shadow-xs cursor-pointer flex items-center gap-1">
-                                <i class="fa-solid fa-compress"></i> Compress
-                            </button>
+                        <div class="min-w-0 flex-1">
+                            <span class="text-xs font-bold text-slate-800 block truncate">${file.name}</span>
+                            <span class="text-[10px] text-slate-400 block font-medium uppercase">${(file.size/1024).toFixed(1)} KB</span>
                         </div>
                     </div>
-                    
                     <div id="status-box-${index}" class="text-[11px] font-bold text-slate-400">Ready to compress</div>
                     <div id="action-box-${index}" class="w-full hidden"></div>
                 `;
@@ -605,109 +566,208 @@
                 reader.readAsDataURL(file);
             });
         }
-        function compressSingleImage(index) {
-            const file = selectedFilesQueue[index];
-            if (!file) return;
 
-            const targetKb = parseFloat(document.getElementById(`individual-kb-${index}`).value);
-            const statusBox = document.getElementById(`status-box-${index}`);
-            const actionBox = document.getElementById(`action-box-${index}`);
-            
-            statusBox.innerHTML = `<i class="fa-solid fa-spinner animate-spin text-emerald-500 mr-1"></i> Processing this image...`;
-            actionBox.classList.add('hidden');
+        function triggerBulkCompressionPipeline() {
+            if(!selectedFilesQueue.length) return;
+            const targetKb = parseFloat(document.getElementById('kbTargetInput').value);
 
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const img = new Image();
-                img.onload = async function() {
-                    const canvas = document.createElement('canvas');
-                    let width = img.width;
-                    let height = img.height;
+            selectedFilesQueue.forEach((file, index) => {
+                const statusBox = document.getElementById(`status-box-${index}`);
+                const actionBox = document.getElementById(`action-box-${index}`);
+                statusBox.innerHTML = `<i class="fa-solid fa-spinner animate-spin text-emerald-500 mr-1"></i> Processing...`;
 
-                    const MAX_DIMENSION = 3000;
-                    if (width > MAX_DIMENSION || height > MAX_DIMENSION) {
-                        const ratio = Math.min(MAX_DIMENSION / width, MAX_DIMENSION / height);
-                        width = Math.round(width * ratio);
-                        height = Math.round(height * ratio);
-                    }
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.onload = async function() {
+                        const canvas = document.createElement('canvas');
+                       // Smart Resize Engine
+let width = img.width;
+let height = img.height;
 
-                    canvas.width = width;
-                    canvas.height = height;
-                    const ctx = canvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0, width, height);
+// Very large images are automatically scaled
+const MAX_DIMENSION = 3000;
 
-                    let mime;
-                    if (file.type === "image/jpeg" || file.type === "image/jpg") {
-                        mime = "image/jpeg";
-                    } else if (file.type === "image/webp") {
-                        mime = "image/webp";
-                    } else {
-                        mime = "image/png";
-                    }
+if (width > MAX_DIMENSION || height > MAX_DIMENSION) {
 
-                    const result = await compressToTarget(canvas, mime, targetKb);
+    const ratio = Math.min(MAX_DIMENSION / width, MAX_DIMENSION / height);
 
-                    if(!result){
-                        statusBox.innerHTML = "<span class='text-red-600 font-bold'>Unable to reach target size.</span>";
-                        return;
-                    }
+    width = Math.round(width * ratio);
+    height = Math.round(height * ratio);
 
-                    const dataUrl = result.dataUrl;
-                    mime = result.mime;
-                    const currentSize = result.size;
-                    width = result.width;
-                    height = result.height;
+}
 
-                    const originalSize = file.size / 1024;
-                    const reduction = ((originalSize - currentSize) / originalSize) * 100;
-                    let targetStatus = currentSize <= targetKb ? 
-                        `<span class="text-emerald-600 font-bold">✅ Target Achieved</span>` : 
-                        `<span class="text-red-600 font-bold">❌ Target Missed</span>`;
+canvas.width = width;
+canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
 
-                    statusBox.innerHTML = `
-                        <div class="text-left text-xs leading-5 bg-slate-50 p-3 rounded-lg border border-slate-100 mt-2">
-                            <div class="font-bold text-emerald-700 mb-1">
-                                <i class="fa-solid fa-circle-check"></i> Compression Complete
-                            </div>
-                            <div class="grid grid-cols-2 gap-x-4">
-                                <div>Original: <b>${originalSize.toFixed(1)} KB</b></div>
-                                <div>Compressed: <b>${currentSize.toFixed(1)} KB</b></div>
-                                <div>Reduced: <b>${reduction.toFixed(1)}%</b></div>
-                                <div>Resolution: <b>${width} × ${height}</b></div>
-                            </div>
-                            <div class="mt-1">${targetStatus}</div>
-                        </div>
-                    `;
-                    
-                    actionBox.classList.remove('hidden');
-                    let cleanName = file.name.substring(0, file.name.lastIndexOf('.')) || "editsparks_compressed";
-                    let ext = mime === "image/png" ? "png" : (mime === "image/webp" ? "webp" : "jpg");
+                       // Smart Output Format
+let mime;
 
-                    actionBox.innerHTML = `
-                        <div class="border-t border-slate-200 pt-4 mt-3">
-                            <div class="grid grid-cols-2 gap-4 mb-4">
-                                <div class="text-center">
-                                    <div class="text-xs font-bold mb-2 text-slate-700">Original</div>
-                                    <img src="${e.target.result}" class="w-full h-32 object-contain rounded-lg border bg-slate-50">
-                                    <div class="text-[11px] mt-2 font-semibold">${(file.size/1024).toFixed(1)} KB</div>
-                                </div>
-                                <div class="text-center">
-                                    <div class="text-xs font-bold mb-2 text-emerald-700">Compressed</div>
-                                    <img src="${dataUrl}" class="w-full h-32 object-contain rounded-lg border bg-slate-50">
-                                    <div class="text-[11px] mt-2 font-semibold text-emerald-600">${currentSize.toFixed(1)} KB</div>
-                                </div>
-                            </div>
-                            <a href="${dataUrl}" download="${cleanName}_editsparks.${ext}" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-sm py-3 rounded-xl w-full flex justify-center items-center gap-2 transition shadow-md">
-                                <i class="fa-solid fa-download"></i> Download Compressed Image
-                            </a>
-                        </div>
-                    `;
-                };
-                img.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
+if (file.type === "image/jpeg" || file.type === "image/jpg") {
+
+    mime = "image/jpeg";
+
+} else if (file.type === "image/webp") {
+
+    mime = "image/webp";
+
+} else {
+
+    // PNG ko default PNG hi rakhenge
+    mime = "image/png";
+
+}
+                       // Binary Search Compression Engine
+let minQuality = 0.02;
+let maxQuality = 1.00;
+
+let bestDataUrl = "";
+let bestSize = Infinity;
+let bestQuality = 1.00;
+
+for (let i = 0; i < 12; i++) {
+
+    const quality = (minQuality + maxQuality) / 2;
+
+    const testDataUrl = canvas.toDataURL(mime, quality);
+    const testSize = atob(testDataUrl.split(',')[1]).length / 1024;
+
+    if (testSize <= targetKb) {
+
+        if ((targetKb - testSize) < (targetKb - bestSize)) {
+            bestDataUrl = testDataUrl;
+            bestSize = testSize;
+            bestQuality = quality;
         }
 
+        minQuality = quality;
+
+    } else {
+
+        maxQuality = quality;
+
+    }
+
+}
+
+const result = await compressToTarget(canvas, mime, targetKb);
+
+if(!result){
+
+    statusBox.innerHTML =
+    "<span class='text-red-600 font-bold'>Unable to reach target size.</span>";
+
+    return;
+
+}
+
+const dataUrl = result.dataUrl;
+mime = result.mime;
+const currentSize = result.size;
+
+width = result.width;
+
+height = result.height;
+
+                       const originalSize = file.size / 1024;
+const reduction = ((originalSize - currentSize) / originalSize) * 100;
+
+let targetStatus = "";
+
+if (currentSize <= targetKb) {
+
+    targetStatus = `<span class="text-emerald-600 font-bold">✅ Target Achieved</span>`;
+
+} else {
+
+    targetStatus = `<span class="text-red-600 font-bold">❌ Target Missed</span>`;
+
+}
+
+statusBox.innerHTML = `
+<div class="text-left text-xs leading-5">
+
+<div class="font-bold text-emerald-700 mb-1">
+<i class="fa-solid fa-circle-check"></i>
+Compression Complete
+</div>
+
+<div>Original : <b>${originalSize.toFixed(1)} KB</b></div>
+
+<div>Compressed : <b>${currentSize.toFixed(1)} KB</b></div>
+
+<div>Reduced : <b>${reduction.toFixed(1)}%</b></div>
+
+<div>Resolution : <b>${width} × ${height}</b></div>
+
+<div>${targetStatus}</div>
+
+</div>
+`;
+                        actionBox.classList.remove('hidden');
+                        
+                        let cleanName = file.name.substring(0, file.name.lastIndexOf('.')) || "editsparks_compressed";
+                       let ext;
+
+if (mime === "image/png") {
+    ext = "png";
+} else if (mime === "image/webp") {
+    ext = "webp";
+} else {
+    ext = "jpg";
+}
+
+                    actionBox.innerHTML = `
+<div class="border-t border-slate-200 pt-4 mt-3">
+
+<div class="grid grid-cols-2 gap-4 mb-4">
+
+<div class="text-center">
+<div class="text-xs font-bold mb-2 text-slate-700">Original</div>
+<img src="${e.target.result}"
+class="w-full h-32 object-contain rounded-lg border bg-slate-50">
+<div class="text-[11px] mt-2 font-semibold">
+${(file.size/1024).toFixed(1)} KB
+</div>
+</div>
+
+<div class="text-center">
+<div class="text-xs font-bold mb-2 text-emerald-700">
+Compressed
+</div>
+
+<img src="${dataUrl}"
+class="w-full h-32 object-contain rounded-lg border bg-slate-50">
+
+<div class="text-[11px] mt-2 font-semibold text-emerald-600">
+${currentSize.toFixed(1)} KB
+</div>
+
+</div>
+
+</div>
+
+<a
+href="${dataUrl}"
+download="${cleanName}_editsparks.${ext}"
+class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-sm py-3 rounded-xl w-full flex justify-center items-center gap-2 transition">
+
+<i class="fa-solid fa-download"></i>
+
+Download Compressed Image
+
+</a>
+
+</div>
+`;
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+        }
     </script>
 </body>
 </html>
