@@ -627,38 +627,18 @@ if (file.type === "image/jpeg" || file.type === "image/jpg") {
     mime = "image/png";
 
 }
-                       // Binary Search Compression Engine
-let minQuality = 0.02;
-let maxQuality = 1.00;
+const result = await compressToTarget(canvas, mime, targetKb);
 
-let bestDataUrl = "";
-let bestSize = Infinity;
-let bestQuality = 1.00;
-
-for (let i = 0; i < 12; i++) {
-
-    const quality = (minQuality + maxQuality) / 2;
-
-    const testDataUrl = canvas.toDataURL(mime, quality);
-    const testSize = atob(testDataUrl.split(',')[1]).length / 1024;
-
-    if (testSize <= targetKb) {
-
-        if ((targetKb - testSize) < (targetKb - bestSize)) {
-            bestDataUrl = testDataUrl;
-            bestSize = testSize;
-            bestQuality = quality;
-        }
-
-        minQuality = quality;
-
-    } else {
-
-        maxQuality = quality;
-
-    }
-
+if(!result){
+    statusBox.innerHTML = "<span class='text-red-600 font-bold'>Unable to reach target size.</span>";
+    return;
 }
+
+const dataUrl = result.dataUrl;
+mime = result.mime;
+const currentSize = result.size;
+width = result.width;
+height = result.height;
 
 const result = await compressToTarget(canvas, mime, targetKb);
 
