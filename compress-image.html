@@ -450,8 +450,18 @@
     </footer>
 
     <!-- CORE ENGINE JAVASCRIPT LOGIC (0% Changes - Intact Code) -->
-    <script>
+   <script>
         let selectedFilesQueue = [];
+        const kbTargetInput = document.getElementById('kbTargetInput');
+
+        // ऊपर वाले बटन पर क्लिक करते ही नीचे की सभी इमेजेस का KB बदल जाएगा
+        function applyGlobalKBToAll() {
+            const globalValue = kbTargetInput.value || 50;
+            document.querySelectorAll('.individual-kb-input').forEach(input => {
+                input.value = globalValue;
+            });
+        }
+
     async function compressToTarget(canvas, mime, targetKb) {
 
     let scale = 1;
