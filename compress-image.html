@@ -546,29 +546,46 @@
             if(e.target.files.length) handleIncomingFiles(e.target.files);
         });
 
-        function handleIncomingFiles(filesList) {
+       function handleIncomingFiles(filesList) {
             selectedFilesQueue = Array.from(filesList);
             bulkItemsContainer.innerHTML = '';
             previewQueueContainer.classList.remove('hidden');
+            
+            const currentGlobalKB = kbTargetInput.value || 50;
+
             setTimeout(() => {
-    previewQueueContainer.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-    });
-}, 150);
+                previewQueueContainer.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+            }, 150);
+
             selectedFilesQueue.forEach((file, index) => {
                 const row = document.createElement('div');
-                row.className = "bg-white border border-slate-200 rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-2xs";
+                row.className = "bg-white border border-slate-200 rounded-xl p-4 flex flex-col gap-4 shadow-2xs mb-4";
                 row.innerHTML = `
-                    <div class="flex items-center gap-3 w-full sm:w-auto">
-                        <div class="h-12 w-12 bg-slate-50 rounded-lg overflow-hidden flex items-center justify-center border border-slate-100 shrink-0">
-                            <img id="raw-img-preview-${index}" alt="Original uploaded image before compression" class="object-contain max-h-full max-w-full">
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div class="flex items-center gap-3 w-full sm:w-auto">
+                            <div class="h-12 w-12 bg-slate-50 rounded-lg overflow-hidden flex items-center justify-center border border-slate-100 shrink-0">
+                                <img id="raw-img-preview-${index}" alt="Original" class="object-contain max-h-full max-w-full">
+                            </div>
+                            <div class="min-w-0 flex-1">
+                                <span class="text-xs font-bold text-slate-800 block truncate">${file.name}</span>
+                                <span class="text-[10px] text-slate-400 block font-medium uppercase">${(file.size/1024).toFixed(1)} KB</span>
+                            </div>
                         </div>
-                        <div class="min-w-0 flex-1">
-                            <span class="text-xs font-bold text-slate-800 block truncate">${file.name}</span>
-                            <span class="text-[10px] text-slate-400 block font-medium uppercase">${(file.size/1024).toFixed(1)} KB</span>
+                        
+                        <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
+                            <div class="relative w-24">
+                                <input type="number" id="individual-kb-${index}" value="${currentGlobalKB}" min="5" max="5000" class="individual-kb-input w-full bg-slate-50 border border-slate-200 rounded-lg px-2 py-1.5 text-xs font-bold focus:outline-emerald-500">
+                                <span class="absolute right-2 top-2 text-[10px] font-bold text-slate-400">KB</span>
+                            </div>
+                            <button onclick="compressSingleImage(${index})" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs px-3 py-2 rounded-lg transition shadow-xs cursor-pointer flex items-center gap-1">
+                                <i class="fa-solid fa-compress"></i> Compress
+                            </button>
                         </div>
                     </div>
+                    
                     <div id="status-box-${index}" class="text-[11px] font-bold text-slate-400">Ready to compress</div>
                     <div id="action-box-${index}" class="w-full hidden"></div>
                 `;
