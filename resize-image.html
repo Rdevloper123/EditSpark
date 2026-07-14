@@ -120,10 +120,11 @@
         </nav>
     </div>
 
-    <!-- Main Content Grid -->
-    <main class="flex-grow max-w-7xl mx-auto px-4 py-8 w-full grid grid-cols-1 md:grid-cols-4 gap-8">
-        <!-- Left Area: Tool + Content -->
-        <div class="md:col-span-3 space-y-8">
+    <!-- Main Content Grid Configured for Desktop Right Sidebar & Mobile Layout Stack -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 py-8 w-full grid grid-cols-1 md:grid-cols-4 gap-8 items-start">
+        
+        <!-- Left Area: Tool + Content Layout Area (Takes 3 columns on Laptop) -->
+        <div class="md:col-span-3 space-y-8 w-full">
             <!-- Tool Container -->
             <div class="bg-white rounded-xl shadow-xs border border-slate-200 p-6 md:p-8">
                 <div class="text-center mb-8">
@@ -201,6 +202,7 @@
                         <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Scale Percentage (%)</label>
                         <input type="number" id="resizePercentage" value="100" min="1" max="500" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-bold">
                     </div>
+                </div>
                     
                 <!-- Lock Aspect Ratio Checkbox -->
                 <div id="aspectRatioGroup" class="flex items-center space-x-2 mb-6">
@@ -322,8 +324,8 @@
             </div>
         </div>
 
-        <!-- Right Area: Sidebar Section -->
-        <aside class="space-y-6">
+        <!-- Right Area: Sidebar Section (Takes 1 column layout on Laptop, goes below on Phone) -->
+        <aside class="md:col-span-1 space-y-6 w-full">
             <!-- 10. Added New Box: Popular Searches -->
             <div class="bg-white rounded-xl shadow-xs border border-slate-200 p-6">
                 <h3 class="text-xs font-black uppercase tracking-wider text-slate-400 mb-4">Popular Searches</h3>
@@ -410,7 +412,7 @@
         </div>
     </footer>
 
-    <!-- JavaScript Engine Updates (Tab Switches, UX Feature Statistics Dashboard Logic) -->
+    <!-- JavaScript Engine Updates -->
     <script>
         let originalFile = null;
         let originalImg = new Image();
@@ -432,7 +434,8 @@
         const resizeWidth = document.getElementById('resizeWidth');
         const resizeHeight = document.getElementById('resizeHeight');
         const resizePercentage = document.getElementById('resizePercentage');
-        const maintainAspect = document.getElementById('maintainAspect');   
+        const maintainAspect = document.getElementById('maintainAspect');
+        
         const resizeBtn = document.getElementById('resizeBtn');
         const resetBtn = document.getElementById('resetBtn');
         const resizeResult = document.getElementById('resizeResult');
