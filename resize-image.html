@@ -202,19 +202,6 @@
                         <input type="number" id="resizePercentage" value="100" min="1" max="500" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-bold">
                     </div>
                     
-                    <!-- 7. Advanced Options Dropdown Heading Changed -->
-                    <div>
-                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Advanced Options</label>
-                        <select id="targetDpi" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-bold bg-white">
-                            <option value="original" selected>Image DPI (Optional)</option>
-                            <option value="300">300 DPI</option>
-                            <option value="200">200 DPI</option>
-                            <option value="150">150 DPI</option>
-                            <option value="72">72 DPI</option>
-                        </select>
-                    </div>
-                </div>
-
                 <!-- Lock Aspect Ratio Checkbox -->
                 <div id="aspectRatioGroup" class="flex items-center space-x-2 mb-6">
                     <input type="checkbox" id="maintainAspect" checked class="h-4 w-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500">
@@ -445,9 +432,7 @@
         const resizeWidth = document.getElementById('resizeWidth');
         const resizeHeight = document.getElementById('resizeHeight');
         const resizePercentage = document.getElementById('resizePercentage');
-        const maintainAspect = document.getElementById('maintainAspect');
-        const targetDpi = document.getElementById('targetDpi');
-        
+        const maintainAspect = document.getElementById('maintainAspect');   
         const resizeBtn = document.getElementById('resizeBtn');
         const resetBtn = document.getElementById('resetBtn');
         const resizeResult = document.getElementById('resizeResult');
