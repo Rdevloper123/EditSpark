@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 3 & 4. Meta Theme Color & Application Name Added -->
+    <meta name="theme-color" content="#2563eb">
+    <meta name="application-name" content="EditSparks">
+
     <!-- 1. Title Updated -->
     <title>Resize Image Online Free Without Losing Quality | EditSparks</title>
     <link class="canonical" rel="canonical" href="https://editsparks.in/resize-image.html" />
@@ -31,11 +35,23 @@
         .preview-box:hover { border-color: #2563eb; }
     </style>
 
-    <!-- 11. Schema Markup Extended -->
+    <!-- 9. Schema Markup Extended with WebPage Schema, dateModified, and relationships -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@graph": [
+            {
+                "@type": "WebPage",
+                "@id": "https://editsparks.in/resize-image.html",
+                "url": "https://editsparks.in/resize-image.html",
+                "name": "Resize Image Online Free Without Losing Quality",
+                "isPartOf": { "@id": "https://editsparks.in/#website" },
+                "datePublished": "2025-01-01T08:00:00+05:30",
+                "dateModified": "2026-07-14T12:00:00+05:30",
+                "description": "Resize images online free by pixels or percentage without losing quality. Change image dimensions, resize JPG, PNG and passport photos instantly.",
+                "breadcrumb": { "@id": "https://editsparks.in/resize-image.html#breadcrumb" },
+                "inLanguage": "en-IN"
+            },
             {
                 "@type": "WebApplication",
                 "@id": "https://editsparks.in/resize-image.html#webapp",
@@ -68,6 +84,7 @@
             },
             {
                 "@type": "BreadcrumbList",
+                "@id": "https://editsparks.in/resize-image.html#breadcrumb",
                 "itemListElement": [
                     { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://editsparks.in/index.html" },
                     { "@type": "ListItem", "position": 2, "name": "Resize Image", "item": "https://editsparks.in/resize-image.html" }
@@ -148,7 +165,8 @@
 
                 <!-- Dropzone -->
                 <div id="resizeDropzone" class="preview-box rounded-xl p-8 text-center cursor-pointer bg-slate-50 mb-6">
-                    <input type="file" id="resizeInput" accept="image/*" class="hidden">
+                    <!-- 2. Aria-label Added to File Input -->
+                    <input type="file" id="resizeInput" accept="image/*" class="hidden" aria-label="Upload image to resize">
                     <div id="resizePrompt">
                         <i class="fa-solid fa-cloud-arrow-up text-4xl text-blue-500 mb-3"></i>
                         <p class="font-bold text-slate-700 uppercase tracking-wide text-sm">Drag & drop your image here, or <span class="text-blue-500">browse</span></p>
@@ -182,41 +200,47 @@
 
                 <!-- Resize Mode Tabs -->
                 <div class="flex border-b border-slate-200 mb-6">
-                    <button id="modePixelsBtn" class="py-2 px-4 text-xs font-bold uppercase tracking-wider border-b-2 border-blue-500 text-blue-600 focus:outline-none cursor-pointer">By Pixels</button>
-                    <button id="modePercentageBtn" class="py-2 px-4 text-xs font-bold uppercase tracking-wider border-b-2 border-transparent text-slate-500 hover:text-slate-700 focus:outline-none cursor-pointer">By Percentage</button>
+                    <!-- 2. Aria-labels added to Tab Buttons -->
+                    <button id="modePixelsBtn" class="py-2 px-4 text-xs font-bold uppercase tracking-wider border-b-2 border-blue-500 text-blue-600 focus:outline-none cursor-pointer" aria-label="Resize by pixels mode">By Pixels</button>
+                    <button id="modePercentageBtn" class="py-2 px-4 text-xs font-bold uppercase tracking-wider border-b-2 border-transparent text-slate-500 hover:text-slate-700 focus:outline-none cursor-pointer" aria-label="Resize by percentage mode">By Percentage</button>
                 </div>
 
                 <!-- Controls Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                     <!-- Dimension Group (Pixels) -->
                     <div id="widthInputGroup">
-                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Width (Pixels)</label>
-                        <input type="number" id="resizeWidth" value="350" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-bold">
+                        <label for="resizeWidth" class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Width (Pixels)</label>
+                        <!-- 2. Aria-label Added -->
+                        <input type="number" id="resizeWidth" value="350" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-bold" aria-label="Image width in pixels">
                     </div>
                     <div id="heightInputGroup">
-                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Height (Pixels)</label>
-                        <input type="number" id="resizeHeight" value="450" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-bold">
+                        <label for="resizeHeight" class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Height (Pixels)</label>
+                        <!-- 2. Aria-label Added -->
+                        <input type="number" id="resizeHeight" value="450" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-bold" aria-label="Image height in pixels">
                     </div>
                     <!-- Dimension Group (Percentage) -->
                     <div id="percentageInputGroup" class="hidden col-span-2">
-                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Scale Percentage (%)</label>
-                        <input type="number" id="resizePercentage" value="100" min="1" max="500" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-bold">
+                        <label for="resizePercentage" class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Scale Percentage (%)</label>
+                        <!-- 2. Aria-label Added -->
+                        <input type="number" id="resizePercentage" value="100" min="1" max="500" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-bold" aria-label="Scale percentage">
                     </div>
                 </div>
                     
                 <!-- Lock Aspect Ratio Checkbox -->
                 <div id="aspectRatioGroup" class="flex items-center space-x-2 mb-6">
-                    <input type="checkbox" id="maintainAspect" checked class="h-4 w-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500">
+                    <!-- 2. Aria-label Added -->
+                    <input type="checkbox" id="maintainAspect" checked class="h-4 w-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500" aria-label="Maintain Aspect Ratio">
                     <label for="maintainAspect" class="text-xs font-bold uppercase tracking-wider text-slate-600 cursor-pointer">Maintain Aspect Ratio</label>
                 </div>
 
                 <!-- Action Button Controls Container -->
                 <div class="flex flex-col sm:flex-row gap-3">
-                    <button id="resizeBtn" class="flex-1 btn-blue text-white font-bold py-3 px-6 rounded-lg shadow-sm flex items-center justify-center space-x-2 transition-all cursor-pointer uppercase tracking-wider">
+                    <!-- 2. Aria-label Added to Action Buttons -->
+                    <button id="resizeBtn" class="flex-1 btn-blue text-white font-bold py-3 px-6 rounded-lg shadow-sm flex items-center justify-center space-x-2 transition-all cursor-pointer uppercase tracking-wider" aria-label="Start image resizing process">
                         <i class="fa-solid fa-up-right-and-down-left-from-center"></i> <span>Resize Image Free</span>
                     </button>
                     <!-- 12. Reset Button Added -->
-                    <button id="resetBtn" class="hidden bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-3 px-6 rounded-lg shadow-sm flex items-center justify-center space-x-2 transition-all cursor-pointer uppercase tracking-wider">
+                    <button id="resetBtn" class="hidden bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-3 px-6 rounded-lg shadow-sm flex items-center justify-center space-x-2 transition-all cursor-pointer uppercase tracking-wider" aria-label="Reset tool">
                         <i class="fa-solid fa-arrow-rotate-left"></i> <span>Reset</span>
                     </button>
                 </div>
@@ -228,96 +252,134 @@
                     </div>
                     <p id="resultResizeInfo" class="text-sm text-slate-600 font-bold mb-4"></p>
                     <div class="flex flex-col sm:flex-row justify-center gap-3">
-                        <a id="downloadResizeBtn" class="inline-flex items-center justify-center space-x-2 bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg shadow-sm transition-all cursor-pointer uppercase tracking-wider">
+                        <a id="downloadResizeBtn" class="inline-flex items-center justify-center space-x-2 bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg shadow-sm transition-all cursor-pointer uppercase tracking-wider" aria-label="Download resized image">
                             <i class="fa-solid fa-download"></i> <span>Download Resized Image</span>
                         </a>
                         <!-- 12. Download Again Option Added -->
-                        <button id="downloadAgainBtn" class="inline-flex items-center justify-center space-x-2 bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 px-6 rounded-lg shadow-sm transition-all cursor-pointer uppercase tracking-wider">
+                        <button id="downloadAgainBtn" class="inline-flex items-center justify-center space-x-2 bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 px-6 rounded-lg shadow-sm transition-all cursor-pointer uppercase tracking-wider" aria-label="Trigger image download again">
                             <i class="fa-solid fa-redo"></i> <span>Download Again</span>
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- 5. SEO Content Blocks Updated with High Volume New Keywords -->
+            <!-- 8. Government Users & General Common Image Sizes Table Added -->
+            <div class="bg-white rounded-xl shadow-xs border border-slate-200 p-6 md:p-8">
+                <h2 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-2">Common Image Dimensions</h2>
+                <p class="text-sm text-slate-500 mb-6">Use these standard sizes to resize passport photos, signatures, and social media graphics perfectly.</p>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-sm text-slate-600">
+                        <thead>
+                            <tr class="border-b border-slate-200 bg-slate-50 text-slate-800 font-bold uppercase text-xs tracking-wider">
+                                <th class="py-3 px-4">Use Case</th>
+                                <th class="py-3 px-4">Recommended Size</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <tr>
+                                <td class="py-3 px-4 font-semibold text-slate-900">Passport Photo</td>
+                                <td class="py-3 px-4">350 &times; 450 px</td>
+                            </tr>
+                            <tr class="bg-slate-50/50">
+                                <td class="py-3 px-4 font-semibold text-slate-900">Signature</td>
+                                <td class="py-3 px-4">300 &times; 80 px</td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-4 font-semibold text-slate-900">LinkedIn Profile</td>
+                                <td class="py-3 px-4">400 &times; 400 px</td>
+                            </tr>
+                            <tr class="bg-slate-50/50">
+                                <td class="py-3 px-4 font-semibold text-slate-900">Instagram Post</td>
+                                <td class="py-3 px-4">1080 &times; 1080 px</td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-4 font-semibold text-slate-900">Facebook Cover</td>
+                                <td class="py-3 px-4">1200 &times; 630 px</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 1 & 5. SEO Content Blocks Rewritten to sound completely Natural & Human-written (Helpful Content Boost) -->
             <div class="bg-white rounded-xl shadow-xs border border-slate-200 p-6 md:p-8 space-y-6 text-slate-600 leading-relaxed">
-                <!-- 8. Internal Linking Connection Alert Block -->
+                <!-- Internal Linking Connection Alert Block -->
                 <div class="bg-blue-50 border-l-4 border-blue-500 p-4 text-sm text-blue-700 font-medium rounded-r-lg">
-                    <i class="fa-solid fa-circle-info mr-1"></i> Need to change only the print resolution? Try our <a href="convert-image-to-300-dpi.html" class="text-blue-600 font-bold underline hover:text-blue-800">300 DPI Converter</a>.
+                    <i class="fa-solid fa-circle-info mr-1"></i> Need to change only the print resolution? Try our <a href="300-dpi-converter.html" class="text-blue-600 font-bold underline hover:text-blue-800">300 DPI Converter</a>.
                 </div>
 
                 <section>
                     <h2 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-2">How to Resize Image Without Losing Quality</h2>
-                    <p>When you use our advanced <strong>online image resizer</strong>, you can change image size without losing quality or rendering any blurry pixels. Traditional photo scaling tools often stretch components awkwardly, but our local layout setup ensures smart canvas distribution for your images.</p>
+                    <p>Resize your images easily by entering a custom width and height. Our tool keeps your photos as clear as possible while changing their dimensions. Because everything runs directly in your web browser, your files remain completely private and are never uploaded to any server.</p>
                 </section>
 
                 <section>
                     <h2 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-2">Resize Image by Pixels</h2>
-                    <p>To explicitly <strong>resize image by pixels</strong>, simply navigate to the 'By Pixels' layout tab above. Type down your desired target width and height configuration parameters. It is highly recommended to keep the aspect ratio lock toggled active to protect original geometric proportions perfectly.</p>
+                    <p>If you need exact dimensions, select the "By Pixels" tab. Just type in your target width and height. Make sure to keep the "Maintain Aspect Ratio" box checked so your image scales down naturally without stretching or squeezing.</p>
                 </section>
 
                 <section>
                     <h2 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-2">Resize Image by Percentage</h2>
-                    <p>If you prefer a simpler scale adjustment without precise dimensional constraints, use our <strong>resize image by percentage</strong> module. Scaling down by 50% or 25% helps shrink file boundaries swiftly, making it easier to <strong>change image dimensions</strong> for email attachments or web page deployment layouts.</p>
+                    <p>If you don't need exact dimensions, you can resize by a percentage instead. Choosing to scale down by 50% or 25% is a quick way to reduce the file size of your image, making it easy to share via email or upload online.</p>
                 </section>
 
                 <section>
                     <h2 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-2">Resize JPG and PNG Images Online</h2>
-                    <p>Whether you need to <strong>resize jpg</strong> files from digital smartphone cameras or <strong>resize png</strong> graphics with transparent backgrounds, EditSparks serves as an efficient all-in-one standalone hub. The platform automatically compresses standard structures into lightweight, portal-ready configurations instantly.</p>
+                    <p>EditSparks supports both JPG and PNG formats. If you upload a transparent PNG, our tool preserves the transparency. Our fast, free resizer gets your images ready for any platform or portal instantly.</p>
                 </section>
 
                 <section>
                     <h2 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-2">Resize Passport Photo Online</h2>
-                    <p>Official identity papers require strict compliance boundaries. Easily <strong>resize passport photo online</strong> components for competitive registrations. Our system structures the final export matrix so that both clear personal captures and document layouts match targeted upload criteria neatly.</p>
+                    <p>Many government portals require very specific photo sizes. Use our tool to resize your passport photos and signatures to the exact dimensions requested, ensuring a smooth and hassle-free application process.</p>
                 </section>
 
                 <section>
                     <h2 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-2">Why Choose EditSparks Image Resizer</h2>
-                    <p>EditSparks presents a fast, lightweight, and versatile web engine tailored for global creators. You can seamlessly use our <strong>resize image free</strong> engine without going through complex platform downloads, registrations, or sudden forced subscription premium tier wall locks.</p>
+                    <p>EditSparks is a lightweight, responsive web tool built for quick edits. You can crop, compress, and resize images on any device without signing up, installing software, or dealing with watermarks.</p>
                 </section>
 
                 <section>
                     <h2 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-2">Resize Images Securely in Your Browser</h2>
-                    <p>Privacy is our core operational standard. When you execute actions to <strong>change image size</strong>, every calculation executes inside your local device runtime environment. No photo data packets stream to servers, offering an entirely isolated, safe <strong>resize photo online</strong> workspace.</p>
+                    <p>Privacy is our priority. Every step of the resizing process happens locally on your computer or phone. Your photos are never sent to a cloud or server, keeping your personal data 100% secure.</p>
                 </section>
 
                 <hr class="border-slate-200 my-6">
 
-                <!-- 6. FAQ Section Rewritten completely -->
+                <!-- FAQ Section (Clean Human English) -->
                 <section class="space-y-4">
                     <h2 class="text-xl font-black text-slate-900 uppercase tracking-tight">Frequently Asked Questions</h2>
                     <div class="space-y-4">
                         <div>
                             <h3 class="font-bold text-slate-900 text-sm uppercase tracking-wide">Q1: Can I resize image without losing quality?</h3>
-                            <p class="text-sm mt-1">Yes! EditSparks uses smart HTML5 canvas matrix rendering to ensure that when you <strong>change image dimensions</strong>, the image remains sharp, clear, and unblurred.</p>
+                            <p class="text-sm mt-1">Yes, our tool uses high-quality rendering to ensure your images stay sharp and clear after resizing.</p>
                         </div>
                         <div>
                             <h3 class="font-bold text-slate-900 text-sm uppercase tracking-wide">Q2: Can I resize JPG online?</h3>
-                            <p class="text-sm mt-1">Yes, our <strong>online image resizer</strong> fully accepts and processes all JPG and JPEG photograph formats instantly.</p>
+                            <p class="text-sm mt-1">Yes, you can easily upload and resize JPG and JPEG images to any custom resolution.</p>
                         </div>
                         <div>
                             <h3 class="font-bold text-slate-900 text-sm uppercase tracking-wide">Q3: Can I resize PNG online?</h3>
-                            <p class="text-sm mt-1">Absolutely. You can upload any PNG file to adjust its dimensions, and choose to save it in an optimized web-friendly format.</p>
+                            <p class="text-sm mt-1">Yes, we fully support PNG files. The tool will preserve any transparent details in your original PNG image.</p>
                         </div>
                         <div>
                             <h3 class="font-bold text-slate-900 text-sm uppercase tracking-wide">Q4: How do I resize a passport photo?</h3>
-                            <p class="text-sm mt-1">Simply upload your photo, select the 'By Pixels' tab, type in the custom passport size instructions (e.g. 350 x 450), and hit the resize button.</p>
+                            <p class="text-sm mt-1">Select the "By Pixels" tab, type in the required size (such as 350 x 450 px), upload your photo, and download the resized version.</p>
                         </div>
                         <div>
                             <h3 class="font-bold text-slate-900 text-sm uppercase tracking-wide">Q5: Can I resize image on mobile?</h3>
-                            <p class="text-sm mt-1">Yes, EditSparks is optimized to function as a responsive, mobile-ready <strong>resize photo online</strong> tool for both iOS and Android browsers.</p>
+                            <p class="text-sm mt-1">Yes, EditSparks is responsive and works smoothly on mobile browsers for iPhone, Android, and tablets.</p>
                         </div>
                         <div>
                             <h3 class="font-bold text-slate-900 text-sm uppercase tracking-wide">Q6: What is the maximum image size supported?</h3>
-                            <p class="text-sm mt-1">There are no artificial limits. Our local architecture supports large camera files up to 20MB directly inside your browser cache memory.</p>
+                            <p class="text-sm mt-1">Since the tool runs locally in your browser, it can handle large image files up to 20MB without any speed issues.</p>
                         </div>
                         <div>
                             <h3 class="font-bold text-slate-900 text-sm uppercase tracking-wide">Q7: Will resizing reduce image file size?</h3>
-                            <p class="text-sm mt-1">Yes, scaling down pixels or reducing structural scale percentage naturally lowers the final file size in KB/MB.</p>
+                            <p class="text-sm mt-1">Yes, shrinking the dimensions of an image naturally reduces its overall file size in KB or MB.</p>
                         </div>
                         <div>
                             <h3 class="font-bold text-slate-900 text-sm uppercase tracking-wide">Q8: How can I resize image by pixels?</h3>
-                            <p class="text-sm mt-1">Choose the Pixels tab mod, insert your target width or height integers, and the calculator updates boundaries while maintaining proper proportions.</p>
+                            <p class="text-sm mt-1">Simply enter your target width or height under the Pixels tab. Keep the aspect ratio locked to avoid stretching.</p>
                         </div>
                     </div>
                 </section>
@@ -337,31 +399,32 @@
                         </a>
                     </li>
                     <li>
-                        <a href="document-background-white.html" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-slate-50 text-slate-700 font-bold text-sm transition-all group">
+                        <a href="resize-image.html" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-slate-50 text-slate-700 font-bold text-sm transition-all group">
                             <i class="fa-solid fa-pen-nib text-blue-500 group-hover:scale-110 transition-transform"></i>
-                            <span>Clean Your Signature</span>
+                            <span>Resize Signature</span>
+                        </a>
+                    </li>
+                    <!-- 6. Sidebar Duplicates Replaced with non-duplicated utility links -->
+                    <li>
+                        <a href="image-to-pdf.html" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-slate-50 text-slate-700 font-bold text-sm transition-all group">
+                            <i class="fa-solid fa-file-pdf text-blue-500 group-hover:scale-110 transition-transform"></i>
+                            <span>Image to PDF</span>
                         </a>
                     </li>
                     <li>
-                        <a href="compress-image.html" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-slate-50 text-slate-700 font-bold text-sm transition-all group">
-                            <i class="fa-solid fa-compress text-blue-500 group-hover:scale-110 transition-transform"></i>
-                            <span>Compress Image</span>
+                        <a href="passport-photo-maker.html" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-slate-50 text-slate-700 font-bold text-sm transition-all group">
+                            <i class="fa-solid fa-user-tie text-blue-500 group-hover:scale-110 transition-transform"></i>
+                            <span>Passport Photo Maker</span>
                         </a>
                     </li>
                     <li>
-                        <a href="crop-image.html" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-slate-50 text-slate-700 font-bold text-sm transition-all group">
-                            <i class="fa-solid fa-crop-simple text-blue-500 group-hover:scale-110 transition-transform"></i>
-                            <span>Crop Image</span>
+                        <a href="bulk-passport-maker.html" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-slate-50 text-slate-700 font-bold text-sm transition-all group">
+                            <i class="fa-solid fa-users text-blue-500 group-hover:scale-110 transition-transform"></i>
+                            <span>Bulk Passport Maker</span>
                         </a>
                     </li>
                     <li>
-                        <a href="image-format-converter.html" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-slate-50 text-slate-700 font-bold text-sm transition-all group">
-                            <i class="fa-solid fa-file-image text-blue-500 group-hover:scale-110 transition-transform"></i>
-                            <span>Convert Image Format</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="convert-image-to-300-dpi.html" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-slate-50 text-slate-700 font-bold text-sm transition-all group">
+                        <a href="300-dpi-converter.html" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-slate-50 text-slate-700 font-bold text-sm transition-all group">
                             <i class="fa-solid fa-print text-blue-500 group-hover:scale-110 transition-transform"></i>
                             <span>300 DPI Converter</span>
                         </a>
@@ -557,11 +620,29 @@
             const ctx = canvas.getContext('2d');
             ctx.drawImage(originalImg, 0, 0, targetWidth, targetHeight);
 
+            // 5. Smart Download Format Handler (PNG Transparency Preservation)
+            let mimeType = 'image/jpeg';
+            let quality = 0.9;
+            let ext = 'jpg';
+
+            if (originalFile.type === "image/png") {
+                mimeType = 'image/png';
+                quality = undefined; // PNG compression is lossless
+                ext = 'png';
+            }
+
             canvas.toBlob((blob) => {
                 processedBlob = blob;
                 const url = URL.createObjectURL(blob);
                 downloadResizeBtn.href = url;
-                downloadResizeBtn.download = `editsparks-resized-${originalFile.name}`;
+
+                // 7. Download Filename Updated to "originalfilename-resized.ext" Format
+                let baseName = "image";
+                if (originalFile.name) {
+                    const lastDot = originalFile.name.lastIndexOf('.');
+                    baseName = lastDot !== -1 ? originalFile.name.substring(0, lastDot) : originalFile.name;
+                }
+                downloadResizeBtn.download = `${baseName}-resized.${ext}`;
 
                 // Update UX Performance Dashboard
                 const kbSize = (blob.size / 1024).toFixed(1);
@@ -571,10 +652,10 @@
                 resultResizeInfo.innerText = `Output Dimensions: ${targetWidth}x${targetHeight} px | Output Weight: ${kbSize} KB`;
                 resizeResult.classList.remove('hidden');
                 resizeResult.scrollIntoView({ behavior: 'smooth' });
-            }, 'image/jpeg', 0.9);
+            }, mimeType, quality);
         });
 
-        // 12. Download Again Custom Button Hook
+        // Download Again Custom Button Hook
         downloadAgainBtn.addEventListener('click', () => {
             if(downloadResizeBtn.href) {
                 downloadResizeBtn.click();
