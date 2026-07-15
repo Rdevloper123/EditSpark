@@ -839,11 +839,21 @@
                 const baseName = file.name.substring(0, file.name.lastIndexOf('.')) || file.name; 
                 const ext = file.type === 'image/png' ? 'png' : 'jpg'; 
                 const cleanName = `${baseName}-${targetDpi}dpi-editsparks.${ext}`; 
-                card.innerHTML = ` 
-                    <img src="${url}" style="max-width:100%; height:100px; object-fit:contain;" alt="Converted image to ${targetDpi} DPI"> 
-                    <p style="font-size:0.8rem; margin:0.5rem 0; color: #10b981; font-weight:600;">Ready: ${targetDpi} DPI</p> 
-                    <a href="${url}" download="${cleanName}" class="btn" style="font-size:0.8rem; padding:0.4rem 0.8rem; display:block;" onclick="setTimeout(() => URL.revokeObjectURL('${url}'), 10000)">Download</a> 
-3                grid.appendChild(card); 
+            let responsiveAltText = `Converted image to ${targetDpi} DPI`; 
+        if(file.type === 'image/png') {
+            responsiveAltText = `PNG image converted to ${targetDpi} DPI`; 
+        } else if(file.name.toLowerCase().includes('passport') || file.name.toLowerCase().includes('photo')) {
+            responsiveAltText = `Passport photo converted to ${targetDpi} DPI`; 
+        } else {
+            responsiveAltText = `Converted JPG image to ${targetDpi} DPI`; 
+        } 
+
+       card.innerHTML = `
+    <img src="${url}" style="max-width:100%; height:100px; object-fit:contain;" alt="${responsiveAltText}"> 
+    <p style="font-size:0.8rem; margin:0.5rem 0; color: #10b981; font-weight:600;">Ready: ${targetDpi} DPI</p> 
+    <a href="${url}" download="${cleanName}" class="btn" style="font-size:0.8rem; padding:0.4rem 0.8rem; display:block;" onclick="setTimeout(() => URL.revokeObjectURL('${url}'), 10000)">Download</a> 
+`;
+        grid.appendChild(card);
                 completed++; 
                 if (completed === selectedFilesArray.length && selectedFilesArray.length > 1) {
                     document.getElementById('bulk-download-wrap').style.display = 'block'; 
