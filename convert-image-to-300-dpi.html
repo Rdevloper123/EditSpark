@@ -21,9 +21,23 @@
     
     <!-- Consolidated Schema JSON-LD --> 
     <script type="application/ld+json"> 
-   {
+ {
   "@context": "https://schema.org",
   "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://editsparks.in/#website",
+      "url": "https://editsparks.in/",
+      "name": "EditSparks",
+      "publisher": {
+        "@id": "https://editsparks.in/#organization"
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://editsparks.in/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    },
     {
       "@type": "WebPage", 
       "@id": "https://editsparks.in/convert-image-to-300-dpi.html#webpage", 
@@ -42,6 +56,24 @@
         "@type": "SpeakableSpecification",
         "cssSelector": ["header h1", "header p"]
       }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://editsparks.in/convert-image-to-300-dpi.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://editsparks.in/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Convert Image to 300 DPI",
+          "item": "https://editsparks.in/convert-image-to-300-dpi.html"
+        }
+      ]
     },
     {
       "@type": "SoftwareApplication", 
