@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rename Images in Bulk Online Free – Batch Image Renamer | EditSparks</title>
-    <meta name="description" content="Rename images in bulk online for free. Batch rename JPG, PNG, WEBP and other image files using custom names, prefixes, suffixes and sequential numbering. Fast, secure and browser-based.">
+    <meta name="description" content="Rename images in bulk online for free. Batch rename JPG, PNG, WEBP and other image files using custom sequential numbering. Fast, secure and browser-based.">
     <link rel="canonical" href="https://editsparks.in/rename-images-in-bulk.html">
     
     <!-- Tailwind CSS for clean styling -->
@@ -55,36 +55,14 @@
             <!-- Main Interactive Controls Workspace Panel -->
             <div id="workspace-panel" class="hidden space-y-8">
                 
-                <!-- Flexible Tuning & Configuration Form Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-slate-50 p-6 rounded-xl border border-slate-200">
+                <!-- Simplified Configuration Panel - Only Starting Number Column -->
+                <div class="max-w-md mx-auto bg-slate-50 p-6 rounded-xl border border-slate-200">
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Custom File Name Prefix</label>
-                        <input type="text" id="prefix" placeholder="e.g., photo" class="w-full px-4 py-2.5 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Suffix Text</label>
-                        <input type="text" id="suffix" placeholder="e.g., _final" class="w-full px-4 py-2.5 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition">
-                    </div>
-                    <div>
-                        <div class="flex items-center justify-between mb-2">
-                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider">Starting Number</label>
-                        </div>
-                        <input type="number" id="start-num" value="0" min="0" class="w-full px-4 py-2.5 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition">
-                        <p class="text-[11px] text-slate-500 mt-1.5 leading-tight bg-blue-50 p-1.5 rounded border border-blue-100">
-                            <strong>Note:</strong> File sequencing automatic input value se <strong>+1</strong> hokar serial wise aage badhegi (Jaise 90000 dalne par 90001, 90002 se shuru hogi).
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 text-center">Starting Number</label>
+                        <input type="number" id="start-num" value="0" min="0" class="w-full px-4 py-2.5 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition text-center font-bold text-lg text-slate-900">
+                        <p class="text-[11px] text-slate-500 mt-2 leading-tight bg-blue-50 p-2.5 rounded border border-blue-100">
+                            <strong>Note:</strong> File name aapke input value se <strong>+1</strong> hokar serial wise aage badhega (Jaise 90000 dalne par photo ka naam 90001, 90002 shuru hoga).
                         </p>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Find Text in Filename</label>
-                        <input type="text" id="find-text" placeholder="Text to replace" class="w-full px-4 py-2.5 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Replace With</label>
-                        <input type="text" id="replace-text" placeholder="New text match" class="w-full px-4 py-2.5 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Text to Remove</label>
-                        <input type="text" id="remove-text" placeholder="Cut specific phrase" class="w-full px-4 py-2.5 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition">
                     </div>
                 </div>
 
@@ -124,7 +102,6 @@
                 <ol class="list-decimal pl-5 space-y-2">
                     <li>Upload your photos or select files using the direct dynamic drop area (up to 500 images allowed at a single time).</li>
                     <li>The application will automatically read metadata tags to sort files chronologically by date taken or name sequence.</li>
-                    <li>Type your configuration inside the prefix or suffix input box, or choose find and replace filters.</li>
                     <li>Adjust the starting value integer configuration sequence box to structure layout index orders (+1 dynamic offset automatically applied).</li>
                     <li>Rearrange the order manually by pulling or dragging rows right inside our passport layout preview gallery window.</li>
                     <li>Hit the apply rules execution trigger to instantly preview changes side-by-side, verify new labels, and download individually or save everything as one clean compressed ZIP file.</li>
@@ -144,7 +121,6 @@
                         <li>Handles up to 500 graphic documents simultaneously.</li>
                         <li>Automated timing parameters recognition sequence system.</li>
                         <li>Drag manipulation sorting framework workspace.</li>
-                        <li>Find, replace, clean, and crop string text combinations instantly.</li>
                         <li>Zero server asset side transfers for perfect protection.</li>
                     </ul>
                 </div>
@@ -252,34 +228,41 @@
                 return;
             }
 
-            // Step 1: Detect numeric sequencing structures from the first file name if present
-            const firstFileName = incomingArr[0].name;
-            const numberMatch = firstFileName.match(/\d+/g);
-            if(numberMatch && numberMatch.length > 0) {
-                // Get the last number found in the name string to set as matching track starting anchor points
-                const baseDetectedNum = parseInt(numberMatch[numberMatch.length - 1]);
-                if(!isNaN(baseDetectedNum)) {
-                    // Adjust base seed state input fields so sequential matching operates gracefully
-                    startNumInput.value = baseDetectedNum;
-                }
-            }
-
-            // Step 2: Push into target storage and perform automatic chronological/name alignment sorting algorithms
+            // Step 1: Push into target storage along with extracted metadata for chronological tracking
             incomingArr.forEach(file => {
+                // Filename se saare numbers extract karein (Jaise: "IMG_10002.jpg" -> 10002)
+                const numMatches = file.name.match(/\d+/g);
+                const embeddedNumber = numMatches ? parseInt(numMatches[numMatches.length - 1], 10) : null;
+
                 loadedItemsArray.push({
                     id: Math.random().toString(36).substring(2, 9),
                     fileRef: file, // 100% unaltered reference to the original uploaded File object
-                    lastModified: file.lastModified || new Date().getTime()
+                    lastModified: file.lastModified || new Date().getTime(),
+                    embeddedNumber: embeddedNumber
                 });
             });
 
-            // Perform automatic logical sequence sorting based on timestamps or embedded index names
+            // Step 2: Smart Chronological Auto-Sorting Engine (Phone or Name series)
             loadedItemsArray.sort((a, b) => {
+                if (a.embeddedNumber !== null && b.embeddedNumber !== null) {
+                    if (a.embeddedNumber !== b.embeddedNumber) {
+                        return a.embeddedNumber - b.embeddedNumber;
+                    }
+                }
                 if (a.lastModified !== b.lastModified) {
                     return a.lastModified - b.lastModified;
                 }
                 return a.fileRef.name.localeCompare(b.fileRef.name, undefined, {numeric: true, sensitivity: 'base'});
             });
+
+            // Step 3: Automatically detect sequencing structures to set the baseline anchor starting number
+            if (loadedItemsArray.length > 0) {
+                const firstItemNumber = loadedItemsArray[0].embeddedNumber;
+                if (firstItemNumber !== null && !isNaN(firstItemNumber)) {
+                    // Pre-fill the input box based on the first image found
+                    startNumInput.value = firstItemNumber;
+                }
+            }
 
             // Display components and layout grids inside workspace panel
             workspacePanel.classList.remove('hidden');
@@ -344,48 +327,25 @@
             });
         }
 
-        // Apply global configuration rules parameter settings and dynamically compute new filename labels
+        // Apply configuration rules parameters and dynamically compute new filename sequential labels
         processBtn.addEventListener('click', () => {
             if(loadedItemsArray.length === 0) return;
 
-            const prefixValue = document.getElementById('prefix').value.trim();
-            const suffixValue = document.getElementById('suffix').value.trim();
             let startCounterSeed = parseInt(startNumInput.value);
             if(isNaN(startCounterSeed)) startCounterSeed = 0;
 
-            const findStr = document.getElementById('find-text').value;
-            const replaceStr = document.getElementById('replace-text').value;
-            const removeStr = document.getElementById('remove-text').value;
-
-            // Step through elements array array to update strings dynamically
+            // Step through elements array to update strings dynamically
             loadedItemsArray.forEach((item, idx) => {
                 const originalName = item.fileRef.name;
                 const dotPos = originalName.lastIndexOf('.');
                 const extension = dotPos !== -1 ? originalName.substring(dotPos) : '';
-                let baseNameWithoutExt = dotPos !== -1 ? originalName.substring(0, dotPos) : originalName;
 
-                // Execute modifications string parsing sequence pipeline actions
-                // Filter 1: Optional find and replace processing execution
-                if(findStr) {
-                    baseNameWithoutExt = baseNameWithoutExt.split(findStr).join(replaceStr);
-                }
-                
-                // Filter 2: Optional text cutting extraction removal filters
-                if(removeStr) {
-                    baseNameWithoutExt = baseNameWithoutExt.split(removeStr).join('');
-                }
-
-                // Filter 3: Apply sequential numbering scheme +1 offset values configuration rule pattern sets
+                // FIX: User ke input value me simple sequential index order add kiya
                 const computedSequenceNumber = startCounterSeed + 1 + idx;
 
-                // Assemble complete final filename string match layout pattern structures
-                let targetFinalNewNameString = `${prefixValue}${baseNameWithoutExt}${suffixValue}_${computedSequenceNumber}${extension}`;
+                // FIX: Image ka final name sirf wahi clear number hoga bina kisi extra text ke!
+                const targetFinalNewNameString = `${computedSequenceNumber}${extension}`;
                 
-                // Fallback catch clean up if user inputs are fully empty blank values settings configurations
-                if(!prefixValue && !suffixValue && !findStr && !removeStr) {
-                    targetFinalNewNameString = `${baseNameWithoutExt}_${computedSequenceNumber}${extension}`;
-                }
-
                 // Save inside the tracked item object memory layout references array matrix structures
                 item.computedRenamedLabel = targetFinalNewNameString;
 
@@ -442,7 +402,9 @@
                 const zippedBlobResultContent = await zipBundleInstance.generateAsync({ type: 'blob' });
                 const downloadAnchorLinkElement = document.createElement('a');
                 downloadAnchorLinkElement.href = URL.createObjectURL(zippedBlobResultContent);
-                downloadAnchorLinkElement.download = `editsparks_renamed_batch_${new Date().toISOString().slice(0,10)}.zip`;
+                
+                // FIX: ZIP archive folder ka naam bhi clean aur generic kar diya hai
+                downloadAnchorLinkElement.download = `renamed_images_${new Date().toISOString().slice(0,10)}.zip`;
                 
                 document.body.appendChild(downloadAnchorLinkElement);
                 downloadAnchorLinkElement.click();
