@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rename Images in Bulk Online Free – Batch Image Renamer | EditSparks</title>
+    <meta name="description" content="Rename images in bulk online for free. Batch rename JPG, PNG, WEBP and other image files using custom names, prefixes, suffixes and sequential numbering. Fast, secure and browser-based.">
+    <link rel="canonical" href="https://editsparks.in/rename-images-in-bulk.html">
+    
+    <!-- Tailwind CSS for clean styling -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- JSZip Library for zipping original files -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <!-- SortableJS for flawless Passport photo drag and drop grid -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.2/Sortable.min.js"></script>
+
+    <style>
+        .sortable-ghost { opacity: 0.4; border: 2px dashed #3b82f6; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col justify-between">
+
+    <!-- Header Navigation Section -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="https://editsparks.in" class="text-2xl font-black text-blue-600 tracking-tight">EditSparks<span class="text-slate-700">.in</span></a>
+            <nav class="hidden md:flex space-x-6 text-sm font-medium text-slate-600">
+                <a href="https://editsparks.in/compress-image" class="hover:text-blue-600 transition">Compress Image</a>
+                <a href="https://editsparks.in/resize-image" class="hover:text-blue-600 transition">Resize Image</a>
+                <a href="https://editsparks.in/image-to-pdf" class="hover:text-blue-600 transition">Image to PDF</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Tool Container -->
+    <main class="max-w-6xl w-full mx-auto p-4 md:p-8 flex-grow">
+        <div class="bg-white rounded-2xl shadow-xl border border-slate-100 p-6 md:p-8 mb-12">
+            <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 text-center mb-2">Rename Images in Bulk Online Free</h1>
+            <p class="text-center text-slate-500 max-w-2xl mx-auto mb-8 text-sm md:text-base">
+                Batch rename your images instantly inside your browser. Safe, secure, and preserves 100% original quality without any loss.
+            </p>
+
+            <!-- File Drag and Drop Box -->
+            <div id="drop-zone" class="border-3 border-dashed border-slate-300 rounded-xl p-8 text-center hover:border-blue-500 hover:bg-blue-50/30 transition cursor-pointer mb-8 group">
+                <input type="file" id="file-input" multiple accept="image/*" class="hidden">
+                <label for="file-input" class="cursor-pointer flex flex-col items-center">
+                    <svg class="h-14 w-14 text-slate-400 group-hover:text-blue-500 transition mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 002-2H4a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                    </svg>
+                    <span class="text-blue-600 font-bold text-lg">Click to select images</span>
+                    <span class="text-slate-400 text-xs mt-1">or drag and drop files here (Max 500 images)</span>
+                </label>
+            </div>
+
+            <!-- Main Interactive Controls Workspace Panel -->
+            <div id="workspace-panel" class="hidden space-y-8">
+                
+                <!-- Flexible Tuning & Configuration Form Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-slate-50 p-6 rounded-xl border border-slate-200">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Custom File Name Prefix</label>
+                        <input type="text" id="prefix" placeholder="e.g., photo" class="w-full px-4 py-2.5 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Suffix Text</label>
+                        <input type="text" id="suffix" placeholder="e.g., _final" class="w-full px-4 py-2.5 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider">Starting Number</label>
+                        </div>
+                        <input type="number" id="start-num" value="0" min="0" class="w-full px-4 py-2.5 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition">
+                        <p class="text-[11px] text-slate-500 mt-1.5 leading-tight bg-blue-50 p-1.5 rounded border border-blue-100">
+                            <strong>Note:</strong> File sequencing automatic input value se <strong>+1</strong> hokar serial wise aage badhegi (Jaise 90000 dalne par 90001, 90002 se shuru hogi).
+                        </p>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Find Text in Filename</label>
+                        <input type="text" id="find-text" placeholder="Text to replace" class="w-full px-4 py-2.5 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Replace With</label>
+                        <input type="text" id="replace-text" placeholder="New text match" class="w-full px-4 py-2.5 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Text to Remove</label>
+                        <input type="text" id="remove-text" placeholder="Cut specific phrase" class="w-full px-4 py-2.5 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition">
+                    </div>
+                </div>
+
+                <!-- Live Drag-n-Drop Verification Passport Size Grid Layout -->
+                <div>
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-3 gap-2">
+                        <h3 class="font-bold text-slate-800 text-lg flex items-center">
+                            Image Preview Workspace 
+                            <span class="ml-2 text-xs font-normal bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full" id="counter-badge">0 Files</span>
+                        </h3>
+                        <p class="text-xs text-slate-500 bg-amber-50 text-amber-800 px-2 py-1 rounded border border-amber-200">💡 Tip: Drag & drop photos inside the grid layout to change their numeric serialization order!</p>
+                    </div>
+
+                    <!-- Exact 6 passport photos per row structure layout -->
+                    <div id="preview-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 p-4 bg-slate-100 rounded-xl min-h-[160px]"></div>
+                </div>
+
+                <!-- Master Primary Batch Actions Operations Bar -->
+                <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 pt-4 border-t border-slate-100">
+                    <button id="process-btn" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 px-6 rounded-xl shadow-lg shadow-blue-200 transition active:scale-[0.99]">
+                        Apply Bulk Rename Rules
+                    </button>
+                    <button id="download-zip-btn" class="hidden flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 px-6 rounded-xl shadow-lg shadow-emerald-200 transition active:scale-[0.99] flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                        Download All as ZIP Bundle
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- SEO Optimized Content Area Layout Structure -->
+        <section class="prose max-w-none mt-16 text-slate-600 space-y-10">
+            
+            <div class="bg-white p-6 md:p-8 rounded-xl border border-slate-200 shadow-sm">
+                <h2 class="text-2xl font-bold text-slate-900 mb-4">How to Rename Images in Bulk</h2>
+                <ol class="list-decimal pl-5 space-y-2">
+                    <li>Upload your photos or select files using the direct dynamic drop area (up to 500 images allowed at a single time).</li>
+                    <li>The application will automatically read metadata tags to sort files chronologically by date taken or name sequence.</li>
+                    <li>Type your configuration inside the prefix or suffix input box, or choose find and replace filters.</li>
+                    <li>Adjust the starting value integer configuration sequence box to structure layout index orders (+1 dynamic offset automatically applied).</li>
+                    <li>Rearrange the order manually by pulling or dragging rows right inside our passport layout preview gallery window.</li>
+                    <li>Hit the apply rules execution trigger to instantly preview changes side-by-side, verify new labels, and download individually or save everything as one clean compressed ZIP file.</li>
+                </ol>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                    <h2 class="text-xl font-bold text-slate-900 mb-3">Batch Rename JPG, PNG & WEBP Images</h2>
+                    <p class="text-sm leading-relaxed">
+                        Our utility program accommodates standard photography data types effortlessly. Whether you are aiming to alter device storage file dumps, reorganize structural directory frameworks, clean client assets, or restructure complex graphic variations, the pipeline handles heavy raw files instantaneously without resizing or introducing distortion.
+                    </p>
+                </div>
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                    <h2 class="text-xl font-bold text-slate-900 mb-3">Features of Our Bulk Image Renamer</h2>
+                    <ul class="list-disc pl-5 space-y-1.5 text-sm">
+                        <li>Handles up to 500 graphic documents simultaneously.</li>
+                        <li>Automated timing parameters recognition sequence system.</li>
+                        <li>Drag manipulation sorting framework workspace.</li>
+                        <li>Find, replace, clean, and crop string text combinations instantly.</li>
+                        <li>Zero server asset side transfers for perfect protection.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 md:p-8 rounded-xl border border-slate-200 shadow-sm">
+                <h2 class="text-2xl font-bold text-slate-900 mb-4">Why Use EditSparks Image Renamer?</h2>
+                <p class="text-sm leading-relaxed">
+                    Most traditional conversion tool systems upload your assets to third-party web servers, which compromises data integrity and risks digital piracy. EditSparks processes your files entirely locally within your web browser using HTML5 memory pipelines. This ensures zero data loss, guarantees original resolution is 100% preserved, and processes hundreds of changes in less than a second.
+                </p>
+            </div>
+
+            <!-- Simple English Natural Frequently Asked Questions (No AI buzzwords) -->
+            <div class="bg-white p-6 md:p-8 rounded-xl border border-slate-200 shadow-sm">
+                <h2 class="text-2xl font-bold text-slate-900 mb-6">Frequently Asked Questions</h2>
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="font-bold text-slate-900 text-base mb-1.5">Will using this batch rename images tool reduce my photo size or quality?</h3>
+                        <p class="text-sm">No. This bulk photo renamer does not change, edit, or compress the pixels of your files. It only updates the filename string values in your browser memory, so you get your exact original image quality back every time.</p>
+                    </div>
+                    <hr class="border-slate-100">
+                    <div>
+                        <h3 class="font-bold text-slate-900 text-base mb-1.5">How many photos can I rename at once using this image filename changer?</h3>
+                        <p class="text-sm">You can upload, order, drag, and rename up to 500 images at the same time in a single batch.</p>
+                    </div>
+                    <hr class="border-slate-100">
+                    <div>
+                        <h3 class="font-bold text-slate-900 text-base mb-1.5">Is it safe to drop my private files into this rename images in bulk online tool?</h3>
+                        <p class="text-sm">Yes, it is fully safe. This batch image renamer is completely browser-based. Your images never leave your computer or telephone, and no file is ever uploaded to any internet storage server.</p>
+                    </div>
+                    <hr class="border-slate-100">
+                    <div>
+                        <h3 class="font-bold text-slate-900 text-base mb-1.5">Can I rename specific file types like rename JPG images or rename PNG images separately?</h3>
+                        <p class="text-sm">You can select and mix different file extensions like JPG, PNG, WEBP, or GIF together. The program updates the custom name and sequence while keeping the original file extension exactly as it was.</p>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- Internal Linking Footer Block Area -->
+    <footer class="bg-slate-900 text-slate-400 text-xs sm:text-sm border-t border-slate-800 py-10">
+        <div class="max-w-6xl mx-auto px-4 text-center space-y-6">
+            <div class="flex flex-wrap justify-center gap-6 font-medium text-slate-300">
+                <a href="https://editsparks.in/compress-image" class="hover:text-white transition">Compress Image</a>
+                <a href="https://editsparks.in/resize-image" class="hover:text-white transition">Resize Image</a>
+                <a href="https://editsparks.in/image-to-pdf" class="hover:text-white transition">Image to PDF</a>
+                <a href="https://editsparks.in/image-format-converter" class="hover:text-white transition">Image Format Converter</a>
+                <a href="https://editsparks.in/crop-image" class="hover:text-white transition">Crop Image</a>
+                <a href="https://editsparks.in/increase-image-size" class="hover:text-white transition">Increase Image Size</a>
+            </div>
+            <hr class="border-slate-800 max-w-xs mx-auto">
+            <p>&copy; 2026 EditSparks.in — Secure Client-Side Image Toolkit Framework Ecosystem. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Smart Local Core Application Engine Logic Controller Script -->
+    <script>
+        const fileInput = document.getElementById('file-input');
+        const dropZone = document.getElementById('drop-zone');
+        const workspacePanel = document.getElementById('workspace-panel');
+        const previewGrid = document.getElementById('preview-grid');
+        const counterBadge = document.getElementById('counter-badge');
+        const startNumInput = document.getElementById('start-num');
+        const processBtn = document.getElementById('process-btn');
+        const downloadZipBtn = document.getElementById('download-zip-btn');
+
+        // Main dynamic layout variables tracking raw uploaded items array
+        let loadedItemsArray = [];
+        let sortableInstance = null;
+
+        // Initialize sorting mechanism component instance hook
+        if (typeof Sortable !== 'undefined') {
+            sortableInstance = new Sortable(previewGrid, {
+                animation: 180,
+                ghostClass: 'sortable-ghost',
+                onEnd: () => {
+                    recalculateGridNumbers();
+                }
+            });
+        }
+
+        // Drag and Drop Event Listeners 
+        dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('border-blue-500', 'bg-blue-50/50'); });
+        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('border-blue-500', 'bg-blue-50/50'));
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('border-blue-500', 'bg-blue-50/50');
+            if(e.dataTransfer.files.length > 0) handleFilesImport(e.dataTransfer.files);
+        });
+        fileInput.addEventListener('change', (e) => {
+            if(e.target.files.length > 0) handleFilesImport(e.target.files);
+        });
+
+        // Smart file handler processing engine routine
+        function handleFilesImport(files) {
+            const incomingArr = Array.from(files).filter(f => f.type.startsWith('image/'));
+            
+            if(incomingArr.length === 0) return;
+            
+            // Limit checks safety constraints
+            if(loadedItemsArray.length + incomingArr.length > 500) {
+                alert("You can only manage a maximum threshold load limit of 500 images per conversion process execution session.");
+                return;
+            }
+
+            // Step 1: Detect numeric sequencing structures from the first file name if present
+            const firstFileName = incomingArr[0].name;
+            const numberMatch = firstFileName.match(/\d+/g);
+            if(numberMatch && numberMatch.length > 0) {
+                // Get the last number found in the name string to set as matching track starting anchor points
+                const baseDetectedNum = parseInt(numberMatch[numberMatch.length - 1]);
+                if(!isNaN(baseDetectedNum)) {
+                    // Adjust base seed state input fields so sequential matching operates gracefully
+                    startNumInput.value = baseDetectedNum;
+                }
+            }
+
+            // Step 2: Push into target storage and perform automatic chronological/name alignment sorting algorithms
+            incomingArr.forEach(file => {
+                loadedItemsArray.push({
+                    id: Math.random().toString(36).substring(2, 9),
+                    fileRef: file, // 100% unaltered reference to the original uploaded File object
+                    lastModified: file.lastModified || new Date().getTime()
+                });
+            });
+
+            // Perform automatic logical sequence sorting based on timestamps or embedded index names
+            loadedItemsArray.sort((a, b) => {
+                if (a.lastModified !== b.lastModified) {
+                    return a.lastModified - b.lastModified;
+                }
+                return a.fileRef.name.localeCompare(b.fileRef.name, undefined, {numeric: true, sensitivity: 'base'});
+            });
+
+            // Display components and layout grids inside workspace panel
+            workspacePanel.classList.remove('hidden');
+            downloadZipBtn.classList.add('hidden'); // Reset batch zip downloads view until rules are processed
+            renderPreviewGridStructure();
+        }
+
+        // Generate and update the 6-column passport size view layout structure interface
+        function renderPreviewGridStructure() {
+            previewGrid.innerHTML = '';
+            counterBadge.textContent = `${loadedItemsArray.length} Files Selected`;
+
+            loadedItemsArray.forEach((item, index) => {
+                const cardNode = document.createElement('div');
+                cardNode.dataset.id = item.id;
+                cardNode.className = "bg-white border border-slate-200 rounded-lg p-2 shadow-sm relative flex flex-col justify-between items-center text-center group cursor-grab active:cursor-grabbing";
+                
+                // Top Serialization number element
+                const numLabel = document.createElement('div');
+                numLabel.className = "absolute -top-2 -left-2 bg-slate-800 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-md index-badge shadow-sm";
+                numLabel.textContent = `#${index + 1}`;
+
+                // Passport size small image canvas wrapper node element
+                const imgContainer = document.createElement('div');
+                imgContainer.className = "w-full aspect-[3/4] bg-slate-50 rounded flex items-center justify-center overflow-hidden mb-2 border border-slate-100";
+                
+                const imgEl = document.createElement('img');
+                imgEl.className = "w-full h-full object-cover pointer-events-none";
+                imgEl.src = URL.createObjectURL(item.fileRef);
+                imgContainer.appendChild(imgEl);
+
+                // Bottom original name string label element display text 
+                const textLabel = document.createElement('div');
+                textLabel.className = "text-[10px] font-medium text-slate-500 truncate w-full filename-display-label px-0.5";
+                textLabel.textContent = item.fileRef.name;
+
+                // Action area container slot for custom post-processing downloads button insertion
+                const actionsSlot = document.createElement('div');
+                actionsSlot.className = "w-full mt-2 hidden dynamic-action-wrapper";
+
+                cardNode.appendChild(numLabel);
+                cardNode.appendChild(imgContainer);
+                cardNode.appendChild(textLabel);
+                cardNode.appendChild(actionsSlot);
+                
+                previewGrid.appendChild(cardNode);
+            });
+        }
+
+        // Grid serial number label sync engine function helper routine execution blocks
+        function recalculateGridNumbers() {
+            const rearrangedIds = Array.from(previewGrid.children).map(child => child.dataset.id);
+            
+            // Map the internal loaded array references to match the updated visual sorting sequence array list indices
+            const mappingIndex = new Map(loadedItemsArray.map(item => [item.id, item]));
+            loadedItemsArray = rearrangedIds.map(id => mappingIndex.get(id)).filter(Boolean);
+
+            // Re-label visual markers sequentially
+            Array.from(previewGrid.children).forEach((child, index) => {
+                const badge = child.querySelector('.index-badge');
+                if(badge) badge.textContent = `#${index + 1}`;
+            });
+        }
+
+        // Apply global configuration rules parameter settings and dynamically compute new filename labels
+        processBtn.addEventListener('click', () => {
+            if(loadedItemsArray.length === 0) return;
+
+            const prefixValue = document.getElementById('prefix').value.trim();
+            const suffixValue = document.getElementById('suffix').value.trim();
+            let startCounterSeed = parseInt(startNumInput.value);
+            if(isNaN(startCounterSeed)) startCounterSeed = 0;
+
+            const findStr = document.getElementById('find-text').value;
+            const replaceStr = document.getElementById('replace-text').value;
+            const removeStr = document.getElementById('remove-text').value;
+
+            // Step through elements array array to update strings dynamically
+            loadedItemsArray.forEach((item, idx) => {
+                const originalName = item.fileRef.name;
+                const dotPos = originalName.lastIndexOf('.');
+                const extension = dotPos !== -1 ? originalName.substring(dotPos) : '';
+                let baseNameWithoutExt = dotPos !== -1 ? originalName.substring(0, dotPos) : originalName;
+
+                // Execute modifications string parsing sequence pipeline actions
+                // Filter 1: Optional find and replace processing execution
+                if(findStr) {
+                    baseNameWithoutExt = baseNameWithoutExt.split(findStr).join(replaceStr);
+                }
+                
+                // Filter 2: Optional text cutting extraction removal filters
+                if(removeStr) {
+                    baseNameWithoutExt = baseNameWithoutExt.split(removeStr).join('');
+                }
+
+                // Filter 3: Apply sequential numbering scheme +1 offset values configuration rule pattern sets
+                const computedSequenceNumber = startCounterSeed + 1 + idx;
+
+                // Assemble complete final filename string match layout pattern structures
+                let targetFinalNewNameString = `${prefixValue}${baseNameWithoutExt}${suffixValue}_${computedSequenceNumber}${extension}`;
+                
+                // Fallback catch clean up if user inputs are fully empty blank values settings configurations
+                if(!prefixValue && !suffixValue && !findStr && !removeStr) {
+                    targetFinalNewNameString = `${baseNameWithoutExt}_${computedSequenceNumber}${extension}`;
+                }
+
+                // Save inside the tracked item object memory layout references array matrix structures
+                item.computedRenamedLabel = targetFinalNewNameString;
+
+                // UI feedback update changes list elements real-time verification viewports
+                const cardDOMNode = previewGrid.querySelector(`[data-id="${item.id}"]`);
+                if(cardDOMNode) {
+                    const displayLabel = cardDOMNode.querySelector('.filename-display-label');
+                    if(displayLabel) {
+                        displayLabel.textContent = targetFinalNewNameString;
+                        displayLabel.classList.remove('text-slate-500');
+                        displayLabel.classList.add('text-emerald-600', 'font-bold');
+                    }
+
+                    // Insert the custom individual file single action dynamic download button interface anchor node
+                    const actionsWrapper = cardDOMNode.querySelector('.dynamic-action-wrapper');
+                    if(actionsWrapper) {
+                        actionsWrapper.innerHTML = '';
+                        actionsWrapper.classList.remove('hidden');
+
+                        const singleDownloadBtn = document.createElement('a');
+                        singleDownloadBtn.className = "block w-full bg-slate-800 hover:bg-slate-900 text-white text-[10px] font-bold py-1 px-2 rounded transition shadow-sm text-center";
+                        singleDownloadBtn.textContent = "📥 Download";
+                        
+                        // Pass reference to original 100% unchanged file object data source references blobs
+                        singleDownloadBtn.href = URL.createObjectURL(item.fileRef);
+                        singleDownloadBtn.download = targetFinalNewNameString;
+                        
+                        actionsWrapper.appendChild(singleDownloadBtn);
+                    }
+                }
+            });
+
+            // Make the bulk saving collection download options buttons visible
+            downloadZipBtn.classList.remove('hidden');
+            alert("Bulk image rename rules applied successfully! Verify your new passport grid filenames layout and download single images or the full ZIP bundle.");
+        });
+
+        // Bulk Zip Compilation action event routine loop processes
+        downloadZipBtn.addEventListener('click', async () => {
+            if(loadedItemsArray.length === 0) return;
+
+            downloadZipBtn.disabled = true;
+            downloadZipBtn.textContent = "Bundling Original Files...";
+
+            const zipBundleInstance = new JSZip();
+
+            // Populate zip archive collection using raw source file pointers guaranteeing 100% pristine byte state resolution
+            loadedItemsArray.forEach(item => {
+                const targetName = item.computedRenamedLabel || item.fileRef.name;
+                zipBundleInstance.file(targetName, item.fileRef);
+            });
+
+            try {
+                const zippedBlobResultContent = await zipBundleInstance.generateAsync({ type: 'blob' });
+                const downloadAnchorLinkElement = document.createElement('a');
+                downloadAnchorLinkElement.href = URL.createObjectURL(zippedBlobResultContent);
+                downloadAnchorLinkElement.download = `editsparks_renamed_batch_${new Date().toISOString().slice(0,10)}.zip`;
+                
+                document.body.appendChild(downloadAnchorLinkElement);
+                downloadAnchorLinkElement.click();
+                document.body.removeChild(downloadAnchorLinkElement);
+            } catch(error) {
+                alert("An unexpected error occurred during the zip creation compression stage process routines. Please try again.");
+            } finally {
+                downloadZipBtn.disabled = false;
+                downloadZipBtn.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg> Download All as ZIP Bundle`;
+            }
+        });
+    </script>
+</body>
+</html>
