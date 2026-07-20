@@ -509,7 +509,7 @@
         </div>
     </footer>
 
-    <!-- Script Logic For PDF Advanced Bottom-Sheet Drawer Interactions -->
+   <!-- Script Logic For PDF Advanced Bottom-Sheet Drawer Interactions -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const menuBtn = document.getElementById('pdfMenuBtn');
@@ -517,24 +517,29 @@
             const closeMenuBtn = document.getElementById('closePdfMenu');
 
             function openMenu() {
+                // Pahle hidden hatayein taaki element DOM me render ho sake
                 menuDropdown.classList.remove('hidden');
-                setTimeout(() => {
+                
+                // Ek chota sa delay (requestAnimationFrame ya setTimeout) taaki opacity transition trigger ho sake
+                requestAnimationFrame(() => {
                     menuDropdown.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-full');
                     menuDropdown.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
-                }, 10);
+                });
             }
 
             function closeMenu() {
                 menuDropdown.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
                 menuDropdown.classList.add('opacity-0', 'pointer-events-none', 'translate-y-full');
+                
+                // Transition (300ms) poora hone ke baad hidden lagayein
                 setTimeout(() => {
                     menuDropdown.classList.add('hidden');
                 }, 300);
             }
 
             menuBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                if (menuDropdown.classList.contains('hidden') || menuDropdown.classList.contains('pointer-events-none')) {
+                e.stopPropagation(); // Window click handler ko rokne ke liye
+                if (menuDropdown.classList.contains('hidden')) {
                     openMenu();
                 } else {
                     closeMenu();
@@ -542,10 +547,13 @@
             });
 
             if (closeMenuBtn) {
-                closeMenuBtn.addEventListener('click', closeMenu);
+                closeMenuBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    closeMenu();
+                });
             }
 
-            // Close when clicking outside the menu
+            // Bahar kahin bhi click karne par menu band ho jayega
             document.addEventListener('click', (e) => {
                 if (!menuDropdown.contains(e.target) && !menuBtn.contains(e.target)) {
                     if (!menuDropdown.classList.contains('hidden')) {
