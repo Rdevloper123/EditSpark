@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merge PDF Online Free - Combine PDFs Locally | EditSparks</title>
+    <meta name="description" content="Merge multiple PDF files into one single document in seconds with EditSparks. 100% free, fully secure, client-side processing where your files never leave your device.">
+    <meta name="keywords" content="merge pdf online, combine pdf free, join pdf files, pdf merger client side, editsparks pdf tool, free pdf tools">
+    <meta name="author" content="EditSparks">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://editsparks.com/merge-pdf-online-free">
+    <meta name="theme-color" content="#2563eb">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://editsparks.com/merge-pdf-online-free">
+    <meta property="og:title" content="Merge PDF Online Free - Combine PDFs Locally | EditSparks">
+    <meta property="og:description" content="Combine up to 100 PDF files into one quickly and securely. 100% private client-side merging.">
+    <meta property="og:image" content="https://editsparks.com/assets/og-merge-pdf.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://editsparks.com/merge-pdf-online-free">
+    <meta property="twitter:title" content="Merge PDF Online Free - Combine PDFs Locally | EditSparks">
+    <meta property="twitter:description" content="Combine up to 100 PDF files into one quickly and securely. 100% private client-side merging.">
+    <meta property="twitter:image" content="https://editsparks.com/assets/og-merge-pdf.png">
+
+    <!-- Preconnect to CDN -->
+    <link rel="preconnect" href="https://unpkg.com">
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebApplication",
+                "@id": "https://editsparks.com/merge-pdf-online-free#webapp",
+                "url": "https://editsparks.com/merge-pdf-online-free",
+                "name": "EditSparks Merge PDF Tool",
+                "applicationCategory": "BusinessApplication",
+                "operatingSystem": "All",
+                "browserRequirements": "Requires HTML5 and Javascript enabled browsers.",
+                "offers": {
+                    "@type": "Offer",
+                    "price": "0.00",
+                    "priceCurrency": "USD"
+                }
+            },
+            {
+                "@type": "Organization",
+                "@id": "https://editsparks.com/#organization",
+                "name": "EditSparks",
+                "url": "https://editsparks.com",
+                "logo": "https://editsparks.com/logo.png"
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "Home",
+                        "item": "https://editsparks.com"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": "Merge PDF Online Free",
+                        "item": "https://editsparks.com/merge-pdf-online-free"
+                    }
+                ]
+            },
+            {
+                "@type": "FAQPage",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "Is it safe to merge my PDFs on EditSparks?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Yes. EditSparks performs all actions directly inside your web browser using client-side JavaScript. Your files are never uploaded to any server, ensuring complete privacy."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "How many PDFs can I merge at once?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "You can upload and arrange up to 100 PDF documents simultaneously."
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+    </script>
+
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg-main: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --danger: #ef4444;
+            --danger-hover: #dc2626;
+            --success: #22c55e;
+            --radius: 12px;
+            --transition: all 0.25s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            padding-bottom: 80px; /* Space for mobile sticky button */
+        }
+
+        /* Navigation Header */
+        header {
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Hero Layout */
+        .hero {
+            text-align: center;
+            padding: 3.5rem 1rem 2rem 1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 2.75rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 1rem;
+            letter-spacing: -0.025em;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+        }
+
+        /* Core Application Card wrapper */
+        .app-container {
+            max-width: 800px;
+            margin: 0 auto 3rem auto;
+            padding: 0 1rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05);
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            transition: var(--transition);
+        }
+
+        /* Drag and Drop Zone */
+        .dropzone {
+            border: 2px dashed #cbd5e1;
+            border-radius: var(--radius);
+            padding: 3rem 2rem;
+            text-align: center;
+            cursor: pointer;
+            background-color: #f8fafc;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .dropzone.dragover {
+            border-color: var(--primary);
+            background-color: #eff6ff;
+            transform: scale(0.99);
+        }
+
+        .dropzone-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 1rem auto;
+            color: var(--primary);
+        }
+
+        .dropzone p {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .security-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            background: #f1f5f9;
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+        }
+
+        /* Hidden standard file picker input */
+        #file-input {
+            display: none;
+        }
+
+        /* Global UI Elements */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1rem;
+            position: relative;
+            overflow: hidden;
+            outline: none;
+        }
+
+        .btn:focus-visible {
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-danger {
+            background-color: transparent;
+            color: var(--danger);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-danger:hover:not(:disabled) {
+            background-color: #fef2f2;
+            border-color: #fca5a5;
+        }
+
+        .btn-secondary {
+            background-color: #f1f5f9;
+            color: var(--text-main);
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background-color: #e2e8f0;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Feedback Notifications */
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-weight: 500;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .alert-danger {
+            background-color: #fef2f2;
+            color: var(--danger);
+            border: 1px solid #fee2e2;
+        }
+
+        .alert-success {
+            background-color: #f0fdf4;
+            color: var(--success);
+            border: 1px solid #dcfce7;
+        }
+
+        /* Queue / Sortable File List area */
+        .file-list-wrapper {
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .action-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .file-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            gap: 1rem;
+            cursor: grab;
+            user-select: none;
+            transition: box-shadow 0.2s, transform 0.2s;
+            position: relative;
+        }
+
+        .file-item:active {
+            cursor: grabbing;
+        }
+
+        .file-item.dragging {
+            opacity: 0.5;
+            background: #eff6ff;
+            border-color: var(--primary);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.06);
+        }
+
+        .drag-handle {
+            color: var(--text-muted);
+            cursor: grab;
+            display: flex;
+            align-items: center;
+        }
+
+        .file-icon {
+            color: #ef4444;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .file-info {
+            flex-grow: 1;
+            min-width: 0;
+        }
+
+        .file-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .file-meta {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .remove-item {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 0.25rem;
+            border-radius: 4px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+        }
+
+        .remove-item:hover {
+            color: var(--danger);
+            background: #fef2f2;
+        }
+
+        /* Progress Reporting and States */
+        .processing-status {
+            margin-top: 1.5rem;
+            display: none;
+            text-align: center;
+        }
+
+        .progress-bar-container {
+            background: #e2e8f0;
+            border-radius: 50px;
+            height: 8px;
+            width: 100%;
+            margin: 0.5rem 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background: var(--primary);
+            height: 100%;
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+
+        /* Ripple effect animation rules */
+        .ripple {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple-animation 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* SEO Editorial Content layout sections */
+        .content-section {
+            max-width: 900px;
+            margin: 4rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .content-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .article-block h2 {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            color: var(--text-main);
+        }
+
+        .article-block p, .article-block ul {
+            color: #334155;
+            margin-bottom: 1rem;
+        }
+
+        .article-block ul {
+            padding-left: 1.25rem;
+        }
+
+        .article-block li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* FAQ Component Accordion style */
+        .faq-section {
+            max-width: 800px;
+            margin: 4rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .faq-section h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+
+        .faq-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            width: 100%;
+            text-align: left;
+            padding: 1.25rem;
+            background: none;
+            border: none;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-main);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            outline: none;
+        }
+
+        .faq-question::after {
+            content: '+';
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            transition: transform 0.2s;
+        }
+
+        .faq-item.active .faq-question::after {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+            padding: 0 1.25rem;
+            color: #334155;
+            font-size: 0.95rem;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 0 1.25rem 1.25rem 1.25rem;
+            max-height: 200px;
+        }
+
+        /* Internal Tools Routing / Quick Links navigation */
+        .tools-showcase {
+            background-color: #f1f5f9;
+            padding: 4rem 1.5rem;
+            text-align: center;
+        }
+
+        .tools-showcase h2 {
+            margin-bottom: 2rem;
+            font-size: 1.75rem;
+        }
+
+        .tools-grid {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .tool-link {
+            background: var(--card-bg);
+            padding: 1.2rem;
+            border-radius: var(--radius);
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 600;
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .tool-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* Sticky Bottom Action Mobile Bar styling wrapper */
+        .sticky-action-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            border-top: 1px solid var(--border-color);
+            padding: 0.75rem 1rem;
+            box-shadow: 0 -4px 16px rgba(0,0,0,0.05);
+            display: none;
+            justify-content: center;
+            z-index: 90;
+        }
+
+        @media (max-width: 768px) {
+            .sticky-action-bar.visible {
+                display: flex;
+            }
+        }
+
+        /* Global Structural Footer */
+        footer {
+            background: #0f172a;
+            color: #94a3b8;
+            padding: 3rem 1.5rem;
+            text-align: center;
+            font-size: 0.9rem;
+            border-top: 1px solid #1e293b;
+        }
+
+        .footer-badges {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            color: #f8fafc;
+            font-weight: 600;
+        }
+
+        .footer-badges span {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo" aria-label="EditSparks Home">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                EditSparks
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Merge PDF Online Free</h1>
+            <p>Combine multiple PDF files into one single document safely in seconds. Your files are processed locally and never uploaded to any remote server.</p>
+        </section>
+
+        <section class="app-container">
+            <div class="card">
+                <div id="danger-alert" class="alert alert-danger" role="alert"></div>
+                <div id="success-alert" class="alert alert-success" role="alert"></div>
+
+                <!-- Dropzone Area layout element -->
+                <div id="dropzone" class="dropzone" tabindex="0" aria-label="File Upload Dropzone. Drag and drop PDF files here or tap to choose files.">
+                    <svg class="dropzone-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z"/>
+                    </svg>
+                    <p>Drag & drop PDF files here</p>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">or click to select from your device</p>
+                    <button type="button" class="btn btn-secondary" id="browse-btn">Browse Files</button>
+                    <input type="file" id="file-input" accept="application/pdf" multiple>
+                    <div>
+                        <span class="security-badge">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                            100% Secure Client-Side Engine
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Active Document Queue and Sorting Interface -->
+                <div id="file-list-wrapper" class="file-list-wrapper">
+                    <div class="action-bar">
+                        <span id="file-count" style="font-weight:600;">0 Files Selected</span>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button type="button" class="btn btn-danger" id="clear-all-btn">Clear All</button>
+                            <button type="button" class="btn btn-secondary" id="add-more-btn">Add More</button>
+                        </div>
+                    </div>
+
+                    <ul id="file-list" class="file-list"></ul>
+
+                    <div style="margin-top: 2rem; text-align: center;">
+                        <button type="button" class="btn btn-primary id-merge-trigger" id="merge-btn" style="width: 100%; max-width: 320px; padding: 1rem;">
+                            Merge PDF
+                        </button>
+                    </div>
+
+                    <div id="processing-status" class="processing-status">
+                        <p id="progress-text" style="font-weight: 500;">Reading parameters...</p>
+                        <div class="progress-bar-container">
+                            <div id="progress-bar" class="progress-bar"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Informational Marketing & Search Optimization Editorial Content -->
+        <section class="content-section">
+            <div class="content-grid">
+                <div class="article-block">
+                    <h2>What is Merge PDF?</h2>
+                    <p>Our online Merge PDF system compiles distinct Adobe Portable Document Format records cleanly into a streamlined unified output file. It simplifies document distribution workflow problems seamlessly.</p>
+                </div>
+                <div class="article-block">
+                    <h2>How to Merge PDFs?</h2>
+                    <p>Drag multiple source items safely straight into the structural drop zone. Arrange files inside the queue configuration matrix systematically. Trigger execution locally on demand to assemble assets instantaneously.</p>
+                </div>
+                <div class="article-block">
+                    <h2>Why Choose EditSparks?</h2>
+                    <p>EditSparks uses advanced, sandbox-isolated local JavaScript architectures to modify binaries directly on modern execution platforms. No structural contents pass to cloud arrays, providing maximum computational speed.</p>
+                </div>
+                <div class="article-block">
+                    <h2>Advanced Privacy</h2>
+                    <p>We respect information isolation principles. Zero remote data persistence rules exist here, making it ideal for institutional regulatory tasks.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dedicated Interactive Accordion FAQ block -->
+        <section class="faq-section">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-item">
+                <button class="faq-question">How does client-side PDF merging work?</button>
+                <div class="faq-answer">The script securely references standard browser compilation APIs to assemble your files directly in your memory stack.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">Are my legal documents stored anywhere?</button>
+                <div class="faq-answer">No. All structural assets remain inside your local environment sandbox loop throughout execution.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">What size restrictions apply here?</button>
+                <div class="faq-answer">The tool handles typical daily assets comfortably up to a limits matrix of 100 individual files.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">Can I manage encrypted, locked sheets?</button>
+                <div class="faq-answer">Password protected variants must be unlocked manually before execution can finish successfully.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">Does this require plugin packages?</button>
+                <div class="faq-answer">No. It operates natively out-of-the-box on standard contemporary web browsers.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">Are there structural resolution degradation risks?</button>
+                <div class="faq-answer">No, vector geometries, embedded typographic items, and asset layers pass intact without structural loss.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">Does it run on mobile operating systems?</button>
+                <div class="faq-answer">Yes, responsive layouts handle processing on modern iOS and Android mobile platforms seamlessly.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">What should I do if a load error occurs?</button>
+                <div class="faq-answer">Verify the source file integrity is intact and confirm it opens independently locally.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">Can I sort structural documents post-upload?</button>
+                <div class="faq-answer">Yes, use interactive touch handles or clear desktop point-and-drag steps to sort files.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">Is there a cost to use this service?</button>
+                <div class="faq-answer">No, all application features are completely free with unlimited access.</div>
+            </div>
+        </section>
+
+        <!-- Internal Links Showcasing Navigation Matrices -->
+        <section class="tools-showcase">
+            <h2>Explore More Digital Assets Tools</h2>
+            <div class="tools-grid">
+                <a href="#" class="tool-link">Compress PDF</a>
+                <a href="#" class="tool-link">Image to PDF</a>
+                <a href="#" class="tool-link">PDF Split</a>
+                <a href="#" class="tool-link">PDF Rotate</a>
+                <a href="#" class="tool-link">PDF to Image</a>
+                <a href="#" class="tool-link">Compress Image</a>
+                <a href="#" class="tool-link">Resize Image</a>
+                <a href="#" class="tool-link">Convert Image</a>
+                <a href="#" class="tool-link">Crop Image</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Floating Sticky action navigation block visible on small dynamic handheld screens -->
+    <div class="sticky-action-bar" id="sticky-bar">
+        <button type="button" class="btn btn-primary id-merge-trigger" id="sticky-merge-btn" style="width: 100%; max-width: 400px; box-shadow: 0 4px 12px rgba(37,99,235,0.35);">
+            Merge PDF Now
+        </button>
+    </div>
+
+    <footer>
+        <div class="footer-badges">
+            <span>100% Free</span>
+            <span>No Registration</span>
+            <span>Works Offline</span>
+            <span>Secure Client Side</span>
+        </div>
+        <p>&copy; 2026 EditSparks. Fully private computational browser pipelines.</p>
+    </footer>
+
+    <!-- Async Dynamic Loading Script Wrapper for pdf-lib Engine -->
+    <script>
+        (function() {
+            // Lazy load application dependency pipeline carefully
+            const script = document.createElement('script');
+            script.src = "https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js";
+            script.async = true;
+            script.onload = () => { window.PDFLibEngineReady = true; };
+            document.head.appendChild(script);
+        })();
+
+        document.addEventListener("DOMContentLoaded", () => {
+            // Document reference selectors matrix
+            const dropzone = document.getElementById('dropzone');
+            const fileInput = document.getElementById('file-input');
+            const browseBtn = document.getElementById('browse-btn');
+            const fileListWrapper = document.getElementById('file-list-wrapper');
+            const fileListContainer = document.getElementById('file-list');
+            const fileCountLabel = document.getElementById('file-count');
+            const mergeBtn = document.getElementById('merge-btn');
+            const stickyMergeBtn = document.getElementById('sticky-merge-btn');
+            const stickyBar = document.getElementById('sticky-bar');
+            const clearAllBtn = document.getElementById('clear-all-btn');
+            const addMoreBtn = document.getElementById('add-more-btn');
+            const dangerAlert = document.getElementById('danger-alert');
+            const successAlert = document.getElementById('success-alert');
+            const processingStatus = document.getElementById('processing-status');
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+
+            let selectedFilesArray = [];
+            let dragSourceElement = null;
+
+            // Global ripple animation binding rules
+            function createButtonRipple(e) {
+                const btn = e.currentTarget;
+                const ripple = document.createElement('span');
+                ripple.classList.add('ripple');
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                ripple.style.left = `${x}px`;
+                ripple.style.top = `${y}px`;
+                btn.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 600);
+            }
+
+            document.querySelectorAll('.btn').forEach(button => {
+                button.addEventListener('click', createButtonRipple);
+            });
+
+            // Alerts Management Utility
+            function displayError(msg) {
+                dangerAlert.textContent = msg;
+                dangerAlert.style.display = 'block';
+                successAlert.style.display = 'none';
+                window.scrollTo({ top: dangerAlert.offsetTop - 100, behavior: 'smooth' });
+            }
+
+            function displaySuccess(msg) {
+                successAlert.textContent = msg;
+                successAlert.style.display = 'block';
+                dangerAlert.style.display = 'none';
+            }
+
+            function clearAlerts() {
+                dangerAlert.style.display = 'none';
+                successAlert.style.display = 'none';
+            }
+
+            // Dropzone Interactivity Listeners
+            dropzone.addEventListener('click', () => fileInput.click());
+            browseBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                fileInput.click();
+            });
+
+            dropzone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropzone.classList.add('dragover');
+            });
+
+            dropzone.addEventListener('dragleave', () => {
+                dropzone.classList.remove('dragover');
+            });
+
+            dropzone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropzone.classList.remove('dragover');
+                if (e.dataTransfer.files.length > 0) {
+                    processSelectedFiles(e.dataTransfer.files);
+                }
+            });
+
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    processSelectedFiles(e.target.files);
+                    e.target.value = ''; // Allow subsequent re-uploads smoothly
+                }
+            });
+
+            // Queue processing logic functions
+            async function processSelectedFiles(files) {
+                clearAlerts();
+                const targetVolume = selectedFilesArray.length + files.length;
+
+                if (targetVolume > 100) {
+                    displayError("Maximum limit exceeded. You can only merge up to 100 PDF files simultaneously.");
+                    return;
+                }
+
+                for (let i = 0; i < files.length; i++) {
+                    const currentFile = files[i];
+
+                    if (currentFile.type !== "application/pdf" && !currentFile.name.endsWith('.pdf')) {
+                        displayError(`Skipped "${currentFile.name}" because it is not a valid PDF file.`);
+                        continue;
+                    }
+
+                    // Check for structural duplicates
+                    const isDuplicate = selectedFilesArray.some(item => item.file.name === currentFile.name && item.file.size === currentFile.size);
+                    if (isDuplicate) continue;
+
+                    // Initialize lightweight proxy descriptor metrics card placeholder
+                    const identifier = 'id-' + Math.random().toString(36).substr(2, 9);
+                    const fileRecordObject = {
+                        id: identifier,
+                        file: currentFile,
+                        pagesCount: 'Calculating...',
+                        formattedSize: (currentFile.size / (1024 * 1024)).toFixed(2) + ' MB'
+                    };
+
+                    selectedFilesArray.push(fileRecordObject);
+                    renderQueueItem(fileRecordObject);
+                    
+                    // Asynchronously lazy parse specific page totals in background thread without blockages
+                    lazyLoadPageMetrics(fileRecordObject);
+                }
+
+                refreshQueueStateDisplay();
+            }
+
+            async function lazyLoadPageMetrics(record) {
+                try {
+                    if (!window.PDFLibEngineReady) {
+                        // Polling safeguard fallback sequence if network latency delays library initialization
+                        setTimeout(() => lazyLoadPageMetrics(record), 300);
+                        return;
+                    }
+                    const arrayBuffer = await record.file.arrayBuffer();
+                    // Load only basic structural mapping parameters skipping complete content execution
+                    const pdfDoc = await PDFLib.PDFDocument.load(arrayBuffer, { updateMetadata: false });
+                    record.pagesCount = pdfDoc.getPageCount();
+                    
+                    const countBadge = document.querySelector(`[data-id="${record.id}"] .js-page-badge`);
+                    if (countBadge) {
+                        countBadge.textContent = `${record.pagesCount} pages`;
+                    }
+                } catch(e) {
+                    record.pagesCount = 'Error/Encrypted';
+                    const countBadge = document.querySelector(`[data-id="${record.id}"] .js-page-badge`);
+                    if (countBadge) {
+                        countBadge.textContent = 'Encrypted/Corrupted';
+                        countBadge.style.color = 'var(--danger)';
+                    }
+                }
+            }
+
+            function renderQueueItem(record) {
+                const li = document.createElement('li');
+                li.className = 'file-item';
+                li.setAttribute('draggable', 'true');
+                li.setAttribute('data-id', record.id);
+                li.setAttribute('aria-label', `Document item: ${record.file.name}`);
+
+                li.innerHTML = `
+                    <div class="drag-handle" aria-hidden="true">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M4 8h16M4 16h16"/>
+                        </svg>
+                    </div>
+                    <div class="file-icon" aria-hidden="true">
+                        <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/>
+                        </svg>
+                    </div>
+                    <div class="file-info">
+                        <div class="file-name">${record.file.name}</div>
+                        <div class="file-meta">
+                            <span>${record.formattedSize}</span>
+                            <span class="js-page-badge">${record.pagesCount}</span>
+                        </div>
+                    </div>
+                    <button type="button" class="remove-item" aria-label="Remove ${record.file.name}">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                `;
+
+                // Item interactive control event listeners bindings
+                li.querySelector('.remove-item').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    removeFileFromQueue(record.id);
+                });
+
+                // HTML5 Drag and Drop sorting interactions orchestration implementation
+                li.addEventListener('dragstart', handleDragStart);
+                li.addEventListener('dragover', handleDragOver);
+                li.addEventListener('drop', handleDragDrop);
+                li.addEventListener('dragend', handleDragEnd);
+
+                // Touch support reordering capabilities optimization
+                li.addEventListener('touchstart', handleTouchStart, {passive: true});
+                li.addEventListener('touchmove', handleTouchMove, {passive: false});
+                li.addEventListener('touchend', handleTouchEnd);
+
+                fileListContainer.appendChild(li);
+            }
+
+            function removeFileFromQueue(id) {
+                selectedFilesArray = selectedFilesArray.filter(item => item.id !== id);
+                const targetElement = fileListContainer.querySelector(`[data-id="${id}"]`);
+                if (targetElement) targetElement.remove();
+                refreshQueueStateDisplay();
+            }
+
+            function refreshQueueStateDisplay() {
+                const totalCount = selectedFilesArray.length;
+                fileCountLabel.textContent = `${totalCount} File${totalCount !== 1 ? 's' : ''} Selected`;
+
+                if (totalCount > 0) {
+                    fileListWrapper.style.display = 'block';
+                    if(totalCount >= 2) {
+                        stickyBar.classList.add('visible');
+                    } else {
+                        stickyBar.classList.remove('visible');
+                    }
+                } else {
+                    fileListWrapper.style.display = 'none';
+                    stickyBar.classList.remove('visible');
+                }
+            }
+
+            // Drag operations functions
+            function handleDragStart(e) {
+                dragSourceElement = this;
+                this.classList.add('dragging');
+                e.dataTransfer.effectAllowed = 'move';
+            }
+
+            function handleDragOver(e) {
+                e.preventDefault();
+                e.dataTransfer.dropEffect = 'move';
+                const bounding = this.getBoundingClientRect();
+                const offset = bounding.y + (bounding.height / 2);
+                if (e.clientY - offset > 0) {
+                    this.style.borderBottom = '2px solid var(--primary)';
+                    this.style.borderTop = '';
+                } else {
+                    this.style.borderTop = '2px solid var(--primary)';
+                    this.style.borderBottom = '';
+                }
+            }
+
+            function handleDragDrop(e) {
+                e.preventDefault();
+                this.style.borderTop = '';
+                this.style.borderBottom = '';
+                
+                if (dragSourceElement !== this) {
+                    const children = Array.from(fileListContainer.children);
+                    const sourceIdx = children.indexOf(dragSourceElement);
+                    const targetIdx = children.indexOf(this);
+
+                    if (sourceIdx < targetIdx) {
+                        this.parentNode.insertBefore(dragSourceElement, this.nextSibling);
+                    } else {
+                        this.parentNode.insertBefore(dragSourceElement, this);
+                    }
+                    rebuildInternalDataArrayOrder();
+                }
+            }
+
+            function handleDragEnd() {
+                this.classList.remove('dragging');
+                Array.from(fileListContainer.children).forEach(el => {
+                    el.style.borderTop = '';
+                    el.style.borderBottom = '';
+                });
+            }
+
+            // Touch support mechanisms routines
+            let activeTouchElement = null;
+            function handleTouchStart(e) {
+                activeTouchElement = this;
+                this.classList.add('dragging');
+            }
+
+            function handleTouchMove(e) {
+                if (!activeTouchElement) return;
+                e.preventDefault(); // Lock mobile frame viewport tracking behavior
+                const touchLocation = e.touches[0];
+                const targetEl = document.elementFromPoint(touchLocation.clientX, touchLocation.clientY);
+                const closestItem = targetEl ? targetEl.closest('.file-item') : null;
+
+                if (closestItem && closestItem !== activeTouchElement) {
+                    const children = Array.from(fileListContainer.children);
+                    const sourceIdx = children.indexOf(activeTouchElement);
+                    const targetIdx = children.indexOf(closestItem);
+                    if (sourceIdx < targetIdx) {
+                        fileListContainer.insertBefore(activeTouchElement, closestItem.nextSibling);
+                    } else {
+                        fileListContainer.insertBefore(activeTouchElement, closestItem);
+                    }
+                }
+            }
+
+            function handleTouchEnd() {
+                if (activeTouchElement) {
+                    activeTouchElement.classList.remove('dragging');
+                    activeTouchElement = null;
+                    rebuildInternalDataArrayOrder();
+                }
+            }
+
+            function rebuildInternalDataArrayOrder() {
+                const orderedIds = Array.from(fileListContainer.children).map(li => li.getAttribute('data-id'));
+                const remap = orderedIds.map(id => selectedFilesArray.find(item => item.id === id));
+                selectedFilesArray = remap;
+            }
+
+            // Global Actions controls bindings
+            clearAllBtn.addEventListener('click', () => {
+                selectedFilesArray = [];
+                fileListContainer.innerHTML = '';
+                refreshQueueStateDisplay();
+                clearAlerts();
+            });
+
+            addMoreBtn.addEventListener('click', () => fileInput.click());
+
+            // Core Document Merging Engine Implementation
+            async function triggerPdfMergeAction() {
+                if (selectedFilesArray.length < 2) {
+                    displayError("Please upload at least 2 PDF documents to perform a merge action.");
+                    return;
+                }
+
+                if (!window.PDFLibEngineReady) {
+                    displayError("The local processing engine is still initializing. Please wait a brief moment and try again.");
+                    return;
+                }
+
+                clearAlerts();
+                setUIProcessingState(true);
+
+                try {
+                    // Instantiation of empty client-side document canvas structural context
+                    const targetMergedPdfDoc = await PDFLib.PDFDocument.create();
+                    const loopsVolume = selectedFilesArray.length;
+
+                    for (let i = 0; i < loopsVolume; i++) {
+                        const currentRecord = selectedFilesArray[i];
+                        updateProgressPercentage(Math.round((i / loopsVolume) * 100), `Processing document ${i + 1} of ${loopsVolume}...`);
+
+                        let fileArrayBuffer;
+                        try {
+                            fileArrayBuffer = await currentRecord.file.arrayBuffer();
+                        } catch(err) {
+                            throw new Error(`Failed to read the file data structure for "${currentRecord.file.name}". It might be open in another application.`);
+                        }
+
+                        let foreignPdfDocument;
+                        try {
+                            foreignPdfDocument = await PDFLib.PDFDocument.load(fileArrayBuffer);
+                        } catch(loadErr) {
+                            throw new Error(`"${currentRecord.file.name}" appears corrupted or password encrypted and cannot be processed.`);
+                        }
+
+                        const pagesIndicesArray = foreignPdfDocument.getPageIndices();
+                        const copiedPagesReferences = await targetMergedPdfDoc.copyPages(foreignPdfDocument, pagesIndicesArray);
+                        
+                        copiedPagesReferences.forEach((page) => {
+                            targetMergedPdfDoc.addPage(page);
+                        });
+                    }
+
+                    updateProgressPercentage(95, "Compiling final document binaries...");
+                    const finalMergedPdfBytes = await targetMergedPdfDoc.save();
+
+                    // Instantiation of automated sandboxed downloading trigger structure
+                    const blob = new Blob([finalMergedPdfBytes], { type: "application/pdf" });
+                    const downloadUrl = URL.createObjectURL(blob);
+                    
+                    const hiddenAnchor = document.createElement('a');
+                    hiddenAnchor.href = downloadUrl;
+                    hiddenAnchor.download = "merged.pdf";
+                    document.body.appendChild(hiddenAnchor);
+                    hiddenAnchor.click();
+                    
+                    // Clean memory footprint leaks cleanly
+                    document.body.removeChild(hiddenAnchor);
+                    URL.revokeObjectURL(downloadUrl);
+
+                    updateProgressPercentage(100, "Successfully merged!");
+                    displaySuccess("Success! Your combined document has been created and saved to your device download folder.");
+                } catch (globalExecutionError) {
+                    displayError(globalExecutionError.message || "An unexpected system memory structural failure occurred during generation. Please verify document accessibility parameters.");
+                } finally {
+                    setUIProcessingState(false);
+                }
+            }
+
+            // Universal Binding for multi-trigger access paradigms
+            document.querySelectorAll('.id-merge-trigger').forEach(trigger => {
+                trigger.addEventListener('click', triggerPdfMergeAction);
+            });
+
+            function setUIProcessingState(isProcessing) {
+                const buttons = [mergeBtn, stickyMergeBtn, clearAllBtn, addMoreBtn, browseBtn];
+                buttons.forEach(btn => { if(btn) btn.disabled = isProcessing; });
+
+                if (isProcessing) {
+                    processingStatus.style.display = 'block';
+                    progressBar.style.width = '0%';
+                } else {
+                    setTimeout(() => {
+                        processingStatus.style.display = 'none';
+                    }, 2000);
+                }
+            }
+
+            function updateProgressPercentage(percentage, feedbackText) {
+                progressBar.style.width = `${percentage}%`;
+                progressText.textContent = feedbackText;
+            }
+
+            // Expandable SEO FAQ Layout Interactions Implementation
+            document.querySelectorAll('.faq-question').forEach(button => {
+                button.addEventListener('click', () => {
+                    const item = button.parentElement;
+                    item.classList.toggle('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
