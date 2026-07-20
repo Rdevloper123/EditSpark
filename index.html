@@ -131,8 +131,18 @@
             opacity: 0;
             transition: 0s;
         }
+        
+        /* Menu Animation Management Overrides */
         #pdfMenuDropdown {
-            transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            display: none;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 250ms cubic-bezier(0.16, 1, 0.3, 1), transform 250ms cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        #pdfMenuDropdown.show-active {
+            display: block !important;
+            opacity: 1 !important;
+            pointer-events: auto !important;
         }
     </style>
 </head>
@@ -228,7 +238,7 @@
                 </button>
 
                 <!-- Responsive Contextual Dropdown / Bottom Sheet Menu Container -->
-                <div id="pdfMenuDropdown" class="hidden opacity-0 pointer-events-none absolute left-0 right-0 top-full mt-4 bg-white md:border md:border-slate-200 rounded-[20px] md:rounded-xl shadow-2xl p-4 md:max-w-md md:left-auto md:right-0 w-full z-50 fixed bottom-0 md:relative rounded-b-none border-t border-slate-200 max-h-[85vh] overflow-y-auto transform translate-y-full md:translate-y-0 transition-all duration-300">
+                <div id="pdfMenuDropdown" class="absolute left-0 right-0 top-full mt-4 bg-white md:border md:border-slate-200 rounded-[20px] md:rounded-xl shadow-2xl p-4 md:max-w-md md:left-auto md:right-0 w-full z-50 fixed bottom-0 md:relative rounded-b-none border-t border-slate-200 max-h-[85vh] overflow-y-auto transform translate-y-full md:translate-y-0">
                     <!-- Mobile Drag Indicator -->
                     <div class="w-12 h-1 bg-slate-200 rounded-full mx-auto mb-4 md:hidden"></div>
                     <div class="flex items-center justify-between mb-3 border-b border-slate-100 pb-2">
@@ -509,56 +519,58 @@
         </div>
     </footer>
 
-   <!-- Script Logic For PDF Advanced Bottom-Sheet Drawer Interactions -->
+    <!-- Script Logic For PDF Advanced Bottom-Sheet Drawer Interactions -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const menuBtn = document.getElementById('pdfMenuBtn');
             const menuDropdown = document.getElementById('pdfMenuDropdown');
             const closeMenuBtn = document.getElementById('closePdfMenu');
 
-            function openMenu() {
-                // Pahle hidden hatayein taaki element DOM me render ho sake
-                menuDropdown.classList.remove('hidden');
+            function toggleMenu(e) {
+                e.stopPropagation(); // Stop click from propagating to document
                 
-                // Ek chota sa delay (requestAnimationFrame ya setTimeout) taaki opacity transition trigger ho sake
-                requestAnimationFrame(() => {
-                    menuDropdown.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-full');
-                    menuDropdown.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
-                });
-            }
-
-            function closeMenu() {
-                menuDropdown.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
-                menuDropdown.classList.add('opacity-0', 'pointer-events-none', 'translate-y-full');
-                
-                // Transition (300ms) poora hone ke baad hidden lagayein
-                setTimeout(() => {
-                    menuDropdown.classList.add('hidden');
-                }, 300);
-            }
-
-            menuBtn.addEventListener('click', (e) => {
-                e.stopPropagation(); // Window click handler ko rokne ke liye
-                if (menuDropdown.classList.contains('hidden')) {
-                    openMenu();
+                if (menuDropdown.classList.contains('show-active')) {
+                    // Smooth slide out handler
+                    menuDropdown.style.opacity = '0';
+                    menuDropdown.style.transform = 'translateY(100%)';
+                    setTimeout(() => {
+                        menuDropdown.classList.remove('show-active');
+                    }, 250);
                 } else {
-                    closeMenu();
+                    // Smooth layout reveal handler
+                    menuDropdown.classList.add('show-active');
+                    // Small paint interval timing trigger
+                    setTimeout(() => {
+                        menuDropdown.style.opacity = '1';
+                        menuDropdown.style.transform = 'translateY(0)';
+                    }, 20);
                 }
-            });
+            }
+
+            function closeMenuExplicit() {
+                if (menuDropdown.classList.contains('show-active')) {
+                    menuDropdown.style.opacity = '0';
+                    menuDropdown.style.transform = 'translateY(100%)';
+                    setTimeout(() => {
+                        menuDropdown.classList.remove('show-active');
+                    }, 250);
+                }
+            }
+
+            // Click attachment event triggers
+            menuBtn.addEventListener('click', toggleMenu);
 
             if (closeMenuBtn) {
                 closeMenuBtn.addEventListener('click', (e) => {
                     e.stopPropagation();
-                    closeMenu();
+                    closeMenuExplicit();
                 });
             }
 
-            // Bahar kahin bhi click karne par menu band ho jayega
+            // Standard viewport backdrop tracking outside click action
             document.addEventListener('click', (e) => {
                 if (!menuDropdown.contains(e.target) && !menuBtn.contains(e.target)) {
-                    if (!menuDropdown.classList.contains('hidden')) {
-                        closeMenu();
-                    }
+                    closeMenuExplicit();
                 }
             });
         });
