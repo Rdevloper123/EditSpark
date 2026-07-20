@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Primary SEO Meta Tags for India Government Exam Target -->
     <title>EditSparks - Free Photo, Signature & PDF Tools for SSC, Railway, UPSC & Government Forms</title>
+    
     <!-- Google Search Advanced Schema (Organization, WebSite, SearchAction, WebApplication) -->
     <script type="application/ld+json">
     {
@@ -27,9 +28,7 @@
           "name": "EditSparks",
           "url": "https://editsparks.in/",
           "alternateName": ["Edit Sparks", "editsparks"],
-          "publisher": {
-            "@id": "https://editsparks.in/#organization"
-          },
+          "publisher": {"@id": "https://editsparks.in/#organization"},
           "potentialAction": {
             "@type": "SearchAction",
             "target": "https://editsparks.in/?s={search_term_string}",
@@ -44,64 +43,109 @@
           "applicationCategory": "UtilityApplication",
           "operatingSystem": "All",
           "browserRequirements": "Requires HTML5 canvas support",
-          "author": {
-            "@id": "https://editsparks.in/#organization"
-          }
+          "author": {"@id": "https://editsparks.in/#organization"}
         }
       ]
     }
     </script>
+
     <!-- Ultimate Favicon Configuration -->
     <link rel="icon" type="image/x-icon" href="favicon.ico?v=2">
     <link rel="shortcut icon" href="favicon.ico?v=2" type="image/x-icon">
     <meta name="description" content="Free online photo, signature and PDF tools for SSC, Railway, UPSC, Banking and other government forms. Compress image to 20KB, 50KB or 100KB, resize dimensions, clean signatures and convert files securely without uploading.">
     <meta name="keywords" content="compress image to 20kb, compress image to 50kb, compress image to 100kb, photo and signature resizer, passport size photo maker, signature background remover, image resize online, government form photo resize, EditSparks">
     <meta name="robots" content="index, follow">
-    <!-- Isme class bhi hai (CSS ke liye) aur rel bhi hai (Google SEO ke liye) -->
     <link class="canonical" rel="canonical" href="https://editsparks.in/">
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://editsparks.in/">
     <meta property="og:title" content="EditSparks - Free Photo, Signature & PDF Tools for Government Forms">
     <meta property="og:description" content="Sarkari forms ke liye exact photo resizing aur compression suite. 100% offline secured.">
+
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://editsparks.in/">
     <meta property="twitter:title" content="EditSparks - Free Photo, Signature & PDF Tools for Government Forms">
     <meta property="twitter:description" content="Sarkari forms ke liye exact photo resizing aur compression suite. 100% offline secured.">
+
     <!-- Tailwind CSS v4 -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <!-- FontAwesome Free Icons (Loaded securely via CDN) -->
+
+    <!-- FontAwesome Free Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Custom micro-interactions style sheet inside native fallback -->
+
+    <!-- Custom Micro-interactions & Hero Action Bar Styles -->
     <style>
-        .tool-card {transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); border: 2px solid transparent !important; }
-        /* Desktop ke liye Soft Green Border hover effect sabhi par */
+        .tool-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid transparent !important;
+        }
+        /* Desktop ke liye Soft Green Border hover effect */
         @media (min-width: 768px) {
             .tool-card:hover {
-                transform: translateY(-5px); 
-                box-shadow: 0 20px 25px -5px rgba(16, 185, 129, 0.08), 0 10px 10px -5px rgba(16, 185, 129, 0.04); 
-                border-color: #10b981 !important; /* Pure Emerald Green Border */ 
+                transform: translateY(-5px);
+                box-shadow: 0 20px 25px -5px rgba(16, 185, 129, 0.08), 0 10px 10px -5px rgba(16, 185, 129, 0.04);
+                border-color: #10b981 !important;
             }
-            .tool-card:hover .icon-box {transform: scale(1.08); }
+            .tool-card:hover .icon-box {
+                transform: scale(1.08);
+            }
         }
-        /* Phone par automatic scroll highlight classes - Sabhi ke liye Green */
+        /* Phone par automatic scroll highlight classes */
         .mobile-active {
-            box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.1); 
-            transform: scale(1.03); 
-            border-color: #10b981 !important; /* Pure Emerald Green Border */ 
+            box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.1);
+            transform: scale(1.03);
+            border-color: #10b981 !important;
         }
-        .mobile-active .icon-box {transform: scale(1.08); }
+        .mobile-active .icon-box {
+            transform: scale(1.08);
+        }
+
+        /* --- Premium Hero Action Bar Custom Styles --- */
+        @keyframes slow-spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .animate-slow-spin {
+            animation: slow-spin 10s linear infinite;
+        }
+        .ripple-btn {
+            position: relative;
+            overflow: hidden;
+        }
+        .ripple-btn::after {
+            content: "";
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            transform: scale(0);
+            opacity: 1;
+            pointer-events: none;
+            transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+        }
+        .ripple-btn:active::after {
+            transform: scale(4);
+            opacity: 0;
+            transition: 0s;
+        }
+        #pdfMenuDropdown {
+            transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
     </style>
 </head>
 <body class="bg-[#f0f7ff] font-sans text-slate-800 min-h-screen flex flex-col antialiased">
+
     <!-- Top Indian Flag Strip -->
     <div class="h-1 flex w-full sticky top-0 z-50">
         <div class="bg-[#FF9933] flex-1"></div>
         <div class="bg-white flex-grow-0 w-8"></div>
         <div class="bg-[#138808] flex-1"></div>
     </div>
-    <!-- Navigation Bar Header with Sticky Tracking -->
+
+    <!-- Navigation Bar Header -->
     <nav class="bg-white border-b border-slate-200 sticky top-1 z-50 shadow-xs">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
@@ -115,7 +159,7 @@
                         <span class="text-[10px] font-bold text-slate-400 tracking-wider uppercase mt-0.5">🇮🇳 Free Government Form Photo Toolkit (India)</span>
                     </div>
                 </div>
-                <!-- Live Client Side Validation Status badge pill component -->
+                <!-- Validation Status Badge -->
                 <div class="flex items-center space-x-4">
                     <div class="hidden sm:inline-flex items-center space-x-1.5 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full text-xs font-bold text-emerald-700">
                         <span class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
@@ -125,72 +169,161 @@
             </div>
         </div>
     </nav>
-    <!-- Main Central Hub Body Viewport Context layout -->
+
+    <!-- Main Central Hub Layout -->
     <main class="flex-grow max-w-7xl mx-auto px-4 pt-2 pb-8 sm:pt-4 sm:pb-10 w-full">
-        <!-- Welcome Hero Structured Text Alignment Grid Header -->
+        <!-- Welcome Hero Structured Section -->
         <div class="text-center max-w-3xl mx-auto mb-10 flex flex-col items-center">
             <span class="inline-flex items-center space-x-1.5 bg-emerald-50 border border-emerald-200 px-4 py-1.5 rounded-full text-[12px] font-bold text-emerald-800 mb-4 shadow-2xs">
                 <i class="fa-solid fa-lock text-emerald-600"></i> <span>🔒 100% Private • No Server Uploads • Works Offline in Your Browser</span>
             </span>
             <h1 class="text-2xl font-black text-slate-900 tracking-tight uppercase sm:text-4xl leading-tight">
-                <!-- Upar wali line: Pure Black -->
                 <span class="block text-slate-900">Free Photo, Signature & PDF Tools for</span>
-                <!-- Neeche wali line: Pure Green -->
                 <span class="block text-emerald-500 mt-1">SSC, Railway & UPSC</span>
             </h1>
             <p class="text-slate-500 font-semibold text-xs sm:text-sm mt-2 max-w-xl">
                 Sarkari forms ke liye photo aur signature ka size kam karein (20KB, 50KB, 100KB) aur dimensions resize karein bina server par upload kiye.
             </p>
-            <!-- Saffron Image to PDF Button (Chota aur Compact Size) -->
-            <div class="mt-4 w-full max-w-2xl flex justify-start">
-                <a href="image-to-pdf.html" class="inline-flex items-center space-x-1.5 bg-[#FF9933] hover:bg-[#e68a2e] text-white text-[11px] font-black uppercase tracking-wide px-3 py-1.5 rounded-md shadow-xs hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5 group">
-                    <i class="fa-solid fa-file-pdf text-xs text-white group-hover:animate-bounce"></i> <span>⚡ Image to PDF</span>
+
+            <!-- Premium Redesigned Tricolor Responsive Action Bar -->
+            <div class="mt-8 w-full max-w-2xl relative z-20 flex flex-row items-center justify-center px-2 md:px-0">
+                <!-- Left Button: Image to PDF (Orange Gradient) -->
+                <a href="image-to-pdf.html" class="ripple-btn flex-1 flex items-center justify-center space-x-2 bg-gradient-to-r from-[#FF8A00] to-[#FF6A00] text-white text-xs md:text-sm font-black uppercase tracking-wider py-4 pl-2 pr-6 md:pr-10 rounded-[16px] shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5 text-center mr-[-20px] md:mr-[-30px]">
+                    <i class="fa-solid fa-file-image"></i>
+                    <i class="fa-solid fa-bolt text-[10px] animate-pulse"></i>
+                    <span>Image to PDF</span>
                 </a>
+
+                <!-- Center Element: Modern Indian Tricolor Wheel Concept -->
+                <div class="relative z-30 shrink-0 h-[75px] w-[75px] md:h-[95px] md:w-[95px] bg-white rounded-full shadow-xl flex items-center justify-center border-2 border-slate-100 select-none">
+                    <div class="absolute inset-1 pointer-events-none rounded-full border border-dashed border-slate-200"></div>
+                    <!-- Left Saffron Dots Arc -->
+                    <span class="absolute left-1.5 top-1/4 w-1.5 h-1.5 bg-[#FF9933] rounded-full"></span>
+                    <span class="absolute left-1 top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-[#FF9933] rounded-full"></span>
+                    <span class="absolute left-1.5 bottom-1/4 w-1.5 h-1.5 bg-[#FF9933] rounded-full"></span>
+                    <!-- Right Green Dots Arc -->
+                    <span class="absolute right-1.5 top-1/4 w-1.5 h-1.5 bg-[#138808] rounded-full"></span>
+                    <span class="absolute right-1 top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-[#138808] rounded-full"></span>
+                    <span class="absolute right-1.5 bottom-1/4 w-1.5 h-1.5 bg-[#138808] rounded-full"></span>
+                    
+                    <!-- Inner Moving Blue Abstract Radial Spoke Pattern -->
+                    <div class="animate-slow-spin w-[45px] h-[45px] md:w-[65px] md:h-[65px] rounded-full border-2 border-blue-800 opacity-90 relative flex items-center justify-center">
+                        <div class="absolute w-full h-[1px] bg-blue-800/40 rotate-0"></div>
+                        <div class="absolute w-full h-[1px] bg-blue-800/40 rotate-30"></div>
+                        <div class="absolute w-full h-[1px] bg-blue-800/40 rotate-60"></div>
+                        <div class="absolute w-full h-[1px] bg-blue-800/40 rotate-90"></div>
+                        <div class="absolute w-full h-[1px] bg-blue-800/40 rotate-120"></div>
+                        <div class="absolute w-full h-[1px] bg-blue-800/40 rotate-150"></div>
+                        <div class="w-2.5 h-2.5 rounded-full bg-blue-900 z-10 shadow-3xs"></div>
+                    </div>
+                </div>
+
+                <!-- Right Button: PDF Tools Trigger (Green Gradient) -->
+                <button id="pdfMenuBtn" type="button" class="ripple-btn flex-1 flex items-center justify-between bg-gradient-to-r from-[#16A34A] to-[#15803D] text-white text-xs md:text-sm font-black uppercase tracking-wider py-4 pl-6 md:pl-10 pr-4 rounded-[16px] shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5 ml-[-20px] md:ml-[-30px] cursor-pointer border-none outline-none">
+                    <span class="flex items-center space-x-2">
+                        <i class="fa-solid fa-file-pdf"></i>
+                        <span>PDF Tools</span>
+                    </span>
+                    <i class="fa-solid fa-bars text-sm"></i>
+                </button>
+
+                <!-- Responsive Contextual Dropdown / Bottom Sheet Menu Container -->
+                <div id="pdfMenuDropdown" class="hidden opacity-0 pointer-events-none absolute left-0 right-0 top-full mt-4 bg-white md:border md:border-slate-200 rounded-[20px] md:rounded-xl shadow-2xl p-4 md:max-w-md md:left-auto md:right-0 w-full z-50 fixed bottom-0 md:relative rounded-b-none border-t border-slate-200 max-h-[85vh] overflow-y-auto transform translate-y-full md:translate-y-0 transition-all duration-300">
+                    <!-- Mobile Drag Indicator -->
+                    <div class="w-12 h-1 bg-slate-200 rounded-full mx-auto mb-4 md:hidden"></div>
+                    <div class="flex items-center justify-between mb-3 border-b border-slate-100 pb-2">
+                        <h4 class="text-xs font-black tracking-wider text-slate-400 uppercase">Select PDF Tool</h4>
+                        <button type="button" id="closePdfMenu" class="text-slate-400 hover:text-slate-600 md:hidden p-1">
+                            <i class="fa-solid fa-xmark text-lg"></i>
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2 text-left">
+                        <!-- Clickable Active Link -->
+                        <a href="merge-pdf.html" class="flex items-center space-x-2 p-2.5 rounded-lg bg-emerald-50 text-emerald-800 hover:bg-emerald-100 text-xs font-bold uppercase transition-colors">
+                            <i class="fa-solid fa-object-group text-emerald-600"></i>
+                            <span>Merge PDF</span>
+                        </a>
+                        <!-- Non-clickable UI Placeholders -->
+                        <div class="flex items-center space-x-2 p-2.5 rounded-lg bg-slate-50 text-slate-400 cursor-not-allowed text-xs font-bold uppercase opacity-60">
+                            <i class="fa-solid fa-scissors"></i> <span>Split PDF</span>
+                        </div>
+                        <div class="flex items-center space-x-2 p-2.5 rounded-lg bg-slate-50 text-slate-400 cursor-not-allowed text-xs font-bold uppercase opacity-60">
+                            <i class="fa-solid fa-file-arrow-down"></i> <span>Compress PDF</span>
+                        </div>
+                        <div class="flex items-center space-x-2 p-2.5 rounded-lg bg-slate-50 text-slate-400 cursor-not-allowed text-xs font-bold uppercase opacity-60">
+                            <i class="fa-solid fa-rotate"></i> <span>Rotate PDF</span>
+                        </div>
+                        <div class="flex items-center space-x-2 p-2.5 rounded-lg bg-slate-50 text-slate-400 cursor-not-allowed text-xs font-bold uppercase opacity-60">
+                            <i class="fa-solid fa-arrow-down-1-9"></i> <span>Reorder Pages</span>
+                        </div>
+                        <div class="flex items-center space-x-2 p-2.5 rounded-lg bg-slate-50 text-slate-400 cursor-not-allowed text-xs font-bold uppercase opacity-60">
+                            <i class="fa-solid fa-file-export"></i> <span>Extract Pages</span>
+                        </div>
+                        <div class="flex items-center space-x-2 p-2.5 rounded-lg bg-slate-50 text-slate-400 cursor-not-allowed text-xs font-bold uppercase opacity-60">
+                            <i class="fa-solid fa-file-image"></i> <span>PDF to Image</span>
+                        </div>
+                        <div class="flex items-center space-x-2 p-2.5 rounded-lg bg-slate-50 text-slate-400 cursor-not-allowed text-xs font-bold uppercase opacity-60">
+                            <i class="fa-solid fa-file-pdf"></i> <span>Image to PDF</span>
+                        </div>
+                    </div>
+                </div>
             </div>
+
             <!-- Popular Tools Direct Target Keyword Strip -->
-            <div class="mt-4 text-xs font-semibold text-slate-400 bg-white/80 backdrop-blur-md border border-slate-200 px-4 py-2 rounded-lg max-w-2xl shadow-3xs">
+            <div class="mt-6 text-xs font-semibold text-slate-400 bg-white/80 backdrop-blur-md border border-slate-200 px-4 py-2 rounded-lg max-w-2xl shadow-3xs">
                 <span class="text-slate-600 font-bold mr-1 uppercase text-[11px] tracking-wider">Popular Tools:</span>
-                <a href="compress-image.html?size=20" class="text-blue-600 hover:text-blue-800 hover:underline transition-colors">Compress Image to 20KB</a> • <a href="compress-image.html?size=50" class="text-blue-600 hover:text-blue-800 hover:underline transition-colors">Compress Image to 50KB</a> • <a href="compress-image.html?size=100" class="text-blue-600 hover:text-blue-800 hover:underline transition-colors">Compress Image to 100KB</a> • <a href="passport-photo-maker.html" class="text-blue-600 hover:text-blue-800 hover:underline transition-colors">Passport Size Photo Maker</a> • <a href="resize-image.html" class="text-blue-600 hover:text-blue-800 hover:underline transition-colors">Signature Resizer</a>
+                <a href="compress-image.html?size=20" class="text-blue-600 hover:text-blue-800 hover:underline transition-colors">Compress Image to 20KB</a> • 
+                <a href="compress-image.html?size=50" class="text-blue-600 hover:text-blue-800 hover:underline transition-colors">Compress Image to 50KB</a> • 
+                <a href="compress-image.html?size=100" class="text-blue-600 hover:text-blue-800 hover:underline transition-colors">Compress Image to 100KB</a> • 
+                <a href="passport-photo-maker.html" class="text-blue-600 hover:text-blue-800 hover:underline transition-colors">Passport Size Photo Maker</a> • 
+                <a href="resize-image.html" class="text-blue-600 hover:text-blue-800 hover:underline transition-colors">Signature Resizer</a>
             </div>
         </div>
+
         <!-- TOOLS INTERACTIVE ROUTER CARDS MATRIX GRID LAYOUT -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- 1. PHOTO COMPRESS CARD LAYER COMPONENT -->
+            <!-- 1. PHOTO COMPRESS CARD -->
             <a href="compress-image.html" class="tool-card bg-white rounded-xl p-5 shadow-2xs flex items-start space-x-4 group">
                 <div class="icon-box h-10 w-10 shrink-0 rounded-lg bg-blue-50 text-blue-500 flex items-center justify-center text-lg group-hover:bg-blue-500 group-hover:text-white transition-all duration-300 shadow-3xs">
                     <i class="fa-solid fa-compress"></i>
                 </div>
                 <div class="flex-grow min-w-0">
                     <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider mb-1 flex items-center justify-between">
-                        Compress Image to 20KB, 50KB and 100KB <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-emerald-500 group-hover:translate-x-1 transition-all"></i>
+                        Compress Image to 20KB, 50KB and 100KB 
+                        <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-emerald-500 group-hover:translate-x-1 transition-all"></i>
                     </h3>
                     <p class="text-slate-500 text-xs leading-relaxed font-medium">Reduce photo upto 20kb, 50kb, 100kb. Reduce image size into kb.</p>
                 </div>
             </a>
-            <!-- 2. PHOTO RESIZE CARD LAYER COMPONENT -->
+
+            <!-- 2. PHOTO RESIZE CARD -->
             <a href="resize-image.html" class="tool-card bg-white rounded-xl p-5 shadow-2xs flex items-start space-x-4 group">
                 <div class="icon-box h-10 w-10 shrink-0 rounded-lg bg-indigo-50 text-indigo-500 flex items-center justify-center text-lg group-hover:bg-indigo-500 group-hover:text-white transition-all duration-300 shadow-3xs">
                     <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
                 </div>
                 <div class="flex-grow min-w-0">
                     <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider mb-1 flex items-center justify-between">
-                        Photo Size & Dimension Resizer <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-emerald-500 group-hover:translate-x-1 transition-all"></i>
+                        Photo Size & Dimension Resizer 
+                        <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-emerald-500 group-hover:translate-x-1 transition-all"></i>
                     </h3>
                     <p class="text-slate-500 text-xs leading-relaxed font-medium">Change image dimension in pixel. Change photo width and height. Change image dpi.</p>
                 </div>
             </a>
-            <!-- 3. CROP PHOTO CARD LAYER COMPONENT -->
+
+            <!-- 3. CROP PHOTO CARD -->
             <a href="crop-image.html" class="tool-card bg-white rounded-xl p-5 shadow-2xs flex items-start space-x-4 group">
                 <div class="icon-box h-10 w-10 shrink-0 rounded-lg bg-amber-50 text-amber-500 flex items-center justify-center text-lg group-hover:bg-amber-500 group-hover:text-white transition-all duration-300 shadow-3xs">
                     <i class="fa-solid fa-crop-simple"></i>
                 </div>
                 <div class="flex-grow min-w-0">
                     <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider mb-1 flex items-center justify-between">
-                        Crop Photo <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-emerald-500 group-hover:translate-x-1 transition-all"></i>
+                        Crop Photo 
+                        <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-emerald-500 group-hover:translate-x-1 transition-all"></i>
                     </h3>
                     <p class="text-slate-500 text-xs leading-relaxed font-medium">Crop image for ssc banking railway and other government examination manually.</p>
                 </div>
             </a>
+
             <!-- 4. PASSPORT SIZE PHOTO MAKER -->
             <a href="passport-photo-maker.html" class="tool-card bg-white rounded-xl p-5 shadow-2xs flex items-start space-x-4 group">
                 <div class="icon-box h-10 w-10 shrink-0 rounded-lg bg-teal-50 text-teal-500 flex items-center justify-center text-lg group-hover:bg-teal-500 group-hover:text-white transition-all duration-300 shadow-3xs">
@@ -198,35 +331,41 @@
                 </div>
                 <div class="flex-grow min-w-0">
                     <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider mb-1 flex items-center justify-between">
-                        Passport Size Photo Maker <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-emerald-500 group-hover:translate-x-1 transition-all"></i>
+                        Passport Size Photo Maker 
+                        <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-emerald-500 group-hover:translate-x-1 transition-all"></i>
                     </h3>
                     <p class="text-slate-500 text-xs leading-relaxed font-medium">Normal photo ko passport size photo me badlein.</p>
                 </div>
             </a>
-            <!-- 5. SIGNATURE CLEANER LAYER COMPONENT -->
+
+            <!-- 5. SIGNATURE CLEANER -->
             <a href="document-background-white.html" class="tool-card bg-white rounded-xl p-5 shadow-2xs flex items-start space-x-4 group">
                 <div class="icon-box h-10 w-10 shrink-0 rounded-lg bg-purple-50 text-purple-500 flex items-center justify-center text-lg group-hover:bg-purple-500 group-hover:text-white transition-all duration-300 shadow-3xs">
                     <i class="fa-solid fa-signature"></i>
                 </div>
                 <div class="flex-grow min-w-0">
                     <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider mb-1 flex items-center justify-between">
-                        Signature Cleaner <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-emerald-500 group-hover:translate-x-1 transition-all"></i>
+                        Signature Cleaner 
+                        <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-emerald-500 group-hover:translate-x-1 transition-all"></i>
                     </h3>
                     <p class="text-slate-500 text-xs leading-relaxed font-medium">Document background white karein online aur signature background shadow hataayein instantly.</p>
                 </div>
             </a>
-            <!-- 6. IMAGE FORMAT CONVERTER LAYER COMPONENT -->
+
+            <!-- 6. IMAGE FORMAT CONVERTER -->
             <a href="image-format-converter.html" class="tool-card bg-white rounded-xl p-5 shadow-2xs flex items-start space-x-4 group">
                 <div class="icon-box h-10 w-10 shrink-0 rounded-lg bg-rose-50 text-rose-500 flex items-center justify-center text-lg group-hover:bg-rose-500 group-hover:text-white transition-all duration-300 shadow-3xs">
                     <i class="fa-solid fa-layer-group"></i>
                 </div>
                 <div class="flex-grow min-w-0">
                     <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider mb-1 flex items-center justify-between">
-                        JPG, PNG & WEBP Converter <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-emerald-500 group-hover:translate-x-1 transition-all"></i>
+                        JPG, PNG & WEBP Converter 
+                        <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-emerald-500 group-hover:translate-x-1 transition-all"></i>
                     </h3>
                     <p class="text-slate-500 text-xs leading-relaxed font-medium">JPG ko PNG, PNG ko JPG aur WEBP me convert karein. Fast, secure aur quality loss ke bina.</p>
                 </div>
             </a>
+
             <!-- 7. ONE CLICK PHOTO EDITOR -->
             <a href="all-in-one-image-tool.html" class="tool-card bg-white rounded-xl p-5 shadow-2xs flex items-start space-x-4 group">
                 <div class="icon-box h-10 w-10 shrink-0 rounded-lg bg-violet-50 text-violet-500 flex items-center justify-center text-lg group-hover:bg-violet-500 group-hover:text-white transition-all duration-300 shadow-3xs">
@@ -234,11 +373,13 @@
                 </div>
                 <div class="flex-grow min-w-0">
                     <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider mb-1 flex items-center justify-between">
-                        One-Click Photo Editor <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-emerald-500 group-hover:translate-x-1 transition-all"></i>
+                        One-Click Photo Editor 
+                        <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-emerald-500 group-hover:translate-x-1 transition-all"></i>
                     </h3>
                     <p class="text-slate-500 text-xs leading-relaxed font-medium">Resize, compress, crop, convert aur signature clean karne ke sabhi tools ek hi jagah par. Government form filling ke liye complete solution.</p>
                 </div>
             </a>
+
             <!-- 8. IMAGE SIZE INCREASER -->
             <a href="increase-image-size.html" class="tool-card bg-white rounded-xl p-5 shadow-2xs flex items-start space-x-4 group">
                 <div class="icon-box h-10 w-10 shrink-0 rounded-lg bg-emerald-50 text-emerald-500 flex items-center justify-center text-lg group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300 shadow-3xs">
@@ -246,40 +387,42 @@
                 </div>
                 <div class="flex-grow min-w-0">
                     <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider mb-1 flex items-center justify-between">
-                        Increase Image Size <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-emerald-500 group-hover:translate-x-1 transition-all"></i>
+                        Increase Image Size 
+                        <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-emerald-500 group-hover:translate-x-1 transition-all"></i>
                     </h3>
                     <p class="text-slate-500 text-xs leading-relaxed font-medium">Increase image size in KB without reducing quality. Perfect for government forms with minimum file size requirements.</p>
                 </div>
             </a>
-            <!-- 9. IMAGE DPI CHANGER CARD LAYER COMPONENT (TECHNICAL KEYWORDS ONLY) -->
+
+            <!-- 9. 300 DPI CONVERTER -->
             <a href="convert-image-to-300-dpi.html" class="tool-card bg-white rounded-xl p-5 shadow-2xs flex items-start space-x-4 group">
                 <div class="icon-box h-10 w-10 shrink-0 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center text-lg group-hover:bg-amber-600 group-hover:text-white transition-all duration-300 shadow-3xs">
                     <i class="fa-solid fa-print"></i>
                 </div>
                 <div class="flex-grow min-w-0">
                     <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider mb-1 flex items-center justify-between">
-                        Change Image DPI (300 DPI Converter) <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-emerald-500 group-hover:translate-x-1 transition-all"></i>
+                        Change Image DPI (300 DPI Converter) 
+                        <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-emerald-500 group-hover:translate-x-1 transition-all"></i>
                     </h3>
-                    <p class="text-slate-500 text-xs leading-relaxed font-medium"> Convert photos to high resolution 300 DPI, 200 DPI, or custom parameters instantly. Change image resolution headers online without stretching original pixels or losing quality. </p>
+                    <p class="text-slate-500 text-xs leading-relaxed font-medium">Convert photos to high resolution 300 DPI, 200 DPI, or custom parameters instantly. Change image resolution headers online without stretching original pixels.</p>
                 </div>
             </a>
-            <!-- 10. BULK IMAGE RENAMER CARD LAYER COMPONENT -->
-<a href="rename-images-in-bulk.html" class="tool-card bg-white rounded-xl p-5 shadow-2xs flex items-start space-x-4 group">
-    <div class="icon-box h-10 w-10 shrink-0 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-lg group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 shadow-3xs">
-        <i class="fa-solid fa-font"></i>
-    </div>
-    <div class="flex-grow min-w-0">
-        <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider mb-1 flex items-center justify-between">
-            Rename Images in Bulk
-            <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-blue-600 group-hover:translate-x-1 transition-all"></i>
-        </h3>
-        <p class="text-slate-500 text-xs leading-relaxed font-medium">
-            Batch rename JPG, PNG, and WEBP images online for free. Add custom prefixes, suffixes, and automatic sequence numbering instantly in your browser.
-        </p>
-    </div>
-</a>
-        </div> <!-- Main Grid Container Ends Here Safely -->
-        
+
+            <!-- 10. BULK IMAGE RENAMER -->
+            <a href="rename-images-in-bulk.html" class="tool-card bg-white rounded-xl p-5 shadow-2xs flex items-start space-x-4 group">
+                <div class="icon-box h-10 w-10 shrink-0 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-lg group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 shadow-3xs">
+                    <i class="fa-solid fa-font"></i>
+                </div>
+                <div class="flex-grow min-w-0">
+                    <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider mb-1 flex items-center justify-between">
+                        Rename Images in Bulk 
+                        <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-blue-600 group-hover:translate-x-1 transition-all"></i>
+                    </h3>
+                    <p class="text-slate-500 text-xs leading-relaxed font-medium">Batch rename JPG, PNG, and WEBP images online for free. Add custom prefixes, suffixes, and automatic sequence numbering instantly in your browser.</p>
+                </div>
+            </a>
+        </div>
+
         <!-- NEW SEO BLOCK: POPULAR IMAGE COMPRESSION TOOLS SECTION -->
         <div class="mt-12 bg-white border border-slate-200 rounded-xl p-6 shadow-2xs">
             <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider mb-4 flex items-center space-x-2">
@@ -303,6 +446,7 @@
                 </a>
             </div>
         </div>
+
         <!-- TRUSTED CONVERSION CONTENT SYSTEM -->
         <div class="mt-8 bg-white border border-slate-200 rounded-xl p-6 shadow-2xs flex flex-col md:flex-row items-center md:items-start gap-5">
             <div class="h-12 w-12 shrink-0 rounded-xl bg-emerald-50 text-emerald-500 flex items-center justify-center text-xl shadow-2xs">
@@ -310,7 +454,9 @@
             </div>
             <div class="space-y-3 text-center md:text-left flex-grow">
                 <h4 class="text-sm font-black text-slate-900 uppercase tracking-wider">Why Use EditSparks for Government Forms?</h4>
-                <p class="text-slate-500 text-xs leading-relaxed font-medium"> EditSparks helps students, cyber cafe operators and job applicants prepare photos and signatures for government forms. </p>
+                <p class="text-slate-500 text-xs leading-relaxed font-medium">
+                    EditSparks helps students, cyber cafe operators and job applicants prepare photos and signatures for government forms.
+                </p>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-bold text-slate-600 max-w-2xl pt-1">
                     <div class="flex items-center space-x-2"><span class="text-emerald-500">✔</span> <span>Compress image to 20KB, 50KB or 100KB</span></div>
                     <div class="flex items-center space-x-2"><span class="text-emerald-500">✔</span> <span>Resize photo dimensions instantly</span></div>
@@ -319,9 +465,12 @@
                     <div class="flex items-center space-x-2"><span class="text-emerald-500">✔</span> <span>Convert JPG, PNG and WEBP formats</span></div>
                     <div class="flex items-center space-x-2"><span class="text-emerald-500">✔</span> <span>100% secure - no server uploads</span></div>
                 </div>
-                <p class="text-slate-400 text-[11px] font-semibold italic mt-2"> Perfect for SSC, Railway, UPSC, Banking, Police Recruitment and other online application forms. </p>
+                <p class="text-slate-400 text-[11px] font-semibold italic mt-2">
+                    Perfect for SSC, Railway, UPSC, Banking, Police Recruitment and other online application forms.
+                </p>
             </div>
         </div>
+
         <!-- FAQ SECTION -->
         <div class="mt-12 bg-white border border-slate-200 rounded-xl p-6 shadow-2xs">
             <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider mb-6 flex items-center space-x-2">
@@ -342,39 +491,69 @@
                 </div>
                 <div class="border-b border-slate-100 pb-3">
                     <h4 class="text-xs font-black text-slate-900 uppercase tracking-wide mb-1">4. How to remove signature background safely?</h4>
-                    <p class="text-slate-500 text-xs font-medium leading-relaxed">Signature Background Remover mobile se kheechi gayi photo ke dark/yellow contrast background patterns ko filter out karke use pure white grid me badal deta hai.</p>
-                </div>
-                <div class="border-b border-slate-100 pb-3">
-                    <h4 class="text-xs font-black text-slate-900 uppercase tracking-wide mb-1">5. Is EditSparks completely secure for document editing?</h4>
-                    <p class="text-slate-500 text-xs font-medium leading-relaxed">Haan, EditSparks 100% Client-Side Secure hai. Aapka koi bhi data server par upload nahi hota, saari processing browser runtime ke andar offline hoti hai.</p>
-                </div>
-                <div class="border-b border-slate-100 pb-3">
-                    <h4 class="text-xs font-black text-slate-900 uppercase tracking-wide mb-1">6. Can I convert JPG to JPEG or PNG formats?</h4>
-                    <p class="text-slate-500 text-xs font-medium leading-relaxed">Haan, hamare JPG, PNG & WEBP Converter asset ka use karke aap instantly bina image quality loose kiye multiple extension files toggle exchange kar sakte hain.</p>
-                </div>
-                <div class="border-b border-slate-100 pb-3">
-                    <h4 class="text-xs font-black text-slate-900 uppercase tracking-wide mb-1">7. What is the benefit of using the Increase Image Size in KB tool?</h4>
-                    <p class="text-slate-500 text-xs font-medium leading-relaxed">Kuch forms me min size requirement hoti hai (e.g., min 20kb). Yeh tool kisi bhi choti photo ka size bina quality kharab kiye safe limit tak badha deta hai.</p>
-                </div>
-                <div>
-                    <h4 class="text-xs font-black text-slate-900 uppercase tracking-wide mb-1">8. Can cyber cafes use this tool for fast workflow operations?</h4>
-                    <p class="text-slate-500 text-xs font-medium leading-relaxed">Bilkul, EditSparks ko lightweight design kiya gaya hai taaki cyber cafe operators ek hi interface panel (All-in-One Editor) ke andar fast single workflows use kar sakein.</p>
+                    <p class="text-slate-500 text-xs font-medium leading-relaxed">Signature Background Remover mobile se kheechi gayi photo ke dark/yellow contrast background patterns ko hata kar bilkul saaf aur white kar deta hai.</p>
                 </div>
             </div>
         </div>
     </main>
-    <!-- COMPACT & OPTIMIZED MULTI-COLUMN FOOTER SECTION -->
-    <footer class="bg-white border-t border-slate-200 mt-auto">
-        <div class="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center text-xs font-bold text-slate-400 uppercase tracking-wider gap-4">
-            <div>
-                &copy; 2026 EditSparks. All Rights Reserved.
-            </div>
-            <div class="flex space-x-6">
-                <a href="privacy.html" class="hover:text-slate-600 transition-colors">Privacy Policy</a>
-                <a href="terms.html" class="hover:text-slate-600 transition-colors">Terms of Service</a>
-                <a href="contact.html" class="hover:text-slate-600 transition-colors">Contact Us</a>
-            </div>
+
+    <!-- Footer Area Layout -->
+    <footer class="bg-white border-t border-slate-200 py-6 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
+            <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                © 2026 EditSparks. All Rights Reserved. Made with ❤️ in India.
+            </p>
+            <p class="text-[10px] text-slate-400 font-semibold max-w-md mx-auto leading-relaxed">
+                Disclaimer: EditSparks ek independent public helper utility suite hai aur iska kisi bhi government organization ya examination board se koi official affiliation nahi hai.
+            </p>
         </div>
     </footer>
+
+    <!-- Script Logic For PDF Advanced Bottom-Sheet Drawer Interactions -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuBtn = document.getElementById('pdfMenuBtn');
+            const menuDropdown = document.getElementById('pdfMenuDropdown');
+            const closeMenuBtn = document.getElementById('closePdfMenu');
+
+            function openMenu() {
+                menuDropdown.classList.remove('hidden');
+                setTimeout(() => {
+                    menuDropdown.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-full');
+                    menuDropdown.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
+                }, 10);
+            }
+
+            function closeMenu() {
+                menuDropdown.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
+                menuDropdown.classList.add('opacity-0', 'pointer-events-none', 'translate-y-full');
+                setTimeout(() => {
+                    menuDropdown.classList.add('hidden');
+                }, 300);
+            }
+
+            menuBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (menuDropdown.classList.contains('hidden') || menuDropdown.classList.contains('pointer-events-none')) {
+                    openMenu();
+                } else {
+                    closeMenu();
+                }
+            });
+
+            if (closeMenuBtn) {
+                closeMenuBtn.addEventListener('click', closeMenu);
+            }
+
+            // Close when clicking outside the menu
+            document.addEventListener('click', (e) => {
+                if (!menuDropdown.contains(e.target) && !menuBtn.contains(e.target)) {
+                    if (!menuDropdown.classList.contains('hidden')) {
+                        closeMenu();
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 </html>
