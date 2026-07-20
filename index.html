@@ -213,13 +213,8 @@
                     <span class="absolute right-1.5 bottom-1/4 w-1.5 h-1.5 bg-[#138808] rounded-full"></span>
                     
                     <!-- Inner Moving Blue Abstract Radial Spoke Pattern -->
-                    <div class="animate-slow-spin w-[45px] h-[45px] md:w-[65px] md:h-[65px] rounded-full border-2 border-blue-800 opacity-90 relative flex items-center justify-center">
-                        <div class="absolute w-full h-[1px] bg-blue-800/40 rotate-0"></div>
-                        <div class="absolute w-full h-[1px] bg-blue-800/40 rotate-30"></div>
-                        <div class="absolute w-full h-[1px] bg-blue-800/40 rotate-60"></div>
-                        <div class="absolute w-full h-[1px] bg-blue-800/40 rotate-90"></div>
-                        <div class="absolute w-full h-[1px] bg-blue-800/40 rotate-120"></div>
-                        <div class="absolute w-full h-[1px] bg-blue-800/40 rotate-150"></div>
+                   <div id="chakraWheel" class="animate-slow-spin w-[45px] h-[45px] md:w-[65px] md:h-[65px] rounded-full border-2 border-blue-800 opacity-90 relative flex items-center justify-center">
+                       
                         <div class="w-2.5 h-2.5 rounded-full bg-blue-900 z-10 shadow-3xs"></div>
                     </div>
                 </div>
@@ -569,6 +564,14 @@
                 }
             });
         });
+        const wheel = document.getElementById("chakraWheel");
+
+for (let i = 0; i < 27; i++) {
+    const spoke = document.createElement("div");
+    spoke.className = "absolute w-full h-[1px] bg-blue-800/40";
+    spoke.style.transform = `rotate(${i * (360 / 27)}deg)`;
+    wheel.appendChild(spoke);
+}
     </script>
 </body>
 </html>
