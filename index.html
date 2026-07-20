@@ -133,17 +133,13 @@
         }
         
         /* Menu Animation Management Overrides */
-        #pdfMenuDropdown {
-            display: none;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 250ms cubic-bezier(0.16, 1, 0.3, 1), transform 250ms cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        #pdfMenuDropdown.show-active {
-            display: block !important;
-            opacity: 1 !important;
-            pointer-events: auto !important;
-        }
+       #pdfMenuDropdown{
+    display:none;
+}
+
+#pdfMenuDropdown.show-active{
+    display:block;
+}
     </style>
 </head>
 <body class="bg-[#f0f7ff] font-sans text-slate-800 min-h-screen flex flex-col antialiased">
