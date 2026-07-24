@@ -1,253 +1,128 @@
 /**
- * Audio Module - Manages audio playback, timeline updates, volume/speed controls,
- * Web Audio API AnalyserNode, DOM caching, pointer capture dragging, and AbortController teardown.
+ * Audio Module - Handles HTMLAudioElement, Web Audio API AnalyserNode,
+ * volume-based amplitude extraction, and central AudioContext/SourceNode sharing.
  */
 
-import { formatTime } from './utils.js';
-
-let audioElement = null;
+// Module State
 let audioContext = null;
-let analyser = null;
-let dataArray = null;
+let audioElement = null;
 let sourceNode = null;
-let currentAudioObjectURL = null;
+let analyserNode = null;
+let dataArray = null;
+let isAudioInitialized = false;
 
-let isMuted = false;
-
-// Event Teardown Controller
-let audioAbortController = null;
-
-// DOM Cache Map
-const dom = {};
-
-export function initAudio() {
-    // Clean any prior instance/listeners before binding
-    destroyAudio();
-
-    audioAbortController = new AbortController();
-    cacheDOM();
-    setupAudioElement();
-    bindAudioControls();
-}
+// Audio Configuration Defaults
+const CONFIG = {
+    FFT_SIZE: 256,
+    SMOOTHING: 0.8
+};
 
 /**
- * Caches DOM element references to avoid repetitive lookups during frame updates.
+ * Initializes or retrieves the singleton HTMLAudioElement.
+ * @returns {HTMLAudioElement}
  */
-function cacheDOM() {
-    dom.fileInput = document.getElementById('audio-file-input');
-    dom.fileNameDisplay = document.getElementById('audio-file-name');
-    dom.playBtn = document.getElementById('play-btn');
-    dom.pauseBtn = document.getElementById('pause-btn');
-    dom.stopBtn = document.getElementById('stop-btn');
-    dom.loopBtn = document.getElementById('loop-btn');
-    dom.muteBtn = document.getElementById('mute-btn');
-    dom.volumeSlider = document.getElementById('volume-slider');
-    dom.speedSelect = document.getElementById('speed-select');
-    dom.timelineSlider = document.getElementById('timeline-slider');
-    dom.currentTimeDisplay = document.getElementById('current-time');
-    dom.totalDurationDisplay = document.getElementById('total-duration');
-}
-
-/**
- * Initializes HTML5 Audio element instance and event listeners with signal management.
- */
-function setupAudioElement() {
+export function getAudioElement() {
     if (!audioElement) {
-        audioElement = new Audio();
+        audioElement = document.querySelector('audio') || new Audio();
+        setupAudioElementListeners();
     }
+    return audioElement;
+}
 
-    const signal = audioAbortController?.signal;
+/**
+ * Singleton AudioContext Provider.
+ * Safely handles webkit prefix for Safari compatibility.
+ * @returns {AudioContext}
+ */
+export function getAudioContext() {
+    if (!audioContext) {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        audioContext = new AudioCtx();
+    }
+    return audioContext;
+}
 
-    audioElement.addEventListener('loadedmetadata', () => {
-        updateDurationDisplay();
-        if (dom.timelineSlider) {
-            dom.timelineSlider.max = audioElement.duration || 100;
-            dom.timelineSlider.value = 0;
+/**
+ * Creates or retrieves the single-instance MediaElementSourceNode.
+ * Prevents "InvalidStateError: HTMLMediaElement already connected" errors.
+ * @returns {MediaElementAudioSourceNode|null}
+ */
+export function getAudioSourceNode() {
+    const el = getAudioElement();
+    if (!el) return null;
+
+    if (!sourceNode) {
+        try {
+            const ctx = getAudioContext();
+            sourceNode = ctx.createMediaElementSource(el);
+            
+            // Central Speaker Connection (Connect only ONCE to destination)
+            sourceNode.connect(ctx.destination);
+        } catch (err) {
+            console.error('Failed to create MediaElementSourceNode:', err);
+            return null;
         }
-    }, { signal });
+    }
+    return sourceNode;
+}
 
-    audioElement.addEventListener('timeupdate', () => {
-        if (dom.currentTimeDisplay) {
-            dom.currentTimeDisplay.textContent = formatTime(audioElement.currentTime);
-        }
+/**
+ * Sets up the Web Audio API pipeline with AnalyserNode for visualization/animation.
+ */
+export function setupWebAudioAPI() {
+    if (isAudioInitialized && analyserNode) return analyserNode;
 
-        if (dom.timelineSlider && !dom.timelineSlider.dataset.isDragging) {
-            dom.timelineSlider.value = audioElement.currentTime;
-        }
-    }, { signal });
+    const ctx = getAudioContext();
+    const source = getAudioSourceNode();
+
+    if (!source) return null;
+
+    try {
+        // Create Analyser Node for lip-sync / visualizer amplitude tracking
+        analyserNode = ctx.createAnalyser();
+        analyserNode.fftSize = CONFIG.FFT_SIZE;
+        analyserNode.smoothingTimeConstant = CONFIG.SMOOTHING;
+
+        dataArray = new Uint8Array(analyserNode.frequencyBinCount);
+
+        // Tap into the existing source stream without reconnecting to ctx.destination
+        source.connect(analyserNode);
+
+        isAudioInitialized = true;
+        return analyserNode;
+    } catch (err) {
+        console.error('Error setting up Web Audio Analyser API:', err);
+        return null;
+    }
+}
+
+/**
+ * Standard Audio Element Listeners
+ */
+function setupAudioElementListeners() {
+    if (!audioElement) return;
 
     audioElement.addEventListener('ended', () => {
         if (!audioElement.loop) {
             pauseAudio();
         }
-    }, { signal });
+    });
 }
 
 /**
- * Sets up Web Audio API AnalyserNode for Time Domain data extraction.
- */
-function setupWebAudioAPI() {
-    if (audioContext) return;
-
-    try {
-        const AudioCtx = window.AudioContext || window.webkitAudioContext;
-        audioContext = new AudioCtx();
-        analyser = audioContext.createAnalyser();
-        analyser.fftSize = 512;
-
-        const bufferLength = analyser.frequencyBinCount;
-        dataArray = new Uint8Array(bufferLength);
-
-        sourceNode = audioContext.createMediaElementSource(audioElement);
-        sourceNode.connect(analyser);
-        analyser.connect(audioContext.destination);
-    } catch (err) {
-        console.warn('Web Audio API setup notice:', err);
-    }
-}
-
-/**
- * Returns current audio amplitude (0 to 1 range) based on Time-Domain Waveform data.
- * @returns {number}
- */
-export function getAudioAmplitude() {
-    if (!analyser || !dataArray || !audioElement || audioElement.paused) return 0;
-
-    analyser.getByteTimeDomainData(dataArray);
-
-    let sumSquares = 0;
-    for (let i = 0; i < dataArray.length; i++) {
-        const normalized = (dataArray[i] - 128) / 128;
-        sumSquares += normalized * normalized;
-    }
-
-    const rms = Math.sqrt(sumSquares / dataArray.length);
-    return Math.min(rms * 2.5, 1);
-}
-
-/**
- * Binds DOM controls using Pointer Capture and AbortSignal for strict cleanup.
- */
-function bindAudioControls() {
-    if (!audioAbortController) return;
-    const { signal } = audioAbortController;
-
-    if (dom.fileInput) {
-        dom.fileInput.addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                loadAudioFile(file);
-            }
-        }, { signal });
-    }
-
-    if (dom.playBtn) dom.playBtn.addEventListener('click', () => playAudio(), { signal });
-    if (dom.pauseBtn) dom.pauseBtn.addEventListener('click', () => pauseAudio(), { signal });
-    if (dom.stopBtn) dom.stopBtn.addEventListener('click', () => stopAudio(), { signal });
-
-    if (dom.loopBtn) {
-        dom.loopBtn.addEventListener('click', () => {
-            if (!audioElement) return;
-            audioElement.loop = !audioElement.loop;
-            dom.loopBtn.classList.toggle('active', audioElement.loop);
-        }, { signal });
-    }
-
-    if (dom.muteBtn) {
-        dom.muteBtn.addEventListener('click', () => {
-            if (!audioElement) return;
-            isMuted = !isMuted;
-            audioElement.muted = isMuted;
-            dom.muteBtn.classList.toggle('active', isMuted);
-        }, { signal });
-    }
-
-    if (dom.volumeSlider) {
-        dom.volumeSlider.addEventListener('input', (e) => {
-            if (!audioElement) return;
-            const rawVal = parseFloat(e.target.value);
-            const normalizedVol = rawVal > 1 ? rawVal / 100 : rawVal;
-            
-            audioElement.volume = Math.max(0, Math.min(1, normalizedVol));
-            isMuted = audioElement.volume === 0;
-            if (dom.muteBtn) dom.muteBtn.classList.toggle('active', isMuted);
-        }, { signal });
-    }
-
-    if (dom.speedSelect) {
-        dom.speedSelect.addEventListener('change', (e) => {
-            if (!audioElement) return;
-            audioElement.playbackRate = parseFloat(e.target.value);
-        }, { signal });
-    }
-
-    if (dom.timelineSlider) {
-        const stopDrag = (e) => {
-            if (dom.timelineSlider.dataset.isDragging) {
-                delete dom.timelineSlider.dataset.isDragging;
-                if (audioElement) {
-                    audioElement.currentTime = parseFloat(dom.timelineSlider.value);
-                }
-            }
-            if (e.target.hasPointerCapture && e.target.hasPointerCapture(e.pointerId)) {
-                e.target.releasePointerCapture(e.pointerId);
-            }
-        };
-
-        dom.timelineSlider.addEventListener('pointerdown', (e) => {
-            dom.timelineSlider.dataset.isDragging = 'true';
-            e.target.setPointerCapture(e.pointerId);
-        }, { signal });
-
-        dom.timelineSlider.addEventListener('pointerup', stopDrag, { signal });
-        dom.timelineSlider.addEventListener('pointercancel', stopDrag, { signal });
-        dom.timelineSlider.addEventListener('lostpointercapture', stopDrag, { signal });
-
-        dom.timelineSlider.addEventListener('input', (e) => {
-            if (dom.currentTimeDisplay) {
-                dom.currentTimeDisplay.textContent = formatTime(parseFloat(e.target.value));
-            }
-        }, { signal });
-    }
-}
-
-/**
- * Loads selected File object into the audio player and revokes old Object URLs.
- * @param {File} file
- */
-export function loadAudioFile(file) {
-    if (!file) return;
-
-    if (currentAudioObjectURL) {
-        URL.revokeObjectURL(currentAudioObjectURL);
-    }
-
-    currentAudioObjectURL = URL.createObjectURL(file);
-    if (audioElement) {
-        audioElement.src = currentAudioObjectURL;
-        audioElement.load();
-    }
-
-    if (dom.fileNameDisplay) {
-        dom.fileNameDisplay.textContent = file.name;
-    }
-}
-
-/**
- * Async audio play trigger with AudioContext resume safety (handles 'suspended' and Safari 'interrupted' states).
+ * Safely plays audio, auto-resuming AudioContext on user gesture (Safari/Chrome requirement).
+ * @returns {Promise<void>}
  */
 export async function playAudio() {
-    if (!audioElement || !audioElement.src) return;
+    const el = getAudioElement();
+    const ctx = getAudioContext();
 
-    setupWebAudioAPI();
+    if (ctx && ctx.state === 'suspended') {
+        await ctx.resume();
+    }
 
-    try {
-        if (audioContext && (audioContext.state === 'suspended' || audioContext.state === 'interrupted')) {
-            await audioContext.resume();
-        }
-        await audioElement.play();
-    } catch (err) {
-        console.error('Audio playback failed or policy restricted:', err);
+    if (el) {
+        return el.play();
     }
 }
 
@@ -255,68 +130,71 @@ export async function playAudio() {
  * Pauses active audio playback.
  */
 export function pauseAudio() {
-    if (audioElement) {
-        audioElement.pause();
+    const el = getAudioElement();
+    if (el && !el.paused) {
+        el.pause();
     }
 }
 
 /**
- * Stops audio playback and resets timeline.
+ * Stops audio and resets playhead to beginning.
  */
 export function stopAudio() {
-    if (audioElement) {
-        audioElement.pause();
-        audioElement.currentTime = 0;
-    }
-
-    if (dom.timelineSlider) {
-        dom.timelineSlider.value = 0;
-    }
-
-    if (dom.currentTimeDisplay) {
-        dom.currentTimeDisplay.textContent = '00:00';
+    const el = getAudioElement();
+    if (el) {
+        el.pause();
+        el.currentTime = 0;
     }
 }
 
 /**
- * Complete Audio Module teardown: revokes Object URLs, closes AudioContext, and unbinds all listeners via AbortController.
+ * Calculates current normalized audio amplitude (0.0 to 1.0) for mouth animation / lip-sync.
+ * @returns {number} Normalized amplitude value
+ */
+export function getAudioAmplitude() {
+    if (!analyserNode || !dataArray) {
+        // Fallback setup if called prior to explicit initialization
+        if (!setupWebAudioAPI()) return 0;
+    }
+
+    const el = getAudioElement();
+    if (!el || el.paused) return 0;
+
+    analyserNode.getByteFrequencyData(dataArray);
+
+    let sum = 0;
+    const length = dataArray.length;
+
+    for (let i = 0; i < length; i++) {
+        sum += dataArray[i];
+    }
+
+    const average = sum / length;
+    // Normalize 0-255 byte data to 0.0-1.0 float scale
+    return Math.min(1.0, average / 128);
+}
+
+/**
+ * Cleanup function to disconnect nodes and release Web Audio resources cleanly.
  */
 export async function destroyAudio() {
     stopAudio();
 
-    if (audioAbortController) {
-        audioAbortController.abort();
-        audioAbortController = null;
+    if (analyserNode) {
+        try { analyserNode.disconnect(); } catch (e) {}
+        analyserNode = null;
     }
 
-    if (currentAudioObjectURL) {
-        URL.revokeObjectURL(currentAudioObjectURL);
-        currentAudioObjectURL = null;
-    }
-
-    if (audioContext) {
-        try {
-            await audioContext.close();
-        } catch (err) {
-            console.warn('Error closing AudioContext:', err);
-        }
-        audioContext = null;
-        analyser = null;
-        dataArray = null;
+    if (sourceNode) {
+        try { sourceNode.disconnect(); } catch (e) {}
         sourceNode = null;
     }
 
-    if (audioElement) {
-        audioElement.src = '';
-        audioElement.load();
+    if (audioContext && audioContext.state !== 'closed') {
+        await audioContext.close();
+        audioContext = null;
     }
-}
 
-/**
- * Updates UI total duration text display.
- */
-function updateDurationDisplay() {
-    if (dom.totalDurationDisplay && audioElement) {
-        dom.totalDurationDisplay.textContent = formatTime(audioElement.duration || 0);
-    }
+    dataArray = null;
+    isAudioInitialized = false;
 }
