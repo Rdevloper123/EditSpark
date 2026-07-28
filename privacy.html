@@ -9,13 +9,16 @@
     <meta name="description" content="Read the Privacy Policy of EditSparks. Learn how our secure client-side tool compresses and resizes your images locally in browser memory without uploading data to servers.">
     <meta name="keywords" content="EditSparks privacy policy, safe image compressor, secure photo resizer, local image processing, data privacy photo editor">
     <meta name="robots" content="index, follow">
-    <link class="canonical" rel="canonical" href="https://editsparks.in/privacy.html">
+    
+    <!-- FIX 1: Canonical URL Updated (Removed .html) -->
+    <link rel="canonical" href="https://editsparks.in/privacy">
 
     <!-- Open Graph / Facebook SEO -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="Privacy Policy | EditSparks - Secure & Private">
     <meta property="og:description" content="Your privacy is our priority. EditSparks processes all images locally inside your browser. No server uploads.">
-    <meta property="og:url" content="https://editsparks.in/EditSparks/privacy.html">
+    <!-- FIX 2: Clean OG URL -->
+    <meta property="og:url" content="https://editsparks.in/privacy">
     <meta property="og:site_name" content="EditSparks">
 
     <style>
@@ -63,10 +66,8 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
         h2 { color: var(--primary); margin-top: 0; font-size: 1.8rem; border-bottom: 2px solid #f4f6f9; padding-bottom: 10px; }
-        h3 { color: #6a1b9a; margin-top: 25px; font-size: 1.3rem; }
+        h3 { color: #6a1b9a; margin-top: 25px; font-size: 1.3rem; border-left: 4px solid var(--primary); padding-left: 10px; }
         p { color: var(--text-muted); margin-bottom: 15px; text-align: justify; }
-        ul { color: var(--text-muted); padding-left: 20px; margin-bottom: 15px; }
-        li { margin-bottom: 5px; }
         .highlight { font-weight: 600; color: var(--text-dark); }
         .back-home {
             display: inline-block;
@@ -86,34 +87,47 @@
             border-top: 1px solid var(--border-color);
             background-color: white;
         }
+        @media (max-width: 768px) {
+            .container { margin: 20px; padding: 20px; }
+        }
     </style>
 </head>
 <body>
 
     <header>
-        <h1><a href="index.html">EditSparks</a></h1>
+        <!-- FIX 3: Clean Header Link -->
+        <h1><a href="https://editsparks.in/">EditSparks</a></h1>
         <div class="badge-india">Apna Bharat Editor Suite 🇮🇳</div>
     </header>
 
     <main class="container">
-        <h2>📜 Privacy Policy</h2>
-        <p>At <span class="highlight">EditSparks</span>, accessible from our main dashboard, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by EditSparks and how we use it.</p>
-        
-        <h3>🛡️ Zero Server Upload Policy (100% Local)</h3>
-        <p>Your digital privacy is our core mission. EditSparks operates as a <span class="highlight">pure client-side application</span>. This means when you upload an image to compress, resize, or crop: </p>
-        <ul>
-            <li>The image is loaded directly into your browser's local HTML5 Canvas memory.</li>
-            <li>No files or data are ever transmitted, sent, or saved onto external servers or databases.</li>
-            <li>All image processing calculations take place strictly on your local computer or smartphone.</li>
-        </ul>
+        <h2>🔒 Privacy Policy</h2>
+        <p>At <span class="highlight">EditSparks</span>, accessible from https://editsparks.in, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by EditSparks and how we use it.</p>
 
-        <h3>📊 Log Files & Analytics</h3>
-        <p>EditSparks follows a standard procedure of using static hosting platform metrics. These logs do not contain any personally identifiable information, your images, or document data. They only track general parameters like browser type, internet service provider (ISP), and date/time stamps to help optimize website loading speeds.</p>
+        <h3>1. Client-Side Processing (Zero Data Upload)</h3>
+        <p>Unlike traditional online photo editors that transfer your sensitive images, signatures, and documents to remote cloud servers, EditSparks operates <span class="highlight">100% locally inside your web browser</span>. When you upload a photo to compress or resize, your device processes the file directly using browser JavaScript memory.</p>
+        <p>Your photos never leave your mobile or desktop computer. We do not store, copy, view, or transmit any of your images to external databases.</p>
 
-        <h3>🍪 Cookies and Web Beacons</h3>
-        <p>Like any other website, EditSparks may use standard cookies to store basic user interface preferences (such as dark mode preferences or tool layout configurations) to enhance the user experience on subsequent visits.</p>
+        <h3>2. Information We Do Not Collect</h3>
+        <p>Since EditSparks requires no user registration, sign-up, or profile setup, we do not collect personal identification details such as your full name, phone number, address, or financial credentials.</p>
 
-        <a href="index.html" class="back-home">← Back to EditSparks Dashboard</a>
+        <h3>3. Cookies and Web Beacons</h3>
+        <p>EditSparks uses standard browser storage mechanisms solely to optimize local workspace performance. We do not use persistent tracking cookies to profile individual user behaviors across third-party networks.</p>
+
+        <h3>4. Third-Party Services & Analytics</h3>
+        <p>We may utilize standard web analytics services (such as Google Search Console or basic traffic metrics) to monitor site health, technical crashes, and page responsiveness. These tools collect anonymized log details such as browser types, referring pages, and access timestamps without linking them to identifiable personal information.</p>
+
+        <h3>5. External Website Links</h3>
+        <p>Our website may contain links to official examination portals, government job websites, or utility references. Please note that EditSparks has no control over the content, privacy practices, or policies of external third-party sites.</p>
+
+        <h3>6. Children's Information</h3>
+        <p>Another part of our priority is adding protection for children while using the internet. EditSparks is a general utility site for educational, exam registration, and document editing purposes, and does not knowingly harvest any personal data from minors.</p>
+
+        <h3>7. Consent</h3>
+        <p>By using our website, you hereby consent to our Privacy Policy and agree to its terms.</p>
+
+        <!-- FIX 4: Clean Back Link -->
+        <a href="https://editsparks.in/" class="back-home">← Back to EditSparks Dashboard</a>
     </main>
 
     <footer>
