@@ -654,46 +654,52 @@
     const SampleCharAssets = {};
 
     // Generate 8 Viseme Mouth Overlay PNG Images
-    function generateVisemes() {
-      const visemeSVG = {
-        mouth_closed: `<svg xmlns="http://www.w3.org/2000/svg" width="120" height="60" viewBox="0 0 120 60"><path d="M20,30 Q60,34 100,30 Q60,36 20,30 Z" fill="#3a1114" stroke="#d47070" stroke-width="2.5"/><path d="M20,30 Q60,35 100,30" fill="none" stroke="#21080a" stroke-width="2"/></svg>`,
-        mouth_tiny: `<svg xmlns="http://www.w3.org/2000/svg" width="120" height="60" viewBox="0 0 120 60"><ellipse cx="60" cy="30" rx="12" ry="6" fill="#3a1114" stroke="#d47070" stroke-width="2.5"/><path d="M48,30 Q60,33 72,30" fill="none" stroke="#21080a" stroke-width="1.5"/></svg>`,
-        mouth_small: `<svg xmlns="http://www.w3.org/2000/svg" width="120" height="60" viewBox="0 0 120 60"><path d="M30,25 Q60,18 90,25 Q92,38 60,40 Q28,38 30,25 Z" fill="#3a1114" stroke="#d47070" stroke-width="2.5"/><path d="M38,25 Q60,28 82,25" fill="none" stroke="#ffffff" opacity="0.8" stroke-width="3"/></svg>`,
-        mouth_medium: `<svg xmlns="http://www.w3.org/2000/svg" width="120" height="60" viewBox="0 0 120 60"><path d="M25,22 Q60,15 95,22 Q98,46 60,48 Q22,46 25,22 Z" fill="#3a1114" stroke="#d47070" stroke-width="2.5"/><path d="M32,23 Q60,26 88,23" fill="none" stroke="#ffffff" opacity="0.85" stroke-width="4"/><path d="M40,44 Q60,38 80,44" fill="#e76f51" opacity="0.8"/></svg>`,
-        mouth_large: `<svg xmlns="http://www.w3.org/2000/svg" width="120" height="60" viewBox="0 0 120 60"><path d="M20,18 Q60,10 100,18 Q104,54 60,56 Q16,54 20,18 Z" fill="#3a1114" stroke="#d47070" stroke-width="2.5"/><path d="M28,20 Q60,24 92,20" fill="none" stroke="#ffffff" opacity="0.9" stroke-width="5"/><path d="M36,52 Q60,40 84,52" fill="#e76f51"/></svg>`,
-        mouth_wide: `<svg xmlns="http://www.w3.org/2000/svg" width="120" height="60" viewBox="0 0 120 60"><path d="M12,24 Q60,14 108,24 Q110,42 60,44 Q10,42 12,24 Z" fill="#3a1114" stroke="#d47070" stroke-width="2.5"/><path d="M20,25 Q60,28 100,25" fill="none" stroke="#ffffff" opacity="0.9" stroke-width="4"/></svg>`,
-        mouth_round_o: `<svg xmlns="http://www.w3.org/2000/svg" width="120" height="60" viewBox="0 0 120 60"><circle cx="60" cy="30" r="18" fill="#3a1114" stroke="#d47070" stroke-width="2.5"/><ellipse cx="60" cy="42" rx="10" ry="4" fill="#e76f51" opacity="0.75"/></svg>`,
-        mouth_smile: `<svg xmlns="http://www.w3.org/2000/svg" width="120" height="60" viewBox="0 0 120 60"><path d="M15,22 Q60,16 105,22 Q108,38 60,45 Q12,38 15,22 Z" fill="#3a1114" stroke="#d47070" stroke-width="2.5"/><path d="M22,23 Q60,29 98,23" fill="none" stroke="#ffffff" opacity="0.9" stroke-width="4.5"/></svg>`
-      };
+ function generateVisemes() {
+    const files = [
+        "mouth_closed",
+        "mouth_tiny",
+        "mouth_small",
+        "mouth_medium",
+        "mouth_large",
+        "mouth_wide",
+        "mouth_round_o",
+        "mouth_smile"
+    ];
 
-      Object.keys(visemeSVG).forEach(key => {
+    files.forEach(name => {
         const img = new Image();
-        img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(visemeSVG[key]);
-        VisemeAssets[key] = img;
-      });
-    }
+        img.src = "assets/mouths/" + name + ".png";
+        VisemeAssets[name] = img;
+    });
+}
 
     // Generate Built-In Sample Characters (Boy, Girl, Man, Woman)
-    function generateSampleCharacters() {
-      const chars = {
-        boy: `<svg xmlns="http://www.w3.org/2000/svg" width="400" height="500" viewBox="0 0 400 500"><path d="M100,500 L300,500 L280,380 L120,380 Z" fill="#3b82f6"/><rect x="165" y="320" width="70" height="70" rx="10" fill="#fbcfe8"/><circle cx="200" cy="230" r="110" fill="#fde047"/><path d="M90,210 C90,100 310,100 310,210 C310,120 280,70 200,70 C120,70 90,120 90,210 Z" fill="#1e3a8a"/><ellipse cx="155" cy="220" rx="12" ry="16" fill="#1e293b"/><ellipse cx="245" cy="220" rx="12" ry="16" fill="#1e293b"/><circle cx="158" cy="215" r="4" fill="#fff"/><circle cx="248" cy="215" r="4" fill="#fff"/><path d="M140,190 Q155,180 170,190" fill="none" stroke="#1e293b" stroke-width="4" stroke-linecap="round"/><path d="M230,190 Q245,180 260,190" fill="none" stroke="#1e293b" stroke-width="4" stroke-linecap="round"/><path d="M195,235 Q200,245 205,235" fill="none" stroke="#cbd5e1" stroke-width="3"/></svg>`,
-        girl: `<svg xmlns="http://www.w3.org/2000/svg" width="400" height="500" viewBox="0 0 400 500"><path d="M90,500 L310,500 L290,370 L110,370 Z" fill="#ec4899"/><rect x="165" y="310" width="70" height="70" rx="10" fill="#fde047"/><path d="M70,260 C60,120 120,50 200,50 C280,50 340,120 330,260 C340,360 300,420 300,420 L100,420 C100,420 60,360 70,260 Z" fill="#831843"/><circle cx="200" cy="220" r="105" fill="#fef08a"/><ellipse cx="155" cy="210" rx="12" ry="15" fill="#0f172a"/><ellipse cx="245" cy="210" rx="12" ry="15" fill="#0f172a"/><circle cx="158" cy="205" r="4" fill="#fff"/><circle cx="248" cy="205" r="4" fill="#fff"/><path d="M138,185 Q155,175 172,185" fill="none" stroke="#831843" stroke-width="3.5"/><path d="M228,185 Q245,175 262,185" fill="none" stroke="#831843" stroke-width="3.5"/><ellipse cx="140" cy="235" rx="14" ry="8" fill="#f43f5e" opacity="0.3"/><ellipse cx="260" cy="235" rx="14" ry="8" fill="#f43f5e" opacity="0.3"/></svg>`,
-        man: `<svg xmlns="http://www.w3.org/2000/svg" width="400" height="500" viewBox="0 0 400 500"><path d="M80,500 L320,500 L290,360 L110,360 Z" fill="#1e293b"/><rect x="160" y="300" width="80" height="75" fill="#f8fafc"/><polygon points="200,330 185,380 215,380" fill="#dc2626"/><circle cx="200" cy="210" r="110" fill="#fed7aa"/><path d="M85,180 C85,90 130,50 200,50 C270,50 315,90 315,180 C315,100 280,65 200,65 C120,65 85,100 85,180 Z" fill="#451a03"/><ellipse cx="155" cy="200" rx="11" ry="14" fill="#0f172a"/><ellipse cx="245" cy="200" rx="11" ry="14" fill="#0f172a"/><circle cx="158" cy="196" r="3.5" fill="#fff"/><circle cx="248" cy="196" r="3.5" fill="#fff"/><path d="M135,175 L175,170" fill="none" stroke="#451a03" stroke-width="5" stroke-linecap="round"/><path d="M225,170 L265,175" fill="none" stroke="#451a03" stroke-width="5" stroke-linecap="round"/></svg>`,
-        woman: `<svg xmlns="http://www.w3.org/2000/svg" width="400" height="500" viewBox="0 0 400 500"><path d="M85,500 L315,500 L285,360 L115,360 Z" fill="#0d9488"/><rect x="165" y="300" width="70" height="70" fill="#ffedd5"/><path d="M60,200 C50,80 130,40 200,40 C270,40 350,80 340,200 C330,340 320,440 320,440 L80,440 C80,440 70,340 60,200 Z" fill="#1e1b4b"/><circle cx="200" cy="210" r="105" fill="#ffedd5"/><ellipse cx="155" cy="195" rx="12" ry="15" fill="#1e293b"/><ellipse cx="245" cy="195" rx="12" ry="15" fill="#1e293b"/><circle cx="158" cy="190" r="4" fill="#fff"/><circle cx="248" cy="190" r="4" fill="#fff"/><path d="M135,172 Q155,162 175,172" fill="none" stroke="#1e1b4b" stroke-width="3.5"/><path d="M225,172 Q245,162 265,172" fill="none" stroke="#1e1b4b" stroke-width="3.5"/></svg>`
-      };
+  function generateSampleCharacters() {
 
-      Object.keys(chars).forEach(key => {
-        const dataUrl = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(chars[key]);
+    const chars = {
+        boy: "assets/characters/boy.png",
+        girl: "assets/characters/girl.png",
+        man: "assets/characters/man.png",
+        woman: "assets/characters/woman.png"
+    };
+
+    Object.keys(chars).forEach(key => {
+
         const img = new Image();
-        img.src = dataUrl;
+        img.src = chars[key];
+
         SampleCharAssets[key] = img;
 
-        // Populate card UI preview images
-        const prevId = 'prev' + key.charAt(0).toUpperCase() + key.slice(1);
-        const prevEl = document.getElementById(prevId);
-        if (prevEl) prevEl.src = dataUrl;
-      });
-    }
+        const prevId = "prev" + key.charAt(0).toUpperCase() + key.slice(1);
+        const prev = document.getElementById(prevId);
+
+        if (prev) {
+            prev.src = chars[key];
+        }
+
+    });
+
+}
 
     generateVisemes();
     generateSampleCharacters();
