@@ -1,1 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <!-- Primary Meta Tags -->
+    <title>Free Talking Photo Video Maker | EditSpark</title>
+    <meta name="title" content="Free Talking Photo Video Maker | EditSpark">
+    <meta name="description" content="Create animated talking photos and videos online for free. Upload audio, sync lip movements automatically, and export high-quality WebM videos instantly.">
+    <meta name="keywords" content="talking photo, video maker, lip sync, photo animation, audio to video, free video generator">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://editspark.com/free-talking-photo-video.html">
 
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://editspark.com/free-talking-photo-video.html">
+    <meta property="og:title" content="Free Talking Photo Video Maker | EditSpark">
+    <meta property="og:description" content="Create animated talking photos and videos online for free. Instant lip sync animation and fast export.">
+    <meta property="og:image" content="assets/characters/boy.png">
+
+    <!-- Twitter Card -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://editspark.com/free-talking-photo-video.html">
+    <meta property="twitter:title" content="Free Talking Photo Video Maker | EditSpark">
+    <meta property="twitter:description" content="Create animated talking photos and videos online for free. Instant lip sync animation and fast export.">
+    <meta property="twitter:image" content="assets/characters/boy.png">
+
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Talking Photo Video Maker",
+      "operatingSystem": "Web Browser",
+      "applicationCategory": "MultimediaApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <header class="app-header">
+        <h1>Talking Photo Video Maker</h1>
+    </header>
+
+    <main class="app-container">
+        
+        <!-- Canvas Preview Area -->
+        <section class="preview-section">
+            <div class="canvas-wrapper">
+                <canvas id="animCanvas" width="1080" height="1920"></canvas>
+            </div>
+        </section>
+
+        <!-- Controls Area -->
+        <section class="controls-section">
+            
+            <!-- Character Selector -->
+            <div class="control-card">
+                <h2>1. Choose Character</h2>
+                <div class="character-grid">
+                    <button class="char-thumb active" data-char="boy">
+                        <img src="assets/characters/boy.png" alt="Boy Character" loading="lazy">
+                    </button>
+                    <button class="char-thumb" data-char="girl">
+                        <img src="assets/characters/girl.png" alt="Girl Character" loading="lazy">
+                    </button>
+                    <button class="char-thumb" data-char="man">
+                        <img src="assets/characters/man.png" alt="Man Character" loading="lazy">
+                    </button>
+                    <button class="char-thumb" data-char="woman">
+                        <img src="assets/characters/woman.png" alt="Woman Character" loading="lazy">
+                    </button>
+                </div>
+                <div class="custom-upload">
+                    <label for="customCharInput" class="btn secondary-btn">Upload Custom Character</label>
+                    <input type="file" id="customCharInput" accept="image/png, image/jpeg" hidden>
+                </div>
+            </div>
+
+            <!-- Audio Upload & Player -->
+            <div class="control-card">
+                <h2>2. Upload Audio (Max 60s)</h2>
+                <div class="audio-controls">
+                    <label for="audioFileInput" class="btn secondary-btn">Select Audio File (MP3, WAV, OGG, AAC)</label>
+                    <input type="file" id="audioFileInput" accept="audio/mp3, audio/wav, audio/ogg, audio/aac" hidden>
+                    
+                    <div class="audio-info" id="audioInfo">No audio selected</div>
+                    
+                    <div class="seekbar-wrapper">
+                        <input type="range" id="seekBar" min="0" value="0" step="0.1" disabled>
+                        <div class="time-display"><span id="currentTime">00:00</span> / <span id="durationTime">00:00</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mouth Position & Adjustments -->
+            <div class="control-card">
+                <h2>3. Mouth Adjustments</h2>
+                <div class="slider-group">
+                    <label for="mouthScale">Mouth Size</label>
+                    <input type="range" id="mouthScale" min="0.2" max="3" value="1" step="0.05">
+                </div>
+                <div class="slider-group">
+                    <label for="mouthOpacity">Mouth Opacity</label>
+                    <input type="range" id="mouthOpacity" min="0" max="1" value="1" step="0.05">
+                </div>
+                <div class="button-row">
+                    <button id="mirrorMouthBtn" class="btn secondary-btn">Mirror Mouth (Flip H)</button>
+                </div>
+            </div>
+
+            <!-- Playback & Export Actions -->
+            <div class="control-card action-card">
+                <div class="action-buttons">
+                    <button id="playBtn" class="btn primary-btn" disabled>Play</button>
+                    <button id="pauseBtn" class="btn secondary-btn" disabled>Pause</button>
+                    <button id="stopBtn" class="btn secondary-btn" disabled>Stop</button>
+                </div>
+                <button id="exportBtn" class="btn export-btn" disabled>Export WebM Video</button>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- Application JavaScript -->
+    <script src="js/app.js"></script>
+</body>
+</html>
