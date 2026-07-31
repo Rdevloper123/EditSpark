@@ -189,15 +189,17 @@ document.addEventListener('DOMContentLoaded', () => {
         requestAnimationFrame(renderLoop);
     }
 
+// ------------------------------------------------------------------
+    // 5. AUDIO ANALYZER - DYNAMIC SPEECH RESPONSIVENESS (NO STUCK OPEN)
     // ------------------------------------------------------------------
-    // 5. AUDIO ANALYZER - SMOOTH SPEECH WITH NATURAL HOLD
-    // ------------------------------------------------------------------
+    let previousEnergy = 0;
+
     function setupAudioContext() {
         if (!audioContext) {
             const AudioCtx = window.AudioContext || window.webkitAudioContext;
             audioContext = new AudioCtx();
             audioAnalyser = audioContext.createAnalyser();
-            audioAnalyser.fftSize = 128;
+            audioAnalyser.fftSize = 64; // Faster frequency response
 
             audioDataArray = new Uint8Array(audioAnalyser.frequencyBinCount);
 
@@ -218,20 +220,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         const currentEnergy = sum / len;
 
-        // Speech Energy Threshold with Hold Buffer for Natural Speech Flow
-        if (currentEnergy > 14) {
-            currentMouthKey = 'open';
-            mouthHoldCounter = 4; // Keeps mouth open for 4 frames during audio output
-        } else {
-            if (mouthHoldCounter > 0) {
-                mouthHoldCounter--;
-                currentMouthKey = 'open';
-            } else {
-                currentMouthKey = 'closed';
-            }
-        }
-    }
+        // Energy Difference check (Volume Drop Detection)
+        const energyDrop = previousEnergy - currentEnergy;
 
+        // Jab audio volume drop ho raha ho YA energy threshold se kam ho -> Close Mouth
+        if (currentEnergy < 16 || energyDrop > 3) {
+            currentMouthKey = 'closed';
+            mouthHoldCounter = 0;
+        } 
+        // Jab clear peak volume aaye -> Open Mouth
+        else {
+            currentMouthKey = 'open';
+            mouthHoldCounter = 1; // Minimal 1 frame buffer
+        }
+
+        previousEnergy = currentEnergy;
+    }
     // ------------------------------------------------------------------
     // 6. EVENT LISTENERS & TOUCH CONTROLS
     // ------------------------------------------------------------------
