@@ -40,14 +40,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const offscreenCharCanvas = document.createElement('canvas');
     const offscreenCharCtx = offscreenCharCanvas.getContext('2d', { alpha: true });
 
-    // Store cleaned offscreen canvases for mouth assets to guarantee alpha integrity
+    // Store cleaned offscreen canvases for mouth assets (mouth_large REMOVED)
     const mouthCanvases = {};
     const mouthPaths = {
         closed: 'assets/mouths/mouth_closed.png',
         tiny: 'assets/mouths/mouth_tiny.png',
         small: 'assets/mouths/mouth_small.png',
         medium: 'assets/mouths/mouth_medium.png',
-        large: 'assets/mouths/mouth_large.png',
         wide: 'assets/mouths/mouth_wide.png',
         round_o: 'assets/mouths/mouth_round_o.png',
         smile: 'assets/mouths/mouth_smile.png'
@@ -63,7 +62,6 @@ document.addEventListener('DOMContentLoaded', () => {
             offCanvas.height = img.naturalHeight;
             const offCtx = offCanvas.getContext('2d', { alpha: true });
 
-            // Clear buffer completely and draw image with explicit alpha preservation
             offCtx.clearRect(0, 0, offCanvas.width, offCanvas.height);
             offCtx.globalCompositeOperation = 'copy';
             offCtx.drawImage(img, 0, 0);
@@ -139,7 +137,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const curW = canvas.width;
         const curH = canvas.height;
         
-        // Fully clear main canvas
         ctx.clearRect(0, 0, curW, curH);
 
         // Draw Character Layer
@@ -196,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ------------------------------------------------------------------
-    // 5. AUDIO ANALYZER (Mapped to all 8 Mouth Shapes)
+    // 5. AUDIO ANALYZER (Mapped to 7 Remaining Mouth Shapes)
     // ------------------------------------------------------------------
     function setupAudioContext() {
         if (!audioContext) {
@@ -224,21 +221,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         const average = sum / len;
 
-        // Audio Threshold Mapping for 8 Mouth Shapes
+        // Thresholds updated without mouth_large
         if (average < 8) {
             currentMouthKey = 'closed';
         } else if (average < 18) {
             currentMouthKey = 'tiny';
         } else if (average < 28) {
             currentMouthKey = 'small';
-        } else if (average < 38) {
+        } else if (average < 40) {
             currentMouthKey = 'round_o';
-        } else if (average < 48) {
+        } else if (average < 52) {
             currentMouthKey = 'medium';
-        } else if (average < 58) {
+        } else if (average < 65) {
             currentMouthKey = 'wide';
-        } else if (average < 68) {
-            currentMouthKey = 'large';
         } else {
             currentMouthKey = 'smile';
         }
