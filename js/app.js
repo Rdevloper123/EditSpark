@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const EXPORT_HEIGHT = 1280;
 
     const canvas = document.getElementById('animCanvas');
-    const ctx = canvas.getContext('2d', { alpha: true });
+    const ctx = canvas.getContext('2d', { alpha: true, willReadFrequently: false });
 
     canvas.width = PREVIEW_WIDTH;
     canvas.height = PREVIEW_HEIGHT;
@@ -34,14 +34,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const exportBtn = document.getElementById('exportBtn');
 
     // ------------------------------------------------------------------
-    // 2. OFFSCREEN CANVAS CACHING & REUSABLE BUFFERS
+    // 2. OFFSCREEN CANVAS CACHING & ALPHA CLEANING ENGINE
     // ------------------------------------------------------------------
     const charImage = new Image();
     const offscreenCharCanvas = document.createElement('canvas');
     const offscreenCharCtx = offscreenCharCanvas.getContext('2d', { alpha: true });
 
-    // All 8 Mouth PNG Assets Mapped
-    const mouthImages = {};
+    // Store cleaned offscreen canvases for mouth assets to guarantee alpha integrity
+    const mouthCanvases = {};
     const mouthPaths = {
         closed: 'assets/mouths/mouth_closed.png',
         tiny: 'assets/mouths/mouth_tiny.png',
@@ -53,11 +53,25 @@ document.addEventListener('DOMContentLoaded', () => {
         smile: 'assets/mouths/mouth_smile.png'
     };
 
+    // Pre-process each mouth image into a pure transparent offscreen canvas buffer
     Object.keys(mouthPaths).forEach(key => {
-        mouthImages[key] = new Image();
-        mouthImages[key].crossOrigin = "anonymous";
-        mouthImages[key].onload = () => drawCanvas();
-        mouthImages[key].src = mouthPaths[key];
+        const img = new Image();
+        img.crossOrigin = "anonymous";
+        img.onload = () => {
+            const offCanvas = document.createElement('canvas');
+            offCanvas.width = img.naturalWidth;
+            offCanvas.height = img.naturalHeight;
+            const offCtx = offCanvas.getContext('2d', { alpha: true });
+
+            // Clear buffer completely and draw image with explicit alpha preservation
+            offCtx.clearRect(0, 0, offCanvas.width, offCanvas.height);
+            offCtx.globalCompositeOperation = 'copy';
+            offCtx.drawImage(img, 0, 0);
+            
+            mouthCanvases[key] = offCanvas;
+            drawCanvas();
+        };
+        img.src = mouthPaths[key];
     });
 
     // Application States
@@ -101,6 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
             offscreenCharCanvas.width = charImage.naturalWidth;
             offscreenCharCanvas.height = charImage.naturalHeight;
             offscreenCharCtx.clearRect(0, 0, offscreenCharCanvas.width, offscreenCharCanvas.height);
+            offscreenCharCtx.globalCompositeOperation = 'copy';
             offscreenCharCtx.drawImage(charImage, 0, 0);
 
             const currentW = canvas.width;
@@ -123,39 +138,41 @@ document.addEventListener('DOMContentLoaded', () => {
     function drawCanvas() {
         const curW = canvas.width;
         const curH = canvas.height;
+        
+        // Fully clear main canvas
         ctx.clearRect(0, 0, curW, curH);
 
-        ctx.save();
-        ctx.globalCompositeOperation = 'source-over';
-
-        // Draw Character
-        if (offscreenCharCanvas.width > 0 && charImage.complete && charImage.naturalWidth > 0) {
+        // Draw Character Layer
+        if (offscreenCharCanvas.width > 0) {
+            ctx.save();
+            ctx.globalCompositeOperation = 'source-over';
             const drawX = charTransform.xRatio * curW;
             const drawY = charTransform.yRatio * curH;
             const drawW = offscreenCharCanvas.width * (charTransform.scaleRatio * curW);
             const drawH = offscreenCharCanvas.height * (charTransform.scaleRatio * curW);
             ctx.drawImage(offscreenCharCanvas, drawX, drawY, drawW, drawH);
+            ctx.restore();
         }
 
-        // Draw Mouth Overlay
-        const mouthImg = mouthImages[currentMouthKey];
-        if (mouthImg && mouthImg.complete && mouthImg.naturalWidth > 0) {
+        // Draw Cleaned Mouth Canvas Overlay
+        const mouthCanvas = mouthCanvases[currentMouthKey];
+        if (mouthCanvas && mouthCanvas.width > 0) {
             ctx.save();
             ctx.globalCompositeOperation = 'source-over';
             ctx.globalAlpha = mouthOpacity;
+            
             const mouthX = mouthTransform.xRatio * curW;
             const mouthY = mouthTransform.yRatio * curH;
             ctx.translate(mouthX, mouthY);
             if (isMouthMirrored) ctx.scale(-1, 1);
 
             const baseScale = (curW / PREVIEW_WIDTH);
-            const drawW = mouthImg.naturalWidth * mouthScale * baseScale * 0.5;
-            const drawH = mouthImg.naturalHeight * mouthScale * baseScale * 0.5;
-            ctx.drawImage(mouthImg, -drawW / 2, -drawH / 2, drawW, drawH);
+            const drawW = mouthCanvas.width * mouthScale * baseScale * 0.5;
+            const drawH = mouthCanvas.height * mouthScale * baseScale * 0.5;
+            
+            ctx.drawImage(mouthCanvas, -drawW / 2, -drawH / 2, drawW, drawH);
             ctx.restore();
         }
-
-        ctx.restore();
     }
 
     function renderLoop(timestamp) {
