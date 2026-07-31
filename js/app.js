@@ -1,6 +1,6 @@
 /**
- * Talking Photo Video Maker - 2-State (Open/Closed) Lip Sync Engine
- * Optimized for Smooth Teeth/Mouth Animation with Hold Delay & Offscreen Canvas
+ * Talking Photo Video Maker - Dynamic Oscillation Lip Sync Engine
+ * Real-time Audio Amplitude Fluttering for Realistic Talking Effect
  */
 document.addEventListener('DOMContentLoaded', () => {
     // ------------------------------------------------------------------
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const exportBtn = document.getElementById('exportBtn');
 
     // ------------------------------------------------------------------
-    // 2. 2-STATE MOUTH MAPPING (mouth_closed.png & mouth_medium.png)
+    // 2. MOUTH MAPPING (mouth_closed.png & mouth_medium.png)
     // ------------------------------------------------------------------
     const charImage = new Image();
     const offscreenCharCanvas = document.createElement('canvas');
@@ -75,8 +75,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let charTransform = { xRatio: 0, yRatio: 0, scaleRatio: 1 };
     let mouthTransform = { xRatio: 0.5, yRatio: 0.58 };
 
-    // Flicker-Fix Delay Counter
-    let openHoldFrames = 0;
+    // Oscillation States
+    let previousEnergy = 0;
+    let toggleFrameCount = 0;
 
     // Interaction Drag States
     let isDragging = false;
@@ -96,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let recordedChunks = [];
     let isExporting = false;
     let lastFrameTime = 0;
-    const previewFPS = 20;
+    const previewFPS = 24; // FPS increased to 24 for smoother mouth flutter
     const exportFPS = 24;
 
     loadCharacter('assets/characters/boy.png');
@@ -172,7 +173,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderLoop(timestamp) {
         if (audioElement.paused && !isExporting) {
             currentMouthKey = 'closed';
-            openHoldFrames = 0;
             drawCanvas();
             return;
         }
@@ -191,14 +191,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ------------------------------------------------------------------
-    // 5. AUDIO ANALYZER WITH FLICKER-FREE HOLD DELAY
+    // 5. AUDIO ANALYZER - REAL-TIME OSCILLATING MOUTH LOGIC
     // ------------------------------------------------------------------
     function setupAudioContext() {
         if (!audioContext) {
             const AudioCtx = window.AudioContext || window.webkitAudioContext;
             audioContext = new AudioCtx();
             audioAnalyser = audioContext.createAnalyser();
-            audioAnalyser.fftSize = 128;
+            audioAnalyser.fftSize = 64; // Smaller FFT size for faster response time
 
             audioDataArray = new Uint8Array(audioAnalyser.frequencyBinCount);
 
@@ -217,20 +217,23 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let i = 0; i < len; i++) {
             sum += audioDataArray[i];
         }
-        const average = sum / len;
+        const currentEnergy = sum / len;
 
-        // Audio Threshold & Hold Delay Logic
-        if (average > 12) {
-            currentMouthKey = 'open';
-            openHoldFrames = 3; // Speech frames hold delay for smooth rendering
-        } else {
-            if (openHoldFrames > 0) {
-                openHoldFrames--;
+        toggleFrameCount++;
+
+        // Speech Energy Threshold Analysis
+        if (currentEnergy > 15) {
+            // Rapid toggle every 2 frames OR on significant volume shift to create realistic mouth movement
+            if (toggleFrameCount % 2 === 0 || Math.abs(currentEnergy - previousEnergy) > 6) {
                 currentMouthKey = 'open';
             } else {
                 currentMouthKey = 'closed';
             }
+        } else {
+            currentMouthKey = 'closed';
         }
+
+        previousEnergy = currentEnergy;
     }
 
     // ------------------------------------------------------------------
@@ -294,7 +297,6 @@ document.addEventListener('DOMContentLoaded', () => {
         playBtn.disabled = false;
         pauseBtn.disabled = true;
         currentMouthKey = 'closed';
-        openHoldFrames = 0;
         drawCanvas();
     });
 
@@ -307,7 +309,6 @@ document.addEventListener('DOMContentLoaded', () => {
         playBtn.disabled = false;
         pauseBtn.disabled = true;
         currentMouthKey = 'closed';
-        openHoldFrames = 0;
         drawCanvas();
     });
 
@@ -437,7 +438,6 @@ document.addEventListener('DOMContentLoaded', () => {
             playBtn.disabled = false;
             pauseBtn.disabled = true;
             currentMouthKey = 'closed';
-            openHoldFrames = 0;
             drawCanvas();
         };
 
