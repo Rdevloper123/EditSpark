@@ -1,6 +1,6 @@
 /**
- * Talking Photo Video Maker - Ultra High-Performance Architecture
- * Optimized for low memory footprint, Offscreen Canvas Caching & Zero Garbage Collection.
+ * Talking Photo Video Maker - 2-State (Open/Closed) Lip Sync Engine
+ * Simple, Clean and Fast Execution
  */
 document.addEventListener('DOMContentLoaded', () => {
     // ------------------------------------------------------------------
@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const EXPORT_HEIGHT = 1280;
 
     const canvas = document.getElementById('animCanvas');
-    const ctx = canvas.getContext('2d', { alpha: true, willReadFrequently: false });
+    const ctx = canvas.getContext('2d', { alpha: true });
 
     canvas.width = PREVIEW_WIDTH;
     canvas.height = PREVIEW_HEIGHT;
@@ -34,25 +34,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const exportBtn = document.getElementById('exportBtn');
 
     // ------------------------------------------------------------------
-    // 2. OFFSCREEN CANVAS CACHING & ALPHA CLEANING ENGINE
+    // 2. ONLY 2 MOUTH STATES (CLOSED & OPEN)
     // ------------------------------------------------------------------
     const charImage = new Image();
     const offscreenCharCanvas = document.createElement('canvas');
     const offscreenCharCtx = offscreenCharCanvas.getContext('2d', { alpha: true });
 
-    // Store cleaned offscreen canvases for mouth assets (mouth_large REMOVED)
     const mouthCanvases = {};
     const mouthPaths = {
         closed: 'assets/mouths/mouth_closed.png',
-        tiny: 'assets/mouths/mouth_tiny.png',
-        small: 'assets/mouths/mouth_small.png',
-        medium: 'assets/mouths/mouth_medium.png',
-        wide: 'assets/mouths/mouth_wide.png',
-        round_o: 'assets/mouths/mouth_round_o.png',
-        smile: 'assets/mouths/mouth_smile.png'
+        open: 'assets/mouths/mouth_small.png' // Aap chaho to mouth_wide.png ya mouth_medium.png bhi rakh sakte ho
     };
 
-    // Pre-process each mouth image into a pure transparent offscreen canvas buffer
     Object.keys(mouthPaths).forEach(key => {
         const img = new Image();
         img.crossOrigin = "anonymous";
@@ -139,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         ctx.clearRect(0, 0, curW, curH);
 
-        // Draw Character Layer
+        // Draw Character
         if (offscreenCharCanvas.width > 0) {
             ctx.save();
             ctx.globalCompositeOperation = 'source-over';
@@ -151,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.restore();
         }
 
-        // Draw Cleaned Mouth Canvas Overlay
+        // Draw Mouth Overlay (Only Closed or Open)
         const mouthCanvas = mouthCanvases[currentMouthKey];
         if (mouthCanvas && mouthCanvas.width > 0) {
             ctx.save();
@@ -193,7 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ------------------------------------------------------------------
-    // 5. AUDIO ANALYZER (Mapped to 7 Remaining Mouth Shapes)
+    // 5. SIMPLE AUDIO ANALYZER (OPEN / CLOSED TOGGLE)
     // ------------------------------------------------------------------
     function setupAudioContext() {
         if (!audioContext) {
@@ -221,21 +214,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         const average = sum / len;
 
-        // Thresholds updated without mouth_large
-        if (average < 8) {
-            currentMouthKey = 'closed';
-        } else if (average < 18) {
-            currentMouthKey = 'tiny';
-        } else if (average < 28) {
-            currentMouthKey = 'small';
-        } else if (average < 40) {
-            currentMouthKey = 'round_o';
-        } else if (average < 52) {
-            currentMouthKey = 'medium';
-        } else if (average < 65) {
-            currentMouthKey = 'wide';
+        // Simple Rule: Agar audio volume threshold (12) se upar hai toh mouth 'open' otherwise 'closed'
+        if (average > 12) {
+            currentMouthKey = 'open';
         } else {
-            currentMouthKey = 'smile';
+            currentMouthKey = 'closed';
         }
     }
 
@@ -392,7 +375,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('touchend', endDrag);
 
     // ------------------------------------------------------------------
-    // 7. FAST EXPORT ENGINE
+    // 7. EXPORT ENGINE
     // ------------------------------------------------------------------
     exportBtn.addEventListener('click', async () => {
         if (!audioElement.src) return;
