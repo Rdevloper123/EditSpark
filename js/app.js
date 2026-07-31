@@ -2,7 +2,6 @@
  * Talking Photo Video Maker - Ultra High-Performance Architecture
  * Optimized for low memory footprint, Offscreen Canvas Caching & Zero Garbage Collection.
  */
-
 document.addEventListener('DOMContentLoaded', () => {
     // ------------------------------------------------------------------
     // 1. DYNAMIC CANVAS RESOLUTIONS (Preview vs Export)
@@ -13,7 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const EXPORT_HEIGHT = 1280;
 
     const canvas = document.getElementById('animCanvas');
-    const ctx = canvas.getContext('2d', { alpha: false }); // Disable alpha channel on main canvas for performance
+    // Enabled alpha channel to correctly composite transparent PNG overlays
+    const ctx = canvas.getContext('2d');
 
     // Set initial preview resolution
     canvas.width = PREVIEW_WIDTH;
@@ -49,7 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
         medium: new Image(),
         large: new Image()
     };
-
     const mouthPaths = {
         closed: 'assets/mouths/mouth_closed.png',
         small: 'assets/mouths/mouth_small.png',
@@ -58,6 +57,8 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     Object.keys(mouthPaths).forEach(key => {
+        mouthImages[key].crossOrigin = "anonymous";
+        mouthImages[key].onload = () => drawCanvas();
         mouthImages[key].src = mouthPaths[key];
     });
 
@@ -112,7 +113,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const currentH = canvas.height;
             const hRatio = currentW / charImage.naturalWidth;
             const vRatio = currentH / charImage.naturalHeight;
-            
             const scale = Math.max(hRatio, vRatio);
             charTransform.scaleRatio = scale / currentW;
             charTransform.xRatio = ((currentW - charImage.naturalWidth * scale) / 2) / currentW;
@@ -129,7 +129,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function drawCanvas() {
         const curW = canvas.width;
         const curH = canvas.height;
-
         ctx.clearRect(0, 0, curW, curH);
 
         // Draw Cached Character from Offscreen Canvas
@@ -138,7 +137,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const drawY = charTransform.yRatio * curH;
             const drawW = offscreenCharCanvas.width * (charTransform.scaleRatio * curW);
             const drawH = offscreenCharCanvas.height * (charTransform.scaleRatio * curW);
-
             ctx.drawImage(offscreenCharCanvas, drawX, drawY, drawW, drawH);
         }
 
@@ -147,10 +145,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (mouthImg && mouthImg.complete && mouthImg.naturalWidth !== 0) {
             ctx.save();
             ctx.globalAlpha = mouthOpacity;
-
             const mouthX = mouthTransform.xRatio * curW;
             const mouthY = mouthTransform.yRatio * curH;
-
             ctx.translate(mouthX, mouthY);
             if (isMouthMirrored) ctx.scale(-1, 1);
 
@@ -158,7 +154,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const baseScale = (curW / PREVIEW_WIDTH);
             const drawW = mouthImg.naturalWidth * mouthScale * baseScale * 0.5;
             const drawH = mouthImg.naturalHeight * mouthScale * baseScale * 0.5;
-
             ctx.drawImage(mouthImg, -drawW / 2, -drawH / 2, drawW, drawH);
             ctx.restore();
         }
@@ -209,7 +204,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Populate existing array without allocating new memory
         audioAnalyser.getByteFrequencyData(audioDataArray);
-
         let sum = 0;
         const len = audioDataArray.length;
         for (let i = 0; i < len; i++) {
@@ -346,7 +340,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const coords = getCoords(e);
         startX = coords.x;
         startY = coords.y;
-
         const distToMouth = Math.hypot(coords.x - mouthTransform.xRatio, coords.y - mouthTransform.yRatio);
         dragTarget = distToMouth < 0.2 ? 'mouth' : 'character';
         isDragging = true;
@@ -379,7 +372,6 @@ document.addEventListener('DOMContentLoaded', () => {
     canvas.addEventListener('mousedown', startDrag);
     canvas.addEventListener('mousemove', moveDrag);
     window.addEventListener('mouseup', endDrag);
-
     canvas.addEventListener('touchstart', startDrag, { passive: true });
     canvas.addEventListener('touchmove', moveDrag, { passive: true });
     window.addEventListener('touchend', endDrag);
@@ -424,7 +416,6 @@ document.addEventListener('DOMContentLoaded', () => {
         mediaRecorder.onstop = () => {
             const blob = new Blob(recordedChunks, { type: 'video/webm' });
             const url = URL.createObjectURL(blob);
-            
             const a = document.createElement('a');
             a.href = url;
             a.download = `talking-photo-${Date.now()}.webm`;
@@ -433,7 +424,6 @@ document.addEventListener('DOMContentLoaded', () => {
             // Reset back to Low-Res Preview (360x640)
             canvas.width = PREVIEW_WIDTH;
             canvas.height = PREVIEW_HEIGHT;
-            
             isExporting = false;
             exportBtn.disabled = false;
             exportBtn.textContent = "Export WebM Video";
