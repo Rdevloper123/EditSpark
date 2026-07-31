@@ -40,28 +40,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const offscreenCharCanvas = document.createElement('canvas');
     const offscreenCharCtx = offscreenCharCanvas.getContext('2d', { alpha: true });
 
-    const mouthImages = {
-        closed: new Image(),
-        small: new Image(),
-        medium: new Image(),
-        large: new Image()
-    };
+    // All 8 Mouth PNG Assets Mapped
+    const mouthImages = {};
     const mouthPaths = {
         closed: 'assets/mouths/mouth_closed.png',
+        tiny: 'assets/mouths/mouth_tiny.png',
         small: 'assets/mouths/mouth_small.png',
         medium: 'assets/mouths/mouth_medium.png',
-        large: 'assets/mouths/mouth_large.png'
+        large: 'assets/mouths/mouth_large.png',
+        wide: 'assets/mouths/mouth_wide.png',
+        round_o: 'assets/mouths/mouth_round_o.png',
+        smile: 'assets/mouths/mouth_smile.png'
     };
 
     Object.keys(mouthPaths).forEach(key => {
+        mouthImages[key] = new Image();
         mouthImages[key].crossOrigin = "anonymous";
-        mouthImages[key].onload = () => {
-            console.log(`Loaded mouth asset: ${mouthPaths[key]}`);
-            drawCanvas();
-        };
-        mouthImages[key].onerror = (e) => {
-            console.error(`Failed to load mouth asset: ${mouthPaths[key]}`, e);
-        };
+        mouthImages[key].onload = () => drawCanvas();
         mouthImages[key].src = mouthPaths[key];
     });
 
@@ -80,14 +75,14 @@ document.addEventListener('DOMContentLoaded', () => {
     let startX = 0;
     let startY = 0;
 
-    // Web Audio API & Single Pre-allocated Buffer
+    // Web Audio API
     let audioContext = null;
     let audioAnalyser = null;
     let audioSource = null;
     let audioDataArray = null;
     const audioElement = new Audio();
 
-    // Export & Animation Loop Controls
+    // Export Controls
     let mediaRecorder = null;
     let recordedChunks = [];
     let isExporting = false;
@@ -95,7 +90,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const previewFPS = 20;
     const exportFPS = 24;
 
-    // Initial Load
     loadCharacter('assets/characters/boy.png');
 
     // ------------------------------------------------------------------
@@ -104,7 +98,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function loadCharacter(src) {
         charImage.crossOrigin = "anonymous";
         charImage.onload = () => {
-            console.log(`Loaded character asset: ${src}`);
             offscreenCharCanvas.width = charImage.naturalWidth;
             offscreenCharCanvas.height = charImage.naturalHeight;
             offscreenCharCtx.clearRect(0, 0, offscreenCharCanvas.width, offscreenCharCanvas.height);
@@ -121,14 +114,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             drawCanvas();
         };
-        charImage.onerror = (e) => {
-            console.error(`Failed to load character asset: ${src}`, e);
-        };
         charImage.src = src;
     }
 
     // ------------------------------------------------------------------
-    // 4. RENDERING ENGINE (Resolution Independent)
+    // 4. RENDERING ENGINE
     // ------------------------------------------------------------------
     function drawCanvas() {
         const curW = canvas.width;
@@ -138,47 +128,36 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.save();
         ctx.globalCompositeOperation = 'source-over';
 
-        if (offscreenCharCanvas.width > 0) {
-            if (charImage.complete && charImage.naturalWidth > 0 && charImage.src.endsWith('.png')) {
-                const drawX = charTransform.xRatio * curW;
-                const drawY = charTransform.yRatio * curH;
-                const drawW = offscreenCharCanvas.width * (charTransform.scaleRatio * curW);
-                const drawH = offscreenCharCanvas.height * (charTransform.scaleRatio * curW);
-                ctx.drawImage(offscreenCharCanvas, drawX, drawY, drawW, drawH);
-            } else if (!charImage.complete) {
-                console.warn("Character image is still loading. Draw skipped to avoid white box.");
-            } else if (!charImage.src.endsWith('.png')) {
-                 console.error("The character image must be a PNG file.");
-            }
+        // Draw Character
+        if (offscreenCharCanvas.width > 0 && charImage.complete && charImage.naturalWidth > 0) {
+            const drawX = charTransform.xRatio * curW;
+            const drawY = charTransform.yRatio * curH;
+            const drawW = offscreenCharCanvas.width * (charTransform.scaleRatio * curW);
+            const drawH = offscreenCharCanvas.height * (charTransform.scaleRatio * curW);
+            ctx.drawImage(offscreenCharCanvas, drawX, drawY, drawW, drawH);
         }
 
+        // Draw Mouth Overlay
         const mouthImg = mouthImages[currentMouthKey];
-        if (mouthImg && mouthImg.complete && mouthImg.naturalWidth !== 0) {
-            if (mouthImg.src.endsWith('.png')) {
-                ctx.save();
-                ctx.globalCompositeOperation = 'source-over';
-                ctx.globalAlpha = mouthOpacity;
-                const mouthX = mouthTransform.xRatio * curW;
-                const mouthY = mouthTransform.yRatio * curH;
-                ctx.translate(mouthX, mouthY);
-                if (isMouthMirrored) ctx.scale(-1, 1);
+        if (mouthImg && mouthImg.complete && mouthImg.naturalWidth > 0) {
+            ctx.save();
+            ctx.globalCompositeOperation = 'source-over';
+            ctx.globalAlpha = mouthOpacity;
+            const mouthX = mouthTransform.xRatio * curW;
+            const mouthY = mouthTransform.yRatio * curH;
+            ctx.translate(mouthX, mouthY);
+            if (isMouthMirrored) ctx.scale(-1, 1);
 
-                const baseScale = (curW / PREVIEW_WIDTH);
-                const drawW = mouthImg.naturalWidth * mouthScale * baseScale * 0.5;
-                const drawH = mouthImg.naturalHeight * mouthScale * baseScale * 0.5;
-                ctx.drawImage(mouthImg, -drawW / 2, -drawH / 2, drawW, drawH);
-                ctx.restore();
-            } else {
-                console.error(`The mouth asset ${mouthImg.src} must be a PNG file.`);
-            }
-        } else if (mouthImg && !mouthImg.complete) {
-            console.warn(`Mouth image ${mouthImg.src} is still loading. Draw skipped to avoid white box.`);
+            const baseScale = (curW / PREVIEW_WIDTH);
+            const drawW = mouthImg.naturalWidth * mouthScale * baseScale * 0.5;
+            const drawH = mouthImg.naturalHeight * mouthScale * baseScale * 0.5;
+            ctx.drawImage(mouthImg, -drawW / 2, -drawH / 2, drawW, drawH);
+            ctx.restore();
         }
 
         ctx.restore();
     }
 
-    // Throttle Loop to target FPS
     function renderLoop(timestamp) {
         if (audioElement.paused && !isExporting) {
             currentMouthKey = 'closed';
@@ -200,14 +179,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ------------------------------------------------------------------
-    // 5. AUDIO ANALYZER (Zero Allocation & 4 Threshold States)
+    // 5. AUDIO ANALYZER (Mapped to all 8 Mouth Shapes)
     // ------------------------------------------------------------------
     function setupAudioContext() {
         if (!audioContext) {
             const AudioCtx = window.AudioContext || window.webkitAudioContext;
             audioContext = new AudioCtx();
             audioAnalyser = audioContext.createAnalyser();
-            audioAnalyser.fftSize = 128; // Smaller FFT size = faster processing
+            audioAnalyser.fftSize = 128;
 
             audioDataArray = new Uint8Array(audioAnalyser.frequencyBinCount);
 
@@ -228,15 +207,23 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         const average = sum / len;
 
-        // 4 Simple thresholds
-        if (average < 12) {
+        // Audio Threshold Mapping for 8 Mouth Shapes
+        if (average < 8) {
             currentMouthKey = 'closed';
-        } else if (average < 35) {
+        } else if (average < 18) {
+            currentMouthKey = 'tiny';
+        } else if (average < 28) {
             currentMouthKey = 'small';
-        } else if (average < 65) {
+        } else if (average < 38) {
+            currentMouthKey = 'round_o';
+        } else if (average < 48) {
             currentMouthKey = 'medium';
-        } else {
+        } else if (average < 58) {
+            currentMouthKey = 'wide';
+        } else if (average < 68) {
             currentMouthKey = 'large';
+        } else {
+            currentMouthKey = 'smile';
         }
     }
 
@@ -393,7 +380,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('touchend', endDrag);
 
     // ------------------------------------------------------------------
-    // 7. FAST EXPORT ENGINE (Switch Resolution to 720x1280 during export)
+    // 7. FAST EXPORT ENGINE
     // ------------------------------------------------------------------
     exportBtn.addEventListener('click', async () => {
         if (!audioElement.src) return;
