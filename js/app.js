@@ -12,10 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const EXPORT_HEIGHT = 1280;
 
     const canvas = document.getElementById('animCanvas');
-    // Enabled alpha channel to correctly composite transparent PNG overlays
     const ctx = canvas.getContext('2d', { alpha: true });
 
-    // Set initial preview resolution
     canvas.width = PREVIEW_WIDTH;
     canvas.height = PREVIEW_HEIGHT;
 
@@ -42,7 +40,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const offscreenCharCanvas = document.createElement('canvas');
     const offscreenCharCtx = offscreenCharCanvas.getContext('2d', { alpha: true });
 
-    // Reduced to only 4 essential mouth shapes
     const mouthImages = {
         closed: new Image(),
         small: new Image(),
@@ -58,7 +55,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     Object.keys(mouthPaths).forEach(key => {
         mouthImages[key].crossOrigin = "anonymous";
-        mouthImages[key].onload = () => drawCanvas();
+        mouthImages[key].onload = () => {
+            console.log(`Loaded mouth asset: ${mouthPaths[key]}`);
+            drawCanvas();
+        };
+        mouthImages[key].onerror = (e) => {
+            console.error(`Failed to load mouth asset: ${mouthPaths[key]}`, e);
+        };
         mouthImages[key].src = mouthPaths[key];
     });
 
@@ -68,9 +71,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let mouthScale = 1;
     let mouthOpacity = 1;
 
-    // Normalized Transforms (0 to 1 relative ratios for dynamic resolution switching)
     let charTransform = { xRatio: 0, yRatio: 0, scaleRatio: 1 };
-    let mouthTransform = { xRatio: 0.5, yRatio: 0.58 }; // Centered relative ratio
+    let mouthTransform = { xRatio: 0.5, yRatio: 0.58 };
 
     // Interaction Drag States
     let isDragging = false;
@@ -82,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let audioContext = null;
     let audioAnalyser = null;
     let audioSource = null;
-    let audioDataArray = null; // Reused Uint8Array to avoid Garbage Collection
+    let audioDataArray = null;
     const audioElement = new Audio();
 
     // Export & Animation Loop Controls
@@ -90,8 +92,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let recordedChunks = [];
     let isExporting = false;
     let lastFrameTime = 0;
-    const previewFPS = 20; // 20 FPS for smooth preview on mobile
-    const exportFPS = 24;  // 24 FPS optimal for Shorts/Reels
+    const previewFPS = 20;
+    const exportFPS = 24;
 
     // Initial Load
     loadCharacter('assets/characters/boy.png');
@@ -102,13 +104,12 @@ document.addEventListener('DOMContentLoaded', () => {
     function loadCharacter(src) {
         charImage.crossOrigin = "anonymous";
         charImage.onload = () => {
-            // Cache loaded image into OffscreenCanvas at base resolution
+            console.log(`Loaded character asset: ${src}`);
             offscreenCharCanvas.width = charImage.naturalWidth;
             offscreenCharCanvas.height = charImage.naturalHeight;
             offscreenCharCtx.clearRect(0, 0, offscreenCharCanvas.width, offscreenCharCanvas.height);
             offscreenCharCtx.drawImage(charImage, 0, 0);
 
-            // Compute relative aspect ratio transforms
             const currentW = canvas.width;
             const currentH = canvas.height;
             const hRatio = currentW / charImage.naturalWidth;
@@ -119,6 +120,9 @@ document.addEventListener('DOMContentLoaded', () => {
             charTransform.yRatio = ((currentH - charImage.naturalHeight * scale) / 2) / currentH;
 
             drawCanvas();
+        };
+        charImage.onerror = (e) => {
+            console.error(`Failed to load character asset: ${src}`, e);
         };
         charImage.src = src;
     }
@@ -131,36 +135,44 @@ document.addEventListener('DOMContentLoaded', () => {
         const curH = canvas.height;
         ctx.clearRect(0, 0, curW, curH);
 
-        // Ensure clean alpha blending state on every animation frame
         ctx.save();
         ctx.globalCompositeOperation = 'source-over';
 
-        // Draw Cached Character from Offscreen Canvas
         if (offscreenCharCanvas.width > 0) {
-            const drawX = charTransform.xRatio * curW;
-            const drawY = charTransform.yRatio * curH;
-            const drawW = offscreenCharCanvas.width * (charTransform.scaleRatio * curW);
-            const drawH = offscreenCharCanvas.height * (charTransform.scaleRatio * curW);
-            ctx.drawImage(offscreenCharCanvas, drawX, drawY, drawW, drawH);
+            if (charImage.complete && charImage.naturalWidth > 0 && charImage.src.endsWith('.png')) {
+                const drawX = charTransform.xRatio * curW;
+                const drawY = charTransform.yRatio * curH;
+                const drawW = offscreenCharCanvas.width * (charTransform.scaleRatio * curW);
+                const drawH = offscreenCharCanvas.height * (charTransform.scaleRatio * curW);
+                ctx.drawImage(offscreenCharCanvas, drawX, drawY, drawW, drawH);
+            } else if (!charImage.complete) {
+                console.warn("Character image is still loading. Draw skipped to avoid white box.");
+            } else if (!charImage.src.endsWith('.png')) {
+                 console.error("The character image must be a PNG file.");
+            }
         }
 
-        // Draw Mouth Overlay
         const mouthImg = mouthImages[currentMouthKey];
         if (mouthImg && mouthImg.complete && mouthImg.naturalWidth !== 0) {
-            ctx.save();
-            ctx.globalCompositeOperation = 'source-over';
-            ctx.globalAlpha = mouthOpacity;
-            const mouthX = mouthTransform.xRatio * curW;
-            const mouthY = mouthTransform.yRatio * curH;
-            ctx.translate(mouthX, mouthY);
-            if (isMouthMirrored) ctx.scale(-1, 1);
+            if (mouthImg.src.endsWith('.png')) {
+                ctx.save();
+                ctx.globalCompositeOperation = 'source-over';
+                ctx.globalAlpha = mouthOpacity;
+                const mouthX = mouthTransform.xRatio * curW;
+                const mouthY = mouthTransform.yRatio * curH;
+                ctx.translate(mouthX, mouthY);
+                if (isMouthMirrored) ctx.scale(-1, 1);
 
-            // Responsive Scaling based on current canvas width
-            const baseScale = (curW / PREVIEW_WIDTH);
-            const drawW = mouthImg.naturalWidth * mouthScale * baseScale * 0.5;
-            const drawH = mouthImg.naturalHeight * mouthScale * baseScale * 0.5;
-            ctx.drawImage(mouthImg, -drawW / 2, -drawH / 2, drawW, drawH);
-            ctx.restore();
+                const baseScale = (curW / PREVIEW_WIDTH);
+                const drawW = mouthImg.naturalWidth * mouthScale * baseScale * 0.5;
+                const drawH = mouthImg.naturalHeight * mouthScale * baseScale * 0.5;
+                ctx.drawImage(mouthImg, -drawW / 2, -drawH / 2, drawW, drawH);
+                ctx.restore();
+            } else {
+                console.error(`The mouth asset ${mouthImg.src} must be a PNG file.`);
+            }
+        } else if (mouthImg && !mouthImg.complete) {
+            console.warn(`Mouth image ${mouthImg.src} is still loading. Draw skipped to avoid white box.`);
         }
 
         ctx.restore();
@@ -197,7 +209,6 @@ document.addEventListener('DOMContentLoaded', () => {
             audioAnalyser = audioContext.createAnalyser();
             audioAnalyser.fftSize = 128; // Smaller FFT size = faster processing
 
-            // Reusable single Uint8Array instance
             audioDataArray = new Uint8Array(audioAnalyser.frequencyBinCount);
 
             audioSource = audioContext.createMediaElementSource(audioElement);
@@ -209,7 +220,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function analyzeAudioEnergy() {
         if (!audioAnalyser || !audioDataArray) return;
 
-        // Populate existing array without allocating new memory
         audioAnalyser.getByteFrequencyData(audioDataArray);
         let sum = 0;
         const len = audioDataArray.length;
@@ -332,7 +342,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
     }
 
-    // Touch & Mouse Drag Handlers
     function getCoords(e) {
         const rect = canvas.getBoundingClientRect();
         const clientX = e.touches ? e.touches[0].clientX : e.clientX;
@@ -392,7 +401,6 @@ document.addEventListener('DOMContentLoaded', () => {
         setupAudioContext();
         if (audioContext.state === 'suspended') await audioContext.resume();
 
-        // Switch Canvas Resolution to 720x1280 for Export
         canvas.width = EXPORT_WIDTH;
         canvas.height = EXPORT_HEIGHT;
         drawCanvas();
@@ -402,7 +410,6 @@ document.addEventListener('DOMContentLoaded', () => {
         exportBtn.disabled = true;
         exportBtn.textContent = "Rendering (24 FPS)...";
 
-        // Capture Stream at fixed 24 FPS
         const canvasStream = canvas.captureStream(exportFPS);
         const dest = audioContext.createMediaStreamDestination();
         audioSource.connect(dest);
@@ -413,7 +420,6 @@ document.addEventListener('DOMContentLoaded', () => {
         ]);
 
         recordedChunks = [];
-        // Use default standard webm container for low CPU encoding
         mediaRecorder = new MediaRecorder(combinedStream);
 
         mediaRecorder.ondataavailable = (e) => {
@@ -428,7 +434,6 @@ document.addEventListener('DOMContentLoaded', () => {
             a.download = `talking-photo-${Date.now()}.webm`;
             a.click();
 
-            // Reset back to Low-Res Preview (360x640)
             canvas.width = PREVIEW_WIDTH;
             canvas.height = PREVIEW_HEIGHT;
             isExporting = false;
