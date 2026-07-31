@@ -1371,9 +1371,19 @@
           ctx.globalAlpha = state.mouthTransform.opacity;
         }
 
-        const mw = visemeImg.width || 120;
-        const mh = visemeImg.height || 60;
-        ctx.drawImage(visemeImg, -mw / 2, -mh / 2, mw, mh);
+      const baseWidth = 90;
+const ratio = visemeImg.height / visemeImg.width;
+
+const mw = baseWidth * state.mouthTransform.scale;
+const mh = mw * ratio;
+
+ctx.drawImage(
+    visemeImg,
+    -mw / 2,
+    -mh / 2,
+    mw,
+    mh
+);
         ctx.restore();
       }
 
