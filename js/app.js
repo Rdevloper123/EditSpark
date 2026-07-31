@@ -1,6 +1,6 @@
 /**
  * Talking Photo Video Maker - 2-State (Open/Closed) Lip Sync Engine
- * Simple, Clean and Fast Execution
+ * Optimized for Smooth Teeth/Mouth Animation with Hold Delay & Offscreen Canvas
  */
 document.addEventListener('DOMContentLoaded', () => {
     // ------------------------------------------------------------------
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const exportBtn = document.getElementById('exportBtn');
 
     // ------------------------------------------------------------------
-    // 2. ONLY 2 MOUTH STATES (CLOSED & OPEN)
+    // 2. 2-STATE MOUTH MAPPING (mouth_closed.png & mouth_medium.png)
     // ------------------------------------------------------------------
     const charImage = new Image();
     const offscreenCharCanvas = document.createElement('canvas');
@@ -43,9 +43,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const mouthCanvases = {};
     const mouthPaths = {
         closed: 'assets/mouths/mouth_closed.png',
-        open: 'assets/mouths/mouth_small.png' // Aap chaho to mouth_wide.png ya mouth_medium.png bhi rakh sakte ho
+        open: 'assets/mouths/mouth_medium.png'
     };
 
+    // Pre-process mouth images into clean transparent offscreen canvases
     Object.keys(mouthPaths).forEach(key => {
         const img = new Image();
         img.crossOrigin = "anonymous";
@@ -73,6 +74,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let charTransform = { xRatio: 0, yRatio: 0, scaleRatio: 1 };
     let mouthTransform = { xRatio: 0.5, yRatio: 0.58 };
+
+    // Flicker-Fix Delay Counter
+    let openHoldFrames = 0;
 
     // Interaction Drag States
     let isDragging = false;
@@ -144,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.restore();
         }
 
-        // Draw Mouth Overlay (Only Closed or Open)
+        // Draw Mouth Overlay
         const mouthCanvas = mouthCanvases[currentMouthKey];
         if (mouthCanvas && mouthCanvas.width > 0) {
             ctx.save();
@@ -168,6 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderLoop(timestamp) {
         if (audioElement.paused && !isExporting) {
             currentMouthKey = 'closed';
+            openHoldFrames = 0;
             drawCanvas();
             return;
         }
@@ -186,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ------------------------------------------------------------------
-    // 5. SIMPLE AUDIO ANALYZER (OPEN / CLOSED TOGGLE)
+    // 5. AUDIO ANALYZER WITH FLICKER-FREE HOLD DELAY
     // ------------------------------------------------------------------
     function setupAudioContext() {
         if (!audioContext) {
@@ -214,11 +219,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         const average = sum / len;
 
-        // Simple Rule: Agar audio volume threshold (12) se upar hai toh mouth 'open' otherwise 'closed'
+        // Audio Threshold & Hold Delay Logic
         if (average > 12) {
             currentMouthKey = 'open';
+            openHoldFrames = 3; // Speech frames hold delay for smooth rendering
         } else {
-            currentMouthKey = 'closed';
+            if (openHoldFrames > 0) {
+                openHoldFrames--;
+                currentMouthKey = 'open';
+            } else {
+                currentMouthKey = 'closed';
+            }
         }
     }
 
@@ -283,6 +294,7 @@ document.addEventListener('DOMContentLoaded', () => {
         playBtn.disabled = false;
         pauseBtn.disabled = true;
         currentMouthKey = 'closed';
+        openHoldFrames = 0;
         drawCanvas();
     });
 
@@ -295,6 +307,7 @@ document.addEventListener('DOMContentLoaded', () => {
         playBtn.disabled = false;
         pauseBtn.disabled = true;
         currentMouthKey = 'closed';
+        openHoldFrames = 0;
         drawCanvas();
     });
 
@@ -424,6 +437,7 @@ document.addEventListener('DOMContentLoaded', () => {
             playBtn.disabled = false;
             pauseBtn.disabled = true;
             currentMouthKey = 'closed';
+            openHoldFrames = 0;
             drawCanvas();
         };
 
