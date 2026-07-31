@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const canvas = document.getElementById('animCanvas');
     // Enabled alpha channel to correctly composite transparent PNG overlays
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { alpha: true });
 
     // Set initial preview resolution
     canvas.width = PREVIEW_WIDTH;
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ------------------------------------------------------------------
     const charImage = new Image();
     const offscreenCharCanvas = document.createElement('canvas');
-    const offscreenCharCtx = offscreenCharCanvas.getContext('2d');
+    const offscreenCharCtx = offscreenCharCanvas.getContext('2d', { alpha: true });
 
     // Reduced to only 4 essential mouth shapes
     const mouthImages = {
@@ -131,6 +131,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const curH = canvas.height;
         ctx.clearRect(0, 0, curW, curH);
 
+        // Ensure clean alpha blending state on every animation frame
+        ctx.save();
+        ctx.globalCompositeOperation = 'source-over';
+
         // Draw Cached Character from Offscreen Canvas
         if (offscreenCharCanvas.width > 0) {
             const drawX = charTransform.xRatio * curW;
@@ -144,6 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const mouthImg = mouthImages[currentMouthKey];
         if (mouthImg && mouthImg.complete && mouthImg.naturalWidth !== 0) {
             ctx.save();
+            ctx.globalCompositeOperation = 'source-over';
             ctx.globalAlpha = mouthOpacity;
             const mouthX = mouthTransform.xRatio * curW;
             const mouthY = mouthTransform.yRatio * curH;
@@ -157,6 +162,8 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.drawImage(mouthImg, -drawW / 2, -drawH / 2, drawW, drawH);
             ctx.restore();
         }
+
+        ctx.restore();
     }
 
     // Throttle Loop to target FPS
