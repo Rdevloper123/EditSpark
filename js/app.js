@@ -1,12 +1,23 @@
 /**
- * Talking Photo Video Maker - Main Application Logic
- * Optimized for high performance, zero external dependencies, and smooth lip sync.
+ * Talking Photo Video Maker - Ultra High-Performance Architecture
+ * Optimized for low memory footprint, Offscreen Canvas Caching & Zero Garbage Collection.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Canvas & Context Setup
+    // ------------------------------------------------------------------
+    // 1. DYNAMIC CANVAS RESOLUTIONS (Preview vs Export)
+    // ------------------------------------------------------------------
+    const PREVIEW_WIDTH = 360;
+    const PREVIEW_HEIGHT = 640;
+    const EXPORT_WIDTH = 720;
+    const EXPORT_HEIGHT = 1280;
+
     const canvas = document.getElementById('animCanvas');
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { alpha: false }); // Disable alpha channel on main canvas for performance
+
+    // Set initial preview resolution
+    canvas.width = PREVIEW_WIDTH;
+    canvas.height = PREVIEW_HEIGHT;
 
     // UI Element References
     const charThumbs = document.querySelectorAll('.char-thumb');
@@ -24,154 +35,169 @@ document.addEventListener('DOMContentLoaded', () => {
     const stopBtn = document.getElementById('stopBtn');
     const exportBtn = document.getElementById('exportBtn');
 
-    // Image Caching (Reusable Objects to avoid memory allocation)
+    // ------------------------------------------------------------------
+    // 2. OFFSCREEN CANVAS CACHING & REUSABLE BUFFERS
+    // ------------------------------------------------------------------
     const charImage = new Image();
+    const offscreenCharCanvas = document.createElement('canvas');
+    const offscreenCharCtx = offscreenCharCanvas.getContext('2d');
+
+    // Reduced to only 4 essential mouth shapes
     const mouthImages = {
         closed: new Image(),
-        tiny: new Image(),
         small: new Image(),
         medium: new Image(),
-        large: new Image(),
-        wide: new Image(),
-        round_o: new Image(),
-        smile: new Image()
+        large: new Image()
     };
 
-    // Load Mouth Images from Assets
     const mouthPaths = {
         closed: 'assets/mouths/mouth_closed.png',
-        tiny: 'assets/mouths/mouth_tiny.png',
         small: 'assets/mouths/mouth_small.png',
         medium: 'assets/mouths/mouth_medium.png',
-        large: 'assets/mouths/mouth_large.png',
-        wide: 'assets/mouths/mouth_wide.png',
-        round_o: 'assets/mouths/mouth_round_o.png',
-        smile: 'assets/mouths/mouth_smile.png'
+        large: 'assets/mouths/mouth_large.png'
     };
 
     Object.keys(mouthPaths).forEach(key => {
         mouthImages[key].src = mouthPaths[key];
     });
 
-    // Application State Variables
+    // Application States
     let currentMouthKey = 'closed';
     let isMouthMirrored = false;
     let mouthScale = 1;
     let mouthOpacity = 1;
 
-    // Transform State (Character)
-    let charTransform = { x: 0, y: 0, scale: 1 };
-    
-    // Transform State (Mouth relative to Canvas)
-    let mouthTransform = { x: 540, y: 1100 }; // Centered default for 1080x1920
+    // Normalized Transforms (0 to 1 relative ratios for dynamic resolution switching)
+    let charTransform = { xRatio: 0, yRatio: 0, scaleRatio: 1 };
+    let mouthTransform = { xRatio: 0.5, yRatio: 0.58 }; // Centered relative ratio
 
-    // Interaction Drag State
+    // Interaction Drag States
     let isDragging = false;
-    let dragTarget = null; // 'character' or 'mouth'
+    let dragTarget = null;
     let startX = 0;
     let startY = 0;
-    let initialPinchDistance = null;
 
-    // Web Audio API & Audio Elements
+    // Web Audio API & Single Pre-allocated Buffer
     let audioContext = null;
     let audioAnalyser = null;
     let audioSource = null;
-    let audioBuffer = null;
+    let audioDataArray = null; // Reused Uint8Array to avoid Garbage Collection
     const audioElement = new Audio();
-    
-    // Export Variables
+
+    // Export & Animation Loop Controls
     let mediaRecorder = null;
     let recordedChunks = [];
     let isExporting = false;
+    let lastFrameTime = 0;
+    const previewFPS = 20; // 20 FPS for smooth preview on mobile
+    const exportFPS = 24;  // 24 FPS optimal for Shorts/Reels
 
-    // Initial Character Setup
+    // Initial Load
     loadCharacter('assets/characters/boy.png');
 
+    // ------------------------------------------------------------------
+    // 3. CHARACTER CACHING ENGINE
+    // ------------------------------------------------------------------
     function loadCharacter(src) {
         charImage.crossOrigin = "anonymous";
         charImage.onload = () => {
-            // Reset character transform to cover canvas proportionally
-            const hRatio = canvas.width / charImage.width;
-            const vRatio = canvas.height / charImage.height;
-            charTransform.scale = Math.max(hRatio, vRatio);
-            charTransform.x = (canvas.width - charImage.width * charTransform.scale) / 2;
-            charTransform.y = (canvas.height - charImage.height * charTransform.scale) / 2;
-            requestAnimationFrame(drawCanvas);
+            // Cache loaded image into OffscreenCanvas at base resolution
+            offscreenCharCanvas.width = charImage.naturalWidth;
+            offscreenCharCanvas.height = charImage.naturalHeight;
+            offscreenCharCtx.clearRect(0, 0, offscreenCharCanvas.width, offscreenCharCanvas.height);
+            offscreenCharCtx.drawImage(charImage, 0, 0);
+
+            // Compute relative aspect ratio transforms
+            const currentW = canvas.width;
+            const currentH = canvas.height;
+            const hRatio = currentW / charImage.naturalWidth;
+            const vRatio = currentH / charImage.naturalHeight;
+            
+            const scale = Math.max(hRatio, vRatio);
+            charTransform.scaleRatio = scale / currentW;
+            charTransform.xRatio = ((currentW - charImage.naturalWidth * scale) / 2) / currentW;
+            charTransform.yRatio = ((currentH - charImage.naturalHeight * scale) / 2) / currentH;
+
+            drawCanvas();
         };
         charImage.src = src;
     }
 
     // ------------------------------------------------------------------
-    // CANVAS RENDERING ENGINE (Single Animation Loop)
+    // 4. RENDERING ENGINE (Resolution Independent)
     // ------------------------------------------------------------------
-
     function drawCanvas() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const curW = canvas.width;
+        const curH = canvas.height;
 
-        // Draw Character
-        if (charImage.complete && charImage.naturalWidth !== 0) {
-            ctx.drawImage(
-                charImage,
-                charTransform.x,
-                charTransform.y,
-                charImage.width * charTransform.scale,
-                charImage.height * charTransform.scale
-            );
+        ctx.clearRect(0, 0, curW, curH);
+
+        // Draw Cached Character from Offscreen Canvas
+        if (offscreenCharCanvas.width > 0) {
+            const drawX = charTransform.xRatio * curW;
+            const drawY = charTransform.yRatio * curH;
+            const drawW = offscreenCharCanvas.width * (charTransform.scaleRatio * curW);
+            const drawH = offscreenCharCanvas.height * (charTransform.scaleRatio * curW);
+
+            ctx.drawImage(offscreenCharCanvas, drawX, drawY, drawW, drawH);
         }
 
-        // Draw Active Mouth Shape
-        const currentMouthImg = mouthImages[currentMouthKey];
-        if (currentMouthImg && currentMouthImg.complete && currentMouthImg.naturalWidth !== 0) {
+        // Draw Mouth Overlay
+        const mouthImg = mouthImages[currentMouthKey];
+        if (mouthImg && mouthImg.complete && mouthImg.naturalWidth !== 0) {
             ctx.save();
             ctx.globalAlpha = mouthOpacity;
-            
-            // Translate to Mouth Center
-            ctx.translate(mouthTransform.x, mouthTransform.y);
-            
-            // Apply Mirroring
-            if (isMouthMirrored) {
-                ctx.scale(-1, 1);
-            }
 
-            // Draw Mouth Scaled Centered
-            const drawW = currentMouthImg.width * mouthScale;
-            const drawH = currentMouthImg.height * mouthScale;
-            
-            ctx.drawImage(
-                currentMouthImg,
-                -drawW / 2,
-                -drawH / 2,
-                drawW,
-                drawH
-            );
-            
+            const mouthX = mouthTransform.xRatio * curW;
+            const mouthY = mouthTransform.yRatio * curH;
+
+            ctx.translate(mouthX, mouthY);
+            if (isMouthMirrored) ctx.scale(-1, 1);
+
+            // Responsive Scaling based on current canvas width
+            const baseScale = (curW / PREVIEW_WIDTH);
+            const drawW = mouthImg.naturalWidth * mouthScale * baseScale * 0.5;
+            const drawH = mouthImg.naturalHeight * mouthScale * baseScale * 0.5;
+
+            ctx.drawImage(mouthImg, -drawW / 2, -drawH / 2, drawW, drawH);
             ctx.restore();
         }
     }
 
-    // Main Loop triggered during playback
-    function renderLoop() {
-        if (!audioElement.paused || isExporting) {
-            analyzeAudioEnergy();
-            drawCanvas();
-            requestAnimationFrame(renderLoop);
-        } else {
+    // Throttle Loop to target FPS
+    function renderLoop(timestamp) {
+        if (audioElement.paused && !isExporting) {
             currentMouthKey = 'closed';
             drawCanvas();
+            return;
         }
+
+        const targetFPS = isExporting ? exportFPS : previewFPS;
+        const interval = 1000 / targetFPS;
+        const delta = timestamp - lastFrameTime;
+
+        if (delta >= interval) {
+            lastFrameTime = timestamp - (delta % interval);
+            analyzeAudioEnergy();
+            drawCanvas();
+        }
+
+        requestAnimationFrame(renderLoop);
     }
 
     // ------------------------------------------------------------------
-    // WEB AUDIO API ANALYZER (LIP SYNC)
+    // 5. AUDIO ANALYZER (Zero Allocation & 4 Threshold States)
     // ------------------------------------------------------------------
-
     function setupAudioContext() {
         if (!audioContext) {
             const AudioCtx = window.AudioContext || window.webkitAudioContext;
             audioContext = new AudioCtx();
             audioAnalyser = audioContext.createAnalyser();
-            audioAnalyser.fftSize = 256;
-            
+            audioAnalyser.fftSize = 128; // Smaller FFT size = faster processing
+
+            // Reusable single Uint8Array instance
+            audioDataArray = new Uint8Array(audioAnalyser.frequencyBinCount);
+
             audioSource = audioContext.createMediaElementSource(audioElement);
             audioSource.connect(audioAnalyser);
             audioAnalyser.connect(audioContext.destination);
@@ -179,77 +205,61 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function analyzeAudioEnergy() {
-        if (!audioAnalyser) return;
+        if (!audioAnalyser || !audioDataArray) return;
 
-        const dataArray = new Uint8Array(audioAnalyser.frequencyBinCount);
-        audioAnalyser.getByteFrequencyData(dataArray);
+        // Populate existing array without allocating new memory
+        audioAnalyser.getByteFrequencyData(audioDataArray);
 
-        // Calculate average volume energy
         let sum = 0;
-        for (let i = 0; i < dataArray.length; i++) {
-            sum += dataArray[i];
+        const len = audioDataArray.length;
+        for (let i = 0; i < len; i++) {
+            sum += audioDataArray[i];
         }
-        const average = sum / dataArray.length;
+        const average = sum / len;
 
-        // Smooth energy thresholding to prevent flicker
-        if (average < 8) {
+        // 4 Simple thresholds
+        if (average < 12) {
             currentMouthKey = 'closed';
-        } else if (average < 25) {
-            currentMouthKey = 'tiny';
-        } else if (average < 40) {
+        } else if (average < 35) {
             currentMouthKey = 'small';
-        } else if (average < 55) {
+        } else if (average < 65) {
             currentMouthKey = 'medium';
-        } else if (average < 70) {
-            currentMouthKey = 'large';
-        } else if (average < 85) {
-            currentMouthKey = 'wide';
-        } else if (average < 100) {
-            currentMouthKey = 'round_o';
         } else {
-            currentMouthKey = 'smile';
+            currentMouthKey = 'large';
         }
     }
 
     // ------------------------------------------------------------------
-    // EVENT LISTENERS & UI HANDLERS
+    // 6. EVENT LISTENERS & TOUCH CONTROLS
     // ------------------------------------------------------------------
-
-    // Character Selection
     charThumbs.forEach(thumb => {
         thumb.addEventListener('click', () => {
             charThumbs.forEach(t => t.classList.remove('active'));
             thumb.classList.add('active');
-            const charName = thumb.getAttribute('data-char');
-            loadCharacter(`assets/characters/${charName}.png`);
+            loadCharacter(`assets/characters/${thumb.getAttribute('data-char')}.png`);
         });
     });
 
-    // Custom Character Upload
     customCharInput.addEventListener('change', (e) => {
         const file = e.target.files[0];
         if (file) {
-            const url = URL.createObjectURL(file);
+            loadCharacter(URL.createObjectURL(file));
             charThumbs.forEach(t => t.classList.remove('active'));
-            loadCharacter(url);
         }
     });
 
-    // Audio File Upload
     audioFileInput.addEventListener('change', (e) => {
         const file = e.target.files[0];
         if (!file) return;
 
-        const url = URL.createObjectURL(file);
-        audioElement.src = url;
-
+        audioElement.src = URL.createObjectURL(file);
         audioElement.onloadedmetadata = () => {
             if (audioElement.duration > 60) {
-                alert('Please upload an audio file less than 60 seconds.');
+                alert('Audio file must be under 60 seconds.');
                 audioElement.src = '';
                 return;
             }
-            audioInfo.textContent = `${file.name}`;
+            audioInfo.textContent = file.name;
             durationTimeEl.textContent = formatTime(audioElement.duration);
             seekBar.max = audioElement.duration;
             seekBar.disabled = false;
@@ -259,12 +269,9 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     });
 
-    // Audio Controls
     playBtn.addEventListener('click', () => {
         setupAudioContext();
-        if (audioContext.state === 'suspended') {
-            audioContext.resume();
-        }
+        if (audioContext.state === 'suspended') audioContext.resume();
         audioElement.play();
         playBtn.disabled = true;
         pauseBtn.disabled = false;
@@ -303,7 +310,6 @@ document.addEventListener('DOMContentLoaded', () => {
         drawCanvas();
     });
 
-    // Mouth Controls
     mouthScaleSlider.addEventListener('input', (e) => {
         mouthScale = parseFloat(e.target.value);
         drawCanvas();
@@ -319,82 +325,45 @@ document.addEventListener('DOMContentLoaded', () => {
         drawCanvas();
     });
 
-    // Format Seconds to MM:SS
-    function formatTime(seconds) {
-        const mins = Math.floor(seconds / 60);
-        const secs = Math.floor(seconds % 60);
-        return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    function formatTime(secs) {
+        const m = Math.floor(secs / 60);
+        const s = Math.floor(secs % 60);
+        return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
     }
 
-    // ------------------------------------------------------------------
-    // CANVAS INTERACTION HANDLERS (Drag & Pinch Zoom)
-    // ------------------------------------------------------------------
-
-    function getCanvasCoords(e) {
+    // Touch & Mouse Drag Handlers
+    function getCoords(e) {
         const rect = canvas.getBoundingClientRect();
         const clientX = e.touches ? e.touches[0].clientX : e.clientX;
         const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-        
-        // Map viewport to internal canvas resolution (1080x1920)
-        const scaleX = canvas.width / rect.width;
-        const scaleY = canvas.height / rect.height;
-
         return {
-            x: (clientX - rect.left) * scaleX,
-            y: (clientY - rect.top) * scaleY
+            x: (clientX - rect.left) / rect.width,
+            y: (clientY - rect.top) / rect.height
         };
     }
 
-    function startInteraction(e) {
-        if (e.touches && e.touches.length === 2) {
-            // Touch pinch gesture initialization for scaling character
-            initialPinchDistance = Math.hypot(
-                e.touches[0].clientX - e.touches[1].clientX,
-                e.touches[0].clientY - e.touches[1].clientY
-            );
-            return;
-        }
-
-        const coords = getCanvasCoords(e);
+    function startDrag(e) {
+        const coords = getCoords(e);
         startX = coords.x;
         startY = coords.y;
 
-        // Hit detection on Mouth first
-        const distToMouth = Math.hypot(coords.x - mouthTransform.x, coords.y - mouthTransform.y);
-        if (distToMouth < 150) { // Hitbox radius around mouth center
-            dragTarget = 'mouth';
-        } else {
-            dragTarget = 'character';
-        }
+        const distToMouth = Math.hypot(coords.x - mouthTransform.xRatio, coords.y - mouthTransform.yRatio);
+        dragTarget = distToMouth < 0.2 ? 'mouth' : 'character';
         isDragging = true;
     }
 
-    function moveInteraction(e) {
-        if (e.touches && e.touches.length === 2 && initialPinchDistance) {
-            // Handle pinch zoom scaling on character
-            const currentDist = Math.hypot(
-                e.touches[0].clientX - e.touches[1].clientX,
-                e.touches[0].clientY - e.touches[1].clientY
-            );
-            const factor = currentDist / initialPinchDistance;
-            charTransform.scale *= factor;
-            initialPinchDistance = currentDist;
-            drawCanvas();
-            return;
-        }
-
+    function moveDrag(e) {
         if (!isDragging) return;
-
-        const coords = getCanvasCoords(e);
+        const coords = getCoords(e);
         const dx = coords.x - startX;
         const dy = coords.y - startY;
 
         if (dragTarget === 'mouth') {
-            mouthTransform.x += dx;
-            mouthTransform.y += dy;
-        } else if (dragTarget === 'character') {
-            charTransform.x += dx;
-            charTransform.y += dy;
+            mouthTransform.xRatio += dx;
+            mouthTransform.yRatio += dy;
+        } else {
+            charTransform.xRatio += dx;
+            charTransform.yRatio += dy;
         }
 
         startX = coords.x;
@@ -402,89 +371,69 @@ document.addEventListener('DOMContentLoaded', () => {
         drawCanvas();
     }
 
-    function endInteraction() {
+    function endDrag() {
         isDragging = false;
         dragTarget = null;
-        initialPinchDistance = null;
     }
 
-    // Pointer Event Registration
-    canvas.addEventListener('mousedown', startInteraction);
-    canvas.addEventListener('mousemove', moveInteraction);
-    window.addEventListener('mouseup', endInteraction);
+    canvas.addEventListener('mousedown', startDrag);
+    canvas.addEventListener('mousemove', moveDrag);
+    window.addEventListener('mouseup', endDrag);
 
-    canvas.addEventListener('touchstart', startInteraction, { passive: true });
-    canvas.addEventListener('touchmove', moveInteraction, { passive: true });
-    window.addEventListener('touchend', endInteraction);
-
-    // Mouse Wheel Scaling for Character
-    canvas.addEventListener('wheel', (e) => {
-        e.preventDefault();
-        const zoomFactor = e.deltaY < 0 ? 1.05 : 0.95;
-        charTransform.scale *= zoomFactor;
-        drawCanvas();
-    }, { passive: false });
+    canvas.addEventListener('touchstart', startDrag, { passive: true });
+    canvas.addEventListener('touchmove', moveDrag, { passive: true });
+    window.addEventListener('touchend', endDrag);
 
     // ------------------------------------------------------------------
-    // EXPORT ENGINE (Fast MediaRecorder WebM Export)
+    // 7. FAST EXPORT ENGINE (Switch Resolution to 720x1280 during export)
     // ------------------------------------------------------------------
-
     exportBtn.addEventListener('click', async () => {
-        if (!audioElement.src || audioElement.duration === 0) return;
+        if (!audioElement.src) return;
 
         setupAudioContext();
-        if (audioContext.state === 'suspended') {
-            await audioContext.resume();
-        }
+        if (audioContext.state === 'suspended') await audioContext.resume();
 
-        // Reset Audio and UI State
+        // Switch Canvas Resolution to 720x1280 for Export
+        canvas.width = EXPORT_WIDTH;
+        canvas.height = EXPORT_HEIGHT;
+        drawCanvas();
+
         audioElement.currentTime = 0;
         isExporting = true;
         exportBtn.disabled = true;
-        exportBtn.textContent = "Rendering Video...";
+        exportBtn.textContent = "Rendering (24 FPS)...";
 
-        // 1. Capture stream directly from canvas at 30 FPS
-        const canvasStream = canvas.captureStream(30);
-
-        // 2. Mix audio output stream with video stream
+        // Capture Stream at fixed 24 FPS
+        const canvasStream = canvas.captureStream(exportFPS);
         const dest = audioContext.createMediaStreamDestination();
         audioSource.connect(dest);
-        
+
         const combinedStream = new MediaStream([
             ...canvasStream.getVideoTracks(),
             ...dest.stream.getAudioTracks()
         ]);
 
-        // 3. Setup MediaRecorder
         recordedChunks = [];
-        const options = { mimeType: 'video/webm;codecs=vp8,opus' };
-        
-        try {
-            mediaRecorder = new MediaRecorder(combinedStream, options);
-        } catch (e) {
-            // Fallback for browsers with default WebM settings
-            mediaRecorder = new MediaRecorder(combinedStream);
-        }
+        // Use default standard webm container for low CPU encoding
+        mediaRecorder = new MediaRecorder(combinedStream);
 
-        mediaRecorder.ondataavailable = (event) => {
-            if (event.data && event.data.size > 0) {
-                recordedChunks.push(event.data);
-            }
+        mediaRecorder.ondataavailable = (e) => {
+            if (e.data.size > 0) recordedChunks.push(e.data);
         };
 
         mediaRecorder.onstop = () => {
-            // Package recorded chunks into a downloadable WebM Blob
             const blob = new Blob(recordedChunks, { type: 'video/webm' });
             const url = URL.createObjectURL(blob);
             
             const a = document.createElement('a');
             a.href = url;
             a.download = `talking-photo-${Date.now()}.webm`;
-            document.body.appendChild(a);
             a.click();
-            document.body.removeChild(a);
 
-            // Cleanup & Reset Controls
+            // Reset back to Low-Res Preview (360x640)
+            canvas.width = PREVIEW_WIDTH;
+            canvas.height = PREVIEW_HEIGHT;
+            
             isExporting = false;
             exportBtn.disabled = false;
             exportBtn.textContent = "Export WebM Video";
@@ -494,12 +443,10 @@ document.addEventListener('DOMContentLoaded', () => {
             drawCanvas();
         };
 
-        // Start Recording and Audio Playback simultaneously
         mediaRecorder.start();
         audioElement.play();
         requestAnimationFrame(renderLoop);
 
-        // Automatically Stop recording when audio finishes
         audioElement.onended = () => {
             if (mediaRecorder && mediaRecorder.state !== 'inactive') {
                 mediaRecorder.stop();
