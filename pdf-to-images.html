@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Primary Meta Tags -->
+  <title>Free PDF to Images Converter | Edit Spark</title>
+  <meta name="title" content="Free PDF to Images Converter | Edit Spark">
+  <meta name="description" content="Convert PDF pages to high-quality JPG or PNG images offline in your browser. 100% free, private, and secure with no file uploads to external servers.">
+  <meta name="keywords" content="pdf to image, pdf to jpg, pdf to png, convert pdf to images, free pdf converter, offline pdf converter, edit spark">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://edit-spark.vercel.app/pdf-to-images.html">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://edit-spark.vercel.app/pdf-to-images.html">
+  <meta property="og:title" content="Free PDF to Images Converter | Edit Spark">
+  <meta property="og:description" content="Convert PDF pages to high-quality JPG or PNG images offline in your browser. Fast, private, and completely free.">
+  <meta property="og:image" content="https://edit-spark.vercel.app/og-image.jpg">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://edit-spark.vercel.app/pdf-to-images.html">
+  <meta property="twitter:title" content="Free PDF to Images Converter | Edit Spark">
+  <meta property="twitter:description" content="Convert PDF pages to high-quality JPG or PNG images offline in your browser. Fast, private, and completely free.">
+  <meta property="twitter:image" content="https://edit-spark.vercel.app/og-image.jpg">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- External JS Libraries (CDN) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+  <!-- Schema.org JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "@id": "https://edit-spark.vercel.app/pdf-to-images.html#webapp",
+        "name": "Edit Spark PDF to Images Converter",
+        "url": "https://edit-spark.vercel.app/pdf-to-images.html",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript and HTML5 Canvas support",
+        "description": "Browser-based tool to convert PDF documents into JPG or PNG image files locally on your device.",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://edit-spark.vercel.app/pdf-to-images.html#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://edit-spark.vercel.app/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "PDF to Images",
+            "item": "https://edit-spark.vercel.app/pdf-to-images.html"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://edit-spark.vercel.app/pdf-to-images.html#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Are my files uploaded to a server?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. All conversion operations happen locally inside your browser using JavaScript and HTML5 Canvas. Your files are never transmitted across the internet."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is there a page limit for PDF conversion?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "There is no set page limit. Processing time depends entirely on your local system resources and memory."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Which output image formats are supported?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "You can export converted pages as either JPG or PNG formats."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I download all converted images at once?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, you can click the Download All (ZIP) button to save every extracted page in a single compressed file."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does this tool work on mobile phones?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, the layout and conversion engine are fully optimized for mobile, tablet, and desktop web browsers."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What DPI setting is used during conversion?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "By default, the converter uses a 2.0 scale factor (approx. 150–200 DPI) to ensure sharp text rendering without exhausting device memory."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do I need to install software or plugins?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No installation or browser extension is required. The utility runs directly in standard HTML5 compliant web browsers."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is this tool completely free to use?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, Edit Spark provides this converter free of charge with no hidden subscriptions or watermark additions."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I extract images from password-protected PDFs?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Protected documents must be unlocked before importing them into the converter interface."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What happens to my data if I close the browser tab?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Since all data resides in temporary memory (RAM), closing or refreshing the browser tab completely clears all processed data instantly."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    /* Custom Focus Outline for Accessibility */
+    a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
+      outline: 2px solid #10b981;
+      outline-offset: 2px;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col font-sans transition-colors duration-200">
+
+  <!-- Header & Navigation -->
+  <header class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="/" class="flex items-center space-x-3 focus:outline-none" aria-label="Edit Spark Home">
+        <div class="bg-brand-500 text-white p-2 rounded-xl flex items-center justify-center">
+          <i class="fa-solid fa-wand-magic-sparkles text-lg" aria-hidden="true"></i>
+        </div>
+        <span class="text-xl font-black tracking-tight text-slate-900 dark:text-white">Edit<span class="text-brand-500">Spark</span></span>
+      </a>
+
+      <div class="flex items-center space-x-4">
+        <!-- Dark Mode Toggle Button -->
+        <button id="themeToggle" type="button" aria-label="Toggle Dark Mode" class="p-2.5 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg text-sm transition-colors">
+          <i id="themeIcon" class="fa-solid fa-moon text-lg" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Conversion Application -->
+  <main class="flex-grow max-w-5xl mx-auto px-4 py-8 sm:py-12 w-full">
+    
+    <!-- Hero Heading Section -->
+    <div class="text-center max-w-3xl mx-auto mb-8">
+      <div class="inline-flex items-center space-x-2 bg-brand-50 dark:bg-brand-500/10 border border-brand-100 dark:border-brand-500/20 px-3 py-1 rounded-full text-xs font-semibold text-brand-700 dark:text-brand-500 mb-4">
+        <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
+        <span>100% Client-Side Processing</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+        PDF to Images Converter
+      </h1>
+      <p class="mt-3 text-sm sm:text-base text-slate-600 dark:text-slate-400">
+        Extract pages from your PDF files as JPG or PNG images directly in your browser. Secure, fast, and completely free.
+      </p>
+    </div>
+
+    <!-- Converter Card Component -->
+    <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 sm:p-8 shadow-sm">
+      
+      <!-- Drag & Drop Zone -->
+      <div id="dropZone" class="border-2 border-dashed border-slate-300 dark:border-slate-600 hover:border-brand-500 dark:hover:border-brand-500 rounded-xl p-8 sm:p-12 text-center bg-slate-50/50 dark:bg-slate-800/50 transition-colors cursor-pointer relative" role="region" aria-label="PDF File Upload Area">
+        <input type="file" id="fileInput" accept="application/pdf" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" aria-label="Upload PDF file">
+        <div class="space-y-4 pointer-events-none">
+          <div class="w-16 h-16 mx-auto bg-brand-50 dark:bg-slate-700 text-brand-500 rounded-full flex items-center justify-center text-2xl">
+            <i class="fa-solid fa-file-pdf" aria-hidden="true"></i>
+          </div>
+          <div>
+            <p class="text-base font-bold text-slate-900 dark:text-white">
+              Drag and drop your PDF here, or <span class="text-brand-500 underline">browse</span>
+            </p>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Supports standard PDF documents</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Controls & Conversion Settings (Hidden initially) -->
+      <div id="conversionControls" class="hidden mt-6 pt-6 border-t border-slate-200 dark:border-slate-700">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div class="flex items-center space-x-3 w-full sm:w-auto">
+            <label for="formatSelect" class="text-sm font-semibold text-slate-700 dark:text-slate-300">Format:</label>
+            <select id="formatSelect" class="bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-white text-sm font-medium rounded-lg px-3 py-2 border border-slate-300 dark:border-slate-600 focus:ring-2 focus:ring-brand-500">
+              <option value="image/jpeg">JPG (JPEG)</option>
+              <option value="image/png">PNG</option>
+            </select>
+          </div>
+
+          <div class="flex items-center space-x-3 w-full sm:w-auto justify-end">
+            <button id="resetBtn" type="button" class="px-4 py-2 text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
+              Clear File
+            </button>
+            <button id="convertBtn" type="button" class="px-6 py-2.5 bg-brand-500 hover:bg-brand-600 text-white font-bold text-sm rounded-lg shadow-sm transition-colors flex items-center space-x-2">
+              <i class="fa-solid fa-gear" aria-hidden="true"></i>
+              <span>Convert Pages</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Progress Indicator -->
+        <div id="progressContainer" class="hidden mt-6">
+          <div class="flex justify-between text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">
+            <span id="progressText">Processing document...</span>
+            <span id="progressPercent">0%</span>
+          </div>
+          <div class="w-full bg-slate-200 dark:bg-slate-700 h-2 rounded-full overflow-hidden">
+            <div id="progressBar" class="bg-brand-500 h-full w-0 transition-all duration-200"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Global Download Actions (Hidden until conversion ends) -->
+      <div id="downloadActions" class="hidden mt-6 pt-6 border-t border-slate-200 dark:border-slate-700 flex justify-between items-center">
+        <span id="outputSummary" class="text-xs font-bold text-slate-500 dark:text-slate-400"></span>
+        <button id="downloadZipBtn" type="button" class="px-5 py-2.5 bg-slate-900 dark:bg-slate-100 dark:text-slate-900 text-white font-bold text-sm rounded-lg shadow-sm hover:opacity-90 transition-opacity flex items-center space-x-2">
+          <i class="fa-solid fa-file-zipper" aria-hidden="true"></i>
+          <span>Download All (ZIP)</span>
+        </button>
+      </div>
+
+      <!-- Converted Image Output Grid -->
+      <div id="resultsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-6"></div>
+    </div>
+
+    <!-- Internal Tools Links Matrix -->
+    <section class="mt-12 bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700">
+      <h2 class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-4">Related Utilities</h2>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 text-center text-xs font-bold">
+        <a href="/compress-pdf" class="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-700/50 hover:bg-brand-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-colors">Compress PDF</a>
+        <a href="/merge-pdf" class="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-700/50 hover:bg-brand-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-colors">Merge PDF</a>
+        <a href="/split-pdf" class="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-700/50 hover:bg-brand-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-colors">Split PDF</a>
+        <a href="/compress-image" class="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-700/50 hover:bg-brand-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-colors">Image Compressor</a>
+        <a href="/jpg-to-pdf" class="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-700/50 hover:bg-brand-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-colors">JPG to PDF</a>
+        <a href="/pdf-compressor" class="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-700/50 hover:bg-brand-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-colors">PDF Compressor</a>
+      </div>
+    </section>
+
+    <!-- Comprehensive Written Content Section -->
+    <article class="mt-12 space-y-10 text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
+      
+      <!-- Introduction -->
+      <section class="space-y-3">
+        <h2 class="text-xl font-bold text-slate-900 dark:text-white">Convert PDF Documents into Image Formats Securely</h2>
+        <p>
+          Portable Document Format (PDF) files are widely used for sharing formal documents, reports, and scanned application forms across operating systems. However, uploading entire PDF files into presentations, image editors, or websites can be inconvenient. Converting individual document pages into image formats like JPG or PNG provides greater flexibility when embedding document visuals into other media.
+        </p>
+        <p>
+          Edit Spark provides a dedicated online converter designed to extract pages from PDF files without requiring third-party software installations. Built around modern browser capabilities, the tool processes your document directly inside memory using HTML5 Canvas rendering engine. This client-side approach ensures your files remain on your local machine throughout the conversion process.
+        </p>
+      </section>
+
+      <!-- Benefits -->
+      <section class="space-y-3">
+        <h2 class="text-xl font-bold text-slate-900 dark:text-white">Benefits of Client-Side PDF Image Extraction</h2>
+        <div class="grid sm:grid-cols-2 gap-4 pt-2">
+          <div class="p-4 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+            <h3 class="font-bold text-slate-900 dark:text-white mb-1">Guaranteed File Privacy</h3>
+            <p class="text-xs">Your documents never travel over public internet connections to external processing servers. All tasks run locally on your personal device.</p>
+          </div>
+          <div class="p-4 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+            <h3 class="font-bold text-slate-900 dark:text-white mb-1">Instant Execution</h3>
+            <p class="text-xs">Eliminates network transmission delays. Processing starts immediately upon file selection regardless of home broadband upload speeds.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Key Features -->
+      <section class="space-y-3">
+        <h2 class="text-xl font-bold text-slate-900 dark:text-white">Core Application Features</h2>
+        <ul class="list-disc pl-5 space-y-1.5">
+          <li><strong>Multiple Format Choices:</strong> Export extracted pages as JPG files for smaller file sizes or PNG files for lossless image clarity.</li>
+          <li><strong>Batch Export Capabilities:</strong> Download individual page images independently or package all generated outputs into a single ZIP archive.</li>
+          <li><strong>Drag-and-Drop Interface:</strong> Simple document import workflow designed for both desktop computers and mobile browser viewports.</li>
+          <li><strong>Zero Installation Required:</strong> Operates entirely through modern, web-standard JavaScript engines without requiring browser extensions.</li>
+        </ul>
+      </section>
+
+      <!-- Step by Step Guide -->
+      <section class="space-y-3">
+        <h2 class="text-xl font-bold text-slate-900 dark:text-white">How to Convert a PDF File to Images</h2>
+        <ol class="list-decimal pl-5 space-y-2">
+          <li><strong>Select or Drop File:</strong> Drag your PDF file into the designated upload area or click browse to choose a file from your file manager.</li>
+          <li><strong>Choose Output Preferences:</strong> Select your preferred output format (JPG or PNG) using the format selection menu.</li>
+          <li><strong>Start Conversion:</strong> Click the Convert Pages button to initiate page rendering. Monitor real-time progress via the status bar.</li>
+          <li><strong>Download Outputs:</strong> Save specific pages using individual download buttons beneath each preview, or click Download All (ZIP) to collect every page at once.</li>
+        </ol>
+      </section>
+
+      <!-- Privacy Explanation -->
+      <section class="p-5 rounded-xl bg-brand-50/50 dark:bg-slate-800 border border-brand-100 dark:border-slate-700 space-y-2">
+        <h2 class="text-base font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+          <i class="fa-solid fa-lock text-brand-500" aria-hidden="true"></i>
+          <span>Data Isolation & Privacy Protection</span>
+        </h2>
+        <p class="text-xs">
+          Traditional online file converters upload user documents to cloud servers, perform background conversion scripts, and serve download links back across the network. Edit Spark operates under an entirely client-side paradigm. By executing conversion scripts locally via client-side engines, confidential information—such as financial records, personal identification forms, and legal contracts—remains strictly inside your browser memory.
+        </p>
+      </section>
+
+      <!-- FAQ Section -->
+      <section class="space-y-4">
+        <h2 class="text-xl font-bold text-slate-900 dark:text-white">Frequently Asked Questions</h2>
+        <div class="space-y-3">
+          <details class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
+            <summary class="font-bold cursor-pointer text-slate-900 dark:text-white">Are my files uploaded to a server?</summary>
+            <p class="mt-2 text-xs">No. All conversion operations happen locally inside your browser using JavaScript and HTML5 Canvas. Your files are never transmitted across the internet.</p>
+          </details>
+          <details class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
+            <summary class="font-bold cursor-pointer text-slate-900 dark:text-white">Is there a page limit for PDF conversion?</summary>
+            <p class="mt-2 text-xs">There is no set page limit. Processing time depends entirely on your local system resources and memory.</p>
+          </details>
+          <details class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
+            <summary class="font-bold cursor-pointer text-slate-900 dark:text-white">Which output image formats are supported?</summary>
+            <p class="mt-2 text-xs">You can export converted pages as either JPG or PNG formats.</p>
+          </details>
+          <details class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
+            <summary class="font-bold cursor-pointer text-slate-900 dark:text-white">Can I download all converted images at once?</summary>
+            <p class="mt-2 text-xs">Yes, you can click the Download All (ZIP) button to save every extracted page in a single compressed file.</p>
+          </details>
+          <details class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
+            <summary class="font-bold cursor-pointer text-slate-900 dark:text-white">Does this tool work on mobile phones?</summary>
+            <p class="mt-2 text-xs">Yes, the layout and conversion engine are fully optimized for mobile, tablet, and desktop web browsers.</p>
+          </details>
+          <details class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
+            <summary class="font-bold cursor-pointer text-slate-900 dark:text-white">What DPI setting is used during conversion?</summary>
+            <p class="mt-2 text-xs">By default, the converter uses a 2.0 scale factor (approx. 150–200 DPI) to ensure sharp text rendering without exhausting device memory.</p>
+          </details>
+          <details class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
+            <summary class="font-bold cursor-pointer text-slate-900 dark:text-white">Do I need to install software or plugins?</summary>
+            <p class="mt-2 text-xs">No installation or browser extension is required. The utility runs directly in standard HTML5 compliant web browsers.</p>
+          </details>
+          <details class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
+            <summary class="font-bold cursor-pointer text-slate-900 dark:text-white">Is this tool completely free to use?</summary>
+            <p class="mt-2 text-xs">Yes, Edit Spark provides this converter free of charge with no hidden subscriptions or watermark additions.</p>
+          </details>
+          <details class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
+            <summary class="font-bold cursor-pointer text-slate-900 dark:text-white">Can I extract images from password-protected PDFs?</summary>
+            <p class="mt-2 text-xs">Protected documents must be unlocked before importing them into the converter interface.</p>
+          </details>
+          <details class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
+            <summary class="font-bold cursor-pointer text-slate-900 dark:text-white">What happens to my data if I close the browser tab?</summary>
+            <p class="mt-2 text-xs">Since all data resides in temporary memory (RAM), closing or refreshing the browser tab completely clears all processed data instantly.</p>
+          </details>
+        </div>
+      </section>
+
+      <!-- Conclusion -->
+      <section class="pt-4 border-t border-slate-200 dark:border-slate-700 text-center">
+        <p class="text-xs text-slate-500 dark:text-slate-400">
+          Edit Spark is committed to building fast, lightweight, and privacy-conscious web utilities for document handling and image processing.
+        </p>
+      </section>
+
+    </article>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 py-8 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 text-center space-y-4">
+      <nav class="flex justify-center items-center space-x-6 text-xs font-semibold text-slate-600 dark:text-slate-400">
+        <a href="/about" class="hover:text-brand-500 transition-colors">About</a>
+        <a href="/privacy" class="hover:text-brand-500 transition-colors">Privacy Policy</a>
+        <a href="/terms" class="hover:text-brand-500 transition-colors">Terms</a>
+        <a href="/contact" class="hover:text-brand-500 transition-colors">Contact</a>
+      </nav>
+      <p class="text-xs text-slate-400 dark:text-slate-500 font-medium">
+        © 2026 Edit Spark. All rights reserved. Built with browser-first web technologies.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Application Logic JavaScript -->
+  <script>
+    // PDF.js Worker Configuration
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+    // Application State Variables
+    let selectedFile = null;
+    let convertedImages = []; // Stores { pageNum, blob, dataUrl, format }
+
+    // DOM Elements
+    const dropZone = document.getElementById('dropZone');
+    const fileInput = document.getElementById('fileInput');
+    const conversionControls = document.getElementById('conversionControls');
+    const formatSelect = document.getElementById('formatSelect');
+    const convertBtn = document.getElementById('convertBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const progressContainer = document.getElementById('progressContainer');
+    const progressBar = document.getElementById('progressBar');
+    const progressText = document.getElementById('progressText');
+    const progressPercent = document.getElementById('progressPercent');
+    const resultsGrid = document.getElementById('resultsGrid');
+    const downloadActions = document.getElementById('downloadActions');
+    const downloadZipBtn = document.getElementById('downloadZipBtn');
+    const outputSummary = document.getElementById('outputSummary');
+
+    // Theme Management Script
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+
+    function initTheme() {
+      if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+        themeIcon.classList.replace('fa-moon', 'fa-sun');
+      } else {
+        document.documentElement.classList.remove('dark');
+        themeIcon.classList.replace('fa-sun', 'fa-moon');
+      }
+    }
+
+    themeToggle.addEventListener('click', () => {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.theme = isDark ? 'dark' : 'light';
+      themeIcon.classList.toggle('fa-sun', isDark);
+      themeIcon.classList.toggle('fa-moon', !isDark);
+    });
+
+    initTheme();
+
+    // Event Handlers for Drag & Drop
+    ['dragenter', 'dragover'].forEach(eventName => {
+      dropZone.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        dropZone.classList.add('border-brand-500', 'bg-brand-50/20');
+      }, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+      dropZone.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        dropZone.classList.remove('border-brand-500', 'bg-brand-50/20');
+      }, false);
+    });
+
+    dropZone.addEventListener('drop', (e) => {
+      const dt = e.dataTransfer;
+      const files = dt.files;
+      if (files.length > 0 && files[0].type === 'application/pdf') {
+        handleFileSelection(files[0]);
+      }
+    });
+
+    fileInput.addEventListener('change', (e) => {
+      if (e.target.files.length > 0) {
+        handleFileSelection(e.target.files[0]);
+      }
+    });
+
+    function handleFileSelection(file) {
+      selectedFile = file;
+      conversionControls.classList.remove('hidden');
+      resetBtn.classList.remove('hidden');
+      clearResults();
+    }
+
+    resetBtn.addEventListener('click', () => {
+      selectedFile = null;
+      fileInput.value = '';
+      conversionControls.classList.add('hidden');
+      progressContainer.classList.add('hidden');
+      downloadActions.classList.add('hidden');
+      clearResults();
+    });
+
+    function clearResults() {
+      convertedImages = [];
+      resultsGrid.innerHTML = '';
+      downloadActions.classList.add('hidden');
+    }
+
+    // PDF Processing Logic
+    convertBtn.addEventListener('click', async () => {
+      if (!selectedFile) return;
+
+      clearResults();
+      progressContainer.classList.remove('hidden');
+      convertBtn.disabled = true;
+      convertBtn.classList.add('opacity-50');
+
+      try {
+        const fileArrayBuffer = await selectedFile.arrayBuffer();
+        const pdfDoc = await pdfjsLib.getDocument({ data: fileArrayBuffer }).promise;
+        const totalPages = pdfDoc.numPages;
+        const selectedMime = formatSelect.value;
+        const ext = selectedMime === 'image/png' ? 'png' : 'jpg';
+
+        for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
+          // Update Progress
+          const percent = Math.round((pageNum / totalPages) * 100);
+          progressBar.style.width = percent + '%';
+          progressPercent.textContent = percent + '%';
+          progressText.textContent = `Rendering page ${pageNum} of ${totalPages}...`;
+
+          // Render Page to Canvas
+          const page = await pdfDoc.getPage(pageNum);
+          const viewport = page.getViewport({ scale: 2.0 }); // High-DPI scale factor
+
+          const canvas = document.createElement('canvas');
+          const context = canvas.getContext('2d');
+          canvas.height = viewport.height;
+          canvas.width = viewport.width;
+
+          await page.render({ canvasContext: context, viewport: viewport }).promise;
+
+          // Convert Canvas to Blob & DataURL
+          const dataUrl = canvas.toDataURL(selectedMime, 0.92);
+          const blob = await new Promise(resolve => canvas.toBlob(resolve, selectedMime, 0.92));
+
+          const imageData = {
+            pageNum,
+            blob,
+            dataUrl,
+            filename: `page_${pageNum}.${ext}`
+          };
+
+          convertedImages.push(imageData);
+          renderImageCard(imageData);
+        }
+
+        // Conversion Completed
+        progressText.textContent = 'Conversion Complete!';
+        outputSummary.textContent = `Extracted ${totalPages} page(s) successfully.`;
+        downloadActions.classList.remove('hidden');
+
+      } catch (error) {
+        console.error('PDF Processing Error:', error);
+        progressText.textContent = 'Failed to process PDF file. Ensure file is unlocked and valid.';
+      } finally {
+        convertBtn.disabled = false;
+        convertBtn.classList.remove('opacity-50');
+      }
+    });
+
+    // Render Thumbnail Card for Converted Page
+    function renderImageCard(imageData) {
+      const card = document.createElement('div');
+      card.className = 'bg-slate-50 dark:bg-slate-700/50 rounded-xl p-3 border border-slate-200 dark:border-slate-600 flex flex-col justify-between space-y-3';
+
+      card.innerHTML = `
+        <div class="overflow-hidden rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 aspect-[3/4] flex items-center justify-center">
+          <img src="${imageData.dataUrl}" alt="Page ${imageData.pageNum}" class="object-contain max-h-full max-w-full" loading="lazy">
+        </div>
+        <div class="flex items-center justify-between pt-1">
+          <span class="text-xs font-bold text-slate-700 dark:text-slate-300">Page ${imageData.pageNum}</span>
+          <a href="${imageData.dataUrl}" download="${imageData.filename}" class="px-3 py-1.5 bg-brand-500 hover:bg-brand-600 text-white text-xs font-bold rounded-md transition-colors flex items-center space-x-1">
+            <i class="fa-solid fa-download" aria-hidden="true"></i>
+            <span>Save</span>
+          </a>
+        </div>
+      `;
+
+      resultsGrid.appendChild(card);
+    }
+
+    // ZIP Archive Export Logic
+    downloadZipBtn.addEventListener('click', async () => {
+      if (convertedImages.length === 0) return;
+
+      const zip = new JSZip();
+      convertedImages.forEach(img => {
+        zip.file(img.filename, img.blob);
+      });
+
+      downloadZipBtn.disabled = true;
+      downloadZipBtn.innerText = 'Creating ZIP...';
+
+      const zipBlob = await zip.generateAsync({ type: 'blob' });
+      const downloadUrl = URL.createObjectURL(zipBlob);
+
+      const link = document.createElement('a');
+      link.href = downloadUrl;
+      link.download = `${selectedFile.name.replace(/\.[^/.]+$/, '')}_images.zip`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      URL.revokeObjectURL(downloadUrl);
+      downloadZipBtn.disabled = false;
+      downloadZipBtn.innerHTML = `<i class="fa-solid fa-file-zipper" aria-hidden="true"></i> <span>Download All (ZIP)</span>`;
+    });
+  </script>
+</body>
+</html>
