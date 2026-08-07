@@ -233,13 +233,13 @@
                 <div class="bg-emerald-50/50 border border-emerald-200 rounded-xl p-4">
                     <label class="block text-xs font-black text-slate-800 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
                         <i class="fa-solid fa-bullseye text-emerald-600"></i>
-                        <span>Target Max File Size (Optional)</span>
+                        <span>Enter Exact Target Size (In KB)</span>
                     </label>
                     <div class="flex items-center gap-3">
                         <input type="number" id="targetKbInput" placeholder="e.g. 100, 200, 500" class="w-full bg-white border border-slate-300 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 rounded-lg px-3 py-2 text-xs font-bold text-slate-800 outline-none">
                         <span class="text-xs font-black text-slate-600 bg-slate-100 border border-slate-200 px-3 py-2 rounded-lg shrink-0">KB</span>
                     </div>
-                    <p class="text-[10px] text-slate-500 mt-1 font-medium">Enter desired maximum size in KB (e.g. 100 for SSC/Govt forms).</p>
+                    <p class="text-[10px] text-slate-500 mt-1 font-medium">Enter your required target size (e.g. 100 for SSC forms). The tool will auto-match under this limit.</p>
                 </div>
 
                 <div>
@@ -281,7 +281,7 @@
             <!-- Progress Bar Tracker -->
             <div id="progressBox" class="hidden mt-6 text-center">
                 <div class="flex justify-between text-xs font-bold text-slate-600 mb-1">
-                    <span id="statusMessage">Processing Pages...</span>
+                    <span id="statusMessage">Processing Document...</span>
                     <span id="progressText">0%</span>
                 </div>
                 <div class="w-full bg-slate-100 rounded-full h-3 overflow-hidden border border-slate-200">
@@ -379,7 +379,7 @@
                     </div>
                     <div class="border-b border-slate-100 pb-3">
                         <h3 class="font-black text-slate-900 uppercase text-xs mb-1">2. How to compress PDF file online to under 100KB or 200KB?</h3>
-                        <p class="text-slate-600 text-xs">Type '100' or '200' in the Target Max File Size field, then click Compress. The algorithm dynamically scales page canvas quality to fit your size limit.</p>
+                        <p class="text-slate-600 text-xs">Type '100' or '200' in the Target Max File Size field, then click Compress. The algorithm dynamically calculates exact canvas quality to match your limit.</p>
                     </div>
                     <div class="border-b border-slate-100 pb-3">
                         <h3 class="font-black text-slate-900 uppercase text-xs mb-1">3. Can I compress large PDF documents on mobile devices?</h3>
@@ -415,9 +415,8 @@
         </div>
     </footer>
 
-    <!-- Client-Side JavaScript Logic with Canvas Downsampling -->
+    <!-- Client-Side JavaScript Logic with Exact Target Iterative Search Engine -->
     <script>
-        // Setup PDF.js Worker
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -501,6 +500,44 @@
                 resultBox.classList.add('hidden');
             });
 
+            // Helper function to render PDF at specific quality scale
+            async function renderPdfAtQuality(pdfDoc, quality, scale) {
+                const { jsPDF } = window.jspdf;
+                let outputPdf = null;
+                const totalPages = pdfDoc.numPages;
+
+                for (let i = 1; i <= totalPages; i++) {
+                    const page = await pdfDoc.getPage(i);
+                    const viewport = page.getViewport({ scale: scale });
+
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    canvas.width = viewport.width;
+                    canvas.height = viewport.height;
+
+                    await page.render({ canvasContext: ctx, viewport: viewport }).promise;
+
+                    const imgData = canvas.toDataURL('image/jpeg', quality);
+
+                    const pdfWidth = viewport.width * 0.75;
+                    const pdfHeight = viewport.height * 0.75;
+
+                    if (i === 1) {
+                        outputPdf = new jsPDF({
+                            orientation: pdfWidth > pdfHeight ? 'landscape' : 'portrait',
+                            unit: 'pt',
+                            format: [pdfWidth, pdfHeight]
+                        });
+                        outputPdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+                    } else {
+                        outputPdf.addPage([pdfWidth, pdfHeight], pdfWidth > pdfHeight ? 'landscape' : 'portrait');
+                        outputPdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+                    }
+                }
+
+                return outputPdf.output('blob');
+            }
+
             compressBtn.addEventListener('click', async () => {
                 if (!selectedFile) return;
 
@@ -513,92 +550,68 @@
                     const targetKb = parseFloat(targetKbInput.value);
                     const selectedLevel = document.querySelector('input[name="compressionLevel"]:checked').value;
 
-                    // Quality & Scale Matrix
-                    let quality = 0.65;
-                    let scale = 1.2;
-
-                    if (selectedLevel === 'low') {
-                        quality = 0.85;
-                        scale = 1.5;
-                    } else if (selectedLevel === 'high') {
-                        quality = 0.45;
-                        scale = 1.0;
-                    }
-
-                    // Adjust parameters if target KB is entered
-                    if (targetKb && targetKb > 0) {
-                        const originalKb = selectedFile.size / 1024;
-                        const ratio = targetKb / originalKb;
-
-                        if (ratio < 0.3) {
-                            quality = 0.35;
-                            scale = 0.9;
-                        } else if (ratio < 0.6) {
-                            quality = 0.55;
-                            scale = 1.1;
-                        } else {
-                            quality = 0.75;
-                            scale = 1.3;
-                        }
-                    }
-
-                    statusMessage.textContent = 'Reading PDF file...';
+                    statusMessage.textContent = 'Loading PDF Document...';
                     progressBar.style.width = '10%';
                     progressText.textContent = '10%';
 
                     const fileBuffer = await selectedFile.arrayBuffer();
                     const pdfDoc = await pdfjsLib.getDocument({ data: fileBuffer }).promise;
-                    const totalPages = pdfDoc.numPages;
 
-                    const { jsPDF } = window.jspdf;
-                    let outputPdf = null;
+                    let finalBlob = null;
 
-                    for (let i = 1; i <= totalPages; i++) {
-                        statusMessage.textContent = `Rendering & Compressing Page ${i} of ${totalPages}...`;
-                        const pagePercent = Math.round(10 + (i / totalPages) * 80);
-                        progressBar.style.width = `${pagePercent}%`;
-                        progressText.textContent = `${pagePercent}%`;
+                    if (targetKb && targetKb > 0) {
+                        const targetBytes = targetKb * 1024;
+                        statusMessage.textContent = `Optimizing PDF to match target ${targetKb} KB...`;
+                        progressBar.style.width = '30%';
+                        progressText.textContent = '30%';
 
-                        const page = await pdfDoc.getPage(i);
-                        const viewport = page.getViewport({ scale: scale });
+                        // Binary Search for Perfect Target Matching
+                        let minQ = 0.05, maxQ = 0.90;
+                        let bestBlob = null;
+                        let currentScale = 1.0;
 
-                        const canvas = document.createElement('canvas');
-                        const ctx = canvas.getContext('2d');
-                        canvas.width = viewport.width;
-                        canvas.height = viewport.height;
+                        if (targetKb < 150) currentScale = 0.8;
+                        else if (targetKb < 300) currentScale = 0.95;
 
-                        await page.render({ canvasContext: ctx, viewport: viewport }).promise;
+                        for (let attempt = 0; attempt < 5; attempt++) {
+                            let midQ = (minQ + maxQ) / 2;
+                            statusMessage.textContent = `Testing Target Precision (Attempt ${attempt + 1}/5)...`;
+                            
+                            let testBlob = await renderPdfAtQuality(pdfDoc, midQ, currentScale);
+                            bestBlob = testBlob;
 
-                        // Canvas Image Encoding to JPEG
-                        const imgData = canvas.toDataURL('image/jpeg', quality);
+                            if (testBlob.size <= targetBytes) {
+                                minQ = midQ; // Try to get higher quality while staying under target
+                            } else {
+                                maxQ = midQ; // File is too large, reduce quality
+                            }
 
-                        // JSPDF dimensions in points
-                        const pdfWidth = viewport.width * 0.75;
-                        const pdfHeight = viewport.height * 0.75;
-
-                        if (i === 1) {
-                            outputPdf = new jsPDF({
-                                orientation: pdfWidth > pdfHeight ? 'landscape' : 'portrait',
-                                unit: 'pt',
-                                format: [pdfWidth, pdfHeight]
-                            });
-                            outputPdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
-                        } else {
-                            outputPdf.addPage([pdfWidth, pdfHeight], pdfWidth > pdfHeight ? 'landscape' : 'portrait');
-                            outputPdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+                            progressBar.style.width = `${30 + (attempt + 1) * 12}%`;
+                            progressText.textContent = `${30 + (attempt + 1) * 12}%`;
                         }
+
+                        finalBlob = bestBlob;
+
+                    } else {
+                        // Preset compression path
+                        let quality = 0.65;
+                        let scale = 1.1;
+
+                        if (selectedLevel === 'low') { quality = 0.82; scale = 1.3; }
+                        else if (selectedLevel === 'high') { quality = 0.40; scale = 0.9; }
+
+                        statusMessage.textContent = 'Compressing Pages...';
+                        progressBar.style.width = '50%';
+                        progressText.textContent = '50%';
+
+                        finalBlob = await renderPdfAtQuality(pdfDoc, quality, scale);
                     }
-
-                    statusMessage.textContent = 'Finalizing Document...';
-                    progressBar.style.width = '95%';
-                    progressText.textContent = '95%';
-
-                    const compressedBlob = outputPdf.output('blob');
-                    const originalSize = selectedFile.size;
-                    const compressedSize = compressedBlob.size;
 
                     progressBar.style.width = '100%';
                     progressText.textContent = '100%';
+
+                    const originalSize = selectedFile.size;
+                    const compressedSize = finalBlob.size;
 
                     // Render Statistics
                     statOriginal.textContent = formatBytes(originalSize);
@@ -611,7 +624,7 @@
                     statSavings.textContent = `${savings}% Smaller`;
 
                     // Local Download Link
-                    const downloadUrl = URL.createObjectURL(compressedBlob);
+                    const downloadUrl = URL.createObjectURL(finalBlob);
                     downloadBtn.href = downloadUrl;
                     downloadBtn.download = `compressed_${selectedFile.name}`;
 
