@@ -218,7 +218,7 @@
                 </button>
             </div>
 
-            <!-- Target Size Input Matrix (Cleaned & Focused) -->
+            <!-- Target Size Input Matrix -->
             <div id="compressionControls" class="hidden mt-6 space-y-5">
                 
                 <div class="bg-emerald-50/60 border border-emerald-200 rounded-xl p-5">
@@ -227,7 +227,7 @@
                         <span>Enter Exact Target Size (In KB)</span>
                     </label>
                     <div class="flex items-center gap-3">
-                        <input type="number" id="targetKbInput" placeholder="e.g. 100, 200, 500" value="200" class="w-full bg-white border border-slate-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 rounded-xl px-4 py-3 text-sm font-black text-slate-800 outline-none transition-all shadow-xs">
+                        <input type="number" id="targetKbInput" placeholder="e.g. 100, 150, 200" value="150" class="w-full bg-white border border-slate-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 rounded-xl px-4 py-3 text-sm font-black text-slate-800 outline-none transition-all shadow-xs">
                         <span class="text-xs font-black text-slate-700 bg-slate-100 border border-slate-200 px-4 py-3 rounded-xl shrink-0">KB</span>
                     </div>
                     <p class="text-[11px] text-slate-500 mt-2 font-medium">Specify required size (e.g. 100KB for SSC or 200KB for UPSC forms). Tool will compress just under this limit.</p>
@@ -315,7 +315,7 @@
         </div>
     </footer>
 
-    <!-- Precision Target Compression JavaScript Engine -->
+    <!-- Adaptive Target Engine JavaScript -->
     <script>
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
@@ -400,7 +400,6 @@
                 resultBox.classList.add('hidden');
             });
 
-            // Single Render Pass Helper
             async function renderPdfAtQuality(pdfDoc, quality, scale) {
                 const { jsPDF } = window.jspdf;
                 let outputPdf = null;
@@ -448,7 +447,7 @@
 
                 try {
                     let targetKb = parseFloat(targetKbInput.value);
-                    if (!targetKb || targetKb <= 0) targetKb = 200; // Default fallback to 200KB
+                    if (!targetKb || targetKb <= 0) targetKb = 150;
 
                     const targetBytes = targetKb * 1024;
 
@@ -459,32 +458,51 @@
                     const fileBuffer = await selectedFile.arrayBuffer();
                     const pdfDoc = await pdfjsLib.getDocument({ data: fileBuffer }).promise;
 
-                    // Dynamic Scale Selection according to Target KB
-                    let scale = 1.3;
-                    if (targetKb < 100) scale = 0.85;
-                    else if (targetKb < 250) scale = 1.05;
-                    else if (targetKb < 500) scale = 1.25;
+                    // Dynamic Scale Selection based on target size threshold
+                    let scalesToTry = [0.85, 1.05, 1.3, 1.6, 2.0];
+                    if (targetKb < 70) scalesToTry = [0.65, 0.8, 0.95];
+                    else if (targetKb < 130) scalesToTry = [0.8, 1.0, 1.2];
+                    else if (targetKb < 220) scalesToTry = [1.1, 1.35, 1.6];
+                    else scalesToTry = [1.4, 1.8, 2.2];
 
-                    let minQ = 0.1, maxQ = 0.95;
                     let bestBlob = null;
+                    let bestSize = 0;
 
-                    // Precision Iterative Binary Loop
-                    for (let attempt = 1; attempt <= 6; attempt++) {
-                        let midQ = (minQ + maxQ) / 2;
-                        statusMessage.textContent = `Optimizing Size to Target ~${targetKb} KB (Step ${attempt}/6)...`;
-                        
-                        let testBlob = await renderPdfAtQuality(pdfDoc, midQ, scale);
-                        bestBlob = testBlob;
+                    // Multi-Pass Adaptive Search
+                    for (let sIdx = 0; sIdx < scalesToTry.length; sIdx++) {
+                        let scale = scalesToTry[sIdx];
+                        let minQ = 0.1, maxQ = 0.95;
 
-                        if (testBlob.size <= targetBytes) {
-                            minQ = midQ; // Safe size, try higher quality
-                        } else {
-                            maxQ = midQ; // Oversized, drop quality
+                        for (let attempt = 1; attempt <= 4; attempt++) {
+                            let midQ = (minQ + maxQ) / 2;
+                            statusMessage.textContent = `Matching Target ~${targetKb} KB...`;
+                            
+                            let testBlob = await renderPdfAtQuality(pdfDoc, midQ, scale);
+
+                            if (testBlob.size <= targetBytes) {
+                                if (testBlob.size > bestSize) {
+                                    bestSize = testBlob.size;
+                                    bestBlob = testBlob;
+                                }
+                                minQ = midQ;
+                            } else {
+                                maxQ = midQ;
+                            }
                         }
 
-                        let currentProgress = Math.round(10 + (attempt / 6) * 85);
+                        let currentProgress = Math.round(10 + ((sIdx + 1) / scalesToTry.length) * 85);
                         progressBar.style.width = `${currentProgress}%`;
                         progressText.textContent = `${currentProgress}%`;
+
+                        // If we achieved a result within 15% of the target, we can break early
+                        if (bestSize > 0 && bestSize >= targetBytes * 0.80) {
+                            break;
+                        }
+                    }
+
+                    // Fallback if no scale was small enough
+                    if (!bestBlob) {
+                        bestBlob = await renderPdfAtQuality(pdfDoc, 0.1, 0.6);
                     }
 
                     progressBar.style.width = '100%';
