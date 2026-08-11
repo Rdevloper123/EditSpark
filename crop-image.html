@@ -147,11 +147,67 @@
         .explanatory-img-container { text-align: center; margin: 1.5rem 0; background: #edf2f7; border-radius: 8px; padding: 1rem; }
         .explanatory-img-container img { max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         
-        /* Footer E-E-A-T Area */
-        .eeat-footer { border-top: 1px solid #e2e8f0; margin-top: 3rem; padding-top: 1.5rem; font-size: 0.85rem; color: #64748b; text-align: center; }
-        .eeat-badges { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 0.75rem; flex-wrap: wrap; }
-        .badge-item { display: inline-flex; align-items: center; gap: 0.25rem; font-weight: 600; color: #475569; }
-        
+      /* Footer Container */
+.eeat-footer {
+    background-color: #0f172a; /* Dark sleek background */
+    color: #94a3b8;
+    padding: 2.5rem 1rem 1.5rem 1rem;
+    text-align: center;
+    border-top: 1px solid #1e293b;
+    font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* Badges Area */
+.eeat-badges {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 1.5rem;
+}
+
+.badge-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: #cbd5e1;
+}
+
+/* Links Spacing and Design */
+.footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 18px 24px; /* Yahan gaps se link aapas me nahi chipkegi */
+    margin-bottom: 1.25rem;
+}
+
+.footer-links a {
+    color: #38bdf8;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+/* Copyright Text */
+.footer-copyright {
+    font-size: 0.85rem;
+    color: #64748b;
+    margin: 0;
+}
+
+.footer-copyright strong {
+    color: #e2e8f0;
+}
         .cta-bottom-block { background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border: 1px solid #bfdbfe; border-radius: 12px; padding: 2rem; text-align: center; margin-top: 2.5rem; }
 
         @media (max-width: 600px) {
