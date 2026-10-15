@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HX4HT52QLR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-HX4HT52QLR');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Primary SEO Meta Tags -->
+    <title>Split PDF Pages Online Free – Extract PDF Pages Securely</title>
+    <meta name="description" content="Split PDF files online for free. Extract specific pages or separate all pages from a PDF document securely in your browser without uploading to any server.">
+    <meta name="keywords" content="split pdf online, extract pdf pages, separate pdf pages, split pdf file free, extract pages from pdf, browser pdf splitter">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://editsparks.in/split-pdf-pages-online">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://editsparks.in/split-pdf-pages-online">
+    <meta property="og:title" content="Split PDF Pages Online Free – Extract PDF Pages Securely">
+    <meta property="og:description" content="Split and extract pages from your PDF documents directly in your browser. 100% private, free, and secure.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico?v=2">
+    
+    <!-- Tailwind CSS v4 & FontAwesome Icons -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- PDF.js Engine & JSPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <!-- Structured Data JSON-LD Schemas -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebApplication",
+                "@id": "https://editsparks.in/split-pdf-pages-online#webapp",
+                "name": "EditSparks PDF Splitter",
+                "url": "https://editsparks.in/split-pdf-pages-online",
+                "applicationCategory": "UtilityApplication",
+                "operatingSystem": "All major browsers",
+                "description": "Free online client-side tool to split and extract PDF pages securely."
+            }
+        ]
+    }
+    </script>
+</head>
+<body class="bg-[#f0f7ff] font-sans text-slate-800 min-h-screen flex flex-col antialiased">
+
+    <!-- Top Indian Flag Strip -->
+    <div class="h-1 flex w-full sticky top-0 z-50">
+        <div class="bg-[#FF9933] flex-1"></div>
+        <div class="bg-white flex-grow-0 w-8"></div>
+        <div class="bg-[#138808] flex-1"></div>
+    </div>
+
+    <!-- Navigation Bar Header -->
+    <nav class="bg-white border-b border-slate-200 sticky top-1 z-50 shadow-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <a href="https://editsparks.in/" class="flex items-center space-x-3">
+                    <div class="bg-emerald-500 p-2 rounded-xl text-white shadow-sm flex items-center justify-center">
+                        <i class="fa-solid fa-wand-magic-sparkles text-xl"></i>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-2xl font-black tracking-tight text-slate-900 leading-none">Edit<span class="text-emerald-500">Sparks</span></span>
+                        <span class="text-[10px] font-bold text-slate-400 tracking-wider uppercase mt-0.5">🇮🇳 Photo & PDF Tools</span>
+                    </div>
+                </a>
+                <div class="hidden sm:flex items-center space-x-3 text-xs font-bold text-slate-600">
+                    <a href="https://editsparks.in/compress-pdf-file-online" class="hover:text-emerald-600 transition-colors">Compress PDF</a>
+                    <span class="text-slate-300">|</span>
+                    <span class="text-emerald-600">Split PDF</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <main class="flex-grow max-w-4xl mx-auto px-4 pt-6 pb-12 w-full">
+        
+        <!-- Header Section -->
+        <div class="text-center max-w-2xl mx-auto mb-8">
+            <span class="inline-flex items-center space-x-1.5 bg-emerald-50 border border-emerald-200 px-4 py-1.5 rounded-full text-xs font-bold text-emerald-800 mb-3">
+                <i class="fa-solid fa-shield-halved text-emerald-600"></i>
+                <span>🔒 100% Client-Side Security • Zero Server Uploads</span>
+            </span>
+            <h1 class="text-2xl sm:text-4xl font-black text-slate-900 uppercase tracking-tight leading-tight">
+                Split PDF Pages Online Free
+            </h1>
+            <p class="text-slate-600 text-xs sm:text-sm font-medium mt-3">
+                Extract specific pages or separate pages from your PDF file instantly inside your browser. Private, fast, and free.
+            </p>
+        </div>
+
+        <!-- TOOL UI COMPONENT -->
+        <div class="bg-white border border-slate-200 rounded-2xl shadow-xl p-6 md:p-8 mb-12">
+            
+            <!-- File Input Drag & Drop Zone -->
+            <div id="dropZone" class="border-2 border-dashed border-slate-300 hover:border-emerald-500 bg-slate-50 rounded-xl p-8 text-center transition-all cursor-pointer flex flex-col items-center justify-center">
+                <input type="file" id="pdfInput" accept="application/pdf" class="hidden">
+                <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-2xl mb-4 shadow-inner">
+                    <i class="fa-solid fa-file-pdf"></i>
+                </div>
+                <h3 class="text-base font-bold text-slate-800">Select or Drag & Drop PDF File Here</h3>
+                <p class="text-xs text-slate-500 mt-1">Upload any PDF document to view and extract its pages.</p>
+                <button type="button" onclick="document.getElementById('pdfInput').click()" class="mt-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider px-5 py-2.5 rounded-lg shadow-sm transition-all cursor-pointer">
+                    Browse PDF File
+                </button>
+            </div>
+
+            <!-- File Details & Split Controls -->
+            <div id="splitControls" class="hidden mt-6 space-y-6">
+                <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 flex items-center justify-between">
+                    <div class="flex items-center space-x-3 overflow-hidden">
+                        <i class="fa-solid fa-file-circle-check text-emerald-600 text-2xl shrink-0"></i>
+                        <div class="truncate">
+                            <p id="fileName" class="text-xs font-bold text-slate-800 truncate"></p>
+                            <p id="filePageCount" class="text-[11px] font-semibold text-slate-500"></p>
+                        </div>
+                    </div>
+                    <button type="button" id="removeFileBtn" class="text-slate-400 hover:text-rose-500 p-2 transition-colors cursor-pointer">
+                        <i class="fa-solid fa-xmark text-lg"></i>
+                    </button>
+                </div>
+
+                <!-- Split Mode Selection -->
+                <div class="space-y-3">
+                    <label class="block text-xs font-black text-slate-800 uppercase tracking-wider">
+                        Select Split / Extract Method:
+                    </label>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <label class="border border-slate-200 hover:border-emerald-500 bg-white p-4 rounded-xl cursor-pointer flex items-center space-x-3 transition-all">
+                            <input type="radio" name="splitMode" value="range" checked class="accent-emerald-600">
+                            <div>
+                                <span class="block text-xs font-bold text-slate-800">Extract Specific Pages</span>
+                                <span class="text-[11px] text-slate-500">Enter pages (e.g., 1,3,5-7)</span>
+                            </div>
+                        </label>
+                        <label class="border border-slate-200 hover:border-emerald-500 bg-white p-4 rounded-xl cursor-pointer flex items-center space-x-3 transition-all">
+                            <input type="radio" name="splitMode" value="all" class="accent-emerald-600">
+                            <div>
+                                <span class="block text-xs font-bold text-slate-800">Extract All Pages</span>
+                                <span class="text-[11px] text-slate-500">Save each page as a separate PDF</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Page Range Input Box -->
+                <div id="pageRangeBox" class="bg-emerald-50/60 border border-emerald-200 rounded-xl p-4">
+                    <label class="block text-xs font-black text-slate-800 uppercase tracking-wider mb-2">
+                        Enter Page Numbers or Range:
+                    </label>
+                    <input type="text" id="pageRangeInput" placeholder="e.g. 1, 3, 5-8" class="w-full bg-white border border-slate-300 focus:border-emerald-500 rounded-xl px-4 py-3 text-sm font-bold text-slate-800 outline-none">
+                    <p class="text-[11px] text-slate-500 mt-1.5">Specify individual pages separated by commas or ranges using a hyphen.</p>
+                </div>
+
+                <!-- Action Button -->
+                <button type="button" id="splitBtn" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black text-sm uppercase tracking-wider py-4 rounded-xl shadow-lg transition-all cursor-pointer flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-scissors"></i>
+                    <span>Split & Download PDF</span>
+                </button>
+            </div>
+
+            <!-- Progress Box -->
+            <div id="progressBox" class="hidden mt-6 text-center">
+                <div class="flex justify-between text-xs font-bold text-slate-600 mb-1">
+                    <span id="statusMessage">Processing PDF Pages...</span>
+                    <span id="progressText">0%</span>
+                </div>
+                <div class="w-full bg-slate-100 rounded-full h-3 overflow-hidden border border-slate-200">
+                    <div id="progressBar" class="bg-emerald-500 h-full w-0 transition-all duration-300"></div>
+                </div>
+            </div>
+
+            <!-- Result Box -->
+            <div id="resultBox" class="hidden mt-6 bg-emerald-50/60 border border-emerald-200 rounded-xl p-6 text-center">
+                <div class="w-12 h-12 bg-emerald-500 text-white rounded-full flex items-center justify-center text-xl mx-auto mb-3 shadow-md">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+                <h4 class="text-base font-black text-slate-900 uppercase">PDF Split Successfully!</h4>
+                <p id="resultText" class="text-xs text-slate-600 my-2">Your extracted PDF has been generated using your original filename.</p>
+                <a id="downloadBtn" href="#" class="inline-flex items-center justify-center space-x-2 bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs uppercase tracking-wider px-6 py-3 rounded-xl shadow-md transition-all mt-3">
+                    <i class="fa-solid fa-download"></i>
+                    <span>Download Split PDF</span>
+                </a>
+            </div>
+
+        </div>
+
+        <!-- Internal Navigation & SEO Links Box -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-6 md:p-8 shadow-xs mb-8">
+            <h2 class="text-sm font-black text-slate-900 uppercase tracking-tight mb-3">Explore Other Free PDF & Photo Tools</h2>
+            <p class="text-xs text-slate-600 mb-4">Looking to optimize your documents further? Check out our other browser-secured tools:</p>
+            <div class="flex flex-wrap gap-3">
+                <a href="https://editsparks.in/compress-pdf-file-online" class="bg-slate-50 hover:bg-emerald-50 border border-slate-200 hover:border-emerald-300 px-4 py-2 rounded-xl text-xs font-bold text-slate-700 transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-compress text-emerald-600"></i>
+                    <span>Compress PDF File Online</span>
+                </a>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer Component -->
+    <footer class="bg-white border-t border-slate-200 py-6 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 text-center space-y-4">
+            <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                © 2026 EditSparks. All Rights Reserved. Made with ❤️ in India.
+            </p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for PDF Splitting Engine -->
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const pdfInput = document.getElementById('pdfInput');
+            const dropZone = document.getElementById('dropZone');
+            const splitControls = document.getElementById('splitControls');
+            const fileName = document.getElementById('fileName');
+            const filePageCount = document.getElementById('filePageCount');
+            const removeFileBtn = document.getElementById('removeFileBtn');
+            const splitBtn = document.getElementById('splitBtn');
+            const progressBox = document.getElementById('progressBox');
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            const statusMessage = document.getElementById('statusMessage');
+            const resultBox = document.getElementById('resultBox');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const pageRangeInput = document.getElementById('pageRangeInput');
+            const pageRangeBox = document.getElementById('pageRangeBox');
+            const modeRadios = document.querySelectorAll('input[name="splitMode"]');
+
+            let selectedFile = null;
+            let loadedPdfDoc = null;
+
+            // Toggle mode inputs
+            modeRadios.forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    if (e.target.value === 'range') {
+                        pageRangeBox.classList.remove('hidden');
+                    } else {
+                        pageRangeBox.classList.add('hidden');
+                    }
+                });
+            });
+
+            pdfInput.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) handleFileSelect(e.target.files[0]);
+            });
+
+            async function handleFileSelect(file) {
+                if (file.type !== 'application/pdf') {
+                    alert('Please select a valid PDF file.');
+                    return;
+                }
+                selectedFile = file;
+                fileName.textContent = file.name;
+                
+                try {
+                    const buffer = await file.arrayBuffer();
+                    loadedPdfDoc = await pdfjsLib.getDocument({ data: buffer }).promise;
+                    filePageCount.textContent = `Total Pages: ${loadedPdfDoc.numPages}`;
+                    
+                    dropZone.classList.add('hidden');
+                    splitControls.classList.remove('hidden');
+                    resultBox.classList.add('hidden');
+                } catch (err) {
+                    alert('Error reading PDF file. Ensure it is not password-protected.');
+                }
+            }
+
+            removeFileBtn.addEventListener('click', () => {
+                selectedFile = null;
+                loadedPdfDoc = null;
+                pdfInput.value = '';
+                dropZone.classList.remove('hidden');
+                splitControls.classList.add('hidden');
+                progressBox.classList.add('hidden');
+                resultBox.classList.add('hidden');
+            });
+
+            // Parse range input like "1,3,5-7"
+            function parsePageRange(str, maxPages) {
+                const pages = new Set();
+                const parts = str.split(',');
+                parts.forEach(part => {
+                    part = part.trim();
+                    if (part.includes('-')) {
+                        const range = part.split('-');
+                        const start = parseInt(range[0]);
+                        const end = parseInt(range[1]);
+                        if (!isNaN(start) && !isNaN(end)) {
+                            for (let i = Math.min(start, end); i <= Math.max(start, end); i++) {
+                                if (i >= 1 && i <= maxPages) pages.add(i);
+                            }
+                        }
+                    } else {
+                        const p = parseInt(part);
+                        if (!isNaN(p) && p >= 1 && p <= maxPages) pages.add(p);
+                    }
+                });
+                return Array.from(pages).sort((a, b) => a - b);
+            }
+
+            splitBtn.addEventListener('click', async () => {
+                if (!loadedPdfDoc || !selectedFile) return;
+
+                const mode = document.querySelector('input[name="splitMode"]:checked').value;
+                let targetPages = [];
+
+                if (mode === 'range') {
+                    targetPages = parsePageRange(pageRangeInput.value, loadedPdfDoc.numPages);
+                    if (targetPages.length === 0) {
+                        alert('Please enter valid page numbers or ranges.');
+                        return;
+                    }
+                } else {
+                    for (let i = 1; i <= loadedPdfDoc.numPages; i++) targetPages.push(i);
+                }
+
+                progressBox.classList.remove('hidden');
+                resultBox.classList.add('hidden');
+                splitBtn.disabled = true;
+
+                try {
+                    const { jsPDF } = window.jspdf;
+                    let newPdf = null;
+
+                    for (let idx = 0; idx < targetPages.length; idx++) {
+                        let pageNum = targetPages[idx];
+                        statusMessage.textContent = `Processing Page ${pageNum} (${idx + 1}/${targetPages.length})...`;
+                        let percent = Math.round(((idx + 1) / targetPages.length) * 100);
+                        progressBar.style.width = `${percent}%`;
+                        progressText.textContent = `${percent}%`;
+
+                        const page = await loadedPdfDoc.getPage(pageNum);
+                        const viewport = page.getViewport({ scale: 1.5 });
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        canvas.width = viewport.width;
+                        canvas.height = viewport.height;
+
+                        await page.render({ canvasContext: ctx, viewport: viewport }).promise;
+                        const imgData = canvas.toDataURL('image/jpeg', 0.85);
+
+                        const pdfWidth = viewport.width * 0.75;
+                        const pdfHeight = viewport.height * 0.75;
+
+                        if (idx === 0) {
+                            newPdf = new jsPDF({
+                                orientation: pdfWidth > pdfHeight ? 'landscape' : 'portrait',
+                                unit: 'pt',
+                                format: [pdfWidth, pdfHeight]
+                            });
+                            newPdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+                        } else {
+                            newPdf.addPage([pdfWidth, pdfHeight], pdfWidth > pdfHeight ? 'landscape' : 'portrait');
+                            newPdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+                        }
+                    }
+
+                    const pdfBlob = newPdf.output('blob');
+                    const downloadUrl = URL.createObjectURL(pdfBlob);
+                    
+                    // Original File Name Retention
+                    downloadBtn.href = downloadUrl;
+                    downloadBtn.download = `split_${selectedFile.name}`;
+
+                    setTimeout(() => {
+                        progressBox.classList.add('hidden');
+                        resultBox.classList.remove('hidden');
+                        splitBtn.disabled = false;
+                    }, 400);
+
+                } catch (err) {
+                    console.error(err);
+                    alert('An error occurred while splitting the PDF.');
+                    progressBox.classList.add('hidden');
+                    splitBtn.disabled = false;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
