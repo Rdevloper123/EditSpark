@@ -57,43 +57,35 @@
                 "operatingSystem": "All major browsers",
                 "description": "Free online client-side tool to split and extract PDF pages securely."
             },
-            {
-                "@type": "FAQPage",
-                "mainEntity": [
-                    {
-                        "@type": "Question",
-                        "name": "Is it safe to split PDF files on EditSparks?",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                          
-"text": "Your PDF is processed in your browser using client-side code. The PDF file is not intentionally uploaded to an EditSparks server for splitting."
-
-                        }
-                    },
-                    {
-                        "@type": "Question",
-                        "name": "How to extract specific pages from a PDF?",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                           
-"text": "Upload your PDF, select Extract Specific Pages, enter page numbers or ranges such as 1, 3, 5-7, and click Split & Download PDF."
-
-                        }
-                    },
-                    {
-                        "@type": "Question",
-                        "name": "Will the downloaded PDF keep my original file name?",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                           
-"text": "The downloaded file uses your original filename with a split_ prefix. For example, report.pdf becomes split_report.pdf."
-
-                        }
-                    }
-                ]
+          {
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "Is it safe to split PDF files on EditSparks?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Your PDF is processed in your browser using client-side code. The file is not intentionally uploaded to an EditSparks server for splitting. Keep a backup of important documents."
             }
-        ]
-    }
+        },
+        {
+            "@type": "Question",
+            "name": "How can I extract specific pages from a PDF?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Select your PDF, choose Extract Specific Pages, and enter page numbers or ranges such as 1, 3, 5-7. Click Split & Download PDF to save the selected pages in one PDF file."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Can I save every PDF page as a separate file?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Choose Extract All Pages to create an individual PDF for each page. The separate PDF files are packaged into a ZIP archive for download."
+            }
+        }
+    ]
+}
     </script>
 </head>
 <body class="bg-[#f0f7ff] font-sans text-slate-800 min-h-screen flex flex-col antialiased">
