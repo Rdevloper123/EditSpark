@@ -57,35 +57,37 @@
                 "operatingSystem": "All major browsers",
                 "description": "Free online client-side tool to split and extract PDF pages securely."
             },
-          {
-    "@type": "FAQPage",
-    "mainEntity": [
-        {
-            "@type": "Question",
-            "name": "Is it safe to split PDF files on EditSparks?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Your PDF is processed in your browser using client-side code. The file is not intentionally uploaded to an EditSparks server for splitting. Keep a backup of important documents."
+            {
+                "@type": "FAQPage",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "Is it safe to split PDF files on EditSparks?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Your PDF is processed in your browser using client-side code. The file is not intentionally uploaded to an EditSparks server for splitting. Keep a backup of important documents."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "How can I extract specific pages from a PDF?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Select your PDF, choose Extract Specific Pages, and enter page numbers or ranges such as 1, 3, 5-7. Click Split & Download PDF to save the selected pages in one PDF file."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Can I save every PDF page as a separate file?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Yes. Choose Extract All Pages to create an individual PDF for each page. The separate PDF files are packaged into a ZIP archive for download."
+                        }
+                    }
+                ]
             }
-        },
-        {
-            "@type": "Question",
-            "name": "How can I extract specific pages from a PDF?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Select your PDF, choose Extract Specific Pages, and enter page numbers or ranges such as 1, 3, 5-7. Click Split & Download PDF to save the selected pages in one PDF file."
-            }
-        },
-        {
-            "@type": "Question",
-            "name": "Can I save every PDF page as a separate file?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Yes. Choose Extract All Pages to create an individual PDF for each page. The separate PDF files are packaged into a ZIP archive for download."
-            }
-        }
-    ]
-}
+        ]
+    }
     </script>
 </head>
 <body class="bg-[#f0f7ff] font-sans text-slate-800 min-h-screen flex flex-col antialiased">
@@ -487,208 +489,3 @@
                 if (!part) {
                     throw new Error(
                         'Invalid page list. Example: 1, 3, 5-7'
-                    );
-                }
-
-                if (/^\d+$/.test(part)) {
-                    const page = Number(part);
-
-                    if (page < 1 || page > maxPages) {
-                        throw new Error(
-                            `Page numbers must be between 1 and ${maxPages}.`
-                        );
-                    }
-
-                    pages.add(page);
-                    continue;
-                }
-
-                const match = part.match(/^(\d+)\s*-\s*(\d+)$/);
-
-                if (!match) {
-                    throw new Error(
-                        'Invalid page range. Use a format like 1, 3, 5-7.'
-                    );
-                }
-
-                const start = Number(match[1]);
-                const end = Number(match[2]);
-
-                if (
-                    start < 1 ||
-                    end < 1 ||
-                    start > maxPages ||
-                    end > maxPages
-                ) {
-                    throw new Error(
-                        `Page numbers must be between 1 and ${maxPages}.`
-                    );
-                }
-
-                if (start > end) {
-                    throw new Error(
-                        'In a range, the first page must not exceed the last page.'
-                    );
-                }
-
-                for (let page = start; page <= end; page++) {
-                    pages.add(page);
-                }
-            }
-
-            return [...pages].sort((a, b) => a - b);
-        }
-
-        async function createPdf(sourcePdf, pages, total, onPage) {
-            const { PDFDocument } = PDFLib;
-            const outputPdf = await PDFDocument.create();
-
-            const copiedPages = await outputPdf.copyPages(
-                sourcePdf,
-                pages.map(page => page - 1)
-            );
-
-            copiedPages.forEach(page => outputPdf.addPage(page));
-
-            onPage(total, 'Preparing PDF download...');
-
-            return await outputPdf.save();
-        }
-
-        splitBtn.addEventListener('click', async () => {
-            if (!selectedFile || busy) return;
-
-            const version = fileVersion;
-            const mode = document.querySelector(
-                'input[name="splitMode"]:checked'
-            ).value;
-
-            let targetPages;
-
-            try {
-                targetPages = mode === 'range'
-                    ? parsePageRange(pageRangeInput.value, pageCount)
-                    : Array.from(
-                        { length: pageCount },
-                        (_, index) => index + 1
-                    );
-            } catch (error) {
-                alert(error.message);
-                return;
-            }
-
-            busy = true;
-            splitBtn.disabled = true;
-            resetResult();
-            progressBox.classList.remove('hidden');
-
-            try {
-                setProgress(5, 'Preparing your PDF...');
-
-                const buffer = await selectedFile.arrayBuffer();
-
-                const sourcePdf = await PDFLib.PDFDocument.load(
-                    buffer,
-                    { updateMetadata: false }
-                );
-
-                let blob;
-                let outputName;
-                let resultMessage;
-
-                if (mode === 'range') {
-                    setProgress(25, 'Extracting selected pages...');
-
-                    const bytes = await createPdf(
-                        sourcePdf,
-                        targetPages,
-                        targetPages.length,
-                        (done, message) => setProgress(80, message)
-                    );
-
-                    blob = new Blob([bytes], {
-                        type: 'application/pdf'
-                    });
-
-                    outputName = `split_${selectedFile.name}`;
-                    resultMessage =
-                        `${targetPages.length} selected page(s) saved in one PDF.`;
-                } else {
-                    const zip = new JSZip();
-
-                    for (let i = 0; i < targetPages.length; i++) {
-                        if (version !== fileVersion) return;
-
-                        const page = targetPages[i];
-
-                        setProgress(
-                            Math.round(5 + (i / targetPages.length) * 85),
-                            `Creating PDF for page ${page} (${i + 1}/${targetPages.length})...`
-                        );
-
-                        const bytes = await createPdf(
-                            sourcePdf,
-                            [page],
-                            1,
-                            () => {}
-                        );
-
-                        const pageName =
-                            `page_${String(page).padStart(3, '0')}.pdf`;
-
-                        zip.file(pageName, bytes);
-                    }
-
-                    setProgress(92, 'Creating ZIP file...');
-
-                    blob = await zip.generateAsync(
-                        { type: 'blob' },
-                        metadata => {
-                            setProgress(
-                                Math.round(92 + metadata.percent * 0.08),
-                                'Preparing ZIP download...'
-                            );
-                        }
-                    );
-
-                    outputName =
-                        `${selectedFile.name.replace(/\.pdf$/i, '')}_pages.zip`;
-
-                    resultMessage =
-                        `${targetPages.length} individual PDF files are ready in the ZIP archive.`;
-                }
-
-                if (version !== fileVersion) return;
-
-                clearDownload();
-                downloadUrl = URL.createObjectURL(blob);
-
-                downloadBtn.href = downloadUrl;
-                downloadBtn.download = outputName;
-
-                $('resultText').textContent = resultMessage;
-                $('resultBox').classList.remove('hidden');
-
-                setProgress(100, 'Your files are ready.');
-
-         } catch (error) {
-    console.error('PDF splitting error:', error);
-
-    if (version === fileVersion) {
-        progressBox.classList.add('hidden');
-
-        alert(
-            'Could not split this PDF. It may be damaged, encrypted, or unsupported. Please try another PDF.'
-        );
-    }
-} finally {
-                if (version === fileVersion) {
-                    busy = false;
-                    splitBtn.disabled = false;
-                }
-            }
-        });
-    });
-</script>
-</body>
-</html>
