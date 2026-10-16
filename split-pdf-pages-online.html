@@ -139,11 +139,12 @@
             <h1 class="text-2xl sm:text-4xl font-black text-slate-900 uppercase tracking-tight leading-tight">
                 Split PDF Pages Online Free
             </h1>
-          <p class="text-slate-600 text-xs sm:text-sm font-medium mt-3">
+        <p class="text-slate-600 text-xs sm:text-sm font-medium mt-3">
     Extract selected PDF pages or save every page as a separate PDF file. Your document is processed locally in your browser.
 </p>
+</div>
 
-        <!-- TOOL UI COMPONENT -->
+<!-- TOOL UI COMPONENT -->
         <div class="bg-white border border-slate-200 rounded-2xl shadow-xl p-6 md:p-8 mb-12">
             
             <!-- File Input Drag & Drop Zone -->
@@ -678,16 +679,17 @@
 
                 setProgress(100, 'Your files are ready.');
 
-            } catch (error) {
-                console.error('PDF splitting error:', error);
+         } catch (error) {
+    console.error('PDF splitting error:', error);
 
-                if (version === fileVersion) {
-                    alert(
-                        'Could not split this PDF. It may be damaged, encrypted, or unsupported. Please try another PDF.'
-                    );
-                }
+    if (version === fileVersion) {
+        progressBox.classList.add('hidden');
 
-            } finally {
+        alert(
+            'Could not split this PDF. It may be damaged, encrypted, or unsupported. Please try another PDF.'
+        );
+    }
+} finally {
                 if (version === fileVersion) {
                     busy = false;
                     splitBtn.disabled = false;
