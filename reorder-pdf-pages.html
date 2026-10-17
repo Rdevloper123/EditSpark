@@ -713,7 +713,7 @@
             const { PDFDocument, degrees } = PDFLib;
             
             // ignoreEncryption bypassed for generic files but does not crack passwords
-            const srcDoc = await PDFDocument.load(originalPdfBytes, { ignoreEncryption: true });
+            // Ensure array buffer copy is passed safely const srcDoc = await PDFDocument.load(originalPdfBytes.buffer.slice(0), { ignoreEncryption: true });
             const outDoc = await PDFDocument.create();
             
             const indices = currentPages.map(p => p.originalIndex - 1);
