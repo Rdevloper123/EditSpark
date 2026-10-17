@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reorder PDF Pages Online Free | EditSparks</title>
+    <meta name="description" content="Reorder PDF pages online for free with EditSparks. Drag and drop pages, rotate or delete pages, and download your updated PDF securely in your browser.">
+    <link rel="canonical" href="https://editsparks.in/reorder-pdf-pages">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Reorder PDF Pages Online Free | EditSparks">
+    <meta property="og:description" content="Reorder PDF pages online for free with EditSparks. Drag and drop pages, rotate or delete pages, and download your updated PDF securely in your browser.">
+    <meta property="og:url" content="https://editsparks.in/reorder-pdf-pages">
+    <meta property="og:type" content="website">
+
+    <!-- Dependencies -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "name": "EditSparks PDF Reorder",
+          "url": "https://editsparks.in/reorder-pdf-pages",
+          "applicationCategory": "UtilityApplication",
+          "operatingSystem": "All",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "INR"
+          },
+          "description": "A free browser-based tool to reorder, rotate, and delete PDF pages securely without uploading files to a server."
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://editsparks.in/" },
+            { "@type": "ListItem", "position": 2, "name": "Reorder PDF Pages", "item": "https://editsparks.in/reorder-pdf-pages" }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "How do I reorder PDF pages online?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Select your PDF file, drag and drop the page thumbnails into your desired order, and click 'Download PDF'. The process happens entirely in your browser." }
+            },
+            {
+              "@type": "Question",
+              "name": "Are my PDF files uploaded to a server?",
+              "acceptedAnswer": { "@type": "Answer", "text": "No. All PDF processing happens locally in your web browser utilizing modern JavaScript libraries. Your files are never uploaded, ensuring complete privacy." }
+            },
+            {
+              "@type": "Question",
+              "name": "Is this tool completely free?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Yes, EditSparks provides this PDF reordering tool completely free of charge with no watermarks or hidden fees." }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I use this on my mobile phone?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Absolutely. The interface is touch-friendly, allowing you to drag and drop or use selection tools to rearrange pages on smartphones and tablets." }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        :root {
+            --primary: #10b981;
+            --primary-dark: #059669;
+            --bg-color: #f9fafb;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --border-color: #e5e7eb;
+            --error: #ef4444;
+            --focus-ring: 0 0 0 3px rgba(16, 185, 129, 0.4);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg-color); color: var(--text-main); line-height: 1.5; }
+        a { color: var(--primary); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        button:focus-visible, .page-card:focus-visible, #upload-section:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+        header { background: white; border-bottom: 1px solid var(--border-color); padding: 1rem 0; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; font-weight: bold; font-size: 1.25rem; color: var(--primary-dark); }
+        
+        .breadcrumb { padding: 1rem 0; font-size: 0.875rem; color: var(--text-muted); }
+        
+        .hero { text-align: center; padding: 3rem 1rem 2rem; }
+        .hero h1 { font-size: 2.5rem; margin-bottom: 1rem; color: var(--text-main); }
+        .hero p { color: var(--text-muted); max-width: 600px; margin: 0 auto; }
+
+        .workspace { background: white; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); padding: 2rem; margin-bottom: 3rem; min-height: 400px; }
+        
+        #upload-section { border: 2px dashed var(--primary); border-radius: 8px; padding: 4rem 2rem; text-align: center; cursor: pointer; transition: background 0.2s; }
+        #upload-section:hover, #upload-section.dragover { background: #ecfdf5; }
+        #file-input { display: none; }
+        .upload-btn { background: var(--primary); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; font-size: 1rem; font-weight: 600; cursor: pointer; margin-top: 1rem; transition: background 0.2s; }
+        .upload-btn:hover { background: var(--primary-dark); }
+        .upload-limit { font-size: 0.875rem; color: var(--text-muted); margin-top: 0.5rem; display: block; }
+
+        #editor-section { display: none; }
+        
+        .file-meta { background: #f3f4f6; padding: 1rem; border-radius: 6px; margin-bottom: 1rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; align-items: center; font-size: 0.875rem; }
+        .file-meta-info strong { color: var(--text-main); }
+        
+        .toolbar { display: flex; flex-wrap: wrap; gap: 0.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-color); margin-bottom: 1.5rem; align-items: center; justify-content: space-between; }
+        .tools-left, .tools-right { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .btn { background: white; border: 1px solid var(--border-color); padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-size: 0.875rem; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.25rem; }
+        .btn:hover:not(:disabled) { border-color: var(--primary); color: var(--primary); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .btn-primary { background: var(--primary); color: white; border-color: var(--primary); font-weight: 600; }
+        .btn-primary:hover:not(:disabled) { background: var(--primary-dark); color: white; }
+        .btn-danger { color: var(--error); border-color: var(--error); }
+        .btn-danger:hover:not(:disabled) { background: #fef2f2; }
+
+        .thumbnail-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1.5rem; padding: 1rem 0; }
+        .page-card { border: 2px solid var(--border-color); border-radius: 6px; padding: 0.5rem; background: white; cursor: grab; position: relative; transition: all 0.2s; display: flex; flex-direction: column; align-items: center; user-select: none; }
+        .page-card.selected { border-color: var(--primary); background: #ecfdf5; }
+        .page-card.sortable-ghost { opacity: 0.4; background: #e5e7eb; }
+        .page-card:active { cursor: grabbing; }
+        
+        /* Using 1/1 aspect ratio so rotated 90deg images don't get clipped by their parent wrapper bounds */
+        .page-canvas-wrapper { width: 100%; aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center; background: transparent; margin-bottom: 0.5rem; position: relative; border-radius: 4px; }
+        .page-canvas-wrapper canvas { max-width: 100%; max-height: 100%; object-fit: contain; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 2px 4px rgba(0,0,0,0.1); background: white; }
+        
+        .page-info { display: flex; justify-content: space-between; width: 100%; align-items: center; margin-bottom: 0.5rem; }
+        .page-number { font-size: 0.875rem; font-weight: 600; color: var(--text-main); }
+        
+        .page-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 0.25rem; width: 100%; margin-bottom: 0.25rem; }
+        .page-controls-bottom { display: flex; gap: 0.25rem; width: 100%; }
+        .page-btn { flex: 1; padding: 0.35rem 0.25rem; font-size: 0.75rem; border: 1px solid var(--border-color); background: white; border-radius: 4px; cursor: pointer; color: var(--text-main); transition: background 0.2s; }
+        .page-btn:hover:not(:disabled) { background: #f3f4f6; }
+        .page-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .status-bar { font-size: 0.875rem; color: var(--text-muted); margin-top: 1rem; text-align: center; }
+        .loader { display: none; margin: 2rem 0; text-align: center; }
+        .loader-text { font-weight: 600; color: var(--primary-dark); margin-top: 1rem; }
+        .spinner { border: 4px solid #f3f4f6; border-top: 4px solid var(--primary); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto; }
+        
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .error-message { display: none; background: #fef2f2; border: 1px solid #f87171; color: #991b1b; padding: 1rem; border-radius: 6px; margin-bottom: 1rem; text-align: left; }
+        
+        .content-section { margin: 3rem 0; padding: 2rem; background: white; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .content-section h2 { color: var(--primary-dark); margin-bottom: 1rem; }
+        .content-section p, .content-section ul { margin-bottom: 1rem; color: var(--text-muted); }
+        .content-section ul { padding-left: 1.5rem; }
+
+        .faq-item { margin-bottom: 1.5rem; }
+        .faq-item h3 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--text-main); }
+        .faq-item p { color: var(--text-muted); margin: 0; }
+
+        footer { text-align: center; padding: 2rem 0; border-top: 1px solid var(--border-color); margin-top: 3rem; color: var(--text-muted); font-size: 0.875rem; }
+        
+        @media (max-width: 640px) {
+            .toolbar { flex-direction: column; align-items: stretch; }
+            .tools-left, .tools-right { justify-content: center; }
+            .thumbnail-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container header-content">
+        <a href="/">EditSparks</a>
+        <nav>
+            <a href="/merge-pdf-online-free" style="margin-left: 1rem; font-size: 1rem; font-weight: normal;">Merge PDF</a>
+            <a href="/image-to-pdf" style="margin-left: 1rem; font-size: 1rem; font-weight: normal;">Image to PDF</a>
+        </nav>
+    </div>
+</header>
+
+<div class="container">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a> &gt; <span aria-current="page">Reorder PDF Pages</span>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <h1>Reorder PDF Pages Online Free</h1>
+            <p>Rearrange, rotate, and delete pages from your PDF document securely. All processing happens directly in your browser without uploading files to our servers.</p>
+        </section>
+
+        <div class="workspace">
+            <div id="error-box" class="error-message" role="alert"></div>
+
+            <div id="upload-section" role="button" tabindex="0" aria-label="Upload PDF file">
+                <svg width="48" height="48" fill="none" stroke="var(--primary)" stroke-width="2" viewBox="0 0 24 24" style="margin: 0 auto 1rem;" aria-hidden="true">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="12" y1="18" x2="12" y2="12"></line>
+                    <line x1="9" y1="15" x2="15" y2="15"></line>
+                </svg>
+                <h2>Choose a PDF file</h2>
+                <p style="color: var(--text-muted); margin: 0.5rem 0;">Drag & drop your PDF here</p>
+                <button class="upload-btn" onclick="document.getElementById('file-input').click()" tabindex="-1">Select PDF</button>
+                <span class="upload-limit">Max file size: 50 MB. Processed locally.</span>
+                <input type="file" id="file-input" accept="application/pdf">
+            </div>
+
+            <div id="loader" class="loader" aria-live="polite">
+                <div class="spinner"></div>
+                <div class="loader-text" id="loader-text">Processing document...</div>
+            </div>
+
+            <div id="editor-section">
+                <div class="file-meta">
+                    <div class="file-meta-info">
+                        <strong>File:</strong> <span id="meta-name"></span> (<span id="meta-size"></span>)
+                    </div>
+                    <div class="file-meta-info">
+                        <strong>Pages:</strong> <span id="meta-count"></span>
+                    </div>
+                </div>
+
+                <div class="toolbar" role="toolbar" aria-label="PDF Editing Controls">
+                    <div class="tools-left">
+                        <button class="btn" id="btn-undo" onclick="undo()" disabled aria-label="Undo last action">Undo</button>
+                        <button class="btn" id="btn-redo" onclick="redo()" disabled aria-label="Redo last action">Redo</button>
+                        <button class="btn" onclick="resetAll()">Reset</button>
+                        <button class="btn" onclick="selectAll()">Select All</button>
+                        <button class="btn" onclick="deselectAll()">Deselect</button>
+                    </div>
+                    <div class="tools-right">
+                        <button class="btn" onclick="rotateSelected()">Rotate 90°</button>
+                        <button class="btn btn-danger" id="btn-delete-selected" onclick="deleteSelected()">Delete</button>
+                        <button class="btn btn-primary" onclick="exportPDF()">Download PDF</button>
+                        <button class="btn" onclick="startOver()">Start Over</button>
+                    </div>
+                </div>
+                
+                <div class="status-bar" id="status-bar" aria-live="polite"></div>
+                <div class="thumbnail-grid" id="thumbnail-grid" role="list"></div>
+            </div>
+        </div>
+
+        <section class="content-section">
+            <h2>How to reorder PDF pages</h2>
+            <ol style="padding-left: 1.5rem; color: var(--text-muted); line-height: 1.8;">
+                <li><strong>Select File:</strong> Click the upload button or drag and drop a PDF file (up to 50MB) into the box above.</li>
+                <li><strong>Rearrange:</strong> Drag the page thumbnails into your desired order, or use the "Move Up" and "Move Down" buttons.</li>
+                <li><strong>Rotate & Delete:</strong> Click on pages to select them, then use the toolbar to rotate them 90 degrees or remove unwanted pages.</li>
+                <li><strong>Download:</strong> Click "Download PDF" to save your organized document immediately to your device.</li>
+            </ol>
+        </section>
+
+        <section class="content-section">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-item">
+                <h3>How do I reorder PDF pages online?</h3>
+                <p>Select your PDF file, drag and drop the page thumbnails into your desired order, and click 'Download PDF'. The process happens entirely in your browser.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Are my PDF files uploaded to a server?</h3>
+                <p>No. All PDF processing happens locally in your web browser utilizing modern JavaScript libraries. Your files are never uploaded, ensuring complete privacy.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Is this tool completely free?</h3>
+                <p>Yes, EditSparks provides this PDF reordering tool completely free of charge with no watermarks or hidden fees.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Can I use this on my mobile phone?</h3>
+                <p>Absolutely. The interface is touch-friendly, allowing you to drag and drop or use selection tools to rearrange pages on smartphones and tablets.</p>
+            </div>
+        </section>
+    </main>
+</div>
+
+<footer>
+    <div class="container">
+        <p>&copy; 2026 EditSparks. All rights reserved.</p>
+        <div style="margin-top: 1rem;">
+            <a href="/privacy-policy">Privacy Policy</a> | 
+            <a href="/terms">Terms</a> | 
+            <a href="/contact">Contact</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+    // Mount SortableJS MultiDrag Plugin if available in the UMD build
+    try {
+        if (typeof Sortable !== 'undefined' && Sortable.MultiDrag) {
+            Sortable.mount(new Sortable.MultiDrag());
+        }
+    } catch (e) {
+        console.warn("Could not mount Sortable.MultiDrag", e);
+    }
+
+    let originalPdfBytes = null;
+    let originalPdfDoc = null;
+    let fileMetadata = {};
+    let currentPages = []; 
+    let history = [];
+    let historyIndex = -1;
+    let sortableInstance = null;
+    
+    // Safely track active renders
+    let renderSessionId = 0;
+    let renderTasks = []; 
+    
+    const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
+    const MIN_PAGES = 1;
+    
+    const ui = {
+        upload: document.getElementById('upload-section'),
+        editor: document.getElementById('editor-section'),
+        grid: document.getElementById('thumbnail-grid'),
+        loader: document.getElementById('loader'),
+        loaderText: document.getElementById('loader-text'),
+        fileInput: document.getElementById('file-input'),
+        statusBar: document.getElementById('status-bar'),
+        errorBox: document.getElementById('error-box'),
+        btnUndo: document.getElementById('btn-undo'),
+        btnRedo: document.getElementById('btn-redo'),
+        btnDeleteSel: document.getElementById('btn-delete-selected')
+    };
+
+    // Accessibility for upload section
+    ui.upload.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            ui.fileInput.click();
+        }
+    });
+
+    ui.upload.addEventListener('dragover', (e) => { e.preventDefault(); ui.upload.classList.add('dragover'); });
+    ui.upload.addEventListener('dragleave', () => ui.upload.classList.remove('dragover'));
+    ui.upload.addEventListener('drop', (e) => {
+        e.preventDefault(); ui.upload.classList.remove('dragover');
+        if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+    });
+    ui.fileInput.addEventListener('change', (e) => {
+        if (e.target.files.length) handleFile(e.target.files[0]);
+    });
+
+    function showError(msg) {
+        ui.errorBox.textContent = msg;
+        ui.errorBox.style.display = 'block';
+        setTimeout(() => { ui.errorBox.style.display = 'none'; }, 8000);
+    }
+
+    function formatBytes(bytes) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024, sizes = ['Bytes', 'KB', 'MB'], i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+
+    async function handleFile(file) {
+        ui.errorBox.style.display = 'none';
+        
+        // Robust basic validation
+        if (!file.type.match('application/pdf') && !file.name.toLowerCase().endsWith('.pdf')) {
+            return showError('Invalid file format. Please upload a valid PDF document.');
+        }
+        if (file.size > MAX_FILE_SIZE) {
+            return showError(`File is too large (${formatBytes(file.size)}). Maximum allowed size is 50MB.`);
+        }
+        if (file.size === 0) {
+            return showError('The uploaded file is empty.');
+        }
+
+        fileMetadata = { name: file.name, size: formatBytes(file.size) };
+        
+        ui.upload.style.display = 'none';
+        ui.loaderText.textContent = 'Reading document...';
+        ui.loader.style.display = 'block';
+
+        try {
+            const arrayBuffer = await file.arrayBuffer();
+            const header = new Uint8Array(arrayBuffer).subarray(0, 5);
+            const isPdf = String.fromCharCode(...header) === '%PDF-';
+            if (!isPdf) throw new Error('Not a valid PDF structure.');
+
+            originalPdfBytes = new Uint8Array(arrayBuffer);
+            
+            // Try loading with pdf.js to generate thumbnails
+            try {
+                if (originalPdfDoc) {
+                    originalPdfDoc.destroy();
+                }
+                originalPdfDoc = await pdfjsLib.getDocument({ data: originalPdfBytes }).promise;
+            } catch (err) {
+                if (err.name === 'PasswordException') {
+                    throw new Error('This PDF is password protected or encrypted. Please unlock it before uploading.');
+                }
+                throw err; 
+            }
+            
+            fileMetadata.pages = originalPdfDoc.numPages;
+            document.getElementById('meta-name').textContent = fileMetadata.name;
+            document.getElementById('meta-size').textContent = fileMetadata.size;
+            document.getElementById('meta-count').textContent = fileMetadata.pages;
+            
+            // Reset history correctly for the new document
+            history = [];
+            historyIndex = -1;
+
+            await initEditor();
+        } catch (error) {
+            console.error('File load error:', error);
+            showError(error.message || 'Error reading PDF. The file might be corrupted or unsupported.');
+            startOver();
+        }
+    }
+
+    async function initEditor() {
+        currentPages = [];
+        const numPages = originalPdfDoc.numPages;
+        
+        for (let i = 1; i <= numPages; i++) {
+            currentPages.push({ id: `page-${i}-${Date.now()}`, originalIndex: i, rotation: 0, selected: false });
+        }
+        
+        saveState();
+        await renderGrid();
+        
+        ui.loader.style.display = 'none';
+        ui.editor.style.display = 'block';
+        updateUIState();
+
+        if (sortableInstance) sortableInstance.destroy();
+        
+        sortableInstance = new Sortable(ui.grid, {
+            animation: 150,
+            ghostClass: 'sortable-ghost',
+            multiDrag: true, 
+            selectedClass: 'selected',
+            fallbackTolerance: 3, 
+            onEnd: function () {
+                // Read the exact updated DOM order regardless of multi-drag internal events
+                const newOrderIds = Array.from(ui.grid.children).map(el => el.dataset.id);
+                currentPages = newOrderIds.map(id => currentPages.find(p => p.id === id));
+                saveState();
+                updateUIState();
+                renderGrid(); // Re-render to update disabled states of move up/down buttons
+            }
+        });
+    }
+
+    function cancelPendingRenders() {
+        renderSessionId++; // Invalidate stale promises
+        renderTasks.forEach(task => {
+            try { task.cancel(); } catch (e) {}
+        });
+        renderTasks = [];
+    }
+
+    async function renderGrid() {
+        cancelPendingRenders();
+        const currentSession = renderSessionId;
+        ui.grid.innerHTML = '';
+        
+        for (let i = 0; i < currentPages.length; i++) {
+            const pageState = currentPages[i];
+            
+            const card = document.createElement('div');
+            card.className = `page-card ${pageState.selected ? 'selected' : ''}`;
+            card.dataset.id = pageState.id;
+            card.setAttribute('role', 'listitem');
+            card.tabIndex = 0;
+            
+            // Protect selection toggle from keyboard events bubbling from internal buttons
+            card.addEventListener('click', (e) => {
+                if(e.target.closest('button') || e.target.tagName.toLowerCase() === 'input') return;
+                toggleSelect(pageState.id);
+            });
+            card.addEventListener('keydown', (e) => {
+                if(e.key === 'Enter' || e.key === ' ') { 
+                    if(e.target.closest('button') || e.target.tagName.toLowerCase() === 'input') return;
+                    e.preventDefault(); 
+                    toggleSelect(pageState.id); 
+                }
+            });
+
+            const info = document.createElement('div');
+            info.className = 'page-info';
+            info.innerHTML = `
+                <div class="page-number">Page ${pageState.originalIndex}</div>
+                <input type="checkbox" aria-label="Select page ${pageState.originalIndex}" ${pageState.selected ? 'checked' : ''} tabindex="-1">
+            `;
+            
+            const canvasWrapper = document.createElement('div');
+            canvasWrapper.className = 'page-canvas-wrapper';
+            const canvas = document.createElement('canvas');
+            
+            // Adjust scaling to prevent clipping inside the 1/1 aspect ratio box when rotated 90 or 270 degrees
+            const isRotatedSideways = (pageState.rotation % 180 !== 0);
+            const scaleFactor = isRotatedSideways ? 0.72 : 1; 
+            canvas.style.transform = `rotate(${pageState.rotation}deg) scale(${scaleFactor})`;
+            
+            canvasWrapper.appendChild(canvas);
+            
+            const controlsTop = document.createElement('div');
+            controlsTop.className = 'page-controls';
+            
+            const isFirst = i === 0;
+            const isLast = i === currentPages.length - 1;
+            const isOnly = currentPages.length <= MIN_PAGES;
+
+            controlsTop.innerHTML = `
+                <button class="page-btn" onclick="movePage('${pageState.id}', -1, event)" ${isFirst ? 'disabled' : ''} aria-label="Move up">↑ Move Up</button>
+                <button class="page-btn" onclick="movePage('${pageState.id}', 1, event)" ${isLast ? 'disabled' : ''} aria-label="Move down">↓ Move Down</button>
+            `;
+
+            const controlsBottom = document.createElement('div');
+            controlsBottom.className = 'page-controls-bottom';
+            controlsBottom.innerHTML = `
+                <button class="page-btn" onclick="rotateSingle('${pageState.id}', event)" aria-label="Rotate 90 degrees">Rotate</button>
+                <button class="page-btn btn-danger" onclick="deleteSingle('${pageState.id}', event)" ${isOnly ? 'disabled title="Cannot delete last page"' : ''} aria-label="Delete page">Delete</button>
+            `;
+            
+            card.appendChild(info);
+            card.appendChild(canvasWrapper);
+            card.appendChild(controlsTop);
+            card.appendChild(controlsBottom);
+            ui.grid.appendChild(card);
+
+            // Progressive, safely cancellable thumbnail rendering
+            originalPdfDoc.getPage(pageState.originalIndex).then(page => {
+                if (currentSession !== renderSessionId) return; // Prevent stale rendering
+                
+                const viewport = page.getViewport({ scale: 0.6 });
+                canvas.width = viewport.width;
+                canvas.height = viewport.height;
+                const renderContext = { canvasContext: canvas.getContext('2d', { alpha: false }), viewport: viewport };
+                const renderTask = page.render(renderContext);
+                
+                renderTasks.push(renderTask);
+                
+                renderTask.promise.catch(err => {
+                    if (err.name !== 'RenderingCancelledException') {
+                        console.warn(`Failed to render thumbnail for page ${pageState.originalIndex}`, err);
+                        const ctx = canvas.getContext('2d');
+                        ctx.fillStyle = '#f87171';
+                        ctx.fillRect(0,0, canvas.width, canvas.height);
+                        ctx.fillStyle = 'white';
+                        ctx.font = '16px sans-serif';
+                        ctx.textAlign = 'center';
+                        ctx.fillText('Preview Error', canvas.width/2, canvas.height/2);
+                    }
+                });
+            }).catch(err => {
+                console.warn(`Failed to load page ${pageState.originalIndex} for thumbnail`, err);
+            });
+        }
+    }
+
+    // State Management
+    function saveState() {
+        const stateCopy = JSON.parse(JSON.stringify(currentPages));
+        if (historyIndex < history.length - 1) {
+            history = history.slice(0, historyIndex + 1);
+        }
+        history.push(stateCopy);
+        historyIndex++;
+        updateUIState();
+    }
+
+    function undo() {
+        if (historyIndex > 0) {
+            historyIndex--;
+            currentPages = JSON.parse(JSON.stringify(history[historyIndex]));
+            renderGrid();
+            updateUIState();
+        }
+    }
+
+    function redo() {
+        if (historyIndex < history.length - 1) {
+            historyIndex++;
+            currentPages = JSON.parse(JSON.stringify(history[historyIndex]));
+            renderGrid();
+            updateUIState();
+        }
+    }
+
+    function resetAll() {
+        if(confirm("Reset all changes, rotations, and deletions to the original file?")) {
+            cancelPendingRenders();
+            history = [];
+            historyIndex = -1;
+            initEditor(); // Completely restores initial state and history correctly
+        }
+    }
+
+    // Page Actions
+    function toggleSelect(id) {
+        const page = currentPages.find(p => p.id === id);
+        if (page) {
+            page.selected = !page.selected;
+            renderGrid();
+            updateUIState();
+        }
+    }
+
+    function selectAll() {
+        currentPages.forEach(p => p.selected = true);
+        renderGrid(); updateUIState();
+    }
+    
+    function deselectAll() {
+        currentPages.forEach(p => p.selected = false);
+        renderGrid(); updateUIState();
+    }
+
+    function normalizeRotation(current, change) {
+        let newRot = (current + change) % 360;
+        if (newRot < 0) newRot += 360;
+        return newRot;
+    }
+
+    function rotateSingle(id, e) {
+        e.stopPropagation();
+        const page = currentPages.find(p => p.id === id);
+        if (page) {
+            page.rotation = normalizeRotation(page.rotation, 90);
+            saveState();
+            renderGrid();
+        }
+    }
+
+    function rotateSelected() {
+        let changed = false;
+        currentPages.forEach(p => {
+            if (p.selected) { p.rotation = normalizeRotation(p.rotation, 90); changed = true; }
+        });
+        if (changed) { saveState(); renderGrid(); }
+    }
+
+    function deleteSingle(id, e) {
+        e.stopPropagation();
+        if (currentPages.length <= MIN_PAGES) return showError("Cannot delete the only remaining page.");
+        currentPages = currentPages.filter(p => p.id !== id);
+        saveState();
+        renderGrid();
+    }
+
+    function deleteSelected() {
+        const remaining = currentPages.filter(p => !p.selected);
+        if (remaining.length === 0) return showError("Cannot delete all pages. Unselect at least one page.");
+        
+        if (remaining.length !== currentPages.length) {
+            currentPages = remaining;
+            saveState();
+            renderGrid();
+        }
+    }
+
+    function movePage(id, direction, e) {
+        e.stopPropagation();
+        const index = currentPages.findIndex(p => p.id === id);
+        if (index < 0) return;
+        const newIndex = index + direction;
+        
+        if (newIndex >= 0 && newIndex < currentPages.length) {
+            const temp = currentPages[index];
+            currentPages[index] = currentPages[newIndex];
+            currentPages[newIndex] = temp;
+            saveState();
+            renderGrid();
+        }
+    }
+
+    function updateUIState() {
+        const selCount = currentPages.filter(p => p.selected).length;
+        ui.statusBar.textContent = `Showing ${currentPages.length} of ${fileMetadata.pages} original pages | ${selCount} selected`;
+        
+        ui.btnUndo.disabled = historyIndex <= 0;
+        ui.btnRedo.disabled = historyIndex >= history.length - 1;
+        ui.btnDeleteSel.disabled = selCount === 0 || (currentPages.length - selCount < MIN_PAGES);
+    }
+
+    function startOver() {
+        cancelPendingRenders();
+        originalPdfBytes = null;
+        if(originalPdfDoc) {
+            originalPdfDoc.destroy();
+            originalPdfDoc = null;
+        }
+        currentPages = [];
+        history = [];
+        historyIndex = -1;
+        fileMetadata = {};
+        ui.fileInput.value = '';
+        ui.editor.style.display = 'none';
+        ui.loader.style.display = 'none';
+        ui.upload.style.display = 'block';
+    }
+
+    async function exportPDF() {
+        if (currentPages.length === 0) return showError('No pages remain to export.');
+        
+        ui.loaderText.textContent = 'Generating your new PDF...';
+        ui.editor.style.display = 'none';
+        ui.loader.style.display = 'block';
+        
+        try {
+            const { PDFDocument, degrees } = PDFLib;
+            
+            // ignoreEncryption bypassed for generic files but does not crack passwords
+            const srcDoc = await PDFDocument.load(originalPdfBytes, { ignoreEncryption: true });
+            const outDoc = await PDFDocument.create();
+            
+            const indices = currentPages.map(p => p.originalIndex - 1);
+            const copiedPages = await outDoc.copyPages(srcDoc, indices);
+            
+            copiedPages.forEach((page, idx) => {
+                const addedRotation = currentPages[idx].rotation;
+                if (addedRotation !== 0) {
+                    const currentRotation = page.getRotation().angle || 0;
+                    const finalRotation = normalizeRotation(currentRotation, addedRotation);
+                    page.setRotation(degrees(finalRotation));
+                }
+                outDoc.addPage(page);
+            });
+            
+            const pdfBytes = await outDoc.save();
+            const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `editsparks-${fileMetadata.name.replace('.pdf', '')}-reordered.pdf`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            
+            // Release Object URL efficiently
+            setTimeout(() => URL.revokeObjectURL(url), 1000);
+            
+        } catch (err) {
+            console.error('Export Error:', err);
+            showError('Failed to generate PDF. Advanced document features or encryption might prevent editing.');
+        } finally {
+            ui.loader.style.display = 'none';
+            ui.editor.style.display = 'block';
+        }
+    }
+</script>
+</body>
+</html>
