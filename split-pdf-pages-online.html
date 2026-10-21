@@ -71,7 +71,7 @@
                         "name": "How can I extract specific pages from a PDF?",
                         "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": "Select your PDF, choose Extract Specific Pages, and enter page numbers or ranges such as 1, 3, 5-7. Click Split & Download PDF to save the selected pages in one PDF file."
+                            "text": "Select your PDF, choose Extract Specific Pages, and enter start and end page numbers. Click Split & Download PDF to save the selected pages in one PDF file."
                         }
                     },
                     {
@@ -177,7 +177,7 @@
                             <input type="radio" name="splitMode" value="range" checked class="accent-emerald-600">
                             <div>
                                 <span class="block text-xs font-bold text-slate-800">Extract Specific Pages</span>
-                                <span class="text-[11px] text-slate-500">Enter pages (e.g., 1,3,5-7)</span>
+                                <span class="text-[11px] text-slate-500">Choose start and end pages</span>
                             </div>
                         </label>
                         <label class="border border-slate-200 hover:border-emerald-500 bg-white p-4 rounded-xl cursor-pointer flex items-center space-x-3 transition-all">
@@ -190,13 +190,22 @@
                     </div>
                 </div>
 
-                <!-- Page Range Input Box -->
+                <!-- Separate Page Range Inputs (From and To Boxes) -->
                 <div id="pageRangeBox" class="bg-emerald-50/60 border border-emerald-200 rounded-xl p-4">
-                    <label class="block text-xs font-black text-slate-800 uppercase tracking-wider mb-2">
-                        Enter Page Numbers or Range:
+                    <label class="block text-xs font-black text-slate-800 uppercase tracking-wider mb-3">
+                        Select Page Range:
                     </label>
-                    <input type="text" id="pageRangeInput" placeholder="e.g. 1, 3, 5-8" class="w-full bg-white border border-slate-300 focus:border-emerald-500 rounded-xl px-4 py-3 text-sm font-bold text-slate-800 outline-none">
-                    <p class="text-[11px] text-slate-500 mt-1.5">Specify individual pages separated by commas or ranges using a hyphen.</p>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-600 mb-1">From Page:</label>
+                            <input type="number" id="startPageInput" min="1" placeholder="1" class="w-full bg-white border border-slate-300 focus:border-emerald-500 rounded-xl px-4 py-3 text-sm font-bold text-slate-800 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-600 mb-1">To Page:</label>
+                            <input type="number" id="endPageInput" min="1" placeholder="5" class="w-full bg-white border border-slate-300 focus:border-emerald-500 rounded-xl px-4 py-3 text-sm font-bold text-slate-800 outline-none">
+                        </div>
+                    </div>
+                    <p class="text-[11px] text-slate-500 mt-2">Enter the starting page and ending page number to extract.</p>
                 </div>
 
                 <!-- Action Button -->
@@ -276,7 +285,7 @@
                         How can I extract specific pages from a PDF?
                     </h3>
                     <p class="text-slate-600">
-                        Select your PDF, choose Extract Specific Pages, and enter page numbers or ranges such as 1, 3, 5-7. Click Split & Download PDF to save the selected pages in one PDF file.
+                        Select your PDF, choose Extract Specific Pages, and enter start and end page numbers. Click Split & Download PDF to save the selected pages in one PDF file.
                     </p>
                 </div>
                 <div>
@@ -328,7 +337,8 @@
             const statusMessage = $('statusMessage');
             const resultBox = $('resultBox');
             const downloadBtn = $('downloadBtn');
-            const pageRangeInput = $('pageRangeInput');
+            const startPageInput = $('startPageInput');
+            const endPageInput = $('endPageInput');
             const pageRangeBox = $('pageRangeBox');
             const modeRadios = document.querySelectorAll('input[name="splitMode"]');
 
@@ -363,6 +373,8 @@
                 pageCount = 0;
                 busy = false;
                 pdfInput.value = '';
+                startPageInput.value = '';
+                endPageInput.value = '';
 
                 clearDownload();
                 dropZone.classList.remove('hidden');
@@ -450,7 +462,8 @@
                     splitControls.classList.remove('hidden');
                     progressBox.classList.add('hidden');
 
-                    pageRangeInput.placeholder = `Enter pages from 1 to ${pageCount}`;
+                    startPageInput.placeholder = `1`;
+                    endPageInput.placeholder = `${pageCount}`;
 
                 } catch (error) {
                     console.error('PDF loading error:', error);
@@ -469,42 +482,31 @@
                 resetTool();
             });
 
-            // Strictly validate page numbers and ranges.
-            function parsePageRange(input, maxPages) {
-                const text = input.trim();
-                if (!text) {
-                    throw new Error('Enter the page numbers you want to extract.');
+            // Validate range from separate Start and End inputs
+            function parseStartEndRange(startVal, endVal, maxPages) {
+                const startStr = startVal.trim();
+                const endStr = endVal.trim();
+
+                if (!startStr || !endStr) {
+                    throw new Error('Please enter both Start and End page numbers.');
                 }
-                const pages = new Set();
-                const parts = text.split(',');
 
-                for (const rawPart of parts) {
-                    const part = rawPart.trim();
-                    if (!part) continue;
+                const start = parseInt(startStr, 10);
+                const end = parseInt(endStr, 10);
 
-                    if (part.includes('-')) {
-                        const sub = part.split('-');
-                        if (sub.length !== 2) {
-                            throw new Error(`Invalid range format: ${part}`);
-                        }
-                        const start = parseInt(sub[0], 10);
-                        const end = parseInt(sub[1], 10);
-
-                        if (isNaN(start) || isNaN(end) || start > end || start < 1 || end > maxPages) {
-                            throw new Error(`Invalid page range: ${part} (Max pages: ${maxPages})`);
-                        }
-                        for (let i = start; i <= end; i++) {
-                            pages.add(i);
-                        }
-                    } else {
-                        const p = parseInt(part, 10);
-                        if (isNaN(p) || p < 1 || p > maxPages) {
-                            throw new Error(`Invalid page number: ${part} (Max pages: ${maxPages})`);
-                        }
-                        pages.add(p);
-                    }
+                if (isNaN(start) || isNaN(end)) {
+                    throw new Error('Please enter valid numbers for page range.');
                 }
-                return Array.from(pages).sort((a, b) => a - b);
+
+                if (start < 1 || end > maxPages || start > end) {
+                    throw new Error(`Invalid range: Start from 1 up to ${maxPages}, and start page cannot be greater than end page.`);
+                }
+
+                const pages = [];
+                for (let i = start; i <= end; i++) {
+                    pages.push(i);
+                }
+                return pages;
             }
 
             // Split Action Handler
@@ -516,7 +518,7 @@
 
                 if (mode === 'range') {
                     try {
-                        targetPages = parsePageRange(pageRangeInput.value, pageCount);
+                        targetPages = parseStartEndRange(startPageInput.value, endPageInput.value, pageCount);
                     } catch (err) {
                         alert(err.message);
                         return;
