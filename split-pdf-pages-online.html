@@ -549,7 +549,7 @@
                             setProgress(progress, `Processing page ${i + 1} of ${pageCount}...`);
                         }
 
-:wq                        setProgress(95, 'Generating ZIP archive...');
+                        setProgress(95, 'Generating ZIP archive...');
                         const zipContent = await zip.generateAsync({ type: 'blob' });
                         downloadUrl = URL.createObjectURL(zipContent);
                         
